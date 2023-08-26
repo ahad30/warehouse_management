@@ -1,0 +1,202 @@
+[
+  {
+    "id": "1",
+    "img": "product1.png",
+    "name": "Samsung Galaxy S21",
+    "code": "JW4652",
+    "price": "150000",
+    "unit": "pcs",
+    "category": "phone",
+    "desc": "New Arrival"
+  },
+  {
+    "id": "2",
+    "img": "product2.png",
+    "name": "Apple iPhone 13",
+    "code": "KP9823",
+    "price": "120000",
+    "unit": "pcs",
+    "category": "phone",
+    "desc": "Latest Model"
+  },
+  {
+    "id": "3",
+    "img": "product3.png",
+    "name": "Sony WH-1000XM4",
+    "code": "BT7210",
+    "price": "35000",
+    "unit": "pcs",
+    "category": "electronics",
+    "desc": "Wireless Headphones"
+  },
+  {
+    "id": "4",
+    "img": "product4.png",
+    "name": "LG 55-inch 4K TV",
+    "code": "TV5501",
+    "price": "75000",
+    "unit": "pcs",
+    "category": "electronics",
+    "desc": "Ultra HD Smart TV"
+  },
+  {
+    "id": "5",
+    "img": "product5.png",
+    "name": "Microsoft Surface Laptop 4",
+    "code": "SL4112",
+    "price": "90000",
+    "unit": "pcs",
+    "category": "laptop",
+    "desc": "Powerful Performance"
+  },
+  {
+    "id": "6",
+    "img": "product6.png",
+    "name": "HP Envy Photo Printer",
+    "code": "PR9203",
+    "price": "8000",
+    "unit": "pcs",
+    "category": "printer",
+    "desc": "High-Quality Prints"
+  },
+  {
+    "id": "7",
+    "img": "product7.png",
+    "name": "Dell Inspiron 15",
+    "code": "LT3008",
+    "price": "65000",
+    "unit": "pcs",
+    "category": "laptop",
+    "desc": "Everyday Computing"
+  },
+  {
+    "id": "8",
+    "img": "product8.png",
+    "name": "Lenovo Yoga Smart Tab",
+    "code": "TB5115",
+    "price": "15000",
+    "unit": "pcs",
+    "category": "tablet",
+    "desc": "Versatile Tablet"
+  },
+  {
+    "id": "9",
+    "img": "product9.png",
+    "name": "Asus ROG Gaming Laptop",
+    "code": "GM7206",
+    "price": "120000",
+    "unit": "pcs",
+    "category": "laptop",
+    "desc": "Gaming Powerhouse"
+  },
+  {
+    "id": "10",
+    "img": "product10.png",
+    "name": "Acer 24-inch Monitor",
+    "code": "MN2409",
+    "price": "12000",
+    "unit": "pcs",
+    "category": "monitor",
+    "desc": "Full HD Display"
+  },
+  {
+    "id": "11",
+    "img": "product11.png",
+    "name": "Canon EOS Rebel T7i",
+    "code": "DC1125",
+    "price": "60000",
+    "unit": "pcs",
+    "category": "camera",
+    "desc": "Great for Photography"
+  },
+  {
+    "id": "12",
+    "img": "product12.png",
+    "name": "Nikon D5600 DSLR",
+    "code": "NK9903",
+    "price": "55000",
+    "unit": "pcs",
+    "category": "camera",
+    "desc": "Creative Control"
+  },
+  {
+    "id": "13",
+    "img": "product13.png",
+    "name": "Fujifilm Instax Mini 11",
+    "code": "FI7711",
+    "price": "7000",
+    "unit": "pcs",
+    "category": "camera",
+    "desc": "Instant Fun"
+  },
+  {
+    "id": "14",
+    "img": "product14.png",
+    "name": "Panasonic Microwave Oven",
+    "code": "MV2205",
+    "price": "9000",
+    "unit": "pcs",
+    "category": "appliances",
+    "desc": "Quick Heating"
+  },
+  {
+    "id": "15",
+    "img": "product15.png",
+    "name": "Logitech MX Master 3",
+    "code": "MO3308",
+    "price": "6000",
+    "unit": "pcs",
+    "category": "accessories",
+    "desc": "Advanced Mouse"
+  },
+  {
+    "id": "16",
+    "img": "product16.png",
+    "name": "Bose QuietComfort 35 II",
+    "code": "HD4402",
+    "price": "25000",
+    "unit": "pcs",
+    "category": "headphones",
+    "desc": "Noise-Cancelling"
+  },
+  {
+    "id": "17",
+    "img": "product17.png",
+    "name": "Beats Studio3 Wireless",
+    "code": "BE7730",
+    "price": "30000",
+    "unit": "pcs",
+    "category": "headphones",
+    "desc": "Premium Sound"
+  },
+  {
+    "id": "18",
+    "img": "product18.png",
+    "name": "JBL Flip 5 Bluetooth Speaker",
+    "code": "SP5509",
+    "price": "8000",
+    "unit": "pcs",
+    "category": "speakers",
+    "desc": "Portable Audio"
+  },
+  {
+    "id": "19",
+    "img": "product19.png",
+    "name": "Skullcandy Indy Evo",
+    "code": "HD9904",
+    "price": "6000",
+    "unit": "pcs",
+    "category": "earbuds",
+    "desc": "Wireless Earbuds"
+  },
+  {
+    "id": "20",
+    "img": "product20.png",
+    "name": "Sony PlayStation 5",
+    "code": "PS5512",
+    "price": "45000",
+    "unit": "pcs",
+    "category": "gaming",
+    "desc": "Next-Gen Gaming Console"
+  }
+]
