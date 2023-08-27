@@ -139,6 +139,20 @@ const DashboardSidebar = () => {
 
   return (
     <div className="bg-white">
+      {/* <div
+            key={'i'}
+            className="collapse collapse-arrow join-item border border-base-300"
+          >
+            <input type="radio" name="my-accordion-4" checked="checked" />
+            <div className="collapse-title text-lg font-medium uppercase">
+              <span className="flex items-center gap-x-2">
+                {'sideBar?.icon'}
+                <span>{'sideBar?.name'}</span>
+              </span>
+            </div>
+          </div> */}
+      <p>tEST</p>
+
       <div className="join join-vertical w-[250px] min-h-screen text-base-content">
         {sideBarData?.map((sideBar, i) => (
           <div
