@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -20,11 +21,21 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        // return response()->json([
+        //     'ok'
+        // ],500);
+        // $codeValidation= Validator::make($request->all(),[
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // ]);
+
+        // if($codeValidation->fails())
+        // {
+        //     return response()->json([
+        //         'errors'=> $codeValidation->errors()
+        //     ],500);
+        // }
 
         $user = User::create([
             'name' => $request->name,
@@ -38,7 +49,7 @@ class RegisteredUserController extends Controller
         $token = $user->createToken('api_token');
 
         return response()->json([
-            'user' => $user,
+            'success' => 'Registration Successfull',
             'api_token' => $token,
         ]);
     }
