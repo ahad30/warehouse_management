@@ -15,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/categories', [CategoryController::class, 'index']);
-    Route::post('/categories/store', [CategoryController::class, 'store']);
-    Route::get('/categories/edit/{id}', [CategoryController::class, 'edit']);
-    Route::put('/categories/update/{id}', [CategoryController::class, 'update']);
-    Route::delete('/categories/delete/{id}', [CategoryController::class, 'distroy']);
+
+    Route::controller()->prefix('categories')->group(function(){        
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/store', [CategoryController::class, 'store']);
+        Route::get('/edit/{id}', [CategoryController::class, 'edit']);
+        Route::put('/update/{id}', [CategoryController::class, 'update']);
+        Route::delete('/delete/{id}', [CategoryController::class, 'distroy']);
+    });
 });
 
 
