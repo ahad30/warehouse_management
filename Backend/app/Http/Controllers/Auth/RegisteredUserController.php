@@ -21,21 +21,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        // return response()->json([
-        //     'ok'
-        // ],500);
-        // $codeValidation= Validator::make($request->all(),[
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
 
-        // if($codeValidation->fails())
-        // {
-        //     return response()->json([
-        //         'errors'=> $codeValidation->errors()
-        //     ],500);
-        // }
+        $codeValidation = Validator::make($request->all(),[
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        if($codeValidation->fails())
+        {
+            return response()->json([
+                'errors'=> $codeValidation->errors()
+            ],500);
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -51,6 +49,6 @@ class RegisteredUserController extends Controller
         return response()->json([
             'success' => 'Registration Successfull',
             'api_token' => $token,
-        ]);
+        ],201);
     }
 }
