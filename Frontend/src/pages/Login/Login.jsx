@@ -9,11 +9,16 @@ const Login = () => {
   const handleOnSubmit = async (data) => {
     // const url = import.meta.env.VITE_REACT_APP_PORT;
     // https://laptop-hunter-server-mmorshedulislam.vercel.app/users
-
+    const userData = {
+      name: "test",
+      email: "test@mail.com",
+      password: "12345678",
+      password_confirmation: "12345678",
+    };
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/login",
-        data
+        "http://127.0.0.1:8000/api/register",
+        userData
       );
       const token = response?.data?.plainTextToken;
       console.log(token);
