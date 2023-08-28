@@ -10,6 +10,12 @@ const Navbar = () => {
       </div>
       <div className="flex-none gap-2">
         <div className="hidden lg:block">
+          <Link to={"/register"}>Register</Link>
+        </div>
+        <div className="hidden lg:block">
+          <Link to={"/login"}>Login</Link>
+        </div>
+        <div className="hidden lg:block">
           <Link to={"/dashboard"}>Dashboard</Link>
         </div>
 

@@ -17,6 +17,7 @@ import PdfSettings from "../Dashboard/Settings/PdfSettings";
 import ReportList from "../Dashboard/Report/Reports/ReportList";
 import Analytics from "../Dashboard/Report/Analytics/Analytics";
 import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
+import Register from "../pages/Register/Register";
 
 const routes = createBrowserRouter([
   {
@@ -27,6 +28,14 @@ const routes = createBrowserRouter([
       {
         path: "/",
         element: <Login />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },
