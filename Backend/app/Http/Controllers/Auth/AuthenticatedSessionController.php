@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,6 +17,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): JsonResponse
     {
+        $codeValidation = Validator::make($request->all(),[
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required'],
+        ]);
+
+        if($codeValidation->fails())
+        {
+            return response()->json([
+                'errors'=> $codeValidation->errors()
+            ],500);
+        }
+
         $request->authenticate();
 
         $user = $request->user();
@@ -25,8 +38,8 @@ class AuthenticatedSessionController extends Controller
         $token = $user->createToken('api_token');
 
         return response()->json([
-            'user' => $user,
-            'api_token' => $token,
+            'success' => 'Login Successfull',
+            'api_token' => $token
         ]);
 
     }
