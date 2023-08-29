@@ -1,33 +1,27 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../features/Auth/authSlice";
 
 const Login = () => {
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleOnSubmit = async (data) => {
-    // const url = import.meta.env.VITE_REACT_APP_PORT;
-    // https://laptop-hunter-server-mmorshedulislam.vercel.app/users
-    const userData = {
-      name: "test",
-      email: "test@mail.com",
-      password: "12345678",
-      password_confirmation: "12345678",
-    };
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/register",
-        userData
-      );
-      const token = response?.data?.plainTextToken;
-      console.log(token);
+  const { isLoading, error, user } = useSelector((state) => state.auth);
 
-      localStorage.setItem("accessToken", token);
-    } catch (err) {
-      console.log(err);
-    }
+  const handleOnSubmit = async ({ email, password }) => {
+    dispatch(loginUser({ email, password }));
   };
+
+  if (user) {
+    return navigate("/dashboard");
+  }
+
+  // const url = import.meta.env.VITE_REACT_APP_PORT;
+  // https://laptop-hunter-server-mmorshedulislam.vercel.app/users
+  // http://127.0.0.1:8000/api/login
+  // https://jsonplaceholder.typicode.com/posts
 
   return (
     <div className="flex justify-center items-center max-w-[1440px] h-screen mx-auto bg-gray-100 rounded-md p-10">
@@ -58,14 +52,14 @@ const Login = () => {
           </div>
           <div className="flex justify-center my-5">
             <button className="bg-gray-600 hover:bg-gray-400 text-white p-2 rounded-md btn btn-block max-w-md">
-              Log In
+              {isLoading ? "Logging..." : "Log In"}
             </button>
           </div>
         </form>
+        {error && <p className="text-center">{error}</p>}
         <p className="text-center">
-          You don't have an account?{" "}
-          <Link to="/register" className="text-blue-700 font-semibold">
-            Register
+          <Link to="/" className="text-blue-700 font-semibold">
+            Forgot password?
           </Link>
         </p>
       </div>
