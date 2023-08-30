@@ -3,14 +3,21 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addCategory } from "../../features/Category/categorySlice";
+import { useAddCategoryMutation } from "../../features/Category/categoryApi";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
+  const [addCategory, { isError, isLoading, data }] = useAddCategoryMutation();
+
   const onSubmit = async (data) => {
-    dispatch(addCategory(data));
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user.api_token.plainTextToken;
+    if (token) {
+      dispatch(addCategory(data));
+    }
+    console.log(data, token);
     /* 
     fetch("http://localhost:8000/api/categories/store", {
       method: "POST",
