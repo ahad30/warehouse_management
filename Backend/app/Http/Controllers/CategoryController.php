@@ -22,7 +22,7 @@ class CategoryController extends Controller
     public function store(Request $request){
         $codeValidation = Validator::make($request->all(),[
             'category_name' => ['required', 'string', 'max:255'],
-            'slug' => ['unique'],
+            'slug' => ['unique:categories'],
             'description' => ['nullable'],
         ]);
 

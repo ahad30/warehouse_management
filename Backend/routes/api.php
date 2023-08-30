@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,12 +17,21 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::controller()->prefix('categories')->group(function(){        
-        Route::get('/', [CategoryController::class, 'index']);
-        Route::post('/store', [CategoryController::class, 'store']);
-        Route::get('/edit/{id}', [CategoryController::class, 'edit']);
-        Route::put('/update/{id}', [CategoryController::class, 'update']);
-        Route::delete('/delete/{id}', [CategoryController::class, 'distroy']);
+    Route::controller(CategoryController::class)->prefix('categories')->group(function(){        
+        Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::get('/edit/{id}', 'edit');
+        Route::put('/update/{id}', 'update');
+        Route::delete('/delete/{id}', 'distroy');
+    });
+
+    Route::controller(ProductController::class)->prefix('products')->group(function(){        
+        Route::get('/', 'index');
+        Route::get('/create', 'create');
+        Route::post('/store', 'store');
+        Route::get('/edit/{id}', 'edit');
+        Route::put('/update/{id}', 'update');
+        Route::delete('/delete/{id}', 'distroy');
     });
 });
 
