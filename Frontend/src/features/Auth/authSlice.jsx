@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// WITHOUT CSRF TOKEN
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     const request = await axios.post(
-      `https://jsonplaceholder.typicode.com/posts`,
+      `http://127.0.0.1:8000/api/login`,
       { email, password }
     );
     const response = request.data;
@@ -13,6 +14,32 @@ export const loginUser = createAsyncThunk(
     return response;
   }
 );
+
+// WITH CSRF TOKEN
+/* export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async ({ email, password }, { getState }) => {
+    const csrfToken = getState().auth.csrfToken; // Get the CSRF token from your Redux state
+    const headers = {
+      "X-CSRF-TOKEN": csrfToken,
+      "X-Requested-With": "XMLHttpRequest",
+    };
+
+    const response = await axios.post(
+      `https://jsonplaceholder.typicode.com/posts`,
+      { email, password },
+      { headers }
+    );
+
+    const responseData = response.data;
+
+    // Perform necessary actions with the response data
+    localStorage.setItem("user", JSON.stringify(responseData));
+
+    return responseData;
+  }
+);
+*/
 
 const authSlice = createSlice({
   name: "auth",

@@ -2,10 +2,27 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const headers = {
+      'Authorization': `Bearer 21|laravel_sanctum_4M6Qd1Hk2Gu7eDzxSXdZAZwlD6Y9LBEq0aBYAlAq649a1543`,
+      "content-type": "application/json",
+
+    };
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/api/categories/store",
+        data,
+        { headers }
+      );
+      // const data = res;
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
     console.log(data);
   };
   return (
