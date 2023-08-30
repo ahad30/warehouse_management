@@ -1,16 +1,16 @@
 {
 	"info": {
-		"_postman_id": "68fd7d3e-542e-4052-a549-8f9c3c789457",
+		"_postman_id": "8b31b1b6-16d6-4e1e-9f0d-0e64685cacf0",
 		"name": "Invoice Generator Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28541532"
+		"_exporter_id": "29375609"
 	},
 	"item": [
 		{
 			"name": "Auth",
 			"item": [
 				{
-					"name": "http://127.0.0.1:8000/api/register",
+					"name": "Register",
 					"request": {
 						"auth": {
 							"type": "bearer"
@@ -63,7 +63,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/login",
+					"name": "Login",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -72,7 +72,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/login?email=sajeeb@gmail.com&password=11112222",
+							"raw": "http://127.0.0.1:8000/api/login?email=admin@gmail.com&password=11112222",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -88,7 +88,7 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "sajeeb@gmail.com"
+									"value": "admin@gmail.com"
 								},
 								{
 									"key": "password",
@@ -105,14 +105,14 @@
 			"name": "Category",
 			"item": [
 				{
-					"name": "http://127.0.0.1:8000/api/categories",
+					"name": "Get Categories",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_mId3C08dQDnW7fGhxqbM5kwwiYb2Ng769uTgCZr99f8095bd",
+									"value": "17|laravel_sanctum_ru88Sif2HRgIrW8MiDmHcARQ18ktIFpl4nW9f3Qjadbb1150",
 									"type": "string"
 								}
 							]
@@ -138,7 +138,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/categories/store?category_name=Mobile&description=Mobile",
+					"name": "Create Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -191,7 +191,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/categories/edit/1",
+					"name": "Get Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -226,7 +226,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/categories/update/1?category_name=Electronics&description=Electronics",
+					"name": "Update Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -271,7 +271,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/categories/delete/1",
+					"name": "Delete Category",
 					"request": {
 						"auth": {
 							"type": "bearer",

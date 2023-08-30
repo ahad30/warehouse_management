@@ -1,6 +1,14 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logOut } from "../../features/Auth/authSlice";
 
 const Navbar = () => {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
+
   return (
     <div className="navbar bg-base-100 w-full max-w-[1440px] mx-auto">
       <div className="flex-1">
@@ -10,13 +18,23 @@ const Navbar = () => {
       </div>
       <div className="flex-none gap-2">
         <div className="hidden lg:block">
-          <Link to={"/dashboard"}>Dashboard</Link>
+          {user ? (
+            <button onClick={() => handleLogOut()}>Logout</button>
+          ) : (
+            <Link to={"/login"}>Login</Link>
+          )}
         </div>
+
+        {user && (
+          <div className="hidden lg:block">
+            <Link to={"/dashboard"}>Dashboard</Link>
+          </div>
+        )}
 
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1691904398~exp=1691904998~hmac=c868d5c96d084bec6d238d0f1e5ab4b1e6e9e64b9ba7338f650ad540e1f5e387" />
+              <img src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png" />
             </div>
           </label>
           <ul
