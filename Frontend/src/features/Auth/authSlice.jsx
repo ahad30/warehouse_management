@@ -6,7 +6,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     const request = await axios.post(
-      `http://127.0.0.1:8000/api/login`,
+      `${import.meta.env.VITE_REACT_APP_PORT}/login`,
       { email, password }
     );
     const response = request.data;

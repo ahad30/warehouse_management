@@ -2,29 +2,30 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addCategory } from "../../features/Category/categorySlice";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = async (data) => {
-    const headers = {
-      'Authorization': `Bearer 21|laravel_sanctum_4M6Qd1Hk2Gu7eDzxSXdZAZwlD6Y9LBEq0aBYAlAq649a1543`,
-      "content-type": "application/json",
+  const dispatch = useDispatch();
 
-    };
-    try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/api/categories/store",
-        data,
-        { headers }
-      );
-      // const data = res;
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-    console.log(data);
+  const onSubmit = async (data) => {
+    dispatch(addCategory(data));
+    /* 
+    fetch("http://localhost:8000/api/categories/store", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer 27|laravel_sanctum_52jgDkVSyFfaOFB0Lbmj9rvbLdYasdndKwXPVPyqf35929a1`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+      */
   };
+
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Category</h2>
@@ -39,7 +40,7 @@ const AddCategory = () => {
               placeholder="Category Name"
               className="input input-bordered w-full"
               required
-              {...register("name")}
+              {...register("category_name")}
             />
           </label>
           <label className="input-group">
@@ -48,7 +49,7 @@ const AddCategory = () => {
               type="text"
               placeholder="Category Description"
               className="input input-bordered w-full"
-              {...register("desc")}
+              {...register("description")}
             />
           </label>
         </div>

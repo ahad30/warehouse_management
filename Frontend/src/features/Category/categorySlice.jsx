@@ -4,10 +4,24 @@ import axios from "axios";
 export const addCategory = createAsyncThunk(
   "category/addCategory",
   async (data) => {
-    const request = await axios.post(
-      "http://127.0.0.1:8000/api/categories/store",
-      data
-    );
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user.api_token.plainTextToken;
+
+    if (!token) {
+      return console.log("Unauthorized User");
+    } else {
+      const request = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_PORT}/categories/store`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const response = request;
+      console.log(response);
+    }
   }
 );
 
@@ -22,4 +36,4 @@ const categorySlice = createSlice({
 
 export default categorySlice.reducer;
 
-export const {} = categorySlice.actions;
+// export const {} = categorySlice.actions;

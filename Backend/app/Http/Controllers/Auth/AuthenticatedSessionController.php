@@ -39,6 +39,7 @@ class AuthenticatedSessionController extends Controller
 
         return response()->json([
             'success' => 'Login Successfull',
+            'user' => $user,
             'api_token' => $token
         ]);
 
