@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8b31b1b6-16d6-4e1e-9f0d-0e64685cacf0",
+		"_postman_id": "2d2393ac-6153-4470-b8ce-4b82da8d5822",
 		"name": "Invoice Generator Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29375609"
@@ -13,7 +13,14 @@
 					"name": "Register",
 					"request": {
 						"auth": {
-							"type": "bearer"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "19|laravel_sanctum_Z8XDmy3Pmfj7GrPQqO1qHi3agoDGyuNC08kqmIOsc985fcbf",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
@@ -72,13 +79,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/login?email=admin@gmail.com&password=11112222",
+							"raw": "http://localhost:8000/api/login?email=admin@gmail.com&password=11112222",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"localhost"
 							],
 							"port": "8000",
 							"path": [
@@ -112,7 +116,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "17|laravel_sanctum_ru88Sif2HRgIrW8MiDmHcARQ18ktIFpl4nW9f3Qjadbb1150",
+									"value": "26|laravel_sanctum_MU7Dw3U3fKW5GD1iwtzQXvppDbA5Fz0snHRxkzaM1d5f0899",
 									"type": "string"
 								}
 							]
@@ -191,7 +195,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Category",
+					"name": "Get Single Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -311,7 +315,7 @@
 			"name": "Product",
 			"item": [
 				{
-					"name": "http://127.0.0.1:8000/api/products",
+					"name": "Get Products",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -378,7 +382,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/products/store",
+					"name": "Create Product",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -444,7 +448,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/products/edit/1",
+					"name": "Get Single Product",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -479,7 +483,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/products/update/1",
+					"name": "Update Product",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -536,7 +540,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/products/delete/1",
+					"name": "Delete Product",
 					"request": {
 						"auth": {
 							"type": "bearer",
