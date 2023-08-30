@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/edit/{id}', 'edit');
         Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'distroy');
+    });
+
+    Route::controller(CompanyInfoController::class)->prefix('company')->group(function(){        
+        Route::get('/info', 'index');
+        Route::get('/info/edit/{id}', 'edit');
+        Route::put('/info/update/{id}', 'update');
     });
 });
 
