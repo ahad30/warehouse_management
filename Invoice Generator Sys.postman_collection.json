@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2d2393ac-6153-4470-b8ce-4b82da8d5822",
+		"_postman_id": "5558362e-4edf-42eb-aa46-9dae1282cddb",
 		"name": "Invoice Generator Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29375609"
+		"_exporter_id": "28541532"
 	},
 	"item": [
 		{
@@ -34,7 +34,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/register?name=zabir&email=zabir2@gmail.com&password=password&password_confirmation=password",
+							"raw": "http://127.0.0.1:8000/api/register?name=zabir&email=zabir2@gmail.com&password=password&password_confirmation=password&address=fsdgfsdfd&role=admin&status=active&phone=9872379879823&city=sadhgjh&country=asdassd",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -63,6 +63,30 @@
 								{
 									"key": "password_confirmation",
 									"value": "password"
+								},
+								{
+									"key": "address",
+									"value": "fsdgfsdfd"
+								},
+								{
+									"key": "role",
+									"value": "admin"
+								},
+								{
+									"key": "status",
+									"value": "active"
+								},
+								{
+									"key": "phone",
+									"value": "9872379879823"
+								},
+								{
+									"key": "city",
+									"value": "sadhgjh"
+								},
+								{
+									"key": "country",
+									"value": "asdassd"
 								}
 							]
 						}
@@ -567,6 +591,248 @@
 							"path": [
 								"api",
 								"products",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company info",
+			"item": [
+				{
+					"name": "Get Company info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Company Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info/update/1?company_name=bsv&company_email=dhjks@gmail.com&company_phone=3487236&company_address=jbxcjgh eiuhnkjwe ew",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info",
+								"update",
+								"1"
+							],
+							"query": [
+								{
+									"key": "company_name",
+									"value": "bsv"
+								},
+								{
+									"key": "company_email",
+									"value": "dhjks@gmail.com"
+								},
+								{
+									"key": "company_phone",
+									"value": "3487236"
+								},
+								{
+									"key": "company_address",
+									"value": "jbxcjgh eiuhnkjwe ew"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get all customers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
 								"delete",
 								"1"
 							]
