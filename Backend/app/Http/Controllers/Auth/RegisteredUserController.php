@@ -26,6 +26,14 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string'],
+            'status' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'zip_code' => ['nullable', 'string'],
+            'city' => ['required', 'string'],
+            'state' => ['nullable', 'string'],
+            'country' => ['required', 'string'],
         ]);
 
         if($codeValidation->fails())
@@ -39,6 +47,14 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'status' => $request->status,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'zip_code' => $request->zip_code,
+            'city' => $request->city,
+            'state' => $request->state,
+            'country' => $request->country,
         ]);
 
         event(new Registered($user));
@@ -48,6 +64,7 @@ class RegisteredUserController extends Controller
 
         return response()->json([
             'success' => 'Registration Successfull',
+            'user' => $user,
             'api_token' => $token,
         ],201);
     }

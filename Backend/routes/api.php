@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyInfoController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +36,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
+
+    Route::controller(CompanyInfoController::class)->prefix('company')->group(function(){        
+        Route::get('/info', 'index');
+        Route::get('/info/edit/{id}', 'edit');
+        Route::put('/info/update/{id}', 'update');
+    });
+
+    Route::controller(CustomerController::class)->prefix('customers')->group(function(){        
+        Route::get('/', 'index');
+        Route::delete('/delete/{id}', 'distroy');
+    });
+
+    Route::controller(UserController::class)->prefix('users')->group(function(){        
+        Route::get('/', 'index');
+        Route::delete('/delete/{id}', 'distroy');
+    });
+
 });
 
 

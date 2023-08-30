@@ -9,6 +9,9 @@ const Navbar = () => {
     dispatch(logOut());
   };
 
+// const user = localStorage.getItem('user')
+// const userName = user
+
   return (
     <div className="navbar bg-base-100 w-full max-w-[1440px] mx-auto">
       <div className="flex-1">
@@ -41,6 +44,12 @@ const Navbar = () => {
             tabIndex={0}
             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
           >
+            <li>
+              <a className="justify-between">
+                Profile
+                <span className="badge">New</span>
+              </a>
+            </li>
             <li>
               <a className="justify-between">
                 Profile
