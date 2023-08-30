@@ -5,7 +5,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     const request = await axios.post(
-      `https://jsonplaceholder.typicode.com/posts`,
+      `http://localhost:8000/api/login`,
       { email, password }
     );
     const response = request.data;
