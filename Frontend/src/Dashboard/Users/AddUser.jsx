@@ -66,6 +66,18 @@ const AddUser = () => {
             </label>
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
+                Retype<span className="text-red-500 p-0">*</span>
+              </span>
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                className="input input-bordered w-full"
+                required
+                {...register("password_confirmation")}
+              />
+            </label>
+            <label className="input-group">
+              <span className="font-semibold min-w-[100px]">
                 Role<span className="text-red-500 p-0">*</span>
               </span>
               <select
@@ -94,7 +106,7 @@ const AddUser = () => {
                 <option value={"inactive"}>Inactive</option>
               </select>
             </label>
-            <label className="input-group">
+            {/* <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Branch<span className="text-red-500 p-0">*</span>
               </span>
@@ -110,7 +122,7 @@ const AddUser = () => {
                   </option>
                 ))}
               </select>
-            </label>
+            </label> */}
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Address<span className="text-red-500 p-0">*</span>
@@ -125,7 +137,7 @@ const AddUser = () => {
             </label>
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
-                Zip<span className="text-red-500 p-0">*</span>
+                Zip
               </span>
               <input
                 type="number"
@@ -161,7 +173,7 @@ const AddUser = () => {
             </label>
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
-                State<span className="text-red-500 p-0">*</span>
+                State
               </span>
               <input
                 type="text"
