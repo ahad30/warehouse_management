@@ -1,5 +1,8 @@
 import apiSlice from "../API/apiSlice";
 
+const user = JSON.parse(localStorage.getItem("user"));
+const token = user.api_token.plainTextToken;
+
 const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addCategory: builder.mutation({
@@ -12,7 +15,15 @@ const categoryApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getCategories: builder.query({
+      query: () => ({
+        url: "/categories",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useAddCategoryMutation } = categoryApi;
+export const { useAddCategoryMutation, useGetCategoriesQuery } = categoryApi;

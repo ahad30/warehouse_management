@@ -1,25 +1,16 @@
 import { BiSolidDuplicate } from "react-icons/bi";
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
-import categoriesData from "./categoriesData.json";
-import { useEffect, useMemo } from "react";
+// import categoriesData from "./categoriesData.json";
+import { useMemo } from "react";
 import BasicTable from "../Tables/BasicTable";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
+import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 
 const CategoriesList = () => {
-  useEffect(() => {
-    fetch("http://localhost:8000/api/categories", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer 27|laravel_sanctum_52jgDkVSyFfaOFB0Lbmj9rvbLdYasdndKwXPVPyqf35929a1`,
-        "content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
-  }, []);
+  const { data: categories, isLoading } = useGetCategoriesQuery();
 
-  const data = useMemo(() => categoriesData, []);
+  const data = useMemo(() => categories, [categories]);
+
   const columns = [
     {
       header: "",
@@ -28,12 +19,12 @@ const CategoriesList = () => {
     },
     {
       header: "Name",
-      accessorKey: "name",
+      accessorKey: "category_name",
       footer: "Name",
     },
     {
       header: "Description",
-      accessorKey: "desc",
+      accessorKey: "description",
       footer: "Description",
     },
     {
@@ -42,6 +33,10 @@ const CategoriesList = () => {
       footer: "Actions",
     },
   ];
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>

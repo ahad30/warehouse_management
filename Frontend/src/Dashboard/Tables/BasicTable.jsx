@@ -46,7 +46,7 @@ const BasicTable = ({ data, columns, btnTitle, btnIcon, btnPath }) => {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <>
+                  
                     <th
                       key={header.id}
                       onClick={header.column.getToggleSortingHandler()}
@@ -65,7 +65,7 @@ const BasicTable = ({ data, columns, btnTitle, btnIcon, btnPath }) => {
                         </div>
                       )}
                     </th>
-                  </>
+                  
                 ))}
               </tr>
             ))}

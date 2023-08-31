@@ -2,35 +2,28 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { useAddCategoryMutation } from "../../features/Category/categoryApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useToken } from "../../utils/hooks/useToken";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [addCategory, { isError, isLoading, isSuccess }] =
+    useAddCategoryMutation();
 
-  const [addCategory, { isError, isLoading, data }] = useAddCategoryMutation();
+  const token = useToken();
 
   const onSubmit = async (data) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.api_token.plainTextToken;
     if (token) {
-      dispatch(addCategory(data));
+      addCategory(data, token);
     }
-    console.log(data, token);
-    /* 
-    fetch("http://localhost:8000/api/categories/store", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer 27|laravel_sanctum_52jgDkVSyFfaOFB0Lbmj9rvbLdYasdndKwXPVPyqf35929a1`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
-      */
+
+    if (isSuccess) {
+      toast.success("Category added Successfully");
+      return navigate("/dashboard/");
+    }
   };
 
   return (
@@ -61,10 +54,11 @@ const AddCategory = () => {
           </label>
         </div>
         <SubmitButton
-          title="Add Category"
+          title={isLoading ? "Saving..." : "Add Category"}
           icon={<BiSolidDuplicate size={20} />}
         />
       </form>
+      {isError && <p>{isError}</p>}
     </DashboardBackground>
   );
 };
