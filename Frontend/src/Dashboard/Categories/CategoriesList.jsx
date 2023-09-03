@@ -9,7 +9,9 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 const CategoriesList = () => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
 
-  const data = useMemo(() => categories, [categories]);
+  console.log(categories?.success);
+
+  const data = useMemo(() => categories?.success, [categories]);
 
   const columns = [
     {

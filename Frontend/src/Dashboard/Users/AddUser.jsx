@@ -203,7 +203,7 @@ const AddUser = () => {
             </div>
           </div>
           <SubmitButton
-            title={isLoading ? "Adding User" : "Add User"}
+            title={isLoading ? "Adding User..." : "Add User"}
             icon={<AiOutlineUserAdd size={20} />}
           />
         </form>

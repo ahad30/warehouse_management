@@ -5,26 +5,27 @@ import { useForm } from "react-hook-form";
 import { useAddCategoryMutation } from "../../features/Category/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { useToken } from "../../utils/hooks/useToken";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const [addCategory, { isError, isLoading, isSuccess }] =
+
+  const [addCategory, { error, isLoading, isSuccess }] =
     useAddCategoryMutation();
 
-  const token = useToken();
-
   const onSubmit = async (data) => {
-    if (token) {
-      addCategory(data, token);
-    }
-
-    if (isSuccess) {
-      toast.success("Category added Successfully");
-      return navigate("/dashboard/");
-    }
+    addCategory(data);
   };
+
+  if (error) {
+    toast.error("Couldn't Category created");
+    console.log(error);
+  }
+
+  if (isSuccess) {
+    toast.success("Category added Successfully", { id: 1 });
+    return navigate("/dashboard/category");
+  }
 
   return (
     <DashboardBackground>
@@ -54,11 +55,11 @@ const AddCategory = () => {
           </label>
         </div>
         <SubmitButton
-          title={isLoading ? "Saving..." : "Add Category"}
+          title={isLoading ? "Adding Category..." : "Add Category"}
           icon={<BiSolidDuplicate size={20} />}
         />
       </form>
-      {isError && <p>{isError}</p>}
+      {error && <p>{error}</p>}
     </DashboardBackground>
   );
 };

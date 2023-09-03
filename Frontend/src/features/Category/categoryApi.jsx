@@ -1,14 +1,12 @@
+import { useToken } from "../../utils/hooks/useToken";
 import apiSlice from "../API/apiSlice";
 
-const user = JSON.parse(localStorage.getItem("user"));
-const token = user?.api_token?.plainTextToken;
-
-console.log(token);
+const token = useToken();
 
 const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addCategory: builder.mutation({
-      query: (data, token) => ({
+      query: (data) => ({
         method: "POST",
         url: "/categories/store",
         headers: {
