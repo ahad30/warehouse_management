@@ -2,13 +2,31 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { useForm } from "react-hook-form";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
+import { useAddUserMutation } from "../../features/User/userApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const AddUser = () => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const [addUser, { isLoading, isSuccess, error }] = useAddUserMutation();
+
+  // GET INPUT FIELD FORM
+  const onSubmit = async (data) => {
     console.log(data);
+    addUser(data);
   };
+
+  // CHECK ERROR
+  if (error) {
+    toast.error(error.data.errors.email[0], { id: 1 });
+  }
+
+  // IF SUCCESS THEN ROUTE THE USERS
+  if (isSuccess) {
+    return navigate("/dashboard/user");
+  }
 
   return (
     <>
@@ -136,14 +154,11 @@ const AddUser = () => {
               />
             </label>
             <label className="input-group">
-              <span className="font-semibold min-w-[100px]">
-                Zip
-              </span>
+              <span className="font-semibold min-w-[100px]">Zip</span>
               <input
                 type="number"
                 placeholder="Zip Code"
                 className="input input-bordered w-full"
-                required
                 {...register("zip")}
               />
             </label>
@@ -172,14 +187,11 @@ const AddUser = () => {
               />
             </label>
             <label className="input-group">
-              <span className="font-semibold min-w-[100px]">
-                State
-              </span>
+              <span className="font-semibold min-w-[100px]">State</span>
               <input
                 type="text"
                 placeholder="State Name"
                 className="input input-bordered w-full"
-                required
                 {...register("state")}
               />
             </label>
@@ -191,7 +203,7 @@ const AddUser = () => {
             </div>
           </div>
           <SubmitButton
-            title={"Add User"}
+            title={isLoading ? "Adding User" : "Add User"}
             icon={<AiOutlineUserAdd size={20} />}
           />
         </form>

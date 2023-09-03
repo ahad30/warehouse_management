@@ -1,7 +1,9 @@
 import apiSlice from "../API/apiSlice";
 
 const user = JSON.parse(localStorage.getItem("user"));
-const token = user.api_token.plainTextToken;
+const token = user?.api_token?.plainTextToken;
+
+console.log(token);
 
 const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

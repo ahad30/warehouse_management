@@ -75,6 +75,14 @@ class ProductController extends Controller
 
     // update
     public function update(Request $request, $id){
+
+        if(Product::where('id',$id)->count()==0)
+        {
+            return response()->json([
+                'errors'=> 'Product not exist'
+            ],404);
+        }
+        
         $product = Product::findOrFail($id);
 
         $codeValidation = Validator::make($request->all(),[
