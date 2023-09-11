@@ -6,19 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Sale;
 
-class Customer extends Model
+class SaleItem extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'sale_id',
         'name',
-        'email',
-        'profile_image',
-        'phone',
-        'address',
-        'notes',
+        'code',
+        'description',
+        'unit',
+        'quantity',
+        'rate',
     ];
 
     public function sales(){
-        return $this->hasMany(Sale::class);
+        return $this->belongsTo(Sale::class);
     }
 }

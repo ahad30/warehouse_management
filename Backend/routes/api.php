@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(UserController::class)->prefix('users')->group(function(){        
         Route::get('/', 'index');
+        Route::delete('/delete/{id}', 'distroy');
+    });
+
+    Route::controller(SaleController::class)->prefix('invoice')->group(function(){        
+        Route::get('/list', 'index');
+        Route::get('/create', 'create');
+        Route::post('/store', 'store');
+        
+        Route::get('/edit/{id}', 'edit');
+        Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 
