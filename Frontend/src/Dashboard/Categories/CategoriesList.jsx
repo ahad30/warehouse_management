@@ -9,7 +9,7 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 const CategoriesList = () => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
 
-  console.log(categories?.success);
+  console.log(categories);
 
   const data = useMemo(() => categories?.success, [categories]);
 

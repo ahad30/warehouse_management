@@ -6,7 +6,7 @@ import NavTest2 from "../../Shared/Navbar/NavTest2";
 const MainLayout = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <NavTest/> */}
       {/* <NavTest2 /> */}
       <Outlet></Outlet>

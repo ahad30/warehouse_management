@@ -2,13 +2,19 @@ import { BiCartAdd } from "react-icons/bi";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
+import { useAddProductMutation } from "../../features/Product/productApi";
 
 const AddProduct = () => {
   const { register, handleSubmit } = useForm();
+  const [addProduct, { isLoading, error, isSuccess }] = useAddProductMutation();
 
   const onSubmit = (data) => {
     console.log(data);
+    addProduct(data);
   };
+
+  console.log("error", error);
+  console.log("isSuccess", isSuccess);
 
   return (
     <DashboardBackground>
@@ -73,11 +79,11 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("category")}
+              {...register("category_id")}
             >
-              <option value={"medicine"}>Medicine</option>
-              <option value={"phone"}>Phone</option>
-              <option value={"grocery"}>Grocery</option>
+              <option value={"1"}>Medicine</option>
+              <option value={"1"}>Phone</option>
+              <option value={"1"}>Grocery</option>
             </select>
           </label>
           <label className="input-group">
@@ -96,7 +102,10 @@ const AddProduct = () => {
             />
           </div>
         </div>
-        <SubmitButton title="Save Product" icon={<BiCartAdd size={20} />} />
+        <SubmitButton
+          title={isLoading ? "Saving Product" : "Save Product"}
+          icon={<BiCartAdd size={20} />}
+        />
       </form>
     </DashboardBackground>
   );
