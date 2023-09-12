@@ -3,12 +3,11 @@ import apiSlice from "../API/apiSlice";
 
 const token = useToken();
 
-const categoryApi = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    addCategory: builder.mutation({
+const customerApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    addCustomer: build.mutation({
       query: (data) => ({
         method: "POST",
-        // url: "/categories/store",
         url: "/posts",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -16,9 +15,8 @@ const categoryApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    getCategories: builder.query({
+    getCustomers: build.query({
       query: () => ({
-        // url: "/categories",
         url: "/posts",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,4 +26,4 @@ const categoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddCategoryMutation, useGetCategoriesQuery } = categoryApi;
+export const { useAddCustomerMutation, useGetCustomersQuery } = customerApi;

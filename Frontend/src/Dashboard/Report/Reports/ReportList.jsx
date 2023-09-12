@@ -4,10 +4,13 @@ import { format } from "date-fns";
 import { useMemo } from "react";
 import reportData from "./reportData.json";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
+import { useGetSalesReportsQuery } from "../../../features/SalesReport/SalesReport";
 
 const ReportList = () => {
   const toDay = format(new Date(), "yyyy-MM-dd");
-  
+  const { data: reports } = useGetSalesReportsQuery();
+  console.log(reports);
+
   const data = useMemo(() => reportData, []);
   const columns = [
     {

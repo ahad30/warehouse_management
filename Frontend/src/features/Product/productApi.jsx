@@ -3,22 +3,22 @@ import apiSlice from "../API/apiSlice";
 
 const token = useToken();
 
-const categoryApi = apiSlice.injectEndpoints({
+const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addCategory: builder.mutation({
+    addProduct: builder.mutation({
       query: (data) => ({
         method: "POST",
-        // url: "/categories/store",
+        // url: "/products/store",
         url: "/posts",
+        body: data,
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: data,
       }),
     }),
-    getCategories: builder.query({
+    getProducts: builder.query({
       query: () => ({
-        // url: "/categories",
+        // url: "/products",
         url: "/posts",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,4 +28,4 @@ const categoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddCategoryMutation, useGetCategoriesQuery } = categoryApi;
+export const { useAddProductMutation, useGetProductsQuery } = productApi;

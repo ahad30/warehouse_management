@@ -4,8 +4,12 @@ import invoiceData from "./invoiceData.json";
 import { useMemo } from "react";
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import BasicTable from "../Tables/BasicTable";
+import { useGetInvoicesQuery } from "../../features/Invoice/InvoiceApi";
 
 const InvoicesList = () => {
+  const { data: invoices } = useGetInvoicesQuery();
+  console.log(invoices);
+
   const data = useMemo(() => invoiceData, []);
 
   const columns = [

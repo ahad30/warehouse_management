@@ -4,8 +4,12 @@ import { useMemo } from "react";
 import productData from "./productData.json";
 import BasicTable from "../Tables/BasicTable";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
+import { useGetProductsQuery } from "../../features/Product/productApi";
 
 const ProductsList = () => {
+  const { data: products, isLoading } = useGetProductsQuery();
+  console.log(products);
+
   const data = useMemo(() => productData, []);
   const columns = [
     {
@@ -40,7 +44,7 @@ const ProductsList = () => {
     },
     {
       header: "Category",
-      accessorKey: "category",
+      accessorKey: "category_id",
       footer: "Category",
     },
     {
@@ -59,6 +63,10 @@ const ProductsList = () => {
       footer: "",
     },
   ];
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>

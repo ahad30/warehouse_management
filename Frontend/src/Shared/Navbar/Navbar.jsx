@@ -9,8 +9,8 @@ const Navbar = () => {
     dispatch(logOut());
   };
 
-// const user = localStorage.getItem('user')
-// const userName = user
+  // const user = localStorage.getItem('user')
+  // const userName = user
 
   return (
     <div className="navbar bg-base-100 w-full max-w-[1440px] mx-auto">
@@ -69,7 +69,7 @@ const Navbar = () => {
             <li>
               <a>Settings</a>
             </li>
-            <li>
+            <li onClick={() => handleLogOut()}>
               <a>Logout</a>
             </li>
           </ul>

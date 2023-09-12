@@ -3,6 +3,7 @@ import "./App.css";
 import routes from "./routes/routes";
 import { useDispatch } from "react-redux";
 import { getUser } from "./features/Auth/authSlice";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ function App() {
   return (
     <>
       <RouterProvider router={routes} />
+      <Toaster />
     </>
   );
 }

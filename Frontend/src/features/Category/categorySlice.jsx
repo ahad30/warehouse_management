@@ -5,7 +5,7 @@ export const addCategory = createAsyncThunk(
   "category/addCategory",
   async (data) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.api_token.plainTextToken;
+    const token = user?.api_token?.plainTextToken;
 
     if (!token) {
       return console.log("Unauthorized User");
