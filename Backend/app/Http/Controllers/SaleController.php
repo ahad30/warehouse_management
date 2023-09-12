@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanyInfo;
 use App\Models\Customer;
+use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use Illuminate\Http\Request;
@@ -30,10 +31,12 @@ class SaleController extends Controller
     public function create(){
         $company_info = CompanyInfo::where('id', 1)->first();
         $customers = Customer::all();
+        $products = Product::all();
 
         return response()->json([
             'company_info' => $company_info,
             'customers' => $customers,
+            'products' => $products,
         ]);
     }
 
