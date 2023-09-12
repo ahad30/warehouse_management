@@ -841,6 +841,183 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Sale",
+			"item": [
+				{
+					"name": "View all invoices",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "7|laravel_sanctum_ZeN43j3d9QQGldN0Xftca4idr4nec07jjgzZ4Bk04af5fe77",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create invoice",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "7|laravel_sanctum_ZeN43j3d9QQGldN0Xftca4idr4nec07jjgzZ4Bk04af5fe77",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store invoice",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_JkTDYwB38G17JQk1332BDO8lRS7Ll1m0nJyrqgIV33ad2e3b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/store?invoice_no=73683&invoice_date=12/03/2023&company_name=hjksajk&company_email=sgdjhsd@gmail.com&company_phone=02389022121&company_address=ajhgjas, ghgjgagjh, jhgjhg&customer_name=jhdhhsa&customer_email=demo1@gmail.com&customer_phone=0123456789&customer_address=jhsikas, hghuiasg, gbasdasd&discount=122&shipping=12&total=3234&name=uewyu&code=jshjhgsj&quantity=2&rate=656&unit=kg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"store"
+							],
+							"query": [
+								{
+									"key": "invoice_no",
+									"value": "73683"
+								},
+								{
+									"key": "customer_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "invoice_date",
+									"value": "12/03/2023"
+								},
+								{
+									"key": "company_name",
+									"value": "hjksajk"
+								},
+								{
+									"key": "company_email",
+									"value": "sgdjhsd@gmail.com"
+								},
+								{
+									"key": "company_phone",
+									"value": "02389022121"
+								},
+								{
+									"key": "company_address",
+									"value": "ajhgjas, ghgjgagjh, jhgjhg"
+								},
+								{
+									"key": "customer_name",
+									"value": "jhdhhsa"
+								},
+								{
+									"key": "customer_email",
+									"value": "demo1@gmail.com"
+								},
+								{
+									"key": "customer_phone",
+									"value": "0123456789"
+								},
+								{
+									"key": "customer_address",
+									"value": "jhsikas, hghuiasg, gbasdasd"
+								},
+								{
+									"key": "discount",
+									"value": "122"
+								},
+								{
+									"key": "shipping",
+									"value": "12"
+								},
+								{
+									"key": "total",
+									"value": "3234"
+								},
+								{
+									"key": "name",
+									"value": "uewyu"
+								},
+								{
+									"key": "code",
+									"value": "jshjhgsj"
+								},
+								{
+									"key": "quantity",
+									"value": "2"
+								},
+								{
+									"key": "rate",
+									"value": "656"
+								},
+								{
+									"key": "unit",
+									"value": "kg"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
