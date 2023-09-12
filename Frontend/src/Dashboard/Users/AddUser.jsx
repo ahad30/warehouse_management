@@ -10,13 +10,15 @@ const AddUser = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const [addUser, { isLoading, isSuccess, error }] = useAddUserMutation();
+  const [addUser, { isLoading, isSuccess, error, data }] = useAddUserMutation();
 
   // GET INPUT FIELD FORM
   const onSubmit = async (data) => {
     console.log(data);
     addUser(data);
   };
+
+  console.log(data);
 
   // CHECK ERROR
   if (error) {

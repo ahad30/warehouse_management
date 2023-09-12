@@ -1,6 +1,6 @@
 import { BiSolidDuplicate } from "react-icons/bi";
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
-// import categoriesData from "./categoriesData.json";
+import categoriesData from "./categoriesData.json";
 import { useMemo } from "react";
 import BasicTable from "../Tables/BasicTable";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
@@ -11,7 +11,7 @@ const CategoriesList = () => {
 
   console.log(categories);
 
-  const data = useMemo(() => categories?.success, [categories]);
+  const data = useMemo(() => categoriesData, []);
 
   const columns = [
     {

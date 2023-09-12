@@ -2,13 +2,19 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
+import { useAddCustomerMutation } from "../../features/Customer/customerApi";
 
 const AddCustomer = () => {
   const { register, handleSubmit } = useForm();
+  const [addCustomer, { data }] = useAddCustomerMutation();
 
   const onSubmit = (data) => {
     console.log(data);
+    addCustomer(data);
   };
+
+  console.log(data);
+
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Customer</h2>

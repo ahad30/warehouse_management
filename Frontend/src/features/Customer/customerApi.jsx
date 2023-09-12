@@ -3,22 +3,20 @@ import apiSlice from "../API/apiSlice";
 
 const token = useToken();
 
-const userApi = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    addUser: builder.mutation({
+const customerApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    addCustomer: build.mutation({
       query: (data) => ({
         method: "POST",
-        // url: "/register",
         url: "/posts",
-        body: data,
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        body: data,
       }),
     }),
-    getUsers: builder.query({
+    getCustomers: build.query({
       query: () => ({
-        // url: "/users",
         url: "/posts",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,4 +26,4 @@ const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddUserMutation, useGetUsersQuery } = userApi;
+export const { useAddCustomerMutation, useGetCustomersQuery } = customerApi;

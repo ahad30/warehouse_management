@@ -1,17 +1,16 @@
 import { BiCartAdd } from "react-icons/bi";
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import { useMemo } from "react";
-// import productData from "./productData.json";
+import productData from "./productData.json";
 import BasicTable from "../Tables/BasicTable";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { useGetProductsQuery } from "../../features/Product/productApi";
 
 const ProductsList = () => {
   const { data: products, isLoading } = useGetProductsQuery();
-
   console.log(products);
 
-  const data = useMemo(() => products?.products, [products?.products]);
+  const data = useMemo(() => productData, []);
   const columns = [
     {
       header: "",

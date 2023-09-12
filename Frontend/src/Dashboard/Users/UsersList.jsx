@@ -4,8 +4,12 @@ import BasicTable from "../Tables/BasicTable";
 import { useMemo } from "react";
 import userData from "./userData.json";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
+import { useGetUsersQuery } from "../../features/User/userApi";
 
 const UsersList = () => {
+  const { data: users } = useGetUsersQuery();
+  console.log(users);
+
   const data = useMemo(() => userData, []);
 
   const columns = [

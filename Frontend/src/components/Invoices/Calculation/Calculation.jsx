@@ -7,6 +7,7 @@ import {
   getTotalPrice,
   resetState,
 } from "../../../features/Invoice/InvoiceSlice";
+import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 
 const Calculation = () => {
   const store = useSelector((state) => state.invoice);
@@ -18,7 +19,12 @@ const Calculation = () => {
   const [shippingCost, setShippingCost] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  let totalItemsPrice = items?.map((item) => parseInt(item?.price) * item?.quantity);
+  let totalItemsPrice = items?.map(
+    (item) => parseInt(item?.price) * item?.quantity
+  );
+
+  // redux
+  const [newInvoice, { data }] = useNewInvoiceMutation();
 
   useEffect(() => {
     setSubTotalPrice(totalItemsPrice?.reduce((prev, cur) => prev + cur, 0));
@@ -37,6 +43,11 @@ const Calculation = () => {
     dispatch(getTotalPrice(calculation));
   }, [subTotalPrice, discountPrice, shippingCost, totalPrice, dispatch]);
 
+  const handleNewInvoice = (data) => {
+    console.log(data);
+    newInvoice(data);
+  };
+
   const handleDiscountPrice = (event) => {
     const { value } = event.target;
     setDiscountPrice(Number(value));
@@ -51,7 +62,7 @@ const Calculation = () => {
     dispatch(resetState());
     window.location.reload(false);
   };
-
+  console.log(data);
   return (
     <div className="my-5">
       <h2 className="text-2xl font-bold mb-3">Calculations</h2>
@@ -100,9 +111,7 @@ const Calculation = () => {
       <div className="flex justify-center mt-10">
         <div className="btn-group border btn-group-vertical lg:btn-group-horizontal">
           <button
-            onClick={() => {
-              console.log(store);
-            }}
+            onClick={() => handleNewInvoice(store)}
             className="btn btn-success text-white"
           >
             <AiOutlineSave /> Save
