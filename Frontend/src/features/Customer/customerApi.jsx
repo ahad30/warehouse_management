@@ -1,7 +1,5 @@
-import { useToken } from "../../utils/hooks/useToken";
+import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
-
-const token = useToken();
 
 const customerApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -9,21 +7,39 @@ const customerApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
         body: data,
       }),
     }),
     getCustomers: build.query({
       query: () => ({
+        // url: "/customers",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
+      }),
+    }),
+    updateCustomer: build.mutation({
+      query: ({ id, customerData }) => ({
+        method: "PUT",
+        url: `/posts/${id}`,
+        headers: headers,
+        body: customerData,
+      }),
+    }),
+    deleteCustomer: build.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        // url: `/customers/delete/${id}`,
+        url: `/posts/${id}`,
+        headers: headers,
       }),
     }),
   }),
 });
 
-export const { useAddCustomerMutation, useGetCustomersQuery } = customerApi;
+export const {
+  useAddCustomerMutation,
+  useGetCustomersQuery,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,
+} = customerApi;

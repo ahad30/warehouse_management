@@ -1,7 +1,5 @@
-import { useToken } from "../../utils/hooks/useToken";
+import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
-
-const token = useToken();
 
 const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,21 +9,47 @@ const productApi = apiSlice.injectEndpoints({
         // url: "/products/store",
         url: "/posts",
         body: data,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
       }),
     }),
     getProducts: builder.query({
       query: () => ({
         // url: "/products",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
+      }),
+    }),
+    getProduct: builder.query({
+      query: (id) => ({
+        // url: `/products/edit/${id}`,
+        url: `/posts/${id}`,
+        headers: headers,
+      }),
+    }),
+    updateProduct: builder.mutation({
+      query: ({ id, productData }) => ({
+        method: "PUT",
+        // url: `/products/update/${id}`,
+        url: `/posts/${id}`,
+        headers: headers,
+        body: productData,
+      }),
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        headers: headers,
+        // url: `/products/delete/${id}`,
+        url: `/posts/${id}`,
       }),
     }),
   }),
 });
 
-export const { useAddProductMutation, useGetProductsQuery } = productApi;
+export const {
+  useAddProductMutation,
+  useGetProductsQuery,
+  useGetProductQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} = productApi;

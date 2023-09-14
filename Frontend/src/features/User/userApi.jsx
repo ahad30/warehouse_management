@@ -1,7 +1,5 @@
-import { useToken } from "../../utils/hooks/useToken";
+import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
-
-const token = useToken();
 
 const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,22 +8,39 @@ const userApi = apiSlice.injectEndpoints({
         method: "POST",
         // url: "/register",
         url: "/posts",
+        headers: headers,
         body: data,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
     getUsers: builder.query({
       query: () => ({
         // url: "/users",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
+      }),
+    }),
+    updateUser: builder.mutation({
+      query: ({ id, userData }) => ({
+        method: "PUT",
+        // url: "/users",
+        url: `/posts/${id}`,
+        headers: headers,
+        body: userData,
+      }),
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        headers: headers,
+        url: `/posts/${id}`,
       }),
     }),
   }),
 });
 
-export const { useAddUserMutation, useGetUsersQuery } = userApi;
+export const {
+  useAddUserMutation,
+  useGetUsersQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = userApi;

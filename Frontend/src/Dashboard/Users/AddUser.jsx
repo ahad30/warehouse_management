@@ -107,8 +107,11 @@ const AddUser = () => {
               >
                 <option value={""}>Select Role</option>
                 <option value={"admin"}>Admin</option>
-                <option value={"officer"}>Officer</option>
+                <option value={"accountant"}>Accountant</option>
                 <option value={"manager"}>Manager</option>
+                <option value={"sales_representative"}>
+                  Sales Representative
+                </option>
               </select>
             </label>
             <label className="input-group">
