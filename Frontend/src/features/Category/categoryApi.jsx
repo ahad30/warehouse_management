@@ -1,7 +1,5 @@
-import { useToken } from "../../utils/hooks/useToken";
+import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
-
-const token = useToken();
 
 const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,9 +8,7 @@ const categoryApi = apiSlice.injectEndpoints({
         method: "POST",
         // url: "/categories/store",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
         body: data,
       }),
     }),
@@ -20,9 +16,7 @@ const categoryApi = apiSlice.injectEndpoints({
       query: () => ({
         // url: "/categories",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
       }),
     }),
   }),

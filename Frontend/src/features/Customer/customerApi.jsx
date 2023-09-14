@@ -1,7 +1,5 @@
-import { useToken } from "../../utils/hooks/useToken";
+import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
-
-const token = useToken();
 
 const customerApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -9,18 +7,14 @@ const customerApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
         body: data,
       }),
     }),
     getCustomers: build.query({
       query: () => ({
         url: "/posts",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
       }),
     }),
   }),
