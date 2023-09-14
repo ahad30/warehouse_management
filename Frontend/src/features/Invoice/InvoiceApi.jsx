@@ -2,8 +2,8 @@ import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
 
 const invoiceApi = apiSlice.injectEndpoints({
-  endpoints: (build) => ({
-    newInvoice: build.mutation({
+  endpoints: (builder) => ({
+    newInvoice: builder.mutation({
       query: (data) => ({
         method: "POST",
         url: "/posts",
@@ -11,10 +11,36 @@ const invoiceApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    getInvoices: build.query({
+    getInvoices: builder.query({
       query: () => ({
+        // url: "/invoice/list",
         url: "/posts",
         headers: headers,
+      }),
+    }),
+
+    getInvoice: builder.query({
+      query: (id) => ({
+        headers: headers,
+        // url: `/categories/edit/${id}`,
+        url: `/posts/${id}`,
+      }),
+    }),
+    updateInvoice: builder.mutation({
+      query: ({ id, invoiceData }) => ({
+        method: "PUT",
+        headers: headers,
+        // url: `/categories/update/${id}`,
+        url: `/posts/${id}`,
+        body: invoiceData,
+      }),
+    }),
+    deleteInvoice: builder.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        headers: headers,
+        // url: `/categories/delete/${id}`,
+        url: `/posts/${id}`,
       }),
     }),
   }),

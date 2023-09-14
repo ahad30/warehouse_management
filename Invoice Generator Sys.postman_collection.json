@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5558362e-4edf-42eb-aa46-9dae1282cddb",
+		"_postman_id": "f0a8f290-c77a-44f3-8708-14c690f8fabf",
 		"name": "Invoice Generator Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28541532"
+		"_exporter_id": "29375609"
 	},
 	"item": [
 		{
@@ -34,7 +34,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/register?name=zabir&email=zabir2@gmail.com&password=password&password_confirmation=password&address=fsdgfsdfd&role=admin&status=active&phone=9872379879823&city=sadhgjh&country=asdassd",
+							"raw": "http://127.0.0.1:8000/api/register?name=Manager 1&email=manager1@gmail.com&password=password&password_confirmation=password&address=Chittagong&role=manager&status=active&phone=0123456789&city=Chittagong&country=Bangladesh",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -50,11 +50,11 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "zabir"
+									"value": "Manager 1"
 								},
 								{
 									"key": "email",
-									"value": "zabir2@gmail.com"
+									"value": "manager1@gmail.com"
 								},
 								{
 									"key": "password",
@@ -66,11 +66,11 @@
 								},
 								{
 									"key": "address",
-									"value": "fsdgfsdfd"
+									"value": "Chittagong"
 								},
 								{
 									"key": "role",
-									"value": "admin"
+									"value": "manager"
 								},
 								{
 									"key": "status",
@@ -78,15 +78,15 @@
 								},
 								{
 									"key": "phone",
-									"value": "9872379879823"
+									"value": "0123456789"
 								},
 								{
 									"key": "city",
-									"value": "sadhgjh"
+									"value": "Chittagong"
 								},
 								{
 									"key": "country",
-									"value": "asdassd"
+									"value": "Bangladesh"
 								}
 							]
 						}
@@ -103,7 +103,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/login?email=admin@gmail.com&password=11112222",
+							"raw": "http://localhost:8000/api/login?email=admin@gmail.com&password=password",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -120,7 +120,7 @@
 								},
 								{
 									"key": "password",
-									"value": "11112222"
+									"value": "password"
 								}
 							]
 						}
@@ -140,7 +140,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "26|laravel_sanctum_MU7Dw3U3fKW5GD1iwtzQXvppDbA5Fz0snHRxkzaM1d5f0899",
+									"value": "37|laravel_sanctum_DtBvsZGl7El6XnE2PLGNyYSYpFDoalM4z5yUZ7Zof11152ac",
 									"type": "string"
 								}
 							]
@@ -173,7 +173,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_mId3C08dQDnW7fGhxqbM5kwwiYb2Ng769uTgCZr99f8095bd",
+									"value": "37|laravel_sanctum_DtBvsZGl7El6XnE2PLGNyYSYpFDoalM4z5yUZ7Zof11152ac",
 									"type": "string"
 								}
 							]
@@ -226,7 +226,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_mId3C08dQDnW7fGhxqbM5kwwiYb2Ng769uTgCZr99f8095bd",
+									"value": "38|laravel_sanctum_Y39KEsLckhjQvS8U0VJzpAixtbNnSAkzaYTlsgnR55ef3596",
 									"type": "string"
 								}
 							]
@@ -261,15 +261,24 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_mId3C08dQDnW7fGhxqbM5kwwiYb2Ng769uTgCZr99f8095bd",
+									"value": "37|laravel_sanctum_DtBvsZGl7El6XnE2PLGNyYSYpFDoalM4z5yUZ7Zof11152ac",
 									"type": "string"
 								}
 							]
 						},
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_name\": \"Category 7\",\r\n    \"description\": \"Electronics 6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/update/1?category_name=Electronics&description=Electronics",
+							"raw": "http://127.0.0.1:8000/api/categories/update/6",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -282,16 +291,18 @@
 								"api",
 								"categories",
 								"update",
-								"1"
+								"6"
 							],
 							"query": [
 								{
 									"key": "category_name",
-									"value": "Electronics"
+									"value": "Electronics",
+									"disabled": true
 								},
 								{
 									"key": "description",
-									"value": "Electronics"
+									"value": "Electronics",
+									"disabled": true
 								}
 							]
 						}
@@ -306,7 +317,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_mId3C08dQDnW7fGhxqbM5kwwiYb2Ng769uTgCZr99f8095bd",
+									"value": "37|laravel_sanctum_DtBvsZGl7El6XnE2PLGNyYSYpFDoalM4z5yUZ7Zof11152ac",
 									"type": "string"
 								}
 							]
@@ -314,7 +325,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/delete/1",
+							"raw": "http://127.0.0.1:8000/api/categories/delete/6",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -327,7 +338,7 @@
 								"api",
 								"categories",
 								"delete",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -346,7 +357,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|laravel_sanctum_KVaYX8r3CPuVfiOBbdaH6zjOBEHdEhYlDuE0NSLR9d6c3d5b",
+									"value": "34|laravel_sanctum_V94F7hWqVT6ciDC4Qg4YnTDcyGFiQgtjjz69Dubv0c9a3e1a",
 									"type": "string"
 								}
 							]
@@ -372,7 +383,7 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/api/products/create",
+					"name": "Get Categories",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -877,7 +888,7 @@
 					"response": []
 				},
 				{
-					"name": "Create invoice",
+					"name": "Get Invoice Infos",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1018,6 +1029,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "26|laravel_sanctum_MU7Dw3U3fKW5GD1iwtzQXvppDbA5Fz0snHRxkzaM1d5f0899"
 		}
 	]
 }
