@@ -13,11 +13,33 @@ const customerApi = apiSlice.injectEndpoints({
     }),
     getCustomers: build.query({
       query: () => ({
+        // url: "/customers",
         url: "/posts",
+        headers: headers,
+      }),
+    }),
+    updateCustomer: build.mutation({
+      query: ({ id, customerData }) => ({
+        method: "PUT",
+        url: `/posts/${id}`,
+        headers: headers,
+        body: customerData,
+      }),
+    }),
+    deleteCustomer: build.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        // url: `/customers/delete/${id}`,
+        url: `/posts/${id}`,
         headers: headers,
       }),
     }),
   }),
 });
 
-export const { useAddCustomerMutation, useGetCustomersQuery } = customerApi;
+export const {
+  useAddCustomerMutation,
+  useGetCustomersQuery,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,
+} = customerApi;

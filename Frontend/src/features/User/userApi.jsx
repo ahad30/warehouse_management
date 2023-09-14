@@ -32,7 +32,7 @@ const userApi = apiSlice.injectEndpoints({
       query: (id) => ({
         method: "DELETE",
         headers: headers,
-        url: `posts/${id}`,
+        url: `/posts/${id}`,
       }),
     }),
   }),
