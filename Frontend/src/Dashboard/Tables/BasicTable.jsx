@@ -46,26 +46,24 @@ const BasicTable = ({ data, columns, btnTitle, btnIcon, btnPath }) => {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  
-                    <th
-                      key={header.id}
-                      onClick={header.column.getToggleSortingHandler()}
-                    >
-                      {header.isPlaceholder ? null : (
-                        <div>
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {
-                            { asc: "🔼", desc: "🔽" }[
-                              header.column.getIsSorted() ?? null
-                            ]
-                          }
-                        </div>
-                      )}
-                    </th>
-                  
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {header.isPlaceholder ? null : (
+                      <div>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {
+                          { asc: "🔼", desc: "🔽" }[
+                            header.column.getIsSorted() ?? null
+                          ]
+                        }
+                      </div>
+                    )}
+                  </th>
                 ))}
               </tr>
             ))}
@@ -87,18 +85,16 @@ const BasicTable = ({ data, columns, btnTitle, btnIcon, btnPath }) => {
             {table.getFooterGroups().map((footerGroup) => (
               <tr key={footerGroup.id}>
                 {footerGroup.headers.map((footer) => (
-                  <>
-                    <th key={footer.id}>
-                      {footer.isPlaceholder ? null : (
-                        <div>
-                          {flexRender(
-                            footer.column.columnDef.footer,
-                            footer.getContext()
-                          )}
-                        </div>
-                      )}
-                    </th>
-                  </>
+                  <th key={footer.id}>
+                    {footer.isPlaceholder ? null : (
+                      <div>
+                        {flexRender(
+                          footer.column.columnDef.footer,
+                          footer.getContext()
+                        )}
+                      </div>
+                    )}
+                  </th>
                 ))}
               </tr>
             ))}
