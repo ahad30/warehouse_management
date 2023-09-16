@@ -10,13 +10,13 @@ use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     // index
-    public function index()
-    {
+    public function index(Request $request)
+    {               
         $categories = Category::orderBy('id', 'DESC')->get();
 
-        if($categories->count() >= 0){            
+        if($categories->count() > 0){            
             return response()->json([
-                'success' => $categories
+                'categories' => $categories,
             ]);
         }else{
             return response()->json([
@@ -28,19 +28,18 @@ class CategoryController extends Controller
     // store
     public function store(Request $request)
     {
-        $validateInput = Validator::make($request->all(), 
-            [
-                'category_name' => 'required|string|max:255',
-                'description' => 'nullable',
-            ]);
-
-            if($validateInput->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateInput->errors()
-                ], 401);
-            }
+        $validateInput = Validator::make($request->all(), [
+            'category_name' => 'required|string|max:255',
+            'description' => 'nullable',            
+        ]);
+            
+        if($validateInput->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validateInput->errors()
+            ], 401);
+        }
 
         $categoryexist = Category::where('slug', Str::slug($request->category_name))->first();
         if($categoryexist){
@@ -54,9 +53,12 @@ class CategoryController extends Controller
                 'slug' => Str::slug($request->category_name),
                 'description' => $request->description
             ]);
+
+            $category = Category::latest()->first();
             
             return response()->json([
-                'success' => 'Category Successfully Created'
+                'success' => 'Category Successfully Created',
+                'category' => $category
             ], 201);
         }
     }
@@ -68,7 +70,7 @@ class CategoryController extends Controller
 
         if($category){            
             return response()->json([
-                'success' => $category,
+                'category' => $category,
             ], 201);
         }else{
             return response()->json([
@@ -117,6 +119,7 @@ class CategoryController extends Controller
     public function distroy($id)
     {
         $category = Category::find($id);
+
         if ($category) {
             $category->delete();
 

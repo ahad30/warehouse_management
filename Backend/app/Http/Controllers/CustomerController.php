@@ -9,26 +9,33 @@ class CustomerController extends Controller
 {
     // index
     public function index(){
-        $customers = Customer::latest()->get();
+        $customers = Customer::orderBy('id', 'DESC')->get();
 
-        return response()->json([
-            'customers' => $customers,
-        ]);
+        if($customers->count() > 0){            
+            return response()->json([
+                'customers' => $customers,
+            ]);
+        }else{
+            return response()->json([
+                'errors' => 'No Item Found',
+            ]);
+        }
+
     }
 
     // distroy
     public function distroy($id){
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::find($id);
 
         if ($customer) {
             $customer->delete();
 
             return response()->json([
-                'customer' => "customer successfully deleted",
+                'success' => "customer successfully deleted",
             ],201);
         } else {
             return response()->json([
-                'customer' => "customer Not Found",
+                'error' => "customer Not Found",
             ],500);
         }
     }

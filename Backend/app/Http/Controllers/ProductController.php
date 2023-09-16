@@ -14,111 +14,140 @@ class ProductController extends Controller
     public function index(){
         $products = Product::orderBy('id', 'DESC')->get();
 
-        return response()->json([
-            'products' => $products
-        ]);
+        if($products->count() > 0){            
+            return response()->json([
+                'products' => $products
+            ]);
+        }else{
+            return response()->json([
+                'errors' => 'No Item Found',
+            ]);
+        }
+
     }
 
     // create
     public function create(){
         $categories = Category::all();
-        
-        return response()->json([
-            'categories' => $categories
-        ]);
+
+        if($categories->count() >= 0){            
+            return response()->json([
+                'categories' => $categories
+            ]);
+        }else{
+            return response()->json([
+                'errors' => 'No Item Found',
+            ]);
+        }
     }
 
     // store
     public function store(Request $request){
-        $codeValidation = Validator::make($request->all(),[
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => ['unique:products'],
-            'code' => ['nullable'],
-            'category_id' => ['required'],
-            'price' => ['required'],
-            'unit' => ['required'],
-            'desc' => ['nullable'],
+        $validateInput = Validator::make($request->all(), [
+            'name' => 'required', 'string', 'max:255',
+            'code' => 'nullable',
+            'category_id' => 'required',
+            'price' => 'required',
+            'unit' => 'required',
+            'desc' => 'nullable',
         ]);
-
-        if($codeValidation->fails())
-        {
+            
+        if($validateInput->fails()){
             return response()->json([
-                'errors'=> $codeValidation->errors()
-            ],500);
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validateInput->errors()
+            ], 401);
         }
 
-        Product::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'code' => $request->code,
-            'category_id' => $request->category_id,
-            'price' => $request->price,
-            'unit' => $request->unit,
-            'desc' => $request->desc,
-        ]);
-
-        return response()->json([
-            'success' => 'New product successfully created'
-        ]);
+        $productexist = Product::where('slug', Str::slug($request->name))->first();
+        if($productexist){
+            return response()->json([
+                'message' => 'validation error',
+                'errors' => 'Product Already Exist',
+            ], 401);
+        }else{            
+            Product::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+                'code' => $request->code,
+                'category_id' => $request->category_id,
+                'price' => $request->price,
+                'unit' => $request->unit,
+                'desc' => $request->desc,
+            ]);
+            $product = Product::latest()->first();
+            return response()->json([
+                'success' => 'New product successfully created',
+                'product' => $product
+            ]);
+        }
     }
 
     // edit
     public function edit($id){
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $product = Product::find($id);
+        
+        if($product){     
+            $categories = Category::all();
 
-        return response()->json([
-            'product' => $product,
-            'categories' => $categories,
-        ]);
+            return response()->json([
+                'product' => $product,
+                'categories' => $categories,
+            ], 201);
+        }else{
+            return response()->json([
+                'error' => 'Product Not Found',
+            ], 500);
+        }
     }
 
     // update
-    public function update(Request $request, $id){
+    public function update(Request $request, $id){        
+        $product = Product::find($id);
 
-        if(Product::where('id',$id)->count()==0)
-        {
+        if($product){
+            $validateInput = Validator::make($request->all(), [
+                'name' => 'required', 'string', 'max:255',
+                'code' => 'nullable',
+                'category_id' => 'required',
+                'price' => 'required',
+                'unit' => 'required',
+                'desc' => 'nullable',
+            ]);
+                
+            if($validateInput->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateInput->errors()
+                ], 401);
+            }
+
+            $product->update([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+                'code' => $request->code,
+                'category_id' => $request->category_id,
+                'price' => $request->price,
+                'unit' => $request->unit,
+                'desc' => $request->desc,
+            ]);
+
             return response()->json([
-                'errors'=> 'Product not exist'
-            ],404);
-        }
-        
-        $product = Product::findOrFail($id);
-
-        $codeValidation = Validator::make($request->all(),[
-            'name' => ['required', 'string', 'max:255'],
-            'code' => ['nullable'],
-            'category_id' => ['required'],
-            'price' => ['required'],
-            'unit' => ['required'],
-            'desc' => ['nullable'],
-        ]);
-
-        if($codeValidation->fails())
-        {
+                'success' => 'Product detail successfully updated',
+                'product' => $product,
+            ], 201);
+        }else{
             return response()->json([
-                'errors'=> $codeValidation->errors()
-            ],500);
+                'error' => 'Product Not Found',
+            ], 500);
         }
-
-        $product->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'code' => $request->code,
-            'category_id' => $request->category_id,
-            'price' => $request->price,
-            'unit' => $request->unit,
-            'desc' => $request->desc,
-        ]);
-
-        return response()->json([
-            'success' => 'Product detail successfully updated'
-        ]);
     }
 
     // distroy 
     public function distroy($id){
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
 
         if($product){
             $product->delete();
