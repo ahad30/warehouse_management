@@ -11,6 +11,10 @@ const CategoriesList = () => {
 
   const data = useMemo(() => categories?.success, [categories?.success]);
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   const columns = [
     {
       header: "",
@@ -38,10 +42,6 @@ const CategoriesList = () => {
       footer: "",
     },
   ];
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <>

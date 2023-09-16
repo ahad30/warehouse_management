@@ -6,16 +6,16 @@ const productApi = apiSlice.injectEndpoints({
     addProduct: builder.mutation({
       query: (data) => ({
         method: "POST",
-        // url: "/products/store",
-        url: "/posts",
+        url: "/products/store",
+        // url: "/posts",
         body: data,
         headers: headers,
       }),
     }),
     getProducts: builder.query({
       query: () => ({
-        // url: "/products",
-        url: "/posts",
+        url: "/products",
+        // url: "/posts",
         headers: headers,
       }),
     }),

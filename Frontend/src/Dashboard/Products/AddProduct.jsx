@@ -6,7 +6,8 @@ import { useAddProductMutation } from "../../features/Product/productApi";
 
 const AddProduct = () => {
   const { register, handleSubmit } = useForm();
-  const [addProduct, { isLoading, error, isSuccess }] = useAddProductMutation();
+  const [addProduct, { isLoading, error, isSuccess, data }] =
+    useAddProductMutation();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -15,6 +16,7 @@ const AddProduct = () => {
 
   console.log("error", error);
   console.log("isSuccess", isSuccess);
+  console.log("data", data);
 
   return (
     <DashboardBackground>
