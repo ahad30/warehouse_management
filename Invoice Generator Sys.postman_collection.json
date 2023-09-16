@@ -170,7 +170,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "37|laravel_sanctum_DtBvsZGl7El6XnE2PLGNyYSYpFDoalM4z5yUZ7Zof11152ac",
+									"value": "1|laravel_sanctum_6pn6EAs2KQOFcjP2jXnB4AQVRrziItAb8A8VxJtu453b6014",
 									"type": "string"
 								}
 							]
@@ -203,7 +203,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "37|laravel_sanctum_DtBvsZGl7El6XnE2PLGNyYSYpFDoalM4z5yUZ7Zof11152ac",
+									"value": "1|laravel_sanctum_6pn6EAs2KQOFcjP2jXnB4AQVRrziItAb8A8VxJtu453b6014",
 									"type": "string"
 								}
 							]
@@ -212,7 +212,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"category_name\": \"Techno\",\r\n    \"description\": \"Techno\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -220,7 +220,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/store?category_name=Mobile&description=Mobile",
+							"raw": "http://127.0.0.1:8000/api/categories/store",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -233,16 +233,6 @@
 								"api",
 								"categories",
 								"store"
-							],
-							"query": [
-								{
-									"key": "category_name",
-									"value": "Mobile"
-								},
-								{
-									"key": "description",
-									"value": "Mobile"
-								}
 							]
 						}
 					},
