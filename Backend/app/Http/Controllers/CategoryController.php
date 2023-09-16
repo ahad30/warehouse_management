@@ -14,72 +14,103 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('id', 'DESC')->get();
 
-        return response()->json([
-            'success' => $categories
-        ]);
+        if($categories->count() >= 0){            
+            return response()->json([
+                'success' => $categories
+            ]);
+        }else{
+            return response()->json([
+                'errors' => 'No Item Found',
+            ]);
+        }
     }
 
     // store
     public function store(Request $request)
     {
-        $codeValidation = Validator::make($request->all(), [
-            'category_name' => ['required', 'string', 'max:255'],
-            'slug' => ['unique:categories'],
-            'description' => ['nullable'],
-        ]);
+        $validateInput = Validator::make($request->all(), 
+            [
+                'category_name' => 'required|string|max:255',
+                'description' => 'nullable',
+            ]);
 
-        if ($codeValidation->fails()) {
+            if($validateInput->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateInput->errors()
+                ], 401);
+            }
+
+        $categoryexist = Category::where('slug', Str::slug($request->category_name))->first();
+        if($categoryexist){
             return response()->json([
-                'errors' => $codeValidation->errors()
-            ], 500);
+                'message' => 'validation error',
+                'errors' => 'Category Already Exist',
+            ], 401);
+        }else{
+            Category::create([
+                'category_name' => $request->category_name,
+                'slug' => Str::slug($request->category_name),
+                'description' => $request->description
+            ]);
+            
+            return response()->json([
+                'success' => 'Category Successfully Created'
+            ], 201);
         }
-
-        Category::create([
-            'category_name' => $request->category_name,
-            'slug' => Str::slug($request->category_name),
-            'description' => $request->description
-        ]);
-
-        return response()->json([
-            'success' => 'Category successfully created'
-        ], 201);
     }
 
     // edit
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::find($id);
 
-        return response()->json([
-            'success' => $category
-        ], 201);
+        if($category){            
+            return response()->json([
+                'success' => $category,
+            ], 201);
+        }else{
+            return response()->json([
+                'error' => 'Category Not Found',
+            ], 500);
+        }
     }
 
     // update
     public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::find($id);
 
-        $codeValidation = Validator::make($request->all(), [
-            'category_name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable'],
-        ]);
+        if($category){            
+            $validateInput = Validator::make($request->all(), 
+            [
+                'category_name' => 'required|string|max:255',
+                'description' => 'nullable',
+            ]);
 
-        if ($codeValidation->fails()) {
+            if($validateInput->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateInput->errors()
+                ], 401);
+            }
+    
+            $category->update([
+                'category_name' => $request->category_name,
+                'slug' => Str::slug($request->category_name),
+                'description' => $request->description
+            ]);
+    
             return response()->json([
-                'errors' => $codeValidation->errors()
+                'success' => 'Category successfully updated'
+            ], 201);
+        }else{
+            return response()->json([
+                'error' => 'Category Not Found',
             ], 500);
         }
-
-        $category->update([
-            'category_name' => $request->category_name,
-            'slug' => Str::slug($request->category_name),
-            'description' => $request->description
-        ]);
-
-        return response()->json([
-            'success' => 'Category successfully updated'
-        ], 201);
     }
 
     // distroy
