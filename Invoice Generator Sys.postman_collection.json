@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f0a8f290-c77a-44f3-8708-14c690f8fabf",
+		"_postman_id": "64937fea-8db6-403c-9c11-947ed95b2b7f",
 		"name": "Invoice Generator Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29375609"
+		"_exporter_id": "28541532"
 	},
 	"item": [
 		{
@@ -122,6 +122,36 @@
 									"key": "password",
 									"value": "password"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "14|laravel_sanctum_YlmSWAuKpxSKkzVHwmnkkrhmvbdZmfKsqYlT7yjKc3d5936b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"logout"
 							]
 						}
 					},
@@ -864,7 +894,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|laravel_sanctum_ZeN43j3d9QQGldN0Xftca4idr4nec07jjgzZ4Bk04af5fe77",
+									"value": "1|laravel_sanctum_n4yz4GfGlGx6wwsh8Afn5s9NJaFN2PfQL4Btcz1K5478a94c",
 									"type": "string"
 								}
 							]
@@ -926,15 +956,24 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_JkTDYwB38G17JQk1332BDO8lRS7Ll1m0nJyrqgIV33ad2e3b",
+									"value": "1|laravel_sanctum_GuFydMNGEDS0ZO0asDNrF9ZKAF5S4NesOmG0q3W0ea6a416d",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"invoice_no\": \"73683\",\r\n    \"invoice_date\": \"12/03/2023\",\r\n    \"company_name\": \"hjksajk\",\r\n    \"company_email\": \"sgdjhsd@gmail.com\",\r\n    \"company_phone\": \"02389022121\",\r\n    \"company_address\": \"ajhgjas, ghgjgagjh, jhgjhg\",\r\n    \r\n    \"customer_name\": \"jhdhhsa\",\r\n    \"customer_email\": \"demo1@gmail.com\",\r\n    \"customer_phone\": \"0123456789\",\r\n    \"customer_address\": \"jhsikas, hghuiasg, gbasdasd\",\r\n    \"discount\": \"122\",\r\n    \"shipping\": \"12\",\r\n    \"total\": \"3234\",\r\n    \"items\": [\r\n        {\r\n            \"product_id\": \"1\",\r\n            \"name\": \"uewyu\",\r\n            \"code\": \"jshjhgsj\",\r\n            \"quantity\": \"2\",\r\n            \"rate\": \"656\",\r\n            \"unit\": \"kg\",\r\n            \"description\": \"hbsxguygasej sakghkjasd\"\r\n        },\r\n        {\r\n            \"product_id\": \"2\",\r\n            \"name\": \"uewyu\",\r\n            \"code\": \"jshjhgsj\",\r\n            \"quantity\": \"2\",\r\n            \"rate\": \"656\",\r\n            \"unit\": \"kg\",\r\n            \"description\": \"hbsxguygasej sakghkjasd\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8000/api/invoice/store?invoice_no=73683&invoice_date=12/03/2023&company_name=hjksajk&company_email=sgdjhsd@gmail.com&company_phone=02389022121&company_address=ajhgjas, ghgjgagjh, jhgjhg&customer_name=jhdhhsa&customer_email=demo1@gmail.com&customer_phone=0123456789&customer_address=jhsikas, hghuiasg, gbasdasd&discount=122&shipping=12&total=3234&name=uewyu&code=jshjhgsj&quantity=2&rate=656&unit=kg",
+							"raw": "http://localhost:8000/api/invoice/store",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -944,85 +983,6 @@
 								"api",
 								"invoice",
 								"store"
-							],
-							"query": [
-								{
-									"key": "invoice_no",
-									"value": "73683"
-								},
-								{
-									"key": "customer_id",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "invoice_date",
-									"value": "12/03/2023"
-								},
-								{
-									"key": "company_name",
-									"value": "hjksajk"
-								},
-								{
-									"key": "company_email",
-									"value": "sgdjhsd@gmail.com"
-								},
-								{
-									"key": "company_phone",
-									"value": "02389022121"
-								},
-								{
-									"key": "company_address",
-									"value": "ajhgjas, ghgjgagjh, jhgjhg"
-								},
-								{
-									"key": "customer_name",
-									"value": "jhdhhsa"
-								},
-								{
-									"key": "customer_email",
-									"value": "demo1@gmail.com"
-								},
-								{
-									"key": "customer_phone",
-									"value": "0123456789"
-								},
-								{
-									"key": "customer_address",
-									"value": "jhsikas, hghuiasg, gbasdasd"
-								},
-								{
-									"key": "discount",
-									"value": "122"
-								},
-								{
-									"key": "shipping",
-									"value": "12"
-								},
-								{
-									"key": "total",
-									"value": "3234"
-								},
-								{
-									"key": "name",
-									"value": "uewyu"
-								},
-								{
-									"key": "code",
-									"value": "jshjhgsj"
-								},
-								{
-									"key": "quantity",
-									"value": "2"
-								},
-								{
-									"key": "rate",
-									"value": "656"
-								},
-								{
-									"key": "unit",
-									"value": "kg"
-								}
 							]
 						}
 					},
