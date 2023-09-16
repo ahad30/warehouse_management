@@ -42,6 +42,7 @@ class SaleController extends Controller
 
     // store
     public function store(Request $request){
+
         $codeValidation = Validator::make($request->all(),[
             'invoice_no' => ['unique:sales', 'required'],
             'invoice_date' => ['required'],
@@ -56,14 +57,7 @@ class SaleController extends Controller
             'discount' => ['required'],
             'shipping' => ['required'],
             'total' => ['required'],
-            'name' => ['required'],
-            'code' => ['nullable'],
-            'description' => ['nullable'],
-            'unit' => ['required'],
-            'quantity' => ['required'],
-            'rate' => ['required'],
         ]);
-
         if($codeValidation->fails())
         {
             return response()->json([
@@ -109,19 +103,23 @@ class SaleController extends Controller
             ]);
             $sale = Sale::latest()->first();
             $sale_id = $sale->id;
-            
-            for ($i=0; $i < 10; $i++) { 
-                SaleItem::create([
-                    'sale_id' => $sale_id,
-                    'name' => $request->name,
-                    'code' => $request->code,
-                    'description' => $request->description,
-                    'unit' => $request->unit,
-                    'quantity' => $request->quantity,
-                    'rate' => $request->rate,
-                ]);
+
+            $input = $request->all();
+        
+            foreach($input['items'] as $key => $value){            
+                $item['sale_id'] = $sale_id;
+                $item['product_id'] = $value['product_id'];
+                $item['name'] = $value['name']; 
+                $item['code'] = $value['code']; 
+                $item['quantity'] = $value['quantity']; 
+                $item['rate'] = $value['rate']; 
+                $item['unit'] = $value['unit']; 
+                $item['description'] = $value['description']; 
+                SaleItem::create($item);
             }
+            
             $items = SaleItem::where('sale_id', $sale_id)->get();
+            
             return response()->json([
                 'success' => 'Invoice successfully created',
                 'invoice' => $invoice,
