@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -17,45 +17,55 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): JsonResponse
     {
-        $codeValidation = Validator::make($request->all(),[
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required'],
-        ]);
+        try {
+            $validateUser = Validator::make($request->all(), 
+            [
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
 
-        if($codeValidation->fails())
-        {
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
+
+            if(!Auth::attempt($request->only(['email', 'password']))){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email & Password does not match with our record.',
+                ], 401);
+            }
+
+            $user = User::where('email', $request->email)->first();
+            $user->tokens()->delete();
+
             return response()->json([
-                'errors'=> $codeValidation->errors()
-            ],500);
+                'status' => true,
+                'message' => 'User Logged In Successfully',
+                'user' => $user,
+                'token' => $user->createToken("api-token")->plainTextToken
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
-
-        $request->authenticate();
-
-        $user = $request->user();
-
-        $user->tokens()->delete();
-
-        $token = $user->createToken('api_token');
-
-        return response()->json([
-            'success' => 'Login Successfull',
-            'user' => $user,
-            'api_token' => $token
-        ]);
-
     }
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): Response
+    public function destroy(Request $request): JsonResponse
     {
-        Auth::guard('web')->logout();
+        $request->user()->currentAccessToken()->delete();
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return response()->noContent();
+        return response()->json([
+            'success' => 'Logout Success',
+        ]);
     }
 }
