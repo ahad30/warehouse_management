@@ -10,20 +10,23 @@ const AddCategory = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const [addCategory, { error, isLoading, isSuccess }] =
+  const [addCategory, { isLoading, isError, error, isSuccess, data }] =
     useAddCategoryMutation();
 
   const onSubmit = async (data) => {
+    console.log(data);
     addCategory(data);
   };
 
-  if (error) {
-    toast.error("Couldn't Category created", { id: 1 });
-    console.log(error);
+  console.log(isLoading, isError, error, isSuccess, data);
+
+  if (isError) {
+    toast.error(error.status, { id: 1 });
+    return navigate("/dashboard/category");
   }
 
-  if (isSuccess) {
-    toast.success("Category added Successfully", { id: 1 });
+  if (isSuccess && data?.status) {
+    toast.success(data?.message, { id: 1 });
     return navigate("/dashboard/category");
   }
 

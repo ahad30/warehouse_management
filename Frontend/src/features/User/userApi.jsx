@@ -6,25 +6,25 @@ const userApi = apiSlice.injectEndpoints({
     addUser: builder.mutation({
       query: (data) => ({
         method: "POST",
+        headers: headers,
         // url: "/register",
         url: "/posts",
-        headers: headers,
         body: data,
       }),
     }),
     getUsers: builder.query({
       query: () => ({
+        headers: headers,
         // url: "/users",
         url: "/posts",
-        headers: headers,
       }),
     }),
     updateUser: builder.mutation({
       query: ({ id, userData }) => ({
         method: "PUT",
+        headers: headers,
         // url: "/users",
         url: `/posts/${id}`,
-        headers: headers,
         body: userData,
       }),
     }),

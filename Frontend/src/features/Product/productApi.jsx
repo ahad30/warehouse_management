@@ -6,32 +6,32 @@ const productApi = apiSlice.injectEndpoints({
     addProduct: builder.mutation({
       query: (data) => ({
         method: "POST",
+        headers: headers,
         url: "/products/store",
         // url: "/posts",
         body: data,
-        headers: headers,
       }),
     }),
     getProducts: builder.query({
       query: () => ({
+        headers: headers,
         url: "/products",
         // url: "/posts",
-        headers: headers,
       }),
     }),
     getProduct: builder.query({
       query: (id) => ({
+        headers: headers,
         // url: `/products/edit/${id}`,
         url: `/posts/${id}`,
-        headers: headers,
       }),
     }),
     updateProduct: builder.mutation({
       query: ({ id, productData }) => ({
         method: "PUT",
+        headers: headers,
         // url: `/products/update/${id}`,
         url: `/posts/${id}`,
-        headers: headers,
         body: productData,
       }),
     }),

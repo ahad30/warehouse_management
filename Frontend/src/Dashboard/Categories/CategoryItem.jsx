@@ -1,25 +1,27 @@
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import PropTypes from "prop-types";
+import PropTypes, { object } from "prop-types";
 
-const CategoryItem = ({ index }) => {
+const CategoryItem = ({ idx, category }) => {
   return (
     <tr>
-      <th>{index + 1}</th>
-      <td>Samsung</td>
-      <td>This is Samsung category</td>
+      <th>{idx + 1}</th>
+      <td>{category?.category_name}</td>
+      <td>{category?.description}</td>
       <td>
         <div className="flex items-center gap-x-3">
           <FiEdit className="cursor-pointer" size={20} />{" "}
           <RiDeleteBin4Line className="cursor-pointer" size={20} />
         </div>
       </td>
+      <th>{idx + 1}</th>
     </tr>
   );
 };
 
 CategoryItem.propTypes = {
-  index: PropTypes.string,
+  idx: PropTypes.string,
+  category: object,
 };
 
 export default CategoryItem;
