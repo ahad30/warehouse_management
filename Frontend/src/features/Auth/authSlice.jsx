@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 // WITHOUT CSRF TOKEN
 export const loginUser = createAsyncThunk(
@@ -10,37 +11,14 @@ export const loginUser = createAsyncThunk(
       { email, password }
     );
     const response = request.data;
-    console.log(response);
-    localStorage.setItem("user", JSON.stringify(response));
+
+    if (response.status) {
+      localStorage.setItem("user", JSON.stringify(response));
+      toast.success(response?.message, { id: 1 });
+    }
     return response;
   }
 );
-
-// WITH CSRF TOKEN
-/* export const loginUser = createAsyncThunk(
-  "auth/loginUser",
-  async ({ email, password }, { getState }) => {
-    const csrfToken = getState().auth.csrfToken; // Get the CSRF token from your Redux state
-    const headers = {
-      "X-CSRF-TOKEN": csrfToken,
-      "X-Requested-With": "XMLHttpRequest",
-    };
-
-    const response = await axios.post(
-      `https://jsonplaceholder.typicode.com/posts`,
-      { email, password },
-      { headers }
-    );
-
-    const responseData = response.data;
-
-    // Perform necessary actions with the response data
-    localStorage.setItem("user", JSON.stringify(responseData));
-
-    return responseData;
-  }
-);
-*/
 
 const authSlice = createSlice({
   name: "auth",
@@ -52,7 +30,10 @@ const authSlice = createSlice({
   reducers: {
     getUser: (state) => {
       let user = JSON.parse(localStorage.getItem("user"));
-      state.user = user;
+      let token = user?.api_token;
+      if (token) {
+        state.user = user?.user;
+      }
     },
     logOut: (state) => {
       localStorage.removeItem("user");

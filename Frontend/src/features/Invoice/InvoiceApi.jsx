@@ -6,16 +6,16 @@ const invoiceApi = apiSlice.injectEndpoints({
     newInvoice: builder.mutation({
       query: (data) => ({
         method: "POST",
-        url: "/posts",
         headers: headers,
+        url: "/posts",
         body: data,
       }),
     }),
     getInvoices: builder.query({
       query: () => ({
+        headers: headers,
         // url: "/invoice/list",
         url: "/posts",
-        headers: headers,
       }),
     }),
 

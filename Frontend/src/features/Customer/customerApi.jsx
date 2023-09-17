@@ -6,32 +6,32 @@ const customerApi = apiSlice.injectEndpoints({
     addCustomer: build.mutation({
       query: (data) => ({
         method: "POST",
-        url: "/posts",
         headers: headers,
+        url: "/posts",
         body: data,
       }),
     }),
     getCustomers: build.query({
       query: () => ({
+        headers: headers,
         // url: "/customers",
         url: "/posts",
-        headers: headers,
       }),
     }),
     updateCustomer: build.mutation({
       query: ({ id, customerData }) => ({
         method: "PUT",
-        url: `/posts/${id}`,
         headers: headers,
+        url: `/posts/${id}`,
         body: customerData,
       }),
     }),
     deleteCustomer: build.mutation({
       query: (id) => ({
         method: "DELETE",
+        headers: headers,
         // url: `/customers/delete/${id}`,
         url: `/posts/${id}`,
-        headers: headers,
       }),
     }),
   }),
