@@ -5,7 +5,9 @@ import DashboardSidebar from "./DashboardSidebar";
 const DashboardLayout = () => {
   return (
     <div className="max-w-[1440px] mx-auto">
-      <Navbar />
+      <div className="sticky top-0 z-10">
+        <Navbar />
+      </div>
       <div className="drawer lg:drawer-open">
         <input
           id="dashboard-drawer"

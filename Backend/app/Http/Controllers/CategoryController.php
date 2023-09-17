@@ -11,18 +11,18 @@ class CategoryController extends Controller
 {
     // index
     public function index(Request $request)
-    {               
+    {
         $categories = Category::orderBy('id', 'DESC')->get();
 
-        if($categories->count() > 0){            
+        if ($categories->count() > 0) {
             return response()->json([
                 'status' => true,
                 'categories' => $categories,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'No Item Found',
+                'message' => 'No Item Found',
             ]);
         }
     }
@@ -32,25 +32,24 @@ class CategoryController extends Controller
     {
         $validateInput = Validator::make($request->all(), [
             'category_name' => 'required|string|max:255',
-            'description' => 'nullable',            
+            'description' => 'nullable',
         ]);
-            
-        if($validateInput->fails()){
+
+        if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
+                'message' => 'Validation error',
                 'errors' => $validateInput->errors()
             ], 401);
         }
 
         $categoryexist = Category::where('slug', Str::slug($request->category_name))->first();
-        if($categoryexist){
+        if ($categoryexist) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
-                'errors' => 'Category Already Exist',
+                'message' => 'Category Already Exist',
             ], 401);
-        }else{
+        } else {
             Category::create([
                 'category_name' => $request->category_name,
                 'slug' => Str::slug($request->category_name),
@@ -58,10 +57,10 @@ class CategoryController extends Controller
             ]);
 
             $category = Category::latest()->first();
-            
+
             return response()->json([
                 'status' => true,
-                'success' => 'Category Successfully Created',
+                'message' => 'Category Successfully Created',
                 'category' => $category
             ], 201);
         }
@@ -72,15 +71,15 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if($category){            
+        if ($category) {
             return response()->json([
                 'status' => true,
                 'category' => $category,
             ], 201);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'error' => 'Category Not Found',
+                'message' => 'Category Not Found',
             ], 500);
         }
     }
@@ -90,36 +89,38 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if($category){            
-            $validateInput = Validator::make($request->all(), 
-            [
-                'category_name' => 'required|string|max:255',
-                'description' => 'nullable',
-            ]);
+        if ($category) {
+            $validateInput = Validator::make(
+                $request->all(),
+                [
+                    'category_name' => 'required|string|max:255',
+                    'description' => 'nullable',
+                ]
+            );
 
-            if($validateInput->fails()){
+            if ($validateInput->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
                     'errors' => $validateInput->errors()
                 ], 401);
             }
-    
+
             $category->update([
                 'category_name' => $request->category_name,
                 'slug' => Str::slug($request->category_name),
                 'description' => $request->description
             ]);
-    
+
             return response()->json([
                 'status' => true,
-                'success' => 'Category successfully updated',
+                'message' => 'Category successfully updated',
                 'category' => $category,
             ], 201);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'error' => 'Category Not Found',
+                'message' => 'Category Not Found',
             ], 500);
         }
     }
@@ -134,12 +135,12 @@ class CategoryController extends Controller
 
             return response()->json([
                 'status' => true,
-                'success' => 'Category successfully deleted'
+                'message' => 'Category successfully deleted'
             ], 201);
         } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Category not found'
+                'message' => 'Category not found'
             ], 500);
         }
     }

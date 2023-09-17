@@ -7,16 +7,16 @@ const categoryApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         headers: headers,
-        // url: "/categories/store",
-        url: "/posts",
+        url: "/categories/store",
+        // url: "/posts",
         body: data,
       }),
     }),
     getCategories: builder.query({
       query: () => ({
         headers: headers,
-        // url: "/categories",
-        url: "/posts",
+        url: "/categories",
+        // url: "/posts",
       }),
     }),
     getCategory: builder.query({

@@ -10,6 +10,7 @@ export const loginUser = createAsyncThunk(
       { email, password }
     );
     const response = request.data;
+    console.log(response);
     localStorage.setItem("user", JSON.stringify(response));
     return response;
   }

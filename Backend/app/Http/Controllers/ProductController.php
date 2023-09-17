@@ -11,42 +11,44 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     // index
-    public function index(){
+    public function index()
+    {
         $products = Product::orderBy('id', 'DESC')->get();
 
-        if($products->count() > 0){            
+        if ($products->count() > 0) {
             return response()->json([
                 'status' => true,
                 'products' => $products,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'No Item Found',
+                'message' => 'No Item Found',
             ]);
         }
-
     }
 
     // create
-    public function create(){
+    public function create()
+    {
         $categories = Category::all();
 
-        if($categories->count() > 0){            
+        if ($categories->count() > 0) {
             return response()->json([
                 'status' => true,
                 'categories' => $categories,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'No Item Found',
+                'message' => 'No Item Found',
             ]);
         }
     }
 
     // store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validateInput = Validator::make($request->all(), [
             'name' => 'required', 'string', 'max:255',
             'code' => 'nullable',
@@ -55,23 +57,22 @@ class ProductController extends Controller
             'unit' => 'required',
             'desc' => 'nullable',
         ]);
-            
-        if($validateInput->fails()){
+
+        if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
+                'message' => 'Validation error!',
                 'errors' => $validateInput->errors()
             ], 401);
         }
 
         $productexist = Product::where('slug', Str::slug($request->name))->first();
-        if($productexist){
+        if ($productexist) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
-                'errors' => 'Product Already Exist',
+                'message' => 'Product Already Exist',
             ], 401);
-        }else{            
+        } else {
             Product::create([
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
@@ -84,17 +85,18 @@ class ProductController extends Controller
             $product = Product::latest()->first();
             return response()->json([
                 'status' => true,
-                'success' => 'New product successfully created',
+                'message' => 'New product successfully created',
                 'product' => $product,
             ]);
         }
     }
 
     // edit
-    public function edit($id){
+    public function edit($id)
+    {
         $product = Product::find($id);
-        
-        if($product){     
+
+        if ($product) {
             $categories = Category::all();
 
             return response()->json([
@@ -102,19 +104,20 @@ class ProductController extends Controller
                 'product' => $product,
                 'categories' => $categories,
             ], 201);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Product Not Found',
+                'message' => 'Product Not Found',
             ], 500);
         }
     }
 
     // update
-    public function update(Request $request, $id){        
+    public function update(Request $request, $id)
+    {
         $product = Product::find($id);
 
-        if($product){
+        if ($product) {
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required', 'string', 'max:255',
                 'code' => 'nullable',
@@ -123,11 +126,11 @@ class ProductController extends Controller
                 'unit' => 'required',
                 'desc' => 'nullable',
             ]);
-                
-            if($validateInput->fails()){
+
+            if ($validateInput->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error!',
                     'errors' => $validateInput->errors()
                 ], 401);
             }
@@ -144,33 +147,34 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => true,
-                'success' => 'Product detail successfully updated',
+                'message' => 'Product Detail Successfully Updated',
                 'product' => $product,
             ], 201);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Product Not Found',
+                'message' => 'Product Not Found',
             ], 500);
         }
     }
 
     // distroy 
-    public function distroy($id){
+    public function distroy($id)
+    {
         $product = Product::find($id);
 
-        if($product){
+        if ($product) {
             $product->delete();
 
             return response()->json([
                 'status' => true,
-                'success'=> 'Product successfully deleted'
-            ],201);
-        }else{
+                'message' => 'Product Successfully Deleted'
+            ], 201);
+        } else {
             return response()->json([
                 'status' => false,
-                'errors'=> 'Product not found'
-            ],500);
+                'message' => 'Product not found'
+            ], 500);
         }
     }
 }

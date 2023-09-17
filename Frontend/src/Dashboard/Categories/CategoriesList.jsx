@@ -1,6 +1,6 @@
 import { BiSolidDuplicate } from "react-icons/bi";
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
-import categoriesData from "./categoriesData.json";
+// import categoriesData from "./categoriesData.json";
 import { useMemo } from "react";
 import BasicTable from "../Tables/BasicTable";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
@@ -8,9 +8,12 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 
 const CategoriesList = () => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
-  console.log(categories);
 
-  const data = useMemo(() => categoriesData, []);
+  const data = useMemo(() => categories?.success, [categories?.success]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   const columns = [
     {
@@ -33,11 +36,12 @@ const CategoriesList = () => {
       accessorKey: "",
       footer: "Actions",
     },
+    {
+      header: "",
+      accessorKey: "id",
+      footer: "",
+    },
   ];
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <>

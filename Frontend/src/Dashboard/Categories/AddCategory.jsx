@@ -10,7 +10,7 @@ const AddCategory = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const [addCategory, { error, isLoading, isSuccess, data }] =
+  const [addCategory, { error, isLoading, isSuccess }] =
     useAddCategoryMutation();
 
   const onSubmit = async (data) => {
@@ -26,8 +26,6 @@ const AddCategory = () => {
     toast.success("Category added Successfully", { id: 1 });
     return navigate("/dashboard/category");
   }
-
-  console.log(data);
 
   return (
     <DashboardBackground>
