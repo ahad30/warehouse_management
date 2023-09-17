@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
                 'status' => true,
                 'message' => 'User Logged In Successfully',
                 'user' => $user,
-                'token' => $user->createToken("api-token")->plainTextToken
+                'api_token' => $user->createToken("api_token")->plainTextToken
             ], 200);
 
         } catch (\Throwable $th) {

@@ -32,10 +32,10 @@ class CompanyInfoController extends Controller
 
         if ($company_info) {
             $codeValidation = Validator::make($request->all(),[
-                'company_name' => ['required'],
-                'company_email' =>['required', 'email'],
-                'company_phone' => ['required'],
-                'company_address' => ['required'],
+                'company_name' => 'required',
+                'company_email' =>'required', 'email',
+                'company_phone' => 'required',
+                'company_address' => 'required',
             ]);
     
             if($codeValidation->fails())
