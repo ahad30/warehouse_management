@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function create(){
         $categories = Category::all();
 
-        if($categories->count() >= 0){            
+        if($categories->count() > 0){            
             return response()->json([
                 'categories' => $categories
             ]);
