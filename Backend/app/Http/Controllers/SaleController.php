@@ -9,7 +9,7 @@ use App\Models\Sale;
 use App\Models\SaleItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Str;
 
 class SaleController extends Controller
 {
@@ -19,10 +19,12 @@ class SaleController extends Controller
 
         if ($invoices->count() <= 0){
             return response()->json([
-                'error' => 'No item found',
+                'status' => false,
+                'errors' => 'No item found',
             ]);
         }else{            
             return response()->json([
+                'status' => true,
                 'invoices' => $invoices,
             ]);
         }
@@ -35,16 +37,18 @@ class SaleController extends Controller
         $products = Product::all();
 
         return response()->json([
-            'company_info' => $company_info,
-            'customers' => $customers,
-            'products' => $products,
+            'status' => true,
+            'data' => [
+                'company_info' => $company_info,
+                'customers' => $customers,
+                'products' => $products,
+            ],
         ]);
     }
 
     // store
     public function store(Request $request){
         $codeValidation = Validator::make($request->all(),[
-            'invoice_no' => 'unique:sales|required',
             'invoice_date' => 'required',
             'company_name' => 'string|nullable',
             'company_email' => 'nullable|email',
@@ -87,7 +91,7 @@ class SaleController extends Controller
             }
 
             $prefix = "#INV-";
-            $invoice_no = IdGenerator::generate(['table' => 'invoices', 'length' => 9, 'prefix' =>$prefix]);
+            $invoice_no = $prefix.$customer->id.Str::random(3);
             Sale::create([
                 'invoice_no' => $invoice_no,
                 'invoice_date' => $request->invoice_date,
@@ -106,7 +110,6 @@ class SaleController extends Controller
             ]);
             $sale = Sale::latest()->first();
             $sale_id = $sale->id;
-
             $input = $request->all();        
             foreach($input['items'] as $key => $value){            
                 $item['sale_id'] = $sale_id;
@@ -123,9 +126,12 @@ class SaleController extends Controller
             $items = SaleItem::where('sale_id', $sale_id)->get();
             
             return response()->json([
+                'status' => true,
                 'success' => 'Invoice successfully created',
-                'invoice' => $sale,
-                'items' => $items,
+                'data' => [
+                    'invoice' => $sale,
+                    'items' => $items,
+                ]
             ]);
         }
     }

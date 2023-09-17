@@ -14,11 +14,13 @@ class CompanyInfoController extends Controller
 
         if($company_info){
             return response()->json([
+                'status' => true,
                 'company_info' => $company_info,
             ]);
         }else{
             return response()->json([
-                'error' => 'Company Information Not Found',
+                'status' => false,
+                'errors' => 'Company Information Not Found',
             ]);
         }
         
@@ -30,11 +32,13 @@ class CompanyInfoController extends Controller
 
         if($company_info){
             return response()->json([
+                'status' => true,
                 'company_info' => $company_info,
             ]);
         }else{
             return response()->json([
-                'error' => 'Company Information Not Found',
+                'status' => false,
+                'errors' => 'Company Information Not Found',
             ]);
         }
     }
@@ -55,6 +59,7 @@ class CompanyInfoController extends Controller
             {
                 return response()->json([
                     'status' => false,
+                    'errors' => 'Validation errors',
                     'errors'=> $codeValidation->errors(),
                 ],500);
             }
@@ -67,8 +72,14 @@ class CompanyInfoController extends Controller
             ]);
 
             return response()->json([
+                'status' => true,
                 'success' => "Company Info successfully updated",
                 'company_info' => $company_info,
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => "Company Information Not Found",
             ]);
         }
     }

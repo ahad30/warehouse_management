@@ -14,10 +14,12 @@ class CustomerController extends Controller
 
         if($customers->count() > 0){            
             return response()->json([
+                'status' => true,
                 'customers' => $customers,
             ]);
         }else{
             return response()->json([
+                'status' => false,
                 'errors' => 'No Item Found',
             ]);
         }
@@ -46,6 +48,7 @@ class CustomerController extends Controller
         $customerexist = Customer::where('phone', $request->phone)->orWhere('email', $request->email)->first();
         if($customerexist){
             return response()->json([
+                'status' => false,
                 'message' => 'validation error',
                 'errors' => 'Customer Already Exist',
             ], 401);
@@ -62,8 +65,9 @@ class CustomerController extends Controller
             $customer = Customer::latest()->first();
             
             return response()->json([
+                'status' => true,
                 'success' => 'Customer Successfully Created',
-                'customer' => $customer
+                'customer' => $customer,
             ], 201);
         }
     }
@@ -74,11 +78,13 @@ class CustomerController extends Controller
 
         if($customer){            
             return response()->json([
+                'status' => true,
                 'customer' => $customer,
             ], 201);
         }else{
             return response()->json([
-                'error' => 'Customer Not Found',
+                'status' => false,
+                'errors' => 'Customer Not Found',
             ], 500);
         }
     }
@@ -115,12 +121,14 @@ class CustomerController extends Controller
             ]);
 
             return response()->json([
+                'status' => true,
                 'success' => 'Customer Successfully Updated',
                 'customer' => $customer,
             ], 201);
         }else{
             return response()->json([
-                'error' => 'Customer Not Found',
+                'status' => false,
+                'errors' => 'Customer Not Found',
             ], 500);
         }
     }
@@ -134,11 +142,13 @@ class CustomerController extends Controller
             $customer->delete();
 
             return response()->json([
+                'status' => true,
                 'success' => "Customer successfully deleted",
             ],201);
         } else {
             return response()->json([
-                'error' => "Customer Not Found",
+                'status' => false,
+                'errors' => "Customer Not Found",
             ],500);
         }
     }
