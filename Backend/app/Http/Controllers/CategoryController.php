@@ -16,10 +16,12 @@ class CategoryController extends Controller
 
         if($categories->count() > 0){            
             return response()->json([
+                'status' => true,
                 'categories' => $categories,
             ]);
         }else{
             return response()->json([
+                'status' => false,
                 'errors' => 'No Item Found',
             ]);
         }
@@ -44,6 +46,7 @@ class CategoryController extends Controller
         $categoryexist = Category::where('slug', Str::slug($request->category_name))->first();
         if($categoryexist){
             return response()->json([
+                'status' => false,
                 'message' => 'validation error',
                 'errors' => 'Category Already Exist',
             ], 401);
@@ -57,6 +60,7 @@ class CategoryController extends Controller
             $category = Category::latest()->first();
             
             return response()->json([
+                'status' => true,
                 'success' => 'Category Successfully Created',
                 'category' => $category
             ], 201);
@@ -70,10 +74,12 @@ class CategoryController extends Controller
 
         if($category){            
             return response()->json([
+                'status' => true,
                 'category' => $category,
             ], 201);
         }else{
             return response()->json([
+                'status' => false,
                 'error' => 'Category Not Found',
             ], 500);
         }
@@ -106,10 +112,13 @@ class CategoryController extends Controller
             ]);
     
             return response()->json([
-                'success' => 'Category successfully updated'
+                'status' => true,
+                'success' => 'Category successfully updated',
+                'category' => $category,
             ], 201);
         }else{
             return response()->json([
+                'status' => false,
                 'error' => 'Category Not Found',
             ], 500);
         }
@@ -124,10 +133,12 @@ class CategoryController extends Controller
             $category->delete();
 
             return response()->json([
+                'status' => true,
                 'success' => 'Category successfully deleted'
             ], 201);
         } else {
             return response()->json([
+                'status' => false,
                 'errors' => 'Category not found'
             ], 500);
         }
