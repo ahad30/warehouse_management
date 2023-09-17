@@ -594,7 +594,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
 									"type": "string"
 								}
 							]
@@ -789,6 +789,128 @@
 					"response": []
 				},
 				{
+					"name": "Store Customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Morshed\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Morshedul Islam\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/update/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete customer",
 					"request": {
 						"auth": {
@@ -796,7 +918,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
+									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
 									"type": "string"
 								}
 							]
@@ -898,7 +1020,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|laravel_sanctum_GuFydMNGEDS0ZO0asDNrF9ZKAF5S4NesOmG0q3W0ea6a416d",
+									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
 									"type": "string"
 								}
 							]
