@@ -16,10 +16,12 @@ class ProductController extends Controller
 
         if($products->count() > 0){            
             return response()->json([
-                'products' => $products
+                'status' => true,
+                'products' => $products,
             ]);
         }else{
             return response()->json([
+                'status' => false,
                 'errors' => 'No Item Found',
             ]);
         }
@@ -30,12 +32,14 @@ class ProductController extends Controller
     public function create(){
         $categories = Category::all();
 
-        if($categories->count() >= 0){            
+        if($categories->count() > 0){            
             return response()->json([
-                'categories' => $categories
+                'status' => true,
+                'categories' => $categories,
             ]);
         }else{
             return response()->json([
+                'status' => false,
                 'errors' => 'No Item Found',
             ]);
         }
@@ -63,6 +67,7 @@ class ProductController extends Controller
         $productexist = Product::where('slug', Str::slug($request->name))->first();
         if($productexist){
             return response()->json([
+                'status' => false,
                 'message' => 'validation error',
                 'errors' => 'Product Already Exist',
             ], 401);
@@ -78,8 +83,9 @@ class ProductController extends Controller
             ]);
             $product = Product::latest()->first();
             return response()->json([
+                'status' => true,
                 'success' => 'New product successfully created',
-                'product' => $product
+                'product' => $product,
             ]);
         }
     }
@@ -92,12 +98,14 @@ class ProductController extends Controller
             $categories = Category::all();
 
             return response()->json([
+                'status' => true,
                 'product' => $product,
                 'categories' => $categories,
             ], 201);
         }else{
             return response()->json([
-                'error' => 'Product Not Found',
+                'status' => false,
+                'errors' => 'Product Not Found',
             ], 500);
         }
     }
@@ -135,12 +143,14 @@ class ProductController extends Controller
             ]);
 
             return response()->json([
+                'status' => true,
                 'success' => 'Product detail successfully updated',
                 'product' => $product,
             ], 201);
         }else{
             return response()->json([
-                'error' => 'Product Not Found',
+                'status' => false,
+                'errors' => 'Product Not Found',
             ], 500);
         }
     }
@@ -153,10 +163,12 @@ class ProductController extends Controller
             $product->delete();
 
             return response()->json([
+                'status' => true,
                 'success'=> 'Product successfully deleted'
             ],201);
         }else{
             return response()->json([
+                'status' => false,
                 'errors'=> 'Product not found'
             ],500);
         }

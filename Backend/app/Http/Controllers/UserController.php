@@ -11,23 +11,33 @@ class UserController extends Controller
     public function index(){
         $users = User::latest()->get();
 
-        return response()->json([
-            'users' => $users,
-        ]);
+        if ($users->count() <= 0) {
+            return response()->json([
+                'status' => false,
+                'errors' => 'No Item Found',
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'users' => $users,
+            ]);
+        }
     }
 
     // distroy
     public function distroy($id){
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
         if ($user) {
             $user->delete();
 
             return response()->json([
+                'status' => true,
                 'users' => "User successfully deleted",
             ],201);
         } else {
             return response()->json([
+                'status' => false,
                 'users' => "User Not Found",
             ],500);
         }

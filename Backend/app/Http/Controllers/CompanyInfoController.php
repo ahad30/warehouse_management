@@ -12,18 +12,35 @@ class CompanyInfoController extends Controller
     public function index(){
         $company_info = CompanyInfo::latest()->first();
 
-        return response()->json([
-            'company_info' => $company_info,
-        ]);
+        if($company_info){
+            return response()->json([
+                'status' => true,
+                'company_info' => $company_info,
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => 'Company Information Not Found',
+            ]);
+        }
+        
     }
 
     // edit
     public function edit($id){
         $company_info = CompanyInfo::find($id);
 
-        return response()->json([
-            'company_info' => $company_info,
-        ]);
+        if($company_info){
+            return response()->json([
+                'status' => true,
+                'company_info' => $company_info,
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => 'Company Information Not Found',
+            ]);
+        }
     }
 
     // update
@@ -33,7 +50,7 @@ class CompanyInfoController extends Controller
         if ($company_info) {
             $codeValidation = Validator::make($request->all(),[
                 'company_name' => 'required',
-                'company_email' =>'required', 'email',
+                'company_email' =>'required|email',
                 'company_phone' => 'required',
                 'company_address' => 'required',
             ]);
@@ -41,7 +58,9 @@ class CompanyInfoController extends Controller
             if($codeValidation->fails())
             {
                 return response()->json([
-                    'errors'=> $codeValidation->errors()
+                    'status' => false,
+                    'errors' => 'Validation errors',
+                    'errors'=> $codeValidation->errors(),
                 ],500);
             }
     
@@ -51,10 +70,16 @@ class CompanyInfoController extends Controller
                 'company_phone' => $request->company_phone,
                 'company_address' => $request->company_address,
             ]);
-    
+
             return response()->json([
+                'status' => true,
                 'success' => "Company Info successfully updated",
                 'company_info' => $company_info,
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => "Company Information Not Found",
             ]);
         }
     }

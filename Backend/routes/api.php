@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
@@ -19,7 +20,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class,'index']);
 
     Route::controller(CategoryController::class)->prefix('categories')->group(function(){        
         Route::get('/', 'index');
@@ -46,6 +54,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(CustomerController::class)->prefix('customers')->group(function(){        
         Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::get('/edit/{id}', 'edit');
+        Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 
@@ -64,8 +75,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/delete/{id}', 'distroy');
     });
 
-});
-
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
 });

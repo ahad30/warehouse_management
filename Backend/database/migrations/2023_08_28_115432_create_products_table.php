@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('code')->nullable();
-            $table->string('price')->nullable();
+            $table->float('price', 10, 2)->nullable();
             $table->string('unit')->nullable();
             $table->string('desc')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
