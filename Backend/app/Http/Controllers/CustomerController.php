@@ -9,35 +9,36 @@ use Illuminate\Support\Facades\Validator;
 class CustomerController extends Controller
 {
     // index
-    public function index(){
+    public function index()
+    {
         $customers = Customer::orderBy('id', 'DESC')->get();
 
-        if($customers->count() > 0){            
+        if ($customers->count() > 0) {
             return response()->json([
                 'status' => true,
                 'customers' => $customers,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'No Item Found',
+                'message' => 'No Item Found',
             ]);
         }
-
     }
 
     // store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validateInput = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'profile_image' => 'nullable|string|max:255',
             'phone' => 'required|max:255',
             'address' => 'required|string|max:255',
-            'notes' => 'nullable|string|max:255',           
+            'notes' => 'nullable|string|max:255',
         ]);
-            
-        if($validateInput->fails()){
+
+        if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'validation error',
@@ -46,13 +47,12 @@ class CustomerController extends Controller
         }
 
         $customerexist = Customer::where('phone', $request->phone)->orWhere('email', $request->email)->first();
-        if($customerexist){
+        if ($customerexist) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
-                'errors' => 'Customer Already Exist',
+                'message' => 'Customer Already Exist',
             ], 401);
-        }else{
+        } else {
             Customer::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -63,50 +63,52 @@ class CustomerController extends Controller
             ]);
 
             $customer = Customer::latest()->first();
-            
+
             return response()->json([
                 'status' => true,
-                'success' => 'Customer Successfully Created',
+                'message' => 'Customer Successfully Created',
                 'customer' => $customer,
             ], 201);
         }
     }
 
     // edit
-    public function edit($id){
+    public function edit($id)
+    {
         $customer = Customer::find($id);
 
-        if($customer){            
+        if ($customer) {
             return response()->json([
                 'status' => true,
                 'customer' => $customer,
             ], 201);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Customer Not Found',
+                'message' => 'Customer Not Found',
             ], 500);
         }
     }
 
     // update
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $customer = Customer::find($id);
 
-        if($customer){            
+        if ($customer) {
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'profile_image' => 'nullable|string|max:255',
                 'phone' => 'required|max:255',
                 'address' => 'required|string|max:255',
-                'notes' => 'nullable|string|max:255',           
+                'notes' => 'nullable|string|max:255',
             ]);
-                
-            if($validateInput->fails()){
+
+            if ($validateInput->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error!',
                     'errors' => $validateInput->errors()
                 ], 401);
             }
@@ -122,20 +124,21 @@ class CustomerController extends Controller
 
             return response()->json([
                 'status' => true,
-                'success' => 'Customer Successfully Updated',
+                'message' => 'Customer Successfully Updated',
                 'customer' => $customer,
             ], 201);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Customer Not Found',
+                'message' => 'Customer Not Found',
             ], 500);
         }
     }
 
 
     // distroy
-    public function distroy($id){
+    public function distroy($id)
+    {
         $customer = Customer::find($id);
 
         if ($customer) {
@@ -143,13 +146,13 @@ class CustomerController extends Controller
 
             return response()->json([
                 'status' => true,
-                'success' => "Customer successfully deleted",
-            ],201);
+                'message' => "Customer successfully deleted",
+            ], 201);
         } else {
             return response()->json([
                 'status' => false,
-                'errors' => "Customer Not Found",
-            ],500);
+                'message' => "Customer Not Found",
+            ], 500);
         }
     }
 }

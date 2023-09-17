@@ -14,15 +14,16 @@ use Illuminate\Support\Str;
 class SaleController extends Controller
 {
     // index
-    public function index(){
+    public function index()
+    {
         $invoices = Sale::latest()->get();
 
-        if ($invoices->count() <= 0){
+        if ($invoices->count() <= 0) {
             return response()->json([
                 'status' => false,
-                'errors' => 'No item found',
+                'message' => 'No item found',
             ]);
-        }else{            
+        } else {
             return response()->json([
                 'status' => true,
                 'invoices' => $invoices,
@@ -31,7 +32,8 @@ class SaleController extends Controller
     }
 
     // create
-    public function create(){
+    public function create()
+    {
         $company_info = CompanyInfo::latest()->first();
         $customers = Customer::all();
         $products = Product::all();
@@ -47,8 +49,9 @@ class SaleController extends Controller
     }
 
     // store
-    public function store(Request $request){
-        $codeValidation = Validator::make($request->all(),[
+    public function store(Request $request)
+    {
+        $codeValidation = Validator::make($request->all(), [
             'invoice_date' => 'required',
             'company_name' => 'string|nullable',
             'company_email' => 'nullable|email',
@@ -62,20 +65,20 @@ class SaleController extends Controller
             'shipping' => 'required',
             'total' => 'required',
         ]);
-        if($codeValidation->fails())        {
+        if ($codeValidation->fails()) {
             return response()->json([
                 'status' => false,
-                'errors'=> $codeValidation->errors()
-            ],500);
-        }else{
+                'errors' => $codeValidation->errors()
+            ], 500);
+        } else {
             $customer = Customer::where('phone', $request->customer_phone)->orWhere('email', $request->customer_email)->first();
-            if($customer){
+            if ($customer) {
                 $customer_id = $customer->id;
                 $customer_name = $customer->name;
                 $customer_email = $customer->email;
                 $customer_phone = $customer->phone;
                 $customer_address = $customer->address;
-            }else{
+            } else {
                 Customer::create([
                     'name' => $request->customer_name,
                     'email' => $request->customer_email,
@@ -91,7 +94,7 @@ class SaleController extends Controller
             }
 
             $prefix = "#INV-";
-            $invoice_no = $prefix.$customer->id.Str::random(3);
+            $invoice_no = $prefix . $customer->id . Str::random(3);
             Sale::create([
                 'invoice_no' => $invoice_no,
                 'invoice_date' => $request->invoice_date,
@@ -110,24 +113,24 @@ class SaleController extends Controller
             ]);
             $sale = Sale::latest()->first();
             $sale_id = $sale->id;
-            $input = $request->all();        
-            foreach($input['items'] as $key => $value){            
+            $input = $request->all();
+            foreach ($input['items'] as $key => $value) {
                 $item['sale_id'] = $sale_id;
                 $item['product_id'] = $value['product_id'];
-                $item['name'] = $value['name']; 
-                $item['code'] = $value['code']; 
-                $item['quantity'] = $value['quantity']; 
-                $item['rate'] = $value['rate']; 
-                $item['unit'] = $value['unit']; 
-                $item['description'] = $value['description']; 
+                $item['name'] = $value['name'];
+                $item['code'] = $value['code'];
+                $item['quantity'] = $value['quantity'];
+                $item['rate'] = $value['rate'];
+                $item['unit'] = $value['unit'];
+                $item['description'] = $value['description'];
                 SaleItem::create($item);
             }
-            
+
             $items = SaleItem::where('sale_id', $sale_id)->get();
-            
+
             return response()->json([
                 'status' => true,
-                'success' => 'Invoice successfully created',
+                'message' => 'Invoice successfully created',
                 'data' => [
                     'invoice' => $sale,
                     'items' => $items,

@@ -9,61 +9,62 @@ use Illuminate\Support\Facades\Validator;
 class CompanyInfoController extends Controller
 {
     // index
-    public function index(){
+    public function index()
+    {
         $company_info = CompanyInfo::latest()->first();
 
-        if($company_info){
+        if ($company_info) {
             return response()->json([
                 'status' => true,
                 'company_info' => $company_info,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Company Information Not Found',
+                'message' => 'Company Information Not Found',
             ]);
         }
-        
     }
 
     // edit
-    public function edit($id){
+    public function edit($id)
+    {
         $company_info = CompanyInfo::find($id);
 
-        if($company_info){
+        if ($company_info) {
             return response()->json([
                 'status' => true,
                 'company_info' => $company_info,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => 'Company Information Not Found',
+                'message' => 'Company Information Not Found',
             ]);
         }
     }
 
     // update
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $company_info = CompanyInfo::find($id);
 
         if ($company_info) {
-            $codeValidation = Validator::make($request->all(),[
+            $codeValidation = Validator::make($request->all(), [
                 'company_name' => 'required',
-                'company_email' =>'required|email',
+                'company_email' => 'required|email',
                 'company_phone' => 'required',
                 'company_address' => 'required',
             ]);
-    
-            if($codeValidation->fails())
-            {
+
+            if ($codeValidation->fails()) {
                 return response()->json([
                     'status' => false,
-                    'errors' => 'Validation errors',
-                    'errors'=> $codeValidation->errors(),
-                ],500);
+                    'message' => 'Validation error!',
+                    'errors' => $codeValidation->errors(),
+                ], 500);
             }
-    
+
             $company_info->update([
                 'company_name' => $request->company_name,
                 'company_email' => $request->company_email,
@@ -73,13 +74,13 @@ class CompanyInfoController extends Controller
 
             return response()->json([
                 'status' => true,
-                'success' => "Company Info successfully updated",
+                'message' => "Company Info successfully updated",
                 'company_info' => $company_info,
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
-                'errors' => "Company Information Not Found",
+                'message' => "Company Information Not Found",
             ]);
         }
     }
