@@ -5,7 +5,7 @@ export const useToken = () => {
   const token = user?.api_token?.plainTextToken;
   // console.log(token);
   if (!token) {
-    return toast.error("Your not authorized!");
+    return toast.error("Your not authorized!", {id: 1});
   }
   return token;
 };

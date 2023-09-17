@@ -20,10 +20,6 @@ import { GiSettingsKnobs } from "react-icons/gi";
 const DashboardSidebar = () => {
   const sideBarData = [
     {
-      name: "Dashboard",
-      icon: <BiGrid size={25} />,
-    },
-    {
       name: "Users",
       icon: <BiUserCircle size={25} />,
       subLinks: [
@@ -87,22 +83,22 @@ const DashboardSidebar = () => {
         },
       ],
     },
-    {
-      name: "Sales Report",
-      icon: <BsPieChartFill size={25} />,
-      subLinks: [
-        {
-          name: "Sales Report",
-          link: "/dashboard/report",
-          icon: <AiOutlineTable size={20} />,
-        },
-        {
-          name: "Sales Analytics",
-          link: "/dashboard/analytics",
-          icon: <BsPieChartFill size={20} />,
-        },
-      ],
-    },
+    // {
+    //   name: "Sales Report",
+    //   icon: <BsPieChartFill size={25} />,
+    //   subLinks: [
+    //     {
+    //       name: "Sales Report",
+    //       link: "/dashboard/report",
+    //       icon: <AiOutlineTable size={20} />,
+    //     },
+    //     {
+    //       name: "Sales Analytics",
+    //       link: "/dashboard/analytics",
+    //       icon: <BsPieChartFill size={20} />,
+    //     },
+    //   ],
+    // },
     {
       name: "Invoices",
       icon: <FaFileInvoiceDollar size={25} />,
@@ -128,24 +124,33 @@ const DashboardSidebar = () => {
           link: "/dashboard/setting/default",
           icon: <GiSettingsKnobs size={20} />,
         },
-        {
-          name: "PDF Setting",
-          link: "/dashboard/setting/pdf",
-          icon: <BsFiletypePdf size={20} />,
-        },
+        // {
+        //   name: "PDF Setting",
+        //   link: "/dashboard/setting/pdf",
+        //   icon: <BsFiletypePdf size={20} />,
+        // },
       ],
     },
   ];
 
   return (
-    <div className="bg-white">  
+    <div className="bg-white">
       <div className="join join-vertical w-[250px] min-h-screen text-base-content">
+        <span className="flex items-center gap-x-2 px-4 py-3 text-[18px] border-t-2">
+          {<BiGrid size={25} />}
+          <Link to={"/dashboard/analytics"}>{"Dashboard"}</Link>
+        </span>
+
         {sideBarData?.map((sideBar, i) => (
           <div
             key={i}
             className="collapse collapse-arrow join-item border border-base-300"
           >
-            <input type="radio" name="my-accordion-4" defaultChecked="checked" />
+            <input
+              type="radio"
+              name="my-accordion-4"
+              defaultChecked="checked"
+            />
             <div className="collapse-title text-lg font-medium uppercase">
               <span className="flex items-center gap-x-2">
                 {sideBar?.icon}

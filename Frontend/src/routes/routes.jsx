@@ -19,6 +19,7 @@ import Analytics from "../Dashboard/Report/Analytics/Analytics";
 import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
+import InvoiceA4 from "../components/InvoicePages/InvoiceA4";
 
 const routes = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const routes = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/print/a4",
+        element: <InvoiceA4 />,
       },
     ],
   },
