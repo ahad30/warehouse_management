@@ -4,6 +4,7 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { BiSolidDuplicate } from "react-icons/bi";
 import CategoryItem from "./CategoryItem";
+import { toast } from "react-hot-toast";
 
 const CategoriesList = () => {
   const { data, isLoading, isError, error, isSuccess } =
@@ -13,7 +14,7 @@ const CategoriesList = () => {
     return <p>Loading...</p>;
   }
   if (isError) {
-    return console.log(error);
+    return toast.error(error?.status || data?.message, { id: 1 });
   }
   if (isSuccess && data?.status)
     return (

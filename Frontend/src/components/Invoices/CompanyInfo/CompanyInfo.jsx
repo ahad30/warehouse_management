@@ -26,7 +26,7 @@ const CompanyInfo = () => {
   return (
     <>
       <form>
-        <h2 className="text-xl font-semibold mb-3">Company Info:</h2>
+        <h2 className="text-xl font-semibold mb-3">Billing From:</h2>
         <input
           onChange={handleInputChange}
           name="name"
