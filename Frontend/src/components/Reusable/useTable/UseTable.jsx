@@ -1,4 +1,4 @@
-import { array, func, node, string } from "prop-types";
+import { array, bool, func, node, object, string } from "prop-types";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../Inputs/SearchAndAddBtn";
@@ -8,7 +8,7 @@ const UseTable = ({
   data,
   columns,
   onDelete,
-  onEdit,
+  handleModalEditInfo,
   btnTitle,
   btnPath,
   btnIcon,
@@ -45,7 +45,7 @@ const UseTable = ({
                   <div className="flex items-center gap-x-3">
                     <FiEdit
                       onClick={() => {
-                        onEdit(row?.id);
+                        handleModalEditInfo(row);
                       }}
                       className="cursor-pointer"
                       size={20}
@@ -80,12 +80,15 @@ UseTable.propTypes = {
   data: array,
   columns: array,
   onDelete: func,
-  onEdit: func,
+  handleModalEditInfo: func,
   onSearch: func,
   btnTitle: string,
   btnPath: string,
   btnIcon: node,
   setFiltering: func,
+  modalIsOpen: bool,
+  setModalIsOpen: func,
+  editItem: object,
 };
 
 export default UseTable;

@@ -3,15 +3,17 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import {
   useDeleteProductMutation,
   useGetProductsQuery,
-  useUpdateProductMutation,
 } from "../../features/Product/productApi";
 import UseTable from "../../components/Reusable/useTable/useTable";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/useLoading";
+import EditProduct from "./EditProduct";
 
 const ProductsList = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [product, setProduct] = useState("");
   const {
     data: productsData,
     isLoading: productsIsLoading,
@@ -31,43 +33,6 @@ const ProductsList = () => {
     },
   ] = useDeleteProductMutation();
 
-  const [
-    updateProduct,
-    {
-      isLoading: updateIsLoading,
-      isError: updateIsError,
-      error: updateError,
-      isSuccess: updateIsSuccess,
-      data: updateData,
-    },
-  ] = useUpdateProductMutation();
-
-  // EDIT STARTS
-  const onEdit = (id, updatedData) => {
-    updateProduct({ id, updatedData });
-  };
-
-  useEffect(() => {
-    if (updateIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
-    if (updateIsError) {
-      toast.error(updateError?.status, { id: 1 });
-    }
-
-    if (updateIsSuccess) {
-      toast.success(updateData?.message, { id: 1 });
-    }
-  }, [
-    updateIsLoading,
-    updateIsError,
-    updateError,
-    updateIsSuccess,
-    updateData?.message,
-  ]);
-  // EDIT ENDS
-
   // DELETE STARTS
   const onDelete = (id) => {
     deleteProduct(id);
@@ -79,7 +44,7 @@ const ProductsList = () => {
     }
 
     if (deleteIsError) {
-      toast.error(deleteError?.status, { id: 1 });
+      toast.error(deleteData?.message || deleteError?.status, { id: 1 });
     }
 
     if (deleteIsSuccess) {
@@ -94,10 +59,19 @@ const ProductsList = () => {
   ]);
   // DELETE ENDS
 
+  // EDIT STARTS
+  const handleModalEditInfo = (product) => {
+    setProduct(product);
+    setModalIsOpen(true);
+    // updateProduct({ id, updatedData });
+  };
+  // EDIT ENDS
+
   // SEARCH FILTERING STARTS
   const setFiltering = (data) => {
     console.log(data);
   };
+  // SEARCH FILTERING ENDS
 
   const columns = [
     { key: "id", header: "ID" },
@@ -134,7 +108,7 @@ const ProductsList = () => {
         <UseTable
           data={productsData?.products}
           columns={columns}
-          onEdit={onEdit}
+          handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
           btnTitle={"Add Product"}
           btnPath={"/dashboard/product/add"}
@@ -153,6 +127,11 @@ const ProductsList = () => {
         </TableHeadingTitle>
         {/* Products Table */}
         {content}
+        <EditProduct
+          product={product}
+          modalIsOpen={modalIsOpen}
+          setModalIsOpen={setModalIsOpen}
+        />
       </DashboardBackground>
     </>
   );

@@ -120,7 +120,7 @@ class ProductController extends Controller
         if ($product) {
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required', 'string', 'max:255',
-                'code' => 'nullable',
+                'code' => 'required',
                 'category_id' => 'required',
                 'price' => 'required',
                 'unit' => 'required',

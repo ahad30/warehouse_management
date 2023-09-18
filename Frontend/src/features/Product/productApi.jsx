@@ -27,7 +27,7 @@ const productApi = apiSlice.injectEndpoints({
       }),
     }),
     updateProduct: builder.mutation({
-      query: ({ id, productData }) => ({
+      query: (id, productData) => ({
         method: "PUT",
         headers: headers,
         url: `/products/update/${id}`,
