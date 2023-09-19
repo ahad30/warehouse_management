@@ -2,13 +2,13 @@ import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-import { useUpdateCustomerMutation } from "../../features/Customer/customerApi";
+import { useUpdateUserMutation } from "../../features/User/userApi";
 
-const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
+const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   const [
-    updateCustomer,
+    updateUser,
     {
       isLoading: updateIsLoading,
       isError: updateIsError,
@@ -16,7 +16,7 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
       isSuccess: updateIsSuccess,
       data: updateData,
     },
-  ] = useUpdateCustomerMutation();
+  ] = useUpdateUserMutation();
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -42,18 +42,21 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
 
   // Set default values using setValue from react-hook-form
   useEffect(() => {
-    if (customer) {
-      setValue("name", customer.name || "");
-      setValue("email", customer.email || "");
-      setValue("phone", customer.phone || "");
-      setValue("address", customer.address || "");
-      setValue("notes", customer.notes || "");
+    if (user) {
+      setValue("name", user.name || "");
+      setValue("email", user.email || "");
+      setValue("phone", user.phone || "");
+      setValue("role", user.role || "");
+      setValue("status", user.status || "");
+      setValue("address", user.address || "");
+      setValue("city", user.city || "");
+      setValue("country", user.country || "");
     }
-  }, [customer, setValue]);
+  }, [user, setValue]);
 
   // const onSubmit = (data) => {
   //   console.log(data);
-  //   updateCustomer(product?.id, data);
+  //   updateUser(product?.id, data);
   // };
 
   const onSubmit = (data) => {
@@ -61,16 +64,19 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
     // Ensure all required fields have values
     if (
       !data.name ||
-      !data.code ||
-      !data.price ||
-      !data.unit ||
-      !data.category_id
+      !data.email ||
+      !data.phone ||
+      !data.role ||
+      !data.status ||
+      !data.address ||
+      !data.city ||
+      !data.country
     ) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return; // Exit early if any required field is missing
     }
 
-    updateCustomer({ id: customer?.id, data });
+    updateUser({ id: user?.id, data });
   };
 
   return modalIsOpen ? (
@@ -124,6 +130,28 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">
+                        Role<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Role"
+                        className="input input-bordered w-full"
+                        {...register("role")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Status<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Status"
+                        className="input input-bordered w-full"
+                        {...register("status")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
                         Address<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
@@ -135,13 +163,24 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">
-                        Notes<span className="text-red-500 p-0">*</span>
+                        City<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
                         type="text"
-                        placeholder="Notes"
+                        placeholder="City"
                         className="input input-bordered w-full"
-                        {...register("notes")}
+                        {...register("city")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Country<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Country"
+                        className="input input-bordered w-full"
+                        {...register("country")}
                       />
                     </label>
                   </div>
@@ -172,10 +211,10 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   );
 };
 
-EditCustomer.propTypes = {
+EditUser.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
-  customer: object,
+  user: object,
 };
 
-export default EditCustomer;
+export default EditUser;
