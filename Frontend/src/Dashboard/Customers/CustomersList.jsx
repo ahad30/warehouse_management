@@ -1,79 +1,138 @@
-import { AiOutlineUserAdd } from "react-icons/ai";
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
-import BasicTable from "../Tables/BasicTable";
-import { useMemo } from "react";
-import customerData from "./customerData.json";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 
+import UseTable from "../../components/Reusable/useTable/useTable";
+import { BiCartAdd } from "react-icons/bi";
+import { toast } from "react-hot-toast";
+import { useEffect, useState } from "react";
+import UseLoading from "../../components/Reusable/useLoading/useLoading";
+import EditCustomer from "./EditCustomer";
+import {
+  useDeleteCustomerMutation,
+  useGetCustomersQuery,
+} from "../../features/Customer/customerApi";
+
 const CustomersList = () => {
-  const data = useMemo(() => customerData, []);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [customer, setCustomer] = useState({});
+
+  const {
+    data: customersData,
+    isLoading: customersIsLoading,
+    isError: customersIsError,
+    error: customersError,
+    isSuccess: customersIsSuccess,
+  } = useGetCustomersQuery();
+
+  const [
+    deleteCustomer,
+    {
+      isLoading: deleteIsLoading,
+      isError: deleteIsError,
+      error: deleteError,
+      isSuccess: deleteIsSuccess,
+      data: deleteData,
+    },
+  ] = useDeleteCustomerMutation();
+
+  // DELETE STARTS
+  const onDelete = (id) => {
+    deleteCustomer(id);
+  };
+
+  useEffect(() => {
+    if (deleteIsLoading) {
+      toast.loading("Loading...", { id: 1 });
+    }
+
+    if (deleteIsError) {
+      toast.error(deleteData?.message || deleteError?.status, { id: 1 });
+    }
+
+    if (deleteIsSuccess) {
+      toast.success(deleteData?.message, { id: 1 });
+    }
+  }, [
+    deleteIsLoading,
+    deleteIsError,
+    deleteError,
+    deleteIsSuccess,
+    deleteData,
+  ]);
+  // DELETE ENDS
+
+  // EDIT STARTS
+  const handleModalEditInfo = (customer) => {
+    setCustomer(customer);
+    setModalIsOpen(true);
+  };
+  // EDIT ENDS
+
+  // SEARCH FILTERING STARTS
+  const setFiltering = (data) => {
+    console.log(data);
+  };
+  // SEARCH FILTERING ENDS
+
   const columns = [
-    {
-      header: "",
-      accessorKey: "id",
-      footer: "",
-    },
-    {
-      header: "Profile",
-      accessorKey: "profile",
-      footer: "Profile",
-    },
-    {
-      header: "Name",
-      accessorKey: "name",
-      footer: "Name",
-    },
-    {
-      header: "Email",
-      accessorKey: "email",
-      footer: "Email",
-    },
-    {
-      header: "Phone",
-      accessorKey: "phone",
-      footer: "Phone",
-    },
-    {
-      header: "Address",
-      accessorKey: "address",
-      footer: "Address",
-    },
-    {
-      header: "Notes",
-      accessorKey: "notes",
-      footer: "Notes",
-    },
-    {
-      header: "Register Date",
-      accessorKey: "registerDate",
-      footer: "Register Date",
-    },
-    {
-      header: "Actions",
-      accessorKey: "",
-      footer: "Actions",
-    },
-    {
-      header: "",
-      accessorKey: "id",
-      footer: "",
-    },
+    { key: "id", header: "ID" },
+    { key: "name", header: "Name" },
+    { key: "email", header: "Email" },
+    { key: "phone", header: "Phone" },
+    { key: "address", header: "Address" },
+    { key: "notes", header: "Notes" },
   ];
+
+  // CUSTOMERS CONTENT
+  let content;
+
+  // ALL CUSTOMERS
+  if (customersIsLoading) {
+    return (content = <UseLoading />);
+  }
+
+  if (customersIsError) {
+    console.error(customersError);
+  }
+
+  if (!customersData?.status) {
+    return (content = (
+      <>
+        <p className="text-center text-2xl mt-10">{customersData?.message}</p>
+      </>
+    ));
+  }
+
+  if (customersIsSuccess && customersData?.status) {
+    content = (
+      <>
+        <UseTable
+          data={customersData?.customers}
+          columns={columns}
+          handleModalEditInfo={handleModalEditInfo}
+          onDelete={onDelete}
+          btnTitle={"Add Customer"}
+          btnPath={"/dashboard/customer/add"}
+          btnIcon={<BiCartAdd size={20} />}
+          setFiltering={setFiltering}
+        />
+      </>
+    );
+  }
 
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>Customers</TableHeadingTitle>
-
-        <BasicTable
-          data={data}
-          columns={columns}
-          btnTitle={"Add Customer"}
-          btnPath={"/dashboard/customer/add"}
-          btnIcon={<AiOutlineUserAdd size={20} />}
-        >
-          {" "}
-        </BasicTable>
+        <TableHeadingTitle>
+          Customers {customersData?.customers?.length}
+        </TableHeadingTitle>
+        {/* Customers Table */}
+        {content}
+        <EditCustomer
+          customer={customer}
+          modalIsOpen={modalIsOpen}
+          setModalIsOpen={setModalIsOpen}
+        />
       </DashboardBackground>
     </>
   );

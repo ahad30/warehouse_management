@@ -143,7 +143,7 @@ const AddProduct = () => {
           </div> */}
         </div>
         <SubmitButton
-          title={isLoading ? "Saving Product" : "Save Product"}
+          title={isLoading ? "Saving Product..." : "Save Product"}
           icon={<BiCartAdd size={20} />}
         />
       </form>

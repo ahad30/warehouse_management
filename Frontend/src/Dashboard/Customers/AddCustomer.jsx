@@ -124,7 +124,7 @@ const AddCustomer = () => {
         </div>
         <SubmitButton
           icon={<AiOutlineUserAdd size={20} />}
-          title={isLoading ? "Adding Customer" : "Add Customer"}
+          title={isLoading ? "Adding Customer..." : "Add Customer"}
         />
       </form>
     </DashboardBackground>
