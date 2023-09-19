@@ -11,6 +11,7 @@ const categoryApi = apiSlice.injectEndpoints({
         // url: "/posts",
         body: data,
       }),
+      invalidatesTags: ["Categories"],
     }),
     getCategories: builder.query({
       query: () => ({
@@ -18,30 +19,34 @@ const categoryApi = apiSlice.injectEndpoints({
         url: "/categories",
         // url: "/posts",
       }),
+      providesTags: ["Categories"],
     }),
     getCategory: builder.query({
       query: (id) => ({
         headers: headers,
-        // url: `/categories/edit/${id}`,
-        url: `/posts/${id}`,
+        url: `/categories/edit/${id}`,
+        // url: `/posts/${id}`,
       }),
+      providesTags: ["Categories"],
     }),
     updateCategory: builder.mutation({
       query: ({ id, categoryData }) => ({
         method: "PUT",
         headers: headers,
-        // url: `/categories/update/${id}`,
-        url: `/posts/${id}`,
+        url: `/categories/update/${id}`,
+        // url: `/posts/${id}`,
         body: categoryData,
       }),
+      invalidatesTags: ["Categories"],
     }),
     deleteCategory: builder.mutation({
       query: (id) => ({
         method: "DELETE",
         headers: headers,
-        // url: `/categories/delete/${id}`,
-        url: `/posts/${id}`,
+        url: `/categories/delete/${id}`,
+        // url: `/posts/${id}`,
       }),
+      invalidatesTags: ["Categories"],
     }),
   }),
 });

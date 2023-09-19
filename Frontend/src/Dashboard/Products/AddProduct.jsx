@@ -3,20 +3,42 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
 import { useAddProductMutation } from "../../features/Product/productApi";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 
 const AddProduct = () => {
   const { register, handleSubmit } = useForm();
-  const [addProduct, { isLoading, error, isSuccess, data }] =
+  const navigate = useNavigate();
+  const { data: categoryData } = useGetCategoriesQuery();
+  const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
     addProduct(data);
   };
 
-  console.log("error", error);
-  console.log("isSuccess", isSuccess);
-  console.log("data", data);
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
+    if (isError) {
+      toast.error(error?.data?.message, { id: 1 });
+    }
+    if (isSuccess && data?.status) {
+      toast.success(data?.message, { id: 1 });
+      navigate("/dashboard/product");
+    }
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.message,
+    navigate,
+    data?.status,
+  ]);
 
   return (
     <DashboardBackground>
@@ -30,7 +52,7 @@ const AddProduct = () => {
             </span>
             <input
               type="text"
-              placeholder="Product Name"
+              placeholder="Provide an Unique Product Name"
               className="input input-bordered w-full"
               required
               {...register("name")}
@@ -69,6 +91,7 @@ const AddProduct = () => {
               required
               {...register("unit")}
             >
+              <option value={""}>Select Unit</option>
               <option value={"pcs"}>Pcs</option>
               <option value={"box"}>Box</option>
               <option value={"kg"}>KG</option>
@@ -83,9 +106,12 @@ const AddProduct = () => {
               required
               {...register("category_id")}
             >
-              <option value={"1"}>Medicine</option>
-              <option value={"1"}>Phone</option>
-              <option value={"1"}>Grocery</option>
+              <option value={""}>Select Category</option>
+              {categoryData?.categories?.map((category, idx) => (
+                <option key={idx} value={category?.id}>
+                  {category?.category_name}
+                </option>
+              ))}
             </select>
           </label>
           <label className="input-group">
@@ -97,12 +123,12 @@ const AddProduct = () => {
               {...register("desc")}
             />
           </label>
-          <div className="form-control w-full">
+          {/* <div className="form-control w-full">
             <input
               type="file"
               className="file-input file-input-bordered w-full"
             />
-          </div>
+          </div> */}
         </div>
         <SubmitButton
           title={isLoading ? "Saving Product" : "Save Product"}

@@ -8,13 +8,15 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isLoading, error, user } = useSelector((state) => state.auth);
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const handleOnSubmit = async ({ email, password }) => {
     dispatch(loginUser({ email, password }));
   };
+  let user = JSON.parse(localStorage.getItem("user"));
+  let token = user?.api_token;
 
-  if (user) {
+  if (token) {
     return navigate("/dashboard");
   }
 

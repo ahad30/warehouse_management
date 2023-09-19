@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useAddCategoryMutation } from "../../features/Category/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
@@ -14,21 +15,31 @@ const AddCategory = () => {
     useAddCategoryMutation();
 
   const onSubmit = async (data) => {
-    console.log(data);
     addCategory(data);
   };
 
-  console.log(isLoading, isError, error, isSuccess, data);
-
-  if (isError) {
-    toast.error(error.status, { id: 1 });
-    return navigate("/dashboard/category");
-  }
-
-  if (isSuccess && data?.status) {
-    toast.success(data?.message, { id: 1 });
-    return navigate("/dashboard/category");
-  }
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
+    if (isError) {
+      toast.error(data?.message || error?.status, { id: 1 });
+      console.log(error);
+      return navigate("/dashboard/category");
+    }
+    if (isSuccess && data?.status) {
+      toast.success(data?.message, { id: 1 });
+      return navigate("/dashboard/category");
+    }
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.status,
+    data?.message,
+    navigate,
+  ]);
 
   return (
     <DashboardBackground>

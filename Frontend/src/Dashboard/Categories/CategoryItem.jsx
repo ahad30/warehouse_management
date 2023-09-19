@@ -1,6 +1,6 @@
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import PropTypes, { object } from "prop-types";
+import { object, string } from "prop-types";
 import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
 
 const CategoryItem = ({ idx, category }) => {
@@ -13,7 +13,7 @@ const CategoryItem = ({ idx, category }) => {
   const handleDelete = (id) => {
     console.log(id);
   };
-  
+
   return (
     <tr>
       <th>{idx + 1}</th>
@@ -43,7 +43,7 @@ const CategoryItem = ({ idx, category }) => {
 };
 
 CategoryItem.propTypes = {
-  idx: PropTypes.string,
+  idx: string,
   category: object,
 };
 
