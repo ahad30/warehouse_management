@@ -3,17 +3,55 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
 import { useAddCustomerMutation } from "../../features/Customer/customerApi";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../../features/Auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const AddCustomer = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
-  const [addCustomer, { data }] = useAddCustomerMutation();
+  const navigate = useNavigate();
+  const [addCustomer, { isLoading, isError, error, isSuccess, data }] =
+    useAddCustomerMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
     addCustomer(data);
   };
 
-  console.log(data);
+  useEffect(() => {
+    const handleApiError = (error) => {
+      if (error?.originalStatus === 405) {
+        toast.error("Invalid Token Please Re-Login!");
+        return dispatch(logOut());
+      } else {
+        let existUser =
+          error?.data?.message === "Customer Already Exist" &&
+          "Please use different Email and Phone";
+
+        const errorMessage = existUser || error?.data?.message || error?.status;
+        toast.error(errorMessage, { id: 1 });
+      }
+    };
+
+    if (isError) {
+      handleApiError(error);
+    }
+    if (isSuccess && data?.status) {
+      toast.success(data?.message, { id: 1 });
+      return navigate("/dashboard/customer");
+    }
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.message,
+    navigate,
+    data?.status,
+    dispatch,
+  ]);
 
   return (
     <DashboardBackground>
@@ -77,16 +115,16 @@ const AddCustomer = () => {
               {...register("notes")}
             />
           </label>
-          <div className="form-control w-full">
+          {/* <div className="form-control w-full">
             <input
               type="file"
               className="file-input file-input-bordered w-full"
             />
-          </div>
+          </div> */}
         </div>
         <SubmitButton
           icon={<AiOutlineUserAdd size={20} />}
-          title="Add Customer"
+          title={isLoading ? "Adding Customer..." : "Add Customer"}
         />
       </form>
     </DashboardBackground>

@@ -2,13 +2,13 @@ import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
+import { useUpdateCustomerMutation } from "../../features/Customer/customerApi";
 
-const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
+const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   const [
-    updateCategory,
+    updateCustomer,
     {
       isLoading: updateIsLoading,
       isError: updateIsError,
@@ -16,7 +16,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
       isSuccess: updateIsSuccess,
       data: updateData,
     },
-  ] = useUpdateCategoryMutation();
+  ] = useUpdateCustomerMutation();
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -42,26 +42,35 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
 
   // Set default values using setValue from react-hook-form
   useEffect(() => {
-    if (category) {
-      setValue("category_name", category.category_name || "");
-      setValue("description", category.description || "");
+    if (customer) {
+      setValue("name", customer.name || "");
+      setValue("email", customer.email || "");
+      setValue("phone", customer.phone || "");
+      setValue("address", customer.address || "");
+      setValue("notes", customer.notes || "");
     }
-  }, [category, setValue]);
+  }, [customer, setValue]);
 
   // const onSubmit = (data) => {
   //   console.log(data);
-  //   updateCategory(product?.id, data);
+  //   updateCustomer(product?.id, data);
   // };
 
   const onSubmit = (data) => {
     console.log(data);
     // Ensure all required fields have values
-    if (!data.category_name || !data.description) {
+    if (
+      !data.name ||
+      !data.code ||
+      !data.price ||
+      !data.unit ||
+      !data.category_id
+    ) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return; // Exit early if any required field is missing
     }
 
-    updateCategory({ id: category?.id, data });
+    updateCustomer({ id: customer?.id, data });
   };
 
   return modalIsOpen ? (
@@ -75,7 +84,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
-                Update Category
+                Update Product
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -88,16 +97,51 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                         type="text"
                         placeholder="Product Name"
                         className="input input-bordered w-full"
-                        {...register("category_name")}
+                        {...register("name")}
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">Description</span>
+                      <span className="font-semibold">
+                        Email<span className="text-red-500 p-0">*</span>
+                      </span>
                       <input
                         type="text"
-                        placeholder="Product Description"
+                        placeholder="Email"
                         className="input input-bordered w-full"
-                        {...register("description")}
+                        {...register("email")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Phone<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Phone"
+                        className="input input-bordered w-full"
+                        {...register("phone")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Address<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Address"
+                        className="input input-bordered w-full"
+                        {...register("address")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Notes<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Notes"
+                        className="input input-bordered w-full"
+                        {...register("notes")}
                       />
                     </label>
                   </div>
@@ -128,10 +172,10 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   );
 };
 
-EditCategory.propTypes = {
+EditCustomer.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
-  category: object,
+  customer: object,
 };
 
-export default EditCategory;
+export default EditCustomer;

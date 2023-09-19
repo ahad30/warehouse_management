@@ -7,8 +7,8 @@ const userApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         headers: headers,
-        // url: "/register",
-        url: "/posts",
+        url: "/register",
+        // url: "/posts",
         body: data,
       }),
       invalidatesTags: ["Users"],
@@ -16,8 +16,8 @@ const userApi = apiSlice.injectEndpoints({
     getUsers: builder.query({
       query: () => ({
         headers: headers,
-        // url: "/users",
-        url: "/posts",
+        url: "/users",
+        // url: "/posts",
       }),
       providesTags: ["Users"],
     }),
@@ -25,8 +25,8 @@ const userApi = apiSlice.injectEndpoints({
       query: ({ id, userData }) => ({
         method: "PUT",
         headers: headers,
-        // url: "/users",
-        url: `/posts/${id}`,
+        url: `/users/update/${id}`,
+        // url: `/posts/${id}`,
         body: userData,
       }),
       invalidatesTags: ["Users"],
@@ -35,7 +35,8 @@ const userApi = apiSlice.injectEndpoints({
       query: (id) => ({
         method: "DELETE",
         headers: headers,
-        url: `/posts/${id}`,
+        url: `/users/delete/${id}`,
+        // url: `/posts/${id}`,
       }),
       invalidatesTags: ["Users"],
     }),

@@ -7,10 +7,14 @@ import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../features/Auth/authSlice";
 
 const AddProduct = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { data: categoryData } = useGetCategoriesQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
@@ -20,15 +24,22 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
+    const handleApiError = (error) => {
+      if (error?.originalStatus === 405) {
+        toast.error("Invalid Token Please Re-Login!");
+        return dispatch(logOut());
+      } else {
+        const errorMessage = error?.data?.message || error?.status;
+        toast.error(errorMessage, { id: 1 });
+      }
+    };
+
     if (isError) {
-      toast.error(error?.data?.message, { id: 1 });
+      handleApiError(error);
     }
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
-      navigate("/dashboard/product");
+      return navigate("/dashboard/product");
     }
   }, [
     isLoading,
@@ -38,6 +49,7 @@ const AddProduct = () => {
     data?.message,
     navigate,
     data?.status,
+    dispatch,
   ]);
 
   return (
@@ -131,7 +143,7 @@ const AddProduct = () => {
           </div> */}
         </div>
         <SubmitButton
-          title={isLoading ? "Saving Product" : "Save Product"}
+          title={isLoading ? "Saving Product..." : "Save Product"}
           icon={<BiCartAdd size={20} />}
         />
       </form>

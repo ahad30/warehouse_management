@@ -28,18 +28,18 @@ const UseTable = ({
           {/* Table header */}
           <thead>
             <tr>
-              {columns.map((column) => (
-                <th key={column.key}>{column.header}</th>
+              {columns?.map((column) => (
+                <th key={column?.key}>{column?.header}</th>
               ))}
               <th>Actions</th>
             </tr>
           </thead>
           {/* Table body */}
           <tbody>
-            {data.map((row) => (
-              <tr key={row.id}>
-                {columns.map((column) => (
-                  <td key={column.key}>{row[column.key]}</td>
+            {data?.map((row) => (
+              <tr key={row?.id}>
+                {columns?.map((column) => (
+                  <td key={column?.key}>{row[column?.key]}</td>
                 ))}
                 <td>
                   <div className="flex items-center gap-x-3">
@@ -64,8 +64,8 @@ const UseTable = ({
           </tbody>
           <tfoot>
             <tr>
-              {columns.map((column) => (
-                <th key={column.key}>{column.header}</th>
+              {columns?.map((column) => (
+                <th key={column?.key}>{column?.header}</th>
               ))}
               <th>Actions</th>
             </tr>

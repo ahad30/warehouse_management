@@ -6,10 +6,13 @@ import { useAddCategoryMutation } from "../../features/Category/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../features/Auth/authSlice";
 
 const AddCategory = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [addCategory, { isLoading, isError, error, isSuccess, data }] =
     useAddCategoryMutation();
@@ -19,13 +22,18 @@ const AddCategory = () => {
   };
 
   useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
+    const handleApiError = (error) => {
+      if (error?.originalStatus === 405) {
+        toast.error("Invalid Token Please Re-Login!");
+        return dispatch(logOut());
+      } else {
+        const errorMessage = error?.data?.message || error?.status;
+        toast.error(errorMessage, { id: 1 });
+      }
+    };
+
     if (isError) {
-      toast.error(data?.message || error?.status, { id: 1 });
-      console.log(error);
-      return navigate("/dashboard/category");
+      handleApiError(error);
     }
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
@@ -36,9 +44,10 @@ const AddCategory = () => {
     isError,
     error,
     isSuccess,
-    data?.status,
     data?.message,
     navigate,
+    data?.status,
+    dispatch,
   ]);
 
   return (
