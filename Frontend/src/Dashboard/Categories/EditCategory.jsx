@@ -1,10 +1,10 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
-import { useUpdateProductMutation } from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
+import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
 
-const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
+const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   const [
@@ -16,7 +16,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       isSuccess: updateIsSuccess,
       data: updateData,
     },
-  ] = useUpdateProductMutation();
+  ] = useUpdateCategoryMutation();
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -42,15 +42,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
 
   // Set default values using setValue from react-hook-form
   useEffect(() => {
-    if (product) {
-      setValue("name", product.name || "");
-      setValue("code", product.code || "");
-      setValue("price", product.price || "");
-      setValue("unit", product.unit || "pcs");
-      setValue("category_id", product.category_id || "1");
-      setValue("desc", product.desc || "");
+    if (category) {
+      setValue("category_name", category.category_name || "");
+      setValue("description", category.description || "");
     }
-  }, [product, setValue]);
+  }, [category, setValue]);
 
   // const onSubmit = (data) => {
   //   console.log(data);
@@ -60,18 +56,12 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   const onSubmit = (data) => {
     console.log(data);
     // Ensure all required fields have values
-    if (
-      !data.name ||
-      !data.code ||
-      !data.price ||
-      !data.unit ||
-      !data.category_id
-    ) {
+    if (!data.category_name || !data.description) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return; // Exit early if any required field is missing
     }
 
-    updateProduct({ id: product?.id, data });
+    updateProduct({ id: category?.id, data });
   };
 
   return modalIsOpen ? (
@@ -85,7 +75,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
-                Update Product
+                Update Category
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,58 +88,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         type="text"
                         placeholder="Product Name"
                         className="input input-bordered w-full"
-                        {...register("name")}
+                        {...register("category_name")}
                       />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Code<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Product Code"
-                        className="input input-bordered w-full"
-                        {...register("code")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Price<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="number"
-                        placeholder="Product Price"
-                        className="input input-bordered w-full"
-                        {...register("price")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Unit<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <select
-                        className="select select-bordered w-full"
-                        {...register("unit")}
-                      >
-                        <option>Select Unit</option>
-                        <option value={"pcs"}>Pcs</option>
-                        <option value={"box"}>Box</option>
-                        <option value={"kg"}>KG</option>
-                      </select>
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Category<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <select
-                        className="select select-bordered w-full"
-                        {...register("category_id")}
-                      >
-                        <option>Select Category</option>
-                        <option value={"1"}>Medicine</option>
-                        <option value={"2"}>Phone</option>
-                        <option value={"3"}>Grocery</option>
-                      </select>
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">Description</span>
@@ -157,7 +97,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         type="text"
                         placeholder="Product Description"
                         className="input input-bordered w-full"
-                        {...register("desc")}
+                        {...register("description")}
                       />
                     </label>
                   </div>
@@ -188,10 +128,10 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   );
 };
 
-EditProduct.propTypes = {
+EditCategory.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
-  product: object,
+  category: object,
 };
 
-export default EditProduct;
+export default EditCategory;

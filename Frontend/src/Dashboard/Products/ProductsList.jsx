@@ -13,7 +13,7 @@ import EditProduct from "./EditProduct";
 
 const ProductsList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [product, setProduct] = useState("");
+  const [product, setProduct] = useState({});
   const {
     data: productsData,
     isLoading: productsIsLoading,
@@ -63,7 +63,6 @@ const ProductsList = () => {
   const handleModalEditInfo = (product) => {
     setProduct(product);
     setModalIsOpen(true);
-    // updateProduct({ id, updatedData });
   };
   // EDIT ENDS
 

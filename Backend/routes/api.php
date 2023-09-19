@@ -37,12 +37,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/delete/{id}', 'distroy');
     });
 
-    Route::controller(ProductController::class)->prefix('products')->group(function () {
+    Route::controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('/', 'index');
         Route::get('/create', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update/{id}', 'update');
+        Route::patch('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 

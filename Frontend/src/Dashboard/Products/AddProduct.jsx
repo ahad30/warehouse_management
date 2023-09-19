@@ -18,7 +18,7 @@ const AddProduct = () => {
   const onSubmit = (data) => {
     addProduct(data);
   };
-  
+
   useEffect(() => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
@@ -26,11 +26,19 @@ const AddProduct = () => {
     if (isError) {
       toast.error(error?.data?.message, { id: 1 });
     }
-    if (isSuccess) {
+    if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
       navigate("/dashboard/product");
     }
-  }, [isLoading, isError, error, isSuccess, data?.message, navigate]);
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.message,
+    navigate,
+    data?.status,
+  ]);
 
   return (
     <DashboardBackground>

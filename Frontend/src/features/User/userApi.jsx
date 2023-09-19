@@ -11,6 +11,7 @@ const userApi = apiSlice.injectEndpoints({
         url: "/posts",
         body: data,
       }),
+      invalidatesTags: ["Users"],
     }),
     getUsers: builder.query({
       query: () => ({
@@ -18,6 +19,7 @@ const userApi = apiSlice.injectEndpoints({
         // url: "/users",
         url: "/posts",
       }),
+      providesTags: ["Users"],
     }),
     updateUser: builder.mutation({
       query: ({ id, userData }) => ({
@@ -27,6 +29,7 @@ const userApi = apiSlice.injectEndpoints({
         url: `/posts/${id}`,
         body: userData,
       }),
+      invalidatesTags: ["Users"],
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
@@ -34,6 +37,7 @@ const userApi = apiSlice.injectEndpoints({
         headers: headers,
         url: `/posts/${id}`,
       }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });
