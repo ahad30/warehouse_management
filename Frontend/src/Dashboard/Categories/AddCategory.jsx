@@ -18,8 +18,6 @@ const AddCategory = () => {
     addCategory(data);
   };
 
-  console.log(isLoading, isError, error, isSuccess, data);
-
   if (isError) {
     toast.error(error.status, { id: 1 });
     return navigate("/dashboard/category");

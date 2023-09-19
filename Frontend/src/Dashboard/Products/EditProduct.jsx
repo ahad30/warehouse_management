@@ -52,18 +52,27 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     }
   }, [product, setValue]);
 
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  //   updateProduct(product?.id, data);
+  // };
+
   const onSubmit = (data) => {
     console.log(data);
+    // Ensure all required fields have values
+    if (
+      !data.name ||
+      !data.code ||
+      !data.price ||
+      !data.unit ||
+      !data.category_id
+    ) {
+      toast.error("Please fill in all required fields.", { id: 1 });
+      return; // Exit early if any required field is missing
+    }
+
     updateProduct(product?.id, data);
   };
-
-  console.log(
-    updateIsLoading,
-    updateIsError,
-    updateError,
-    updateIsSuccess,
-    updateData?.message
-  );
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
