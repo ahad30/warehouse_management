@@ -85,9 +85,10 @@ class CategoryController extends Controller
     }
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $category = Category::find($id);
+
+        $category = Category::find($request->id);
 
         if ($category) {
             $validateInput = Validator::make(

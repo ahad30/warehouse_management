@@ -22,10 +22,10 @@ const customerApi = apiSlice.injectEndpoints({
       providesTags: ["Customers"],
     }),
     updateCustomer: build.mutation({
-      query: ({ id, customerData }) => ({
+      query: (customerData) => ({
         method: "PUT",
         headers: headers,
-        url: `/customers/update/${id}`,
+        url: `/customers/update`,
         // url: `/posts/${id}`,
         body: customerData,
       }),

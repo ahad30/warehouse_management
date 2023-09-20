@@ -18,6 +18,21 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
     },
   ] = useUpdateCustomerMutation();
 
+  const onSubmit = (data) => {
+    // Ensure all required fields have values
+    if (
+      !customer.name ||
+      !customer.email ||
+      !customer.phone ||
+      !customer.address
+    ) {
+      toast.error("Please fill in all required fields.", { id: 1 });
+      return; // Exit early if any required field is missing
+    }
+
+    updateCustomer({ ...data, id: customer.id });
+  };
+
   useEffect(() => {
     if (updateIsLoading) {
       toast.loading("Loading...", { id: 1 });
@@ -50,28 +65,6 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
       setValue("notes", customer.notes || "");
     }
   }, [customer, setValue]);
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   updateCustomer(product?.id, data);
-  // };
-
-  const onSubmit = (data) => {
-    console.log(data);
-    // Ensure all required fields have values
-    if (
-      !data.name ||
-      !data.code ||
-      !data.price ||
-      !data.unit ||
-      !data.category_id
-    ) {
-      toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
-    }
-
-    updateCustomer({ id: customer?.id, data });
-  };
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -134,9 +127,7 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
-                        Notes<span className="text-red-500 p-0">*</span>
-                      </span>
+                      <span className="font-semibold">Notes</span>
                       <input
                         type="text"
                         placeholder="Notes"

@@ -5,12 +5,17 @@ import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useAddUserMutation } from "../../features/User/userApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { logOut } from "../../features/Auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const AddUser = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [addUser, { isLoading, isSuccess, error, data }] = useAddUserMutation();
+  const [addUser, { isLoading, isError, error, isSuccess, data }] =
+    useAddUserMutation();
 
   // GET INPUT FIELD FORM
   const onSubmit = async (data) => {
@@ -18,17 +23,38 @@ const AddUser = () => {
     addUser(data);
   };
 
-  console.log(data);
+  useEffect(() => {
+    const handleApiError = (error) => {
+      if (error?.originalStatus === 405) {
+        toast.error("Invalid Token Please Re-Login!");
+        return dispatch(logOut());
+      } else {
+        let existUser =
+          error?.data?.message === "Customer Already Exist" &&
+          "Please use different Email and Phone";
 
-  // CHECK ERROR
-  if (error) {
-    toast.error(error.data.errors.email[0], { id: 1 });
-  }
+        const errorMessage = existUser || error?.data?.message || error?.status;
+        toast.error(errorMessage, { id: 1 });
+      }
+    };
 
-  // IF SUCCESS THEN ROUTE THE USERS
-  if (isSuccess) {
-    return navigate("/dashboard/user");
-  }
+    if (isError) {
+      handleApiError(error);
+    }
+    if (isSuccess && data?.status) {
+      toast.success(data?.message, { id: 1 });
+      return navigate("/dashboard/user");
+    }
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.message,
+    navigate,
+    data?.status,
+    dispatch,
+  ]);
 
   return (
     <>

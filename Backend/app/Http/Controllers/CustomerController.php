@@ -91,9 +91,9 @@ class CustomerController extends Controller
     }
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request,)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::find($request->id);
 
         if ($customer) {
             $validateInput = Validator::make($request->all(), [

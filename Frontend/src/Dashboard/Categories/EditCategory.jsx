@@ -18,6 +18,17 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     },
   ] = useUpdateCategoryMutation();
 
+  const onSubmit = (data) => {
+    console.log(data);
+    // Ensure all required fields have values
+    if (!data.category_name || !data.description) {
+      toast.error("Please fill in all required fields.", { id: 1 });
+      return; // Exit early if any required field is missing
+    }
+
+    updateCategory({ ...data, id: category.id });
+  };
+
   useEffect(() => {
     if (updateIsLoading) {
       toast.loading("Loading...", { id: 1 });
@@ -48,21 +59,14 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     }
   }, [category, setValue]);
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   updateCategory(product?.id, data);
-  // };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Ensure all required fields have values
-    if (!data.category_name || !data.description) {
-      toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
-    }
-
-    updateCategory({ id: category?.id, data });
-  };
+  console.log(
+    updateIsLoading,
+    updateIsError,
+    updateError,
+    updateIsSuccess,
+    updateData
+  );
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">

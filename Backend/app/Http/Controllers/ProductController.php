@@ -113,9 +113,10 @@ class ProductController extends Controller
     }
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request)
+
     {
-        $product = Product::find($id);
+        $product = Product::find($request->id);
 
         if ($product) {
             $validateInput = Validator::make($request->all(), [
