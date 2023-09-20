@@ -78,6 +78,7 @@ const ProductsList = () => {
     { key: "code", header: "Code" },
     { key: "price", header: "Price" },
     { key: "unit", header: "Unit" },
+    { key: "category_name", header: "Category" },
     { key: "desc", header: "Description" },
   ];
 

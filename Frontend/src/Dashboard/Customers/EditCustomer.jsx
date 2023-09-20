@@ -19,7 +19,6 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   ] = useUpdateCustomerMutation();
 
   const onSubmit = (data) => {
-    // Ensure all required fields have values
     if (
       !customer.name ||
       !customer.email ||
@@ -30,7 +29,7 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
       return; // Exit early if any required field is missing
     }
 
-    updateCustomer({ ...data, id: customer.id });
+    updateCustomer({ ...data, id: customer?.id });
   };
 
   useEffect(() => {

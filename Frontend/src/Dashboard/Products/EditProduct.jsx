@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useUpdateProductMutation } from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
+import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -17,6 +18,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       data: updateData,
     },
   ] = useUpdateProductMutation();
+
+  const { data: categoriesData } = useGetCategoriesQuery();
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -71,7 +74,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       return; // Exit early if any required field is missing
     }
 
-    updateProduct({ id: product?.id, data });
+    updateProduct({ ...data, id: product?.id });
   };
 
   return modalIsOpen ? (
@@ -146,9 +149,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("category_id")}
                       >
                         <option>Select Category</option>
-                        <option value={"1"}>Medicine</option>
-                        <option value={"2"}>Phone</option>
-                        <option value={"3"}>Grocery</option>
+                        {categoriesData?.categories?.map((category, idx) => (
+                          <option key={idx} value={category?.id}>
+                            {category?.category_name}
+                          </option>
+                        ))}
                       </select>
                     </label>
                     <label className="input-group">
