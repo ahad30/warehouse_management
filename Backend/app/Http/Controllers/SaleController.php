@@ -21,7 +21,7 @@ class SaleController extends Controller
         if ($invoices->count() <= 0) {
             return response()->json([
                 'status' => false,
-                'message' => 'No item found',
+                'message' => 'No Invoices found',
             ]);
         } else {
             return response()->json([

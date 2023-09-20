@@ -23,17 +23,15 @@ const AddUser = () => {
     addUser(data);
   };
 
+  console.log(isLoading, isError, error, isSuccess, data);
+
   useEffect(() => {
     const handleApiError = (error) => {
       if (error?.originalStatus === 405) {
         toast.error("Invalid Token Please Re-Login!");
         return dispatch(logOut());
       } else {
-        let existUser =
-          error?.data?.message === "Customer Already Exist" &&
-          "Please use different Email and Phone";
-
-        const errorMessage = existUser || error?.data?.message || error?.status;
+        const errorMessage = error?.data?.message || error?.status;
         toast.error(errorMessage, { id: 1 });
       }
     };
@@ -100,6 +98,24 @@ const AddUser = () => {
             </label>
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
+                Role<span className="text-red-500 p-0">*</span>
+              </span>
+              <select
+                className="select select-bordered w-full"
+                {...register("role")}
+                required
+              >
+                <option value={""}>Select Role</option>
+                <option value={"admin"}>Admin</option>
+                <option value={"accountant"}>Accountant</option>
+                <option value={"manager"}>Manager</option>
+                <option value={"sales_representative"}>
+                  Sales Representative
+                </option>
+              </select>
+            </label>
+            <label className="input-group">
+              <span className="font-semibold min-w-[100px]">
                 Password<span className="text-red-500 p-0">*</span>
               </span>
               <input
@@ -122,24 +138,7 @@ const AddUser = () => {
                 {...register("password_confirmation")}
               />
             </label>
-            <label className="input-group">
-              <span className="font-semibold min-w-[100px]">
-                Role<span className="text-red-500 p-0">*</span>
-              </span>
-              <select
-                className="select select-bordered w-full"
-                {...register("role")}
-                required
-              >
-                <option value={""}>Select Role</option>
-                <option value={"admin"}>Admin</option>
-                <option value={"accountant"}>Accountant</option>
-                <option value={"manager"}>Manager</option>
-                <option value={"sales_representative"}>
-                  Sales Representative
-                </option>
-              </select>
-            </label>
+
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Status<span className="text-red-500 p-0">*</span>
@@ -226,12 +225,12 @@ const AddUser = () => {
                 {...register("state")}
               />
             </label>
-            <div className="form-control w-full">
+            {/* <div className="form-control w-full">
               <input
                 type="file"
                 className="file-input file-input-bordered w-full"
               />
-            </div>
+            </div> */}
           </div>
           <SubmitButton
             title={isLoading ? "Adding User..." : "Add User"}

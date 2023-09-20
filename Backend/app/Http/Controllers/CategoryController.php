@@ -22,7 +22,7 @@ class CategoryController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'No Item Found',
+                'message' => 'No Categories Found',
             ]);
         }
     }
@@ -60,7 +60,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Category Successfully Created',
+                'message' => 'Category Created Successfully',
                 'category' => $category
             ], 201);
         }

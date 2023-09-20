@@ -16,6 +16,7 @@ class ProductTableSeeder extends Seeder
         Product::create([
             'name' => 'Samsung galexy M40',
             'category_id' => '1',
+            'category_name' => 'Mobile',
             'slug' => 'samsung-galexy-m40',
             'code' => 'SMGM40',
             'price' => '23990',
@@ -26,6 +27,7 @@ class ProductTableSeeder extends Seeder
         Product::create([
             'name' => 'I-phone 11 Pro Max',
             'category_id' => '1',
+            'category_name' => 'Mobile',
             'slug' => 'i-phone-11-pro-max',
             'code' => 'IP11PM',
             'price' => '93990',
@@ -36,6 +38,7 @@ class ProductTableSeeder extends Seeder
         Product::create([
             'name' => 'Panasonic 342MR',
             'category_id' => '2',
+            'category_name' => 'Tv',
             'slug' => 'panasonic-342mr',
             'code' => 'P342MR',
             'price' => '33999',
@@ -46,6 +49,7 @@ class ProductTableSeeder extends Seeder
         Product::create([
             'name' => 'Nippon Taski LED 09NL',
             'category_id' => '2',
+            'category_name' => 'Tv',
             'slug' => 'nippon-taski-led-09nl',
             'code' => 'NT09NL',
             'price' => '21999',
@@ -56,6 +60,7 @@ class ProductTableSeeder extends Seeder
         Product::create([
             'name' => 'NOVA Rice Cooker 867M',
             'category_id' => '3',
+            'category_name' => 'Electronices',
             'slug' => 'nova-rice-cooker-867m',
             'code' => 'NRC867M',
             'price' => '8999',
