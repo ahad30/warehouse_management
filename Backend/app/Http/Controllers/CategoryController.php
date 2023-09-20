@@ -22,7 +22,7 @@ class CategoryController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'No Item Found',
+                'message' => 'No Categories Found',
             ]);
         }
     }
@@ -60,7 +60,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Category Successfully Created',
+                'message' => 'Category Created Successfully',
                 'category' => $category
             ], 201);
         }
@@ -85,9 +85,10 @@ class CategoryController extends Controller
     }
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $category = Category::find($id);
+
+        $category = Category::find($request->id);
 
         if ($category) {
             $validateInput = Validator::make(

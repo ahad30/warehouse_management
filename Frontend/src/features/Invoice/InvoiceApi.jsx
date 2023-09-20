@@ -7,31 +7,32 @@ const invoiceApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         headers: headers,
-        url: "/posts",
+        url: "/invoice/store",
+        // url: "/posts",
         body: data,
       }),
     }),
     getInvoices: builder.query({
       query: () => ({
         headers: headers,
-        // url: "/invoice/list",
-        url: "/posts",
+        url: "/invoice/list",
+        // url: "/posts",
       }),
     }),
 
     getInvoice: builder.query({
       query: (id) => ({
         headers: headers,
-        // url: `/categories/edit/${id}`,
-        url: `/posts/${id}`,
+        url: `/categories/edit/${id}`,
+        // url: `/posts/${id}`,
       }),
     }),
     updateInvoice: builder.mutation({
       query: ({ id, invoiceData }) => ({
         method: "PUT",
         headers: headers,
-        // url: `/categories/update/${id}`,
-        url: `/posts/${id}`,
+        url: `/categories/update/${id}`,
+        // url: `/posts/${id}`,
         body: invoiceData,
       }),
     }),
@@ -39,11 +40,17 @@ const invoiceApi = apiSlice.injectEndpoints({
       query: (id) => ({
         method: "DELETE",
         headers: headers,
-        // url: `/categories/delete/${id}`,
-        url: `/posts/${id}`,
+        url: `/categories/delete/${id}`,
+        // url: `/posts/${id}`,
       }),
     }),
   }),
 });
 
-export const { useNewInvoiceMutation, useGetInvoicesQuery } = invoiceApi;
+export const {
+  useNewInvoiceMutation,
+  useGetInvoicesQuery,
+  useGetInvoiceQuery,
+  useUpdateInvoiceMutation,
+  useDeleteInvoiceMutation,
+} = invoiceApi;

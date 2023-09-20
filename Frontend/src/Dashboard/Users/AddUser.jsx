@@ -5,12 +5,17 @@ import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useAddUserMutation } from "../../features/User/userApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { logOut } from "../../features/Auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const AddUser = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [addUser, { isLoading, isSuccess, error, data }] = useAddUserMutation();
+  const [addUser, { isLoading, isError, error, isSuccess, data }] =
+    useAddUserMutation();
 
   // GET INPUT FIELD FORM
   const onSubmit = async (data) => {
@@ -18,17 +23,36 @@ const AddUser = () => {
     addUser(data);
   };
 
-  console.log(data);
+  console.log(isLoading, isError, error, isSuccess, data);
 
-  // CHECK ERROR
-  if (error) {
-    toast.error(error.data.errors.email[0], { id: 1 });
-  }
+  useEffect(() => {
+    const handleApiError = (error) => {
+      if (error?.originalStatus === 405) {
+        toast.error("Invalid Token Please Re-Login!");
+        return dispatch(logOut());
+      } else {
+        const errorMessage = error?.data?.message || error?.status;
+        toast.error(errorMessage, { id: 1 });
+      }
+    };
 
-  // IF SUCCESS THEN ROUTE THE USERS
-  if (isSuccess) {
-    return navigate("/dashboard/user");
-  }
+    if (isError) {
+      handleApiError(error);
+    }
+    if (isSuccess && data?.status) {
+      toast.success(data?.message, { id: 1 });
+      return navigate("/dashboard/user");
+    }
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.message,
+    navigate,
+    data?.status,
+    dispatch,
+  ]);
 
   return (
     <>
@@ -74,6 +98,24 @@ const AddUser = () => {
             </label>
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
+                Role<span className="text-red-500 p-0">*</span>
+              </span>
+              <select
+                className="select select-bordered w-full"
+                {...register("role")}
+                required
+              >
+                <option value={""}>Select Role</option>
+                <option value={"admin"}>Admin</option>
+                <option value={"accountant"}>Accountant</option>
+                <option value={"manager"}>Manager</option>
+                <option value={"sales_representative"}>
+                  Sales Representative
+                </option>
+              </select>
+            </label>
+            <label className="input-group">
+              <span className="font-semibold min-w-[100px]">
                 Password<span className="text-red-500 p-0">*</span>
               </span>
               <input
@@ -96,24 +138,7 @@ const AddUser = () => {
                 {...register("password_confirmation")}
               />
             </label>
-            <label className="input-group">
-              <span className="font-semibold min-w-[100px]">
-                Role<span className="text-red-500 p-0">*</span>
-              </span>
-              <select
-                className="select select-bordered w-full"
-                {...register("role")}
-                required
-              >
-                <option value={""}>Select Role</option>
-                <option value={"admin"}>Admin</option>
-                <option value={"accountant"}>Accountant</option>
-                <option value={"manager"}>Manager</option>
-                <option value={"sales_representative"}>
-                  Sales Representative
-                </option>
-              </select>
-            </label>
+
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Status<span className="text-red-500 p-0">*</span>
@@ -200,12 +225,12 @@ const AddUser = () => {
                 {...register("state")}
               />
             </label>
-            <div className="form-control w-full">
+            {/* <div className="form-control w-full">
               <input
                 type="file"
                 className="file-input file-input-bordered w-full"
               />
-            </div>
+            </div> */}
           </div>
           <SubmitButton
             title={isLoading ? "Adding User..." : "Add User"}

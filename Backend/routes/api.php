@@ -33,7 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update/{id}', 'update');
+        Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 
@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/create', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::patch('/update/{id}', 'update');
+        Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 
@@ -56,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update/{id}', 'update');
+        Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 
@@ -71,7 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/store', 'store');
 
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update/{id}', 'update');
+        Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 });

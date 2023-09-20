@@ -23,7 +23,7 @@ class ProductController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'No Item Found',
+                'message' => 'No Products Found',
             ]);
         }
     }
@@ -41,7 +41,7 @@ class ProductController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'No Item Found',
+                'message' => 'No Products Found',
             ]);
         }
     }
@@ -66,18 +66,21 @@ class ProductController extends Controller
             ], 401);
         }
 
-        $productexist = Product::where('slug', Str::slug($request->name))->first();
+        $productexist = Product::where('slug', Str::slug($request->name . $request->code))->first();
         if ($productexist) {
             return response()->json([
                 'status' => false,
                 'message' => 'Product Already Exist',
             ], 401);
         } else {
+            $category = Category::where('id', $request->category_id)->first();
+            $category_name = $category->category_name;
             Product::create([
                 'name' => $request->name,
-                'slug' => Str::slug($request->name),
+                'slug' => Str::slug($request->name . $request->code),
                 'code' => $request->code,
                 'category_id' => $request->category_id,
+                'category_name' => $category_name,
                 'price' => $request->price,
                 'unit' => $request->unit,
                 'desc' => $request->desc,
@@ -85,7 +88,7 @@ class ProductController extends Controller
             $product = Product::latest()->first();
             return response()->json([
                 'status' => true,
-                'message' => 'New product successfully created',
+                'message' => 'New Product Created Successfully',
                 'product' => $product,
             ]);
         }
@@ -113,9 +116,10 @@ class ProductController extends Controller
     }
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request)
+
     {
-        $product = Product::find($id);
+        $product = Product::find($request->id);
 
         if ($product) {
             $validateInput = Validator::make($request->all(), [
@@ -135,11 +139,15 @@ class ProductController extends Controller
                 ], 401);
             }
 
+            $category = Category::where('id', $request->category_id)->first();
+            $category_name = $category->category_name;
+
             $product->update([
                 'name' => $request->name,
-                'slug' => Str::slug($request->name),
+                'slug' => Str::slug($request->name . $request->code),
                 'code' => $request->code,
                 'category_id' => $request->category_id,
+                'category_name' => $category_name,
                 'price' => $request->price,
                 'unit' => $request->unit,
                 'desc' => $request->desc,
@@ -147,7 +155,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Product Detail Successfully Updated',
+                'message' => 'Product Detail Updated Successfully ',
                 'product' => $product,
             ], 201);
         } else {
@@ -168,7 +176,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Product Successfully Deleted'
+                'message' => 'Product Deleted Successfully'
             ], 201);
         } else {
             return response()->json([

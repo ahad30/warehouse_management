@@ -22,9 +22,9 @@ class RegisteredUserController extends Controller
     public function store(Request $request): JsonResponse
     {
 
-        $codeValidation = Validator::make($request->all(),[
+        $codeValidation = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'string'],
             'status' => ['required', 'string'],
@@ -36,11 +36,11 @@ class RegisteredUserController extends Controller
             'country' => ['required', 'string'],
         ]);
 
-        if($codeValidation->fails())
-        {
+        if ($codeValidation->fails()) {
             return response()->json([
-                'errors'=> $codeValidation->errors()
-            ],500);
+                'message' => 'The email has already been taken',
+                'errors' => $codeValidation->errors()
+            ], 500);
         }
 
         $user = User::create([
@@ -64,9 +64,9 @@ class RegisteredUserController extends Controller
 
         return response()->json([
             'status' => true,
-            'success' => 'Registration Successfull',
+            'message' => 'Registration Successful',
             'user' => $user,
             'api_token' => $token,
-        ],201);
+        ], 201);
     }
 }
