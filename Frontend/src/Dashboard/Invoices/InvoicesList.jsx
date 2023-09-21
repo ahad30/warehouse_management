@@ -45,7 +45,7 @@ const InvoicesList = () => {
     }
 
     if (deleteIsError) {
-      toast.error(deleteData?.message || deleteError?.status, { id: 1 });
+      toast.error(deleteData?.message || deleteError?.data?.message, { id: 1 });
     }
 
     if (deleteIsSuccess) {
@@ -59,7 +59,13 @@ const InvoicesList = () => {
     deleteData,
   ]);
   // DELETE ENDS
-
+  console.log(
+    deleteIsLoading,
+    deleteIsError,
+    deleteError,
+    deleteIsSuccess,
+    deleteData
+  );
   // EDIT STARTS
   const handleModalEditInfo = (invoice) => {
     setInvoice(invoice);

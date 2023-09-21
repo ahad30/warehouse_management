@@ -6,7 +6,15 @@ const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_REACT_APP_PORT,
   }),
-  tagTypes: ["Users", "Customers", "Categories", "Products", "Invoices"],
+  tagTypes: [
+    "Users",
+    "Customers",
+    "Categories",
+    "Products",
+    "Invoices",
+    "Company",
+    "Profile",
+  ],
   endpoints: (builder) => ({}),
 });
 
