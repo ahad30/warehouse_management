@@ -1,4 +1,3 @@
-import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
 
 const invoiceApi = apiSlice.injectEndpoints({
@@ -6,7 +5,6 @@ const invoiceApi = apiSlice.injectEndpoints({
     newInvoice: builder.mutation({
       query: (data) => ({
         method: "POST",
-        headers: headers,
         url: "/invoice/store",
         // url: "/posts",
         body: data,
@@ -14,7 +12,6 @@ const invoiceApi = apiSlice.injectEndpoints({
     }),
     getInvoices: builder.query({
       query: () => ({
-        headers: headers,
         url: "/invoice/list",
         // url: "/posts",
       }),
@@ -22,7 +19,6 @@ const invoiceApi = apiSlice.injectEndpoints({
 
     getInvoice: builder.query({
       query: (id) => ({
-        headers: headers,
         url: `/categories/edit/${id}`,
         // url: `/posts/${id}`,
       }),
@@ -30,7 +26,6 @@ const invoiceApi = apiSlice.injectEndpoints({
     updateInvoice: builder.mutation({
       query: ({ id, invoiceData }) => ({
         method: "PUT",
-        headers: headers,
         url: `/categories/update/${id}`,
         // url: `/posts/${id}`,
         body: invoiceData,
@@ -39,7 +34,6 @@ const invoiceApi = apiSlice.injectEndpoints({
     deleteInvoice: builder.mutation({
       query: (id) => ({
         method: "DELETE",
-        headers: headers,
         url: `/categories/delete/${id}`,
         // url: `/posts/${id}`,
       }),

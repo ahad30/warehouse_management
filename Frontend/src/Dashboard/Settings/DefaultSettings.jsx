@@ -33,7 +33,7 @@ const DefaultSettings = () => {
   }, [companyInfo, setValue]);
 
   const onSubmit = (data) => {
-    console.log({...data, id: companyInfo?.id});
+    console.log({ ...data, id: companyInfo?.id });
     updateCompanyInfo({ ...data, id: companyInfo?.id });
   };
 
@@ -109,7 +109,7 @@ const DefaultSettings = () => {
               type="submit"
               className="input input-bordered input-md my-2 bg-gray-600 text-white hover:bg-gray-600 hover:text-white cursor-pointer"
               // className="btn bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
-              value={"Update Info"}
+              defaultValue={"Update Info"}
               required
             />
           </form>
@@ -199,7 +199,7 @@ const DefaultSettings = () => {
             type="submit"
             // className="input input-bordered input-md my-2"
             className="btn bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
-            value={"Update Profile"}
+            defaultValue={"Update Profile"}
             required
           />
         </form>

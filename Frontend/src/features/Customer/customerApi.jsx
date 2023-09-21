@@ -1,4 +1,3 @@
-import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
 
 const customerApi = apiSlice.injectEndpoints({
@@ -6,7 +5,6 @@ const customerApi = apiSlice.injectEndpoints({
     addCustomer: build.mutation({
       query: (data) => ({
         method: "POST",
-        headers: headers,
         url: "/customers/store",
         // url: "/posts",
         body: data,
@@ -15,7 +13,6 @@ const customerApi = apiSlice.injectEndpoints({
     }),
     getCustomers: build.query({
       query: () => ({
-        headers: headers,
         url: "/customers",
         // url: "/posts",
       }),
@@ -24,7 +21,6 @@ const customerApi = apiSlice.injectEndpoints({
     updateCustomer: build.mutation({
       query: (customerData) => ({
         method: "PUT",
-        headers: headers,
         url: `/customers/update`,
         // url: `/posts/${id}`,
         body: customerData,
@@ -34,7 +30,6 @@ const customerApi = apiSlice.injectEndpoints({
     deleteCustomer: build.mutation({
       query: (id) => ({
         method: "DELETE",
-        headers: headers,
         url: `/customers/delete/${id}`,
         // url: `/posts/${id}`,
       }),

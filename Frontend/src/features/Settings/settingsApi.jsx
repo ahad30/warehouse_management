@@ -1,11 +1,9 @@
 import apiSlice from "../API/apiSlice";
-import { headers } from "../../utils/hooks/headers";
 
 const settingsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCompanyInfo: builder.query({
       query: () => ({
-        headers: headers,
         url: `/company/info`,
       }),
       providesTags: ["Company"],
@@ -13,7 +11,6 @@ const settingsApi = apiSlice.injectEndpoints({
     updateCompanyInfo: builder.mutation({
       query: (data) => ({
         method: "PUT",
-        headers: headers,
         url: `/company/update`,
         body: data,
       }),
@@ -21,7 +18,6 @@ const settingsApi = apiSlice.injectEndpoints({
     }),
     getUserProfile: builder.query({
       query: () => ({
-        headers: headers,
         url: "/profile/update",
       }),
       providesTags: ["Profile"],
@@ -29,8 +25,7 @@ const settingsApi = apiSlice.injectEndpoints({
     updateUserProfile: builder.mutation({
       query: ({ id, data }) => ({
         method: "PUT",
-        headers: headers,
-        url: "/",
+        url: `/profile/update/${id}`,
         body: data,
       }),
       invalidatesTags: ["Profile"],

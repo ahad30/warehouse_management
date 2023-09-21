@@ -71,7 +71,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Subtotal:</span>
           <input
             type="number"
-            value={subTotalPrice}
+            defaultValue={subTotalPrice}
             placeholder="Subtotal"
             className="input input-bordered w-full max-w-xs"
             readOnly
@@ -81,7 +81,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Discount:</span>
           <input
             onChange={handleDiscountPrice}
-            value={discountPrice}
+            defaultValue={discountPrice}
             type="number"
             placeholder="Discount"
             className="input input-bordered w-full max-w-xs"
@@ -91,7 +91,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Shipping:</span>
           <input
             onChange={handleShippingCost}
-            value={shippingCost}
+            defaultValue={shippingCost}
             type="number"
             placeholder="Shipping"
             className="input input-bordered w-full max-w-xs"
@@ -101,7 +101,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Total:</span>
           <input
             type="number"
-            value={totalPrice}
+            defaultValue={totalPrice}
             placeholder="Total"
             className="input input-bordered w-full max-w-xs"
             readOnly

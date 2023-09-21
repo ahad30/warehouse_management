@@ -25,6 +25,7 @@ const authSlice = createSlice({
   initialState: {
     isLoading: false,
     user: null,
+    api_token: "",
     error: null,
   },
   reducers: {
@@ -33,11 +34,13 @@ const authSlice = createSlice({
       let token = user?.api_token;
       if (token) {
         state.user = user?.user;
+        state.api_token = user?.api_token;
       }
     },
     logOut: (state) => {
       localStorage.removeItem("user");
       state.user = null;
+      state.api_token = "";
     },
   },
   extraReducers: (builder) => {

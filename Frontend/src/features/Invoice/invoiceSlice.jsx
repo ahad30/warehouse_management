@@ -7,10 +7,10 @@ const initialState = {
     dueDate: "",
   },
   company: {
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
+    company_name: "",
+    company_email: "",
+    company_phone: "",
+    company_address: "",
   },
   customer: {
     name: "",
