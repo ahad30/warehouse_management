@@ -1,23 +1,37 @@
+import { useEffect, useState } from "react";
+import { useGetDashboardSummaryQuery } from "../../../../features/Dashboard/DashboardSummary";
+
 const TotalCalculations = () => {
+  const { data } = useGetDashboardSummaryQuery();
+  const [summary, setSummary] = useState({
+    totalRevenue: 0,
+    totalSales: 0,
+    totalProducts: 0,
+    totalCustomers: 0,
+  });
+
+  useEffect(() => {
+    if (data?.status) setSummary(data?.data);
+  }, [data?.status, data?.data]);
   const items = [
     {
       img: "https://cdn-icons-png.flaticon.com/128/1490/1490853.png",
-      count: 499,
+      count: `$${summary?.totalRevenue}`,
       text: "Total Revenue",
     },
     {
       img: "https://cdn-icons-png.flaticon.com/128/11509/11509409.png",
-      count: 77,
+      count: summary?.totalSales,
       text: "Total Sales",
     },
     {
       img: "https://cdn-icons-png.flaticon.com/128/3899/3899160.png",
-      count: 80,
+      count: summary?.totalProducts,
       text: "Total Products",
     },
     {
       img: "https://cdn-icons-png.flaticon.com/128/1165/1165674.png",
-      count: 23,
+      count: summary?.totalCustomers,
       text: "Total Customers",
     },
   ];

@@ -55,7 +55,7 @@ const CustomerInfo = ({ customers }) => {
           defaultValue={customer?.email}
         />
         <select
-          className="select select-bordered w-full"
+          className="select select-bordered w-full my-2"
           onChange={(e) => handleSelectedPhone(e.target.value)}
           required
           name="name"

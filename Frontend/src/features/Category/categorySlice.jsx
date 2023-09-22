@@ -31,7 +31,6 @@ const categorySlice = createSlice({
     categories: [],
   },
   reducers: {},
-  extraReducers: {},
 });
 
 export default categorySlice.reducer;
