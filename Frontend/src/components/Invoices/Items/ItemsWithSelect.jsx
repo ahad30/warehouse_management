@@ -4,12 +4,10 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { deleteItem, getItem } from "../../../features/Invoice/InvoiceSlice";
 // import productData from "../../../Dashboard/Products/productData.json";
-import { useGetProductsQuery } from "../../../features/Product/productApi";
+import { array } from "prop-types";
 
-const ItemsWithSelect = () => {
+const ItemsWithSelect = ({ products }) => {
   const dispatch = useDispatch();
-  // const data = useMemo(() => productData, []);
-  const { data: productsData } = useGetProductsQuery();
 
   const [selectedItem, setSelectedItem] = useState({});
   const [item, setItem] = useState({});
@@ -18,7 +16,7 @@ const ItemsWithSelect = () => {
 
   // SELECT AN ITEM FROM DATA FOR ADD TO INVOICE LIST
   const handleSelectedItem = (id) => {
-    const matchedItem = productsData?.products?.find((item) => item.id == id);
+    const matchedItem = products?.find((item) => item.id == id);
     setSelectedItem(matchedItem);
   };
 
@@ -37,6 +35,8 @@ const ItemsWithSelect = () => {
     if (item) {
       setItemList([...itemList, item]);
       dispatch(getItem(item));
+      setSelectedItem({});
+      setQuantity(0);
     }
   };
 
@@ -46,6 +46,8 @@ const ItemsWithSelect = () => {
     setItemList(newItemList);
     dispatch(deleteItem(newItemList));
   };
+
+  console.log(selectedItem);
 
   return (
     <div className="my-5">
@@ -61,7 +63,8 @@ const ItemsWithSelect = () => {
               required
               name="name"
             >
-              {productsData?.products?.map((item, i) => (
+              <option value="">Select Product</option>
+              {products?.map((item, i) => (
                 <option key={i} value={item?.id}>
                   {item?.name}
                 </option>
@@ -99,7 +102,7 @@ const ItemsWithSelect = () => {
             <input
               type="number"
               name="price"
-              defaultValue={parseInt(selectedItem?.price)}
+              value={Number(selectedItem?.price)}
               placeholder="Price"
               className="input input-bordered input-md w-full"
             />
@@ -184,6 +187,10 @@ const ItemsWithSelect = () => {
       </div>
     </div>
   );
+};
+
+ItemsWithSelect.propTypes = {
+  products: array,
 };
 
 export default ItemsWithSelect;

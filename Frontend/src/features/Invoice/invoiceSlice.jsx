@@ -13,10 +13,10 @@ const initialState = {
     company_address: "",
   },
   customer: {
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
+    customer_name: "",
+    customer_email: "",
+    customer_phone: "",
+    customer_address: "",
   },
   items: [],
   calculation: {

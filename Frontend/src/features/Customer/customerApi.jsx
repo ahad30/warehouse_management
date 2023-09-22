@@ -9,7 +9,7 @@ const customerApi = apiSlice.injectEndpoints({
         // url: "/posts",
         body: data,
       }),
-      invalidatesTags: ["Customers"],
+      invalidatesTags: ["Customers", "Invoices"],
     }),
     getCustomers: build.query({
       query: () => ({
