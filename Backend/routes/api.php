@@ -49,7 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(CompanyInfoController::class)->prefix('company')->group(function () {
         Route::get('/info', 'index');
         Route::get('/info/edit/{id}', 'edit');
-        Route::put('/info/update/{id}', 'update');
+        Route::put('/info/update', 'update');
     });
 
     Route::controller(CustomerController::class)->prefix('customers')->group(function () {

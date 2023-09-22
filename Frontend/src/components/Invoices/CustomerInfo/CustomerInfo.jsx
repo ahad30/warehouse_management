@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCustomerInfo } from "../../../features/Invoice/InvoiceSlice";
+import { array } from "prop-types";
 
-const CustomerInfo = () => {
+const CustomerInfo = ({ customers }) => {
   const dispatch = useDispatch();
+
   const [customer, setCustomer] = useState({
+    id: "",
     name: "",
     email: "",
     phone: "",
@@ -17,6 +20,13 @@ const CustomerInfo = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSelectedPhone = (phone) => {
+    const matchedCustomer = customers?.find(
+      (customer) => customer.phone === phone
+    );
+    setCustomer(matchedCustomer);
   };
 
   useEffect(() => {
@@ -34,6 +44,7 @@ const CustomerInfo = () => {
           placeholder="Customer Name"
           className="input input-bordered input-md w-full my-2"
           required
+          defaultValue={customer?.name}
         />
         <input
           onChange={handleInputChange}
@@ -41,24 +52,36 @@ const CustomerInfo = () => {
           type="email"
           placeholder="Email"
           className="input input-bordered input-md w-full my-2"
+          defaultValue={customer?.email}
         />
-        <input
-          onChange={handleInputChange}
-          name="phone"
-          type="text"
-          placeholder="Phone"
-          className="input input-bordered input-md w-full my-2"
-        />
+        <select
+          className="select select-bordered w-full"
+          onChange={(e) => handleSelectedPhone(e.target.value)}
+          required
+          name="name"
+        >
+          <option value="">Select Customer Phone</option>
+          {customers?.map((customer, i) => (
+            <option key={i} value={customer?.phone}>
+              {customer?.phone}
+            </option>
+          ))}
+        </select>
         <input
           onChange={handleInputChange}
           name="address"
           type="text"
           placeholder="Address"
           className="input input-bordered input-md w-full my-2"
+          defaultValue={customer?.address}
         />
       </form>
     </>
   );
+};
+
+CustomerInfo.propTypes = {
+  customers: array,
 };
 
 export default CustomerInfo;

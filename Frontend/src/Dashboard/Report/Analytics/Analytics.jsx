@@ -12,7 +12,6 @@ const Analytics = () => {
         <TotalSalesBar />
       </div>
     </DashboardBackground>
-    
   );
 };
 

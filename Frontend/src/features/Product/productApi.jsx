@@ -1,4 +1,3 @@
-import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
 
 const productApi = apiSlice.injectEndpoints({
@@ -6,16 +5,14 @@ const productApi = apiSlice.injectEndpoints({
     addProduct: builder.mutation({
       query: (data) => ({
         method: "POST",
-        headers: headers,
         url: "/products/store",
         // url: "/posts",
         body: data,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["Products", "Invoices"],
     }),
     getProducts: builder.query({
       query: () => ({
-        headers: headers,
         url: "/products",
         // url: "/posts",
       }),
@@ -23,7 +20,6 @@ const productApi = apiSlice.injectEndpoints({
     }),
     getProduct: builder.query({
       query: (id) => ({
-        headers: headers,
         url: `/products/edit/${id}`,
         // url: `/posts/${id}`,
       }),
@@ -31,7 +27,6 @@ const productApi = apiSlice.injectEndpoints({
     }),
     updateProduct: builder.mutation({
       query: (productData) => ({
-        headers: headers,
         url: `/products/update`,
         method: "PUT",
         // url: `/posts/${id}`,
@@ -42,7 +37,6 @@ const productApi = apiSlice.injectEndpoints({
     deleteProduct: builder.mutation({
       query: (id) => ({
         method: "DELETE",
-        headers: headers,
         url: `/products/delete/${id}`,
         // url: `/posts/${id}`,
       }),

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../features/Auth/authSlice";
+import { getUser, loginUser } from "../../features/Auth/authSlice";
 
 const Login = () => {
   const { handleSubmit, register } = useForm();
@@ -15,6 +15,7 @@ const Login = () => {
   };
   let user = JSON.parse(localStorage.getItem("user"));
   let token = user?.api_token;
+  dispatch(getUser());
 
   if (token) {
     return navigate("/dashboard");

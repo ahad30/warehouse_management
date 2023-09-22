@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AiOutlineDelete } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { deleteItem, getItem } from "../../../features/Invoice/InvoiceSlice";
-import productData from "../../../Dashboard/Products/productData.json";
+// import productData from "../../../Dashboard/Products/productData.json";
+import { array } from "prop-types";
 
-const ItemsWithSelect = () => {
+const ItemsWithSelect = ({ products }) => {
   const dispatch = useDispatch();
-  const data = useMemo(() => productData, []);
 
   const [selectedItem, setSelectedItem] = useState({});
   const [item, setItem] = useState({});
@@ -16,7 +16,7 @@ const ItemsWithSelect = () => {
 
   // SELECT AN ITEM FROM DATA FOR ADD TO INVOICE LIST
   const handleSelectedItem = (id) => {
-    const matchedItem = data.find((item) => item.id == id);
+    const matchedItem = products?.find((item) => item.id == id);
     setSelectedItem(matchedItem);
   };
 
@@ -35,6 +35,8 @@ const ItemsWithSelect = () => {
     if (item) {
       setItemList([...itemList, item]);
       dispatch(getItem(item));
+      setSelectedItem({});
+      setQuantity(0);
     }
   };
 
@@ -44,6 +46,8 @@ const ItemsWithSelect = () => {
     setItemList(newItemList);
     dispatch(deleteItem(newItemList));
   };
+
+  console.log(selectedItem);
 
   return (
     <div className="my-5">
@@ -59,7 +63,8 @@ const ItemsWithSelect = () => {
               required
               name="name"
             >
-              {data?.map((item, i) => (
+              <option value="">Select Product</option>
+              {products?.map((item, i) => (
                 <option key={i} value={item?.id}>
                   {item?.name}
                 </option>
@@ -73,8 +78,8 @@ const ItemsWithSelect = () => {
             <input
               type="text"
               name="code"
-              value={selectedItem?.code}
-              placeholder="Description"
+              defaultValue={selectedItem?.code}
+              placeholder="Code"
               className="input input-bordered input-md w-full"
             />
           </label>
@@ -85,7 +90,7 @@ const ItemsWithSelect = () => {
             <input
               type="text"
               name="desc"
-              value={selectedItem?.desc}
+              defaultValue={selectedItem?.desc}
               placeholder="Description"
               className="input input-bordered input-md w-full"
             />
@@ -93,12 +98,12 @@ const ItemsWithSelect = () => {
         </div>
         <div>
           <label htmlFor="invoice" className="">
-            <p>Rate:</p>
+            <p>Price:</p>
             <input
               type="number"
-              name="rate"
-              value={parseInt(selectedItem?.price)}
-              placeholder="Rate"
+              name="price"
+              value={Number(selectedItem?.price)}
+              placeholder="Price"
               className="input input-bordered input-md w-full"
             />
           </label>
@@ -122,8 +127,8 @@ const ItemsWithSelect = () => {
             <input
               type="text"
               name="desc"
-              value={selectedItem?.unit}
-              placeholder="Description"
+              defaultValue={selectedItem?.unit}
+              placeholder="Unit"
               className="input input-bordered input-md w-full"
             />
           </label>
@@ -182,6 +187,10 @@ const ItemsWithSelect = () => {
       </div>
     </div>
   );
+};
+
+ItemsWithSelect.propTypes = {
+  products: array,
 };
 
 export default ItemsWithSelect;

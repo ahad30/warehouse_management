@@ -1,4 +1,3 @@
-import { headers } from "../../utils/hooks/headers";
 import apiSlice from "../API/apiSlice";
 
 const categoryApi = apiSlice.injectEndpoints({
@@ -6,7 +5,6 @@ const categoryApi = apiSlice.injectEndpoints({
     addCategory: builder.mutation({
       query: (data) => ({
         method: "POST",
-        headers: headers,
         url: "/categories/store",
         // url: "/posts",
         body: data,
@@ -15,7 +13,6 @@ const categoryApi = apiSlice.injectEndpoints({
     }),
     getCategories: builder.query({
       query: () => ({
-        headers: headers,
         url: "/categories",
         // url: "/posts",
       }),
@@ -23,7 +20,6 @@ const categoryApi = apiSlice.injectEndpoints({
     }),
     getCategory: builder.query({
       query: (id) => ({
-        headers: headers,
         url: `/categories/edit/${id}`,
         // url: `/posts/${id}`,
       }),
@@ -32,7 +28,6 @@ const categoryApi = apiSlice.injectEndpoints({
     updateCategory: builder.mutation({
       query: (categoryData) => ({
         method: "PUT",
-        headers: headers,
         url: `/categories/update`,
         // url: `/posts/${id}`,
         body: categoryData,
@@ -42,7 +37,6 @@ const categoryApi = apiSlice.injectEndpoints({
     deleteCategory: builder.mutation({
       query: (id) => ({
         method: "DELETE",
-        headers: headers,
         url: `/categories/delete/${id}`,
         // url: `/posts/${id}`,
       }),

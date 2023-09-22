@@ -45,9 +45,9 @@ class CompanyInfoController extends Controller
     }
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $company_info = CompanyInfo::find($id);
+        $company_info = CompanyInfo::find($request->id);
 
         if ($company_info) {
             $codeValidation = Validator::make($request->all(), [
