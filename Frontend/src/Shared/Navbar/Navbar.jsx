@@ -51,6 +51,13 @@ const Navbar = () => {
             <li>
               {user && (
                 <div className="hidden lg:block">
+                  <p>{user?.email}</p>
+                </div>
+              )}
+            </li>
+            <li>
+              {user && (
+                <div className="hidden lg:block">
                   <Link to={"/dashboard"}>Dashboard</Link>
                 </div>
               )}
@@ -76,8 +83,11 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <label htmlFor="dashboard-drawer" className="sm:hidden drawer-button lg:hidden">
-          <RxHamburgerMenu size={30}/>
+        <label
+          htmlFor="dashboard-drawer"
+          className="sm:hidden drawer-button lg:hidden"
+        >
+          <RxHamburgerMenu size={30} />
         </label>
       </div>
     </div>

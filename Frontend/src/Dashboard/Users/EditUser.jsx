@@ -129,15 +129,22 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
+                      <span className="font-semibold min-w-[100px]">
                         Role<span className="text-red-500 p-0">*</span>
                       </span>
-                      <input
-                        type="text"
-                        placeholder="Role"
-                        className="input input-bordered w-full"
+                      <select
+                        className="select select-bordered w-full"
                         {...register("role")}
-                      />
+                        required
+                      >
+                        <option value={""}>Select Role</option>
+                        <option value={"admin"}>Admin</option>
+                        <option value={"accountant"}>Accountant</option>
+                        <option value={"manager"}>Manager</option>
+                        <option value={"sales_representative"}>
+                          Sales Representative
+                        </option>
+                      </select>
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">

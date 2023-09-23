@@ -1,68 +1,54 @@
-import { ImDownload2, ImPrinter } from "react-icons/im";
-import { GrPowerReset } from "react-icons/gr";
-import { AiOutlineSave } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {
-  getTotalPrice,
-  resetState,
-} from "../../../features/Invoice/InvoiceSlice";
-import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
+import { getTotalPrice } from "../../../features/Invoice/InvoiceSlice";
 
 const Calculation = () => {
-  const store = useSelector((state) => state.invoice);
-  const { items } = store;
+  const invoice = useSelector((state) => state.invoice);
+  const { items, calculation } = invoice;
+
   const dispatch = useDispatch();
 
-  const [subTotalPrice, setSubTotalPrice] = useState(0);
-  const [discountPrice, setDiscountPrice] = useState(0);
-  const [shippingCost, setShippingCost] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [shipping, setShipping] = useState(0);
+  const [total, setTotal] = useState(0);
 
   let totalItemsPrice = items?.map(
     (item) => parseInt(item?.price) * item?.quantity
   );
-
-  // redux
-  const [newInvoice, { data }] = useNewInvoiceMutation();
+  console.log(subTotal);
 
   useEffect(() => {
-    setSubTotalPrice(totalItemsPrice?.reduce((prev, cur) => prev + cur, 0));
+    setSubTotal(totalItemsPrice?.reduce((prev, cur) => prev + cur, 0));
 
-    setTotalPrice(subTotalPrice - discountPrice + shippingCost);
-  }, [totalItemsPrice, subTotalPrice, discountPrice, shippingCost]);
+    setTotal(subTotal - discount + shipping);
+  }, [totalItemsPrice, subTotal, discount, shipping]);
 
   // Total Price send to the Redux store
   useEffect(() => {
     let calculation = {
-      subTotalPrice,
-      discountPrice,
-      shippingCost,
-      totalPrice,
+      subTotal,
+      discount,
+      shipping,
+      total,
     };
-    dispatch(getTotalPrice(calculation));
-  }, [subTotalPrice, discountPrice, shippingCost, totalPrice, dispatch]);
 
-  const handleNewInvoice = (data) => {
-    console.log(data);
-    newInvoice(data);
-  };
+    dispatch(getTotalPrice(calculation));
+  }, [subTotal, discount, shipping, total, dispatch]);
 
   const handleDiscountPrice = (event) => {
     const { value } = event.target;
-    setDiscountPrice(Number(value));
+    setDiscount(Number(value));
   };
 
   const handleShippingCost = (event) => {
     const { value } = event.target;
-    setShippingCost(Number(value));
+    setShipping(Number(value));
   };
 
-  const handleResetState = () => {
-    dispatch(resetState());
-    window.location.reload(false);
-  };
-  console.log(data);
+  console.log(calculation.subTotal, discount, shipping, total);
+  console.log(invoice);
+
   return (
     <div className="my-5">
       <h2 className="text-2xl font-bold mb-3">Calculations</h2>
@@ -71,7 +57,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Subtotal:</span>
           <input
             type="number"
-            defaultValue={subTotalPrice}
+            defaultValue={calculation?.subTotal}
             placeholder="Subtotal"
             className="input input-bordered w-full max-w-xs"
             readOnly
@@ -81,7 +67,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Discount:</span>
           <input
             onChange={handleDiscountPrice}
-            defaultValue={discountPrice}
+            defaultValue={discount}
             type="number"
             placeholder="Discount"
             className="input input-bordered w-full max-w-xs"
@@ -91,7 +77,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Shipping:</span>
           <input
             onChange={handleShippingCost}
-            defaultValue={shippingCost}
+            defaultValue={shipping}
             type="number"
             placeholder="Shipping"
             className="input input-bordered w-full max-w-xs"
@@ -101,37 +87,11 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Total:</span>
           <input
             type="number"
-            defaultValue={totalPrice}
+            defaultValue={calculation?.total}
             placeholder="Total"
             className="input input-bordered w-full max-w-xs"
             readOnly
           />
-        </div>
-      </div>
-      <div className="flex justify-center mt-10">
-        <div className="btn-group border btn-group-vertical lg:btn-group-horizontal">
-          <button
-            onClick={() => handleNewInvoice(store)}
-            className="btn btn-success text-white"
-          >
-            <AiOutlineSave /> Save
-          </button>
-          <button className="btn btn-secondary text-white">
-            {" "}
-            <ImDownload2 /> Download
-          </button>
-          <button className="btn btn-accent text-white">
-            {" "}
-            <ImPrinter />
-            Print
-          </button>
-          <button
-            onClick={handleResetState}
-            className="btn bg-red-600 text-white"
-          >
-            {" "}
-            <GrPowerReset color="white" /> Reset
-          </button>
         </div>
       </div>
     </div>

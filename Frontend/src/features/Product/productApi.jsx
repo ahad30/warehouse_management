@@ -9,7 +9,7 @@ const productApi = apiSlice.injectEndpoints({
         // url: "/posts",
         body: data,
       }),
-      invalidatesTags: ["Products", "Invoices"],
+      invalidatesTags: ["Products", "Invoices", "Dashboard"],
     }),
     getProducts: builder.query({
       query: () => ({

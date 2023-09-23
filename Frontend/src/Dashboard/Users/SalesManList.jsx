@@ -5,26 +5,26 @@ import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/useLoading";
+import EditUser from "./EditUser";
 import {
-  useDeleteInvoiceMutation,
-  useGetInvoicesQuery,
-} from "../../features/Invoice/InvoiceApi";
-import EditInvoice from "./EditInvoice";
+  useDeleteUserMutation,
+  useGetUsersQuery,
+} from "../../features/User/userApi";
 
-const InvoicesList = () => {
+const SalesManList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [invoice, setInvoice] = useState({});
+  const [user, setUser] = useState({});
 
   const {
-    data: invoicesData,
-    isLoading: invoicesIsLoading,
-    isError: invoicesIsError,
-    error: invoicesError,
-    isSuccess: invoicesIsSuccess,
-  } = useGetInvoicesQuery();
+    data: usersData,
+    isLoading: usersIsLoading,
+    isError: usersIsError,
+    error: usersError,
+    isSuccess: usersIsSuccess,
+  } = useGetUsersQuery();
 
   const [
-    deleteInvoice,
+    deleteUser,
     {
       isLoading: deleteIsLoading,
       isError: deleteIsError,
@@ -32,11 +32,11 @@ const InvoicesList = () => {
       isSuccess: deleteIsSuccess,
       data: deleteData,
     },
-  ] = useDeleteInvoiceMutation();
+  ] = useDeleteUserMutation();
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteInvoice(id);
+    deleteUser(id);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const InvoicesList = () => {
     }
 
     if (deleteIsError) {
-      toast.error(deleteData?.message || deleteError?.data?.message, { id: 1 });
+      toast.error(deleteData?.message || deleteError?.status, { id: 1 });
     }
 
     if (deleteIsSuccess) {
@@ -58,17 +58,10 @@ const InvoicesList = () => {
     deleteIsSuccess,
     deleteData,
   ]);
-  // DELETE ENDS
-  console.log(
-    deleteIsLoading,
-    deleteIsError,
-    deleteError,
-    deleteIsSuccess,
-    deleteData
-  );
+
   // EDIT STARTS
-  const handleModalEditInfo = (invoice) => {
-    setInvoice(invoice);
+  const handleModalEditInfo = (user) => {
+    setUser(user);
     setModalIsOpen(true);
   };
   // EDIT ENDS
@@ -81,48 +74,48 @@ const InvoicesList = () => {
 
   const columns = [
     { key: "id", header: "ID" },
-    { key: "invoice_no", header: "Invoice Number" },
-    { key: "invoice_date", header: "Invoice Date" },
-    { key: "customer_name", header: "Customer Name" },
-    { key: "customer_email", header: "Customer Email" },
-    { key: "customer_phone", header: "Customer Phone" },
-    { key: "customer_address", header: "Billing Address" },
-    { key: "discount", header: "Discount" },
-    { key: "shipping", header: "Shipping" },
-    { key: "total", header: "Total" },
-    // { key: "created_at", header: "Created At" },
+    { key: "name", header: "Name" },
+    { key: "email", header: "Email" },
+    { key: "phone", header: "Phone" },
+    { key: "role", header: "Role" },
+    { key: "status", header: "Status" },
+    { key: "address", header: "Address" },
+    { key: "city", header: "City" },
+    { key: "country", header: "Country" },
   ];
 
-  // INVOICES CONTENT
+  // USERS CONTENT
   let content;
 
-  // ALL INVOICES
-  if (invoicesIsLoading) {
+  // ALL USERS
+  if (usersIsLoading) {
     return (content = <UseLoading />);
   }
 
-  if (invoicesIsError) {
-    console.error(invoicesError);
+  if (usersIsError) {
+    console.error(usersError);
   }
 
-  if (!invoicesData?.status) {
+  if (!usersData?.status) {
     return (content = (
       <>
-        <p className="text-center text-2xl mt-10">{invoicesData?.message}</p>
+        <p className="text-center text-2xl mt-10">{usersData?.message}</p>
       </>
     ));
   }
 
-  if (invoicesIsSuccess && invoicesData?.status) {
+  if (usersIsSuccess && usersData?.status) {
     content = (
       <>
         <UseTable
-          data={invoicesData?.invoices}
+          data={usersData?.users.filter(
+            (user) => user.role === "sales_representative"
+          )}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
-          btnTitle={"Add Invoice"}
-          btnPath={"/dashboard/invoice/new"}
+          btnTitle={"Add User"}
+          btnPath={"/dashboard/user/add"}
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
         />
@@ -134,11 +127,12 @@ const InvoicesList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Invoices {invoicesData?.invoices?.length}
+          Users {usersData?.customers?.length}
         </TableHeadingTitle>
+        {/* Users Table */}
         {content}
-        <EditInvoice
-          invoice={invoice}
+        <EditUser
+          user={user}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
@@ -147,4 +141,4 @@ const InvoicesList = () => {
   );
 };
 
-export default InvoicesList;
+export default SalesManList;
