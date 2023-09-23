@@ -79,13 +79,21 @@ const InvoicesList = () => {
   };
   // SEARCH FILTERING ENDS
 
+  // HANDLE PDF DOWNLOAD
+  const handleInvoicePDF = (data) => {
+    console.log(data);
+  };
+
+  // HANDLE INVOICE VIEW WITH MODAL
+  const handleInvoiceView = (data) => {
+    console.log(data);
+  }
+
   const columns = [
     { key: "id", header: "ID" },
     { key: "invoice_no", header: "Invoice Number" },
     { key: "invoice_date", header: "Invoice Date" },
     { key: "customer_name", header: "Customer Name" },
-    { key: "customer_email", header: "Customer Email" },
-    { key: "customer_phone", header: "Customer Phone" },
     { key: "customer_address", header: "Billing Address" },
     { key: "discount", header: "Discount" },
     { key: "shipping", header: "Shipping" },
@@ -121,6 +129,8 @@ const InvoicesList = () => {
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
+          handleInvoicePDF={handleInvoicePDF}
+          handleInvoiceView={handleInvoiceView}
           btnTitle={"Add Invoice"}
           btnPath={"/dashboard/invoice/new"}
           btnIcon={<BiCartAdd size={20} />}

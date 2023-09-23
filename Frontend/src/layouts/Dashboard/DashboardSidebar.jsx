@@ -21,7 +21,6 @@ import { useSelector } from "react-redux";
 
 const DashboardSidebar = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
   const [sideBarData, setSidebarData] = useState([
     {
       name: "Users",

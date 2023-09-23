@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import { getTotalPrice } from "../../../features/Invoice/InvoiceSlice";
 
 const Calculation = () => {
+  const dispatch = useDispatch();
   const invoice = useSelector((state) => state.invoice);
   const { items, calculation } = invoice;
-
-  const dispatch = useDispatch();
 
   const [subTotal, setSubTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
@@ -16,7 +15,6 @@ const Calculation = () => {
   let totalItemsPrice = items?.map(
     (item) => parseInt(item?.price) * item?.quantity
   );
-  console.log(subTotal);
 
   useEffect(() => {
     setSubTotal(totalItemsPrice?.reduce((prev, cur) => prev + cur, 0));
@@ -45,9 +43,6 @@ const Calculation = () => {
     const { value } = event.target;
     setShipping(Number(value));
   };
-
-  console.log(calculation.subTotal, discount, shipping, total);
-  console.log(invoice);
 
   return (
     <div className="my-5">
