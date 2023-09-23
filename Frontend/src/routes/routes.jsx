@@ -20,6 +20,10 @@ import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import InvoiceA4 from "../components/InvoicePages/InvoiceA4";
+import AdminRoute from "./AdminRoute";
+import AdminList from "../Dashboard/Users/AdminList";
+import ManagerList from "../Dashboard/Users/ManagerList";
+import SalesManList from "../Dashboard/Users/SalesManList";
 
 const routes = createBrowserRouter([
   {
@@ -65,11 +69,46 @@ const routes = createBrowserRouter([
       // USERS
       {
         path: "/dashboard/user",
-        element: <UsersList />,
+        element: (
+          <AdminRoute>
+            <UsersList />
+          </AdminRoute>
+        ),
+      },
+      // Admins
+      {
+        path: "/dashboard/user/admins",
+        element: (
+          <AdminRoute>
+            <AdminList />
+          </AdminRoute>
+        ),
+      },
+      // Managers
+      {
+        path: "/dashboard/user/managers",
+        element: (
+          <AdminRoute>
+            <ManagerList />
+          </AdminRoute>
+        ),
+      },
+      // Managers
+      {
+        path: "/dashboard/user/sales-man",
+        element: (
+          <AdminRoute>
+            <SalesManList />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/user/add",
-        element: <AddUser />,
+        element: (
+          <AdminRoute>
+            <AddUser />
+          </AdminRoute>
+        ),
       },
       // CUSTOMERS
       {

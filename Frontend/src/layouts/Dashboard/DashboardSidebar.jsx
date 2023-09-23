@@ -16,9 +16,13 @@ import { FaFileInvoiceDollar } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { BsFiletypePdf, BsFillCartFill, BsPieChartFill } from "react-icons/bs";
 import { GiSettingsKnobs } from "react-icons/gi";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const DashboardSidebar = () => {
-  const sideBarData = [
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
+  const [sideBarData, setSidebarData] = useState([
     {
       name: "Users",
       icon: <BiUserCircle size={25} />,
@@ -29,8 +33,24 @@ const DashboardSidebar = () => {
           icon: <AiOutlineUserAdd size={20} />,
         },
         {
-          name: "Users list",
+          name: "All Users list",
           link: "/dashboard/user",
+          icon: <FiUsers size={20} />,
+        },
+        {
+          name: "Admin list",
+          link: "/dashboard/user/admins",
+          icon: <FiUsers size={20} />,
+          adminOnly: true,
+        },
+        {
+          name: "Manager list",
+          link: "/dashboard/user/managers",
+          icon: <FiUsers size={20} />,
+        },
+        {
+          name: "Sales Man list",
+          link: "/dashboard/user/sales-man",
           icon: <FiUsers size={20} />,
         },
       ],
@@ -131,7 +151,15 @@ const DashboardSidebar = () => {
         // },
       ],
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (user?.role !== "admin") {
+      setSidebarData((prev) =>
+        prev.filter((section) => section.name !== "Users")
+      );
+    }
+  }, [user]);
 
   return (
     <div className="bg-white">
@@ -159,14 +187,24 @@ const DashboardSidebar = () => {
             </div>
             <div className="collapse-content ml-5">
               <ul className="flex flex-col gap-3">
-                {sideBar?.subLinks?.map((link, i) => (
-                  <span key={i} className="flex items-center gap-x-2">
-                    {link?.icon}
-                    <Link key={i} to={link?.link}>
-                      {link?.name}
-                    </Link>
-                  </span>
-                ))}
+                {sideBar?.subLinks?.map((link, i) =>
+                  (user?.role === "admin" && link?.adminOnly) ||
+                  user?.role !== "admin" ? (
+                    <span key={i} className="flex items-center gap-x-2">
+                      {link?.icon}
+                      <Link key={i} to={link?.link}>
+                        {link?.name}
+                      </Link>
+                    </span>
+                  ) : (
+                    <span key={i} className="flex items-center gap-x-2">
+                      {link?.icon}
+                      <Link key={i} to={link?.link}>
+                        {link?.name}
+                      </Link>
+                    </span>
+                  )
+                )}
               </ul>
             </div>
           </div>

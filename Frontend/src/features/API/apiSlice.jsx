@@ -21,8 +21,9 @@ const apiSlice = createApi({
     "Invoices",
     "Company",
     "Profile",
+    "Dashboard",
   ],
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });
 
 export default apiSlice;

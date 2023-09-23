@@ -11,7 +11,7 @@ const ItemsWithSelect = ({ products }) => {
 
   const [selectedItem, setSelectedItem] = useState({});
   const [item, setItem] = useState({});
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [itemList, setItemList] = useState([]);
 
   // SELECT AN ITEM FROM DATA FOR ADD TO INVOICE LIST
@@ -36,7 +36,7 @@ const ItemsWithSelect = ({ products }) => {
       setItemList([...itemList, item]);
       dispatch(getItem(item));
       setSelectedItem({});
-      setQuantity(0);
+      setQuantity(1);
     }
   };
 
@@ -46,8 +46,6 @@ const ItemsWithSelect = ({ products }) => {
     setItemList(newItemList);
     dispatch(deleteItem(newItemList));
   };
-
-  console.log(selectedItem);
 
   return (
     <div className="my-5">
@@ -115,9 +113,10 @@ const ItemsWithSelect = ({ products }) => {
               type="number"
               name="quantity"
               placeholder="Quantity"
+              defaultValue={quantity}
               className="input input-bordered input-md w-full"
-              // defaultValue={quantity}
               onChange={handleQuantity}
+              required
             />
           </label>
         </div>
@@ -135,7 +134,11 @@ const ItemsWithSelect = ({ products }) => {
         </div>
       </div>
       <div className="flex justify-end">
-        <button className="btn btn-primary btn-sm mt-2" onClick={handleAddItem}>
+        <button
+          className="btn btn-primary btn-sm mt-2"
+          disabled={!selectedItem?.name}
+          onClick={handleAddItem}
+        >
           Add item
         </button>
       </div>

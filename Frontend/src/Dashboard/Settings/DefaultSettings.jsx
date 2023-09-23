@@ -6,8 +6,11 @@ import {
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const DefaultSettings = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const { data: companyInfoData } = useGetCompanyInfoQuery();
   const [
     updateCompanyInfo,
@@ -138,69 +141,89 @@ const DefaultSettings = () => {
             type="text"
             placeholder="Name"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.name}
           />
           <input
             name="email"
             type="email"
             placeholder="Email"
             className="input input-bordered input-md w-full my-2"
+            defaultValue={user?.email}
           />
           <input
             name="phone"
             type="text"
             placeholder="Phone"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.phone}
           />
-          <input
+          {/* <input
             name="role"
             type="text"
             placeholder="Role"
             className="input input-bordered input-md w-full my-2"
-            required
-          />
+            defaultValue={user?.role}
+          /> */}
+          <select
+            className="select select-bordered w-full my-2"
+            {...register("role")}
+            defaultValue={user?.role}
+          >
+            <option value={""}>Select Role</option>
+            <option value={"admin"}>Admin</option>
+            <option value={"accountant"}>Accountant</option>
+            <option value={"manager"}>Manager</option>
+            <option value={"sales_representative"}>Sales Representative</option>
+          </select>
+          <select
+            className="select select-bordered w-full my-2"
+            {...register("status")}
+            defaultValue={user?.status}
+          >
+            <option value={""}>Select Status</option>
+            <option value={"active"}>Active</option>
+            <option value={"inactive"}>Inactive</option>
+          </select>
           <input
             name="address"
             type="text"
             placeholder="Address"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.address}
           />
           <input
             name="zip_code"
             type="text"
             placeholder="Zip Code"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.zip_code}
           />
           <input
             name="city"
             type="text"
             placeholder="city"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.city}
           />
           <input
             name="state"
             type="text"
             placeholder="state"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.country}
           />
           <input
             name="country"
             type="text"
             placeholder="country"
             className="input input-bordered input-md w-full my-2"
-            required
+            defaultValue={user?.country}
           />
           <input
             type="submit"
             // className="input input-bordered input-md my-2"
             className="btn bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
             defaultValue={"Update Profile"}
-            required
           />
         </form>
       </div>

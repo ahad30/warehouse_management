@@ -9,7 +9,7 @@ const userApi = apiSlice.injectEndpoints({
         // url: "/posts",
         body: data,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ["Users", "Dashboard"],
     }),
     getUsers: builder.query({
       query: () => ({

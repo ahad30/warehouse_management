@@ -3,6 +3,7 @@ import Calculation from "../../../components/Invoices/Calculation/Calculation";
 // import InvoiceInfo from "../../../components/Invoices/InvoiceInfo/InvoiceInfo";
 // import ItemsWithCustom from "../../../components/Invoices/Items/ItemsWithCustom";
 import ItemsWithSelect from "../../../components/Invoices/Items/ItemsWithSelect";
+import SubmitInvoice from "../../../components/Invoices/SubmitInvoice/SubmitInvoice";
 import UseLoading from "../../../components/Reusable/useLoading/useLoading";
 import { useGetInvoiceInfosQuery } from "../../../features/Invoice/InvoiceApi";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
@@ -38,6 +39,7 @@ const NewInvoice = () => {
         {/* <ItemsWithCustom /> */}
         <ItemsWithSelect products={data?.data?.products} />
         <Calculation />
+        <SubmitInvoice />
       </DashboardBackground>
     );
 };
