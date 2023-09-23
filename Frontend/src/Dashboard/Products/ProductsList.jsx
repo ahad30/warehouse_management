@@ -74,6 +74,7 @@ const ProductsList = () => {
 
   const columns = [
     { key: "id", header: "ID" },
+    { key: "img", header: "Image" },
     { key: "name", header: "Name" },
     { key: "code", header: "Code" },
     { key: "price", header: "Price" },

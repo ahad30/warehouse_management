@@ -3,7 +3,7 @@ import { QRCodeCanvas } from "qrcode.react";
 const InvoiceA4 = () => {
   return (
     // <div className="w-[2480px] h-[3508px] border p-5">
-    <div className="max-w-full p-5 hidden">
+    <div className="max-w-full p-5">
       {/* Invoice from */}
       <div className="flex justify-between items-center border-b-2 pb-5 my-5">
         <div>

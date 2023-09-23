@@ -27,7 +27,7 @@ const invoiceApi = apiSlice.injectEndpoints({
 
     getInvoice: builder.query({
       query: (id) => ({
-        url: `/categories/edit/${id}`,
+        url: `/invoice/edit/${id}`,
         // url: `/posts/${id}`,
       }),
       providesTags: ["Invoices"],
@@ -35,7 +35,7 @@ const invoiceApi = apiSlice.injectEndpoints({
     updateInvoice: builder.mutation({
       query: ({ id, invoiceData }) => ({
         method: "PUT",
-        url: `/categories/update/${id}`,
+        url: `/invoice/update/${id}`,
         // url: `/posts/${id}`,
         body: invoiceData,
       }),
@@ -44,7 +44,7 @@ const invoiceApi = apiSlice.injectEndpoints({
     deleteInvoice: builder.mutation({
       query: (id) => ({
         method: "DELETE",
-        url: `/categories/delete/${id}`,
+        url: `/invoice/delete/${id}`,
         // url: `/posts/${id}`,
       }),
       invalidatesTags: ["Invoices"],
