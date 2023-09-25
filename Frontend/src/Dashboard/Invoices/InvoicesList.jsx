@@ -10,9 +10,11 @@ import {
   useGetInvoicesQuery,
 } from "../../features/Invoice/InvoiceApi";
 import EditInvoice from "./EditInvoice";
+import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
 
 const InvoicesList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
 
   const {
@@ -59,13 +61,7 @@ const InvoicesList = () => {
     deleteData,
   ]);
   // DELETE ENDS
-  console.log(
-    deleteIsLoading,
-    deleteIsError,
-    deleteError,
-    deleteIsSuccess,
-    deleteData
-  );
+
   // EDIT STARTS
   const handleModalEditInfo = (invoice) => {
     setInvoice(invoice);
@@ -85,9 +81,11 @@ const InvoicesList = () => {
   };
 
   // HANDLE INVOICE VIEW WITH MODAL
-  const handleInvoiceView = (data) => {
+  const handleViewInvoice = (data) => {
+    setInvoice(data);
+    setViewInvoiceOpen(true);
     console.log(data);
-  }
+  };
 
   const columns = [
     { key: "id", header: "ID" },
@@ -130,7 +128,7 @@ const InvoicesList = () => {
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
           handleInvoicePDF={handleInvoicePDF}
-          handleInvoiceView={handleInvoiceView}
+          handleViewInvoice={handleViewInvoice}
           btnTitle={"Add Invoice"}
           btnPath={"/dashboard/invoice/new"}
           btnIcon={<BiCartAdd size={20} />}
@@ -151,6 +149,11 @@ const InvoicesList = () => {
           invoice={invoice}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
+        />
+        <ViewInvoice
+          invoice={invoice}
+          viewInvoiceOpen={viewInvoiceOpen}
+          setViewInvoiceOpen={setViewInvoiceOpen}
         />
       </DashboardBackground>
     </>

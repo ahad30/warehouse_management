@@ -12,7 +12,7 @@ const UseTable = ({
   onDelete,
   handleModalEditInfo,
   handleInvoicePDF,
-  handleInvoiceView,
+  handleViewInvoice,
   btnTitle,
   btnPath,
   btnIcon,
@@ -67,30 +67,34 @@ const UseTable = ({
                         size={20}
                       />
                     )}
-                    {handleInvoiceView && (
+                    {handleViewInvoice && (
                       <BsFillEyeFill
                         onClick={() => {
-                          handleInvoiceView(row);
+                          handleViewInvoice(row);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    )}
+                    {handleModalEditInfo && (
+                      <FiEdit
+                        onClick={() => {
+                          handleModalEditInfo(row);
                         }}
                         className="cursor-pointer"
                         size={20}
                       />
                     )}
 
-                    <FiEdit
-                      onClick={() => {
-                        handleModalEditInfo(row);
-                      }}
-                      className="cursor-pointer"
-                      size={20}
-                    />
-                    <RiDeleteBin4Line
-                      onClick={() => {
-                        onDelete(row?.id);
-                      }}
-                      className="cursor-pointer"
-                      size={20}
-                    />
+                    {onDelete && (
+                      <RiDeleteBin4Line
+                        onClick={() => {
+                          onDelete(row?.id);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    )}
                   </div>
                 </td>
               </tr>
@@ -124,7 +128,7 @@ UseTable.propTypes = {
   setModalIsOpen: func,
   editItem: object,
   handleInvoicePDF: func,
-  handleInvoiceView: func,
+  handleViewInvoice: func,
 };
 
 export default UseTable;

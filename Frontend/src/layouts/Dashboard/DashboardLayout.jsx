@@ -18,7 +18,7 @@ const DashboardLayout = () => {
           {/* Dashboard  content*/}
           <Outlet />
         </div>
-        <div className="drawer-side shadow-xl z-50 top-auto">
+        <div className="drawer-side shadow-xl -z-0 top-auto">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           {/* Dashboard sidebar */}
           <DashboardSidebar />
