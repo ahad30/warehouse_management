@@ -2,7 +2,7 @@ import { ImDownload2, ImPrinter } from "react-icons/im";
 import { GrPowerReset } from "react-icons/gr";
 import { AiOutlineSave } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { resetState } from "../../../features/Invoice/InvoiceSlice";
+import { resetState } from "../../../features/Invoice/invoiceSlice";
 import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";

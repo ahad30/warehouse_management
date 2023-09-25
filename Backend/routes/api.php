@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\CustomerController;
@@ -74,4 +75,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
+});
+
+Route::group(['prefix' => 'jwt'], function () {
+    Route::middleware('verifyAdmin')->post('/register', [JwtAuthController::class, 'register']);
+    Route::post('/login', [JwtAuthController::class, 'login']);
 });

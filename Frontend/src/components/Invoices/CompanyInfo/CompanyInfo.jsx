@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getCompanyInfo } from "../../../features/Invoice/InvoiceSlice";
+import { getCompanyInfo } from "../../../features/Invoice/invoiceSlice";
 import { object } from "prop-types";
 
 const CompanyInfo = ({ company_info }) => {

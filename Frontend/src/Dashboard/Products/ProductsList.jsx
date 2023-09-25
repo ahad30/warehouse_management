@@ -4,11 +4,11 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../features/Product/productApi";
-import UseTable from "../../components/Reusable/useTable/useTable";
+import UseTable from "../../components/Reusable/useTable/UseTable";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import UseLoading from "../../components/Reusable/useLoading/useLoading";
+import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditProduct from "./EditProduct";
 
 const ProductsList = () => {

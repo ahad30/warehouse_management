@@ -4,7 +4,7 @@ import Calculation from "../../../components/Invoices/Calculation/Calculation";
 // import ItemsWithCustom from "../../../components/Invoices/Items/ItemsWithCustom";
 import ItemsWithSelect from "../../../components/Invoices/Items/ItemsWithSelect";
 import SubmitInvoice from "../../../components/Invoices/SubmitInvoice/SubmitInvoice";
-import UseLoading from "../../../components/Reusable/useLoading/useLoading";
+import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
 import { useGetInvoiceInfosQuery } from "../../../features/Invoice/InvoiceApi";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 

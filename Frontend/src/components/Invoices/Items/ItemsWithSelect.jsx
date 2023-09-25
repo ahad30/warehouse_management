@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AiOutlineDelete } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
-import { deleteItem, getItem } from "../../../features/Invoice/InvoiceSlice";
-// import productData from "../../../Dashboard/Products/productData.json";
+import { deleteItem, getItem } from "../../../features/Invoice/invoiceSlice";
+import productData from "../../../Dashboard/Products/productData.json";
 import { array } from "prop-types";
 
 const ItemsWithSelect = ({ products }) => {
