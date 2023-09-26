@@ -3,8 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Sanctum\HasApiTokens;
+use App\Models\Role;
 
+use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone',
-        'role',
+        'role_id',
         'status',
         'address',
         'zip_code',
@@ -70,5 +71,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getRole()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 }

@@ -15,12 +15,20 @@ class JwtAuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user() != null) {
-            return $next($request);
+        try {
+            $user = auth()->user();
+            if ($user != null && $user->name == null) {
+                return $next($request);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 401);
         }
         return response()->json([
             'status' => false,
-            'message' => "unauthorized"
+            'message' => "Unauthorized"
         ], 401);
     }
 }

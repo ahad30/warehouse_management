@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,12 +17,25 @@ class VerifyAdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        if (auth()->user() != null && auth()->user()->role == 'admin') {
-            return $next($request);
+
+
+
+        $user = auth()->user();
+        try {
+            $userWithRole = User::where('id', $user->id)->with('getRole')->first();
+            if ($user != null && $userWithRole->getRole->role == 'admin') {
+                return $next($request);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 401);
         }
 
         return response()->json([
-            'message' => "unauthorized"
+            'status' => false,
+            'message' => "Unauthorized You don't have permission"
         ], 401);
     }
 }

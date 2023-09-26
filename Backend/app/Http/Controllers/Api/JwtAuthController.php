@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use Carbon\Carbon;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +38,7 @@ class JwtAuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'role' => ['required', 'string'],
+            'role_id' => ['required', 'int'],
             'status' => ['required', 'string'],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string'],
@@ -48,10 +50,23 @@ class JwtAuthController extends Controller
 
         if ($codeValidation->fails()) {
             return response()->json([
+                'status' => false,
                 'message' => 'validation error',
                 'errors' => $codeValidation->errors()
             ], 400);
         }
+
+        /* ----------------------- checking roles from database ---------------------- */
+
+        $role = Role::find($request->role_id);
+        if ($role == null) {
+            return response()->json([
+                'status' => false,
+                'message' => "role doesn't exist",
+
+            ], 404);
+        }
+
         /* ------------------------------ image upload ------------------------------ */
         $imageData = null;
         if ($request->img != null) {
@@ -65,7 +80,7 @@ class JwtAuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role_id' => $request->role_id,
             'status' => $request->status,
             'phone' => $request->phone,
             'address' => $request->address,
@@ -121,16 +136,26 @@ class JwtAuthController extends Controller
             // checking users input with database's data. If exists receiving a jwt token and saving it to database
             if ($token = $this->guard()->attempt($credentials)) {
                 $user = auth()->user();
+
+
                 $user->jwt_token = $token;
                 $user->token_expire_time = Carbon::now()->addDay();
                 $user->save();
+                // finding role with user using user role_id
 
-                return response()->json([
-                    'status' => true,
-                    'message' => 'User Logged In Successfully',
+                $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
+                $role = $roleWithUser->getRole->role;
 
-                    'user' => $user
-                ], 200);
+                if (!is_null($role)) {
+                    // $payload = JWTAuth::decode($user);
+
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'user  found',
+                        'user' => $roleWithUser
+                    ]);
+                }
+
             }
 
         } catch (\Throwable $th) {
@@ -149,10 +174,6 @@ class JwtAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
-    {
-        return response()->json($this->guard()->user());
-    }
 
     /**
      * Log the user out (Invalidate the token)
@@ -163,7 +184,10 @@ class JwtAuthController extends Controller
     {
         $this->guard()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json([
+            'status' => true,
+            'message' => 'Successfully logged out'
+        ], 200);
     }
 
     /**
@@ -200,5 +224,46 @@ class JwtAuthController extends Controller
     public function guard()
     {
         return Auth::guard();
+    }
+
+
+    public function findLoggedInUser()
+    {
+
+
+
+        $user = $this->guard()->user();
+
+
+
+        if (!is_null($user)) {
+            $tokenExpireTime = strtotime($user->token_expire_time);
+            $timeNow = strtotime(Carbon::now());
+            $diff = $tokenExpireTime - $timeNow;
+            if ($diff <= 0) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Unauthorized or Access token has expired'
+                ], 401);
+            }
+            $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
+            $role = $roleWithUser->getRole->role;
+
+            if (!is_null($role)) {
+                // $payload = JWTAuth::decode($user);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'user  found',
+                    'user' => $roleWithUser
+                ]);
+            }
+
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'user not found'
+        ], 404);
     }
 }
