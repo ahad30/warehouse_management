@@ -73,7 +73,7 @@ class JwtAuthController extends Controller
             $file = $request->file('img');
             $filename = $file->getClientOriginalName();
             $imageData = time() . '-' . $filename;
-            $file->move('uploads', $imageData);
+            $file->move('uploads/users', $imageData);
         }
         // return asset($imageData);
         $user = User::create([
