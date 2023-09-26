@@ -32,19 +32,19 @@ Route::group(['prefix' => 'jwt', 'as' => 'jwt.'], function () {
 
     Route::post('/login', [JwtAuthController::class, 'login'])->name('login');
 
-    Route::middleware('verifyJwtToken')->post('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
+    Route::middleware('verifyJwtToken')->get('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
 
-    Route::group(['middleware' => 'auth:api', 'verifyJwtToken'], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/logout', [JwtAuthController::class, 'logout'])->name('logout');
     });
 });
 
 
-Route::middleware(['auth:api', 'verifyJwtToken'])->get('/user', function (Request $request) {
+Route::middleware(['verifyJwtToken'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:api', 'verifyJwtToken'])->group(function () {
+Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 

@@ -29,6 +29,11 @@ class VerifyJwtTokenMiddleware
                 ], 401);
             }
             return $next($request);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => "Unauthorized"
+            ], 401);
         }
     }
 }
