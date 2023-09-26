@@ -26,17 +26,16 @@ use App\Http\Controllers\CompanyInfoController;
 /*                        Jwt  Users registration routes                          */
 /* -------------------------------------------------------------------------- */
 
-Route::group(['prefix' => 'jwt', 'as' => 'jwt.'], function () {
+Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
+    Route::post('/login', 'login')->name('login');
     /* -------------------- verifyJwtToken is created custom -------------------- */
-    Route::middleware(['verifyAdmin', 'verifyJwtToken'])->post('/register', [JwtAuthController::class, 'register'])->name('register');
-
-    Route::post('/login', [JwtAuthController::class, 'login'])->name('login');
-
-    Route::middleware('verifyJwtToken')->get('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
-
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::post('/logout', [JwtAuthController::class, 'logout'])->name('logout');
+    Route::group(['middleware' => 'verifyJwtToken'], function () {
+        Route::middleware(['verifyAdmin'])->post('/register', 'register');
+        Route::get('/findLoggedInUser', 'findLoggedInUser');
     });
+
+    Route::middleware('auth:api')->post('/logout', 'logout')->name('logout');
+
 });
 
 
