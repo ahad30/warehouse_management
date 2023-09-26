@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getTotalPrice } from "../../../features/Invoice/InvoiceSlice";
+import { getTotalPrice } from "../../../features/Invoice/invoiceSlice";
 
 const Calculation = () => {
   const dispatch = useDispatch();

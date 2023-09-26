@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import {
   useGetCompanyInfoQuery,
   useUpdateCompanyInfoMutation,
-} from "../../features/Settings/SettingsApi";
+} from "../../features/Settings/settingsApi";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";

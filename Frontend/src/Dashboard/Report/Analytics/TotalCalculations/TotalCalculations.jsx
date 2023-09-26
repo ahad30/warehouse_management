@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGetDashboardSummaryQuery } from "../../../../features/Dashboard/DashboardSummary";
+import { useGetDashboardSummaryQuery } from "../../../../features/Dashboard/dashboardSummary";
 
 const TotalCalculations = () => {
   const { data } = useGetDashboardSummaryQuery();

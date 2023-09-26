@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\CustomerController;
@@ -21,11 +22,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(['auth:api'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
@@ -73,5 +74,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
+    });
+});
+
+Route::group(['prefix' => 'jwt', 'as' => 'jwt.'], function () {
+    Route::middleware('verifyAdmin')->post('/register', [JwtAuthController::class, 'register'])->name('register');
+    Route::post('/login', [JwtAuthController::class, 'login'])->name('login');
+    Route::post('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('/logout', [JwtAuthController::class, 'logout'])->name('logout');
     });
 });

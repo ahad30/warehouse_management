@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getInvoice } from "../../../features/Invoice/InvoiceSlice";
+import { getInvoice } from "../../../features/Invoice/invoiceSlice";
 
 const InvoiceInfo = () => {
   const dispatch = useDispatch();

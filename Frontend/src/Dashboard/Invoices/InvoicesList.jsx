@@ -1,10 +1,10 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import UseTable from "../../components/Reusable/useTable/useTable";
+import UseTable from "../../components/Reusable/useTable/UseTable";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import UseLoading from "../../components/Reusable/useLoading/useLoading";
+import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
   useDeleteInvoiceMutation,
   useGetInvoicesQuery,
@@ -87,7 +87,7 @@ const InvoicesList = () => {
   // HANDLE INVOICE VIEW WITH MODAL
   const handleInvoiceView = (data) => {
     console.log(data);
-  }
+  };
 
   const columns = [
     { key: "id", header: "ID" },

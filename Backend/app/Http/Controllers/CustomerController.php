@@ -46,7 +46,7 @@ class CustomerController extends Controller
             ], 401);
         }
 
-        $customerexist = Customer::where('phone', $request->phone)->orWhere('email', $request->email)->first();
+        $customerexist = Customer::where('phone', $request->phone)->first();
         if ($customerexist) {
             return response()->json([
                 'status' => false,
@@ -91,7 +91,7 @@ class CustomerController extends Controller
     }
 
     // update
-    public function update(Request $request,)
+    public function update(Request $request, )
     {
         $customer = Customer::find($request->id);
 
