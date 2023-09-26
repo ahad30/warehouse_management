@@ -87,6 +87,12 @@ const InvoicesList = () => {
     console.log(data);
   };
 
+  const invoiceData = {
+    invoiceNumber: "INV-001",
+    amount: 100.0,
+    // Add more data as needed
+  };
+
   const columns = [
     { key: "id", header: "ID" },
     { key: "invoice_no", header: "Invoice Number" },

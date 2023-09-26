@@ -225,12 +225,12 @@ const AddUser = () => {
                 {...register("state")}
               />
             </label>
-            {/* <div className="form-control w-full">
+            <div className="form-control w-full">
               <input
                 type="file"
                 className="file-input file-input-bordered w-full"
               />
-            </div> */}
+            </div>
           </div>
           <SubmitButton
             title={isLoading ? "Adding User..." : "Add User"}

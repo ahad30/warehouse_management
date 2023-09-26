@@ -4,6 +4,8 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../Inputs/SearchAndAddBtn";
 import { FaDownload } from "react-icons/fa";
 import { BsFillEyeFill } from "react-icons/bs";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import InvoicePDF from "../../PDF/InvoicePDF";
 
 // Table.jsx
 const UseTable = ({
@@ -58,6 +60,12 @@ const UseTable = ({
                 ))}
                 <td>
                   <div className="flex items-center gap-x-3">
+                    <PDFDownloadLink
+                      document={<InvoicePDF invoice={invoice} />}
+                      fileName={invoice?.invoice_no}
+                    >
+                      Download pdf
+                    </PDFDownloadLink>
                     {handleInvoicePDF && (
                       <FaDownload
                         onClick={() => {
