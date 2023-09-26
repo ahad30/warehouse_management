@@ -32,7 +32,7 @@ Route::group(['prefix' => 'jwt', 'as' => 'jwt.'], function () {
 
     Route::post('/login', [JwtAuthController::class, 'login'])->name('login');
 
-    Route::middleware('verifyJwtToken')->post('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
+    Route::middleware('verifyJwtToken')->get('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
 
     Route::group(['middleware' => 'auth:api', 'verifyJwtToken'], function () {
         Route::post('/logout', [JwtAuthController::class, 'logout'])->name('logout');

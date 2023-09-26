@@ -237,15 +237,7 @@ class JwtAuthController extends Controller
 
 
         if (!is_null($user)) {
-            // $tokenExpireTime = strtotime($user->token_expire_time);
-            // $timeNow = strtotime(Carbon::now());
-            // $diff = $tokenExpireTime - $timeNow;
-            // if ($diff <= 0) {
-            //     return response()->json([
-            //         'status' => false,
-            //         'message' => 'Unauthorized or Access token has expired'
-            //     ], 401);
-            // }
+
             $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
             $role = $roleWithUser->getRole->role;
 
