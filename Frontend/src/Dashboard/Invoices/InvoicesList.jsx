@@ -1,10 +1,10 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import UseTable from "../../components/Reusable/useTable/useTable";
+import UseTable from "../../components/Reusable/useTable/UseTable";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import UseLoading from "../../components/Reusable/useLoading/useLoading";
+import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
   useDeleteInvoiceMutation,
   useGetInvoicesQuery,
@@ -85,12 +85,6 @@ const InvoicesList = () => {
     setInvoice(data);
     setViewInvoiceOpen(true);
     console.log(data);
-  };
-
-  const invoiceData = {
-    invoiceNumber: "INV-001",
-    amount: 100.0,
-    // Add more data as needed
   };
 
   const columns = [

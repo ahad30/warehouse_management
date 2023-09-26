@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import InvoiceSlice from "../features/Invoice/InvoiceSlice";
+import InvoiceSlice from "../features/Invoice/invoiceSlice";
 import authSlice from "../features/Auth/authSlice";
 import categorySlice from "../features/Category/categorySlice";
 import apiSlice from "../features/API/apiSlice";

@@ -14,21 +14,28 @@ use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
+
+    public function __construct()
+    {
+        /* --------------------- jwtAuth has been created custom -------------------- */
+
+        $this->middleware('jwtAuth', ['except' => ['store']]);
+    }
     /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-
+        // return $request->all();
         $codeValidation = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'email', 'max:255',],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'string'],
             'status' => ['required', 'string'],
-            'phone' => ['required', 'string'],
+            'phone' => ['required', 'string', 'unique:' . User::class],
             'address' => ['required', 'string'],
             'zip_code' => ['nullable', 'string'],
             'city' => ['required', 'string'],
@@ -38,7 +45,7 @@ class RegisteredUserController extends Controller
 
         if ($codeValidation->fails()) {
             return response()->json([
-                'message' => 'The email has already been taken',
+
                 'errors' => $codeValidation->errors()
             ], 500);
         }
@@ -57,6 +64,12 @@ class RegisteredUserController extends Controller
             'country' => $request->country,
         ]);
 
+        /* ----------------- generating token after registering user ---------------- */
+        $credentials = $request->only('email', 'password');
+        if ($token = auth()->user()->attempt($credentials)) {
+            return $this->respondWithToken($token);
+        }
+
         event(new Registered($user));
 
         Auth::login($user);
@@ -68,5 +81,25 @@ class RegisteredUserController extends Controller
             'user' => $user,
             'api_token' => $token,
         ], 201);
+    }
+    public function refresh()
+    {
+        return $this->respondWithToken($this->guard()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $this->guard()->factory()->getTTL() * 60
+        ]);
     }
 }

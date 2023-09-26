@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CompanyInfoController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SaleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Api\JwtAuthController;
+use App\Http\Controllers\CompanyInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +22,25 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+/* -------------------------------------------------------------------------- */
+/*                        Jwt  Users registration routes                          */
+/* -------------------------------------------------------------------------- */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::group(['prefix' => 'jwt', 'as' => 'jwt.'], function () {
+    Route::middleware('verifyAdmin')->post('/register', [JwtAuthController::class, 'register'])->name('register');
+    Route::post('/login', [JwtAuthController::class, 'login'])->name('login');
+    Route::post('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('/logout', [JwtAuthController::class, 'logout'])->name('logout');
+    });
+});
+
+
+Route::middleware(['auth:api'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
@@ -74,4 +89,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
+
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                                 Role Routes                                */
+    /* -------------------------------------------------------------------------- */
+
+    Route::get('/roles', RoleController::class)->name('role.index');
 });

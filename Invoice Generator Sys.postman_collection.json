@@ -1,1064 +1,816 @@
 {
-	"info": {
-		"_postman_id": "64937fea-8db6-403c-9c11-947ed95b2b7f",
-		"name": "Invoice Generator Sys",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28541532"
-	},
-	"item": [
+	"id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+	"name": "Invoice Generator Sys",
+	"description": "",
+	"order": [
+		"315e3d10-18e0-97e6-9558-20fc1f204d07"
+	],
+	"folders": [
 		{
+			"id": "c87e0e71-3a1e-691e-b536-a08f197d58b8",
 			"name": "Auth",
-			"item": [
-				{
-					"name": "Register",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "19|laravel_sanctum_Z8XDmy3Pmfj7GrPQqO1qHi3agoDGyuNC08kqmIOsc985fcbf",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/register?name=Manager 1&email=manager1@gmail.com&password=password&password_confirmation=password&address=Chittagong&role=manager&status=active&phone=0123456789&city=Chittagong&country=Bangladesh",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"register"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Manager 1"
-								},
-								{
-									"key": "email",
-									"value": "manager1@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "password"
-								},
-								{
-									"key": "password_confirmation",
-									"value": "password"
-								},
-								{
-									"key": "address",
-									"value": "Chittagong"
-								},
-								{
-									"key": "role",
-									"value": "manager"
-								},
-								{
-									"key": "status",
-									"value": "active"
-								},
-								{
-									"key": "phone",
-									"value": "0123456789"
-								},
-								{
-									"key": "city",
-									"value": "Chittagong"
-								},
-								{
-									"key": "country",
-									"value": "Bangladesh"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/login?email=admin@gmail.com&password=password",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"login"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "admin@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "password"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Logout",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "14|laravel_sanctum_YlmSWAuKpxSKkzVHwmnkkrhmvbdZmfKsqYlT7yjKc3d5936b",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/logout",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"logout"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"description": "",
+			"order": [
+				"63c44cf8-c44f-254d-6974-29ecef696b95",
+				"70e17a48-3703-e857-d00b-bc3684e2be59",
+				"3a6ccafb-e9e8-7a77-6cab-7ccee30e193d",
+				"4c0ab6bf-f67d-1f06-2ab0-9df12ba95951",
+				"52c61a7a-9850-8dbe-c2f8-897936a4f88d"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
 		},
 		{
+			"id": "4730f09a-dde2-3079-3cd2-1ca8b040a0ed",
 			"name": "Category",
-			"item": [
-				{
-					"name": "Get Categories",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "5|laravel_sanctum_slW7lilV0E7DCmhf9xxPIgVBbvdfLFG2RPBD3QK7cd053c9b",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"categories"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Category",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "5|laravel_sanctum_slW7lilV0E7DCmhf9xxPIgVBbvdfLFG2RPBD3QK7cd053c9b",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"category_name\": \"Techno\",\r\n    \"description\": \"Techno\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/store",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"categories",
-								"store"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Single Category",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_6pn6EAs2KQOFcjP2jXnB4AQVRrziItAb8A8VxJtu453b6014",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/edit/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"categories",
-								"edit",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Category",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_6pn6EAs2KQOFcjP2jXnB4AQVRrziItAb8A8VxJtu453b6014",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"category_name\": \"Test Updated\",\r\n    \"description\": \"Test Updated\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/update/4",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"categories",
-								"update",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Category",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_ru3I4QhZy7eRf4cxaXAGwsvJRg22blLlgY4sCdh64c13d11f",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/delete/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"categories",
-								"delete",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"description": "",
+			"order": [
+				"6785e221-f2cf-bde9-093a-10f4aecceedf",
+				"b702421c-48c0-641e-8c1a-b1b75dde4356",
+				"4787951e-9c86-feec-c051-62715e70dc68",
+				"ffd20007-84fa-ba67-b23d-6d02bf1ab9c1",
+				"56e1d98d-f2ba-7462-6504-54a00810a7a3"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
 		},
 		{
-			"name": "Product",
-			"item": [
-				{
-					"name": "Get Products",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/products",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Categories",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/create",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Samsung A20\",\r\n    \"code\": \"SAMA20\",\r\n    \"category_id\": \"1\",\r\n    \"price\": \"18500\",\r\n    \"unit\": \"pich\",\r\n    \"desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/store",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products",
-								"store"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Single Product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/edit/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products",
-								"edit",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"category_id\": 1,\r\n    \"name\": \"Samsung galexy M40\",\r\n    \"code\": \"SMGM40\",\r\n    \"price\": \"23990\",\r\n    \"unit\": \"Box\",\r\n    \"desc\": \"Samsung galexy M40, RAM: 6GB, ROM: 128GB\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/update/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products",
-								"update",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/delete/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"products",
-								"delete",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
+			"id": "3f37fca7-2a8a-9294-df6a-1396171c47c8",
 			"name": "Company info",
-			"item": [
-				{
-					"name": "Get Company info",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/company/info",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"company",
-								"info"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Company Info",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/company/info/edit/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"company",
-								"info",
-								"edit",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Company Info",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/company/info/update/1?company_name=bsv&company_email=dhjks@gmail.com&company_phone=3487236&company_address=jbxcjgh eiuhnkjwe ew",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"company",
-								"info",
-								"update",
-								"1"
-							],
-							"query": [
-								{
-									"key": "company_name",
-									"value": "bsv"
-								},
-								{
-									"key": "company_email",
-									"value": "dhjks@gmail.com"
-								},
-								{
-									"key": "company_phone",
-									"value": "3487236"
-								},
-								{
-									"key": "company_address",
-									"value": "jbxcjgh eiuhnkjwe ew"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"description": "",
+			"order": [
+				"ccf602e2-6384-5ede-2681-e05e2ef988f4",
+				"65227453-0ee5-5fe3-1ec7-60e21fd2654c",
+				"f89e0f52-02eb-a97a-cfc6-c88efaefd6f7"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
 		},
 		{
-			"name": "User",
-			"item": [
-				{
-					"name": "User Delete",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_PxAbvG0LMAZgrCqfGlH7QtyXJPAQZ6yzdn3M8Rvm8adcf29a",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/users/delete/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"users",
-								"delete",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
+			"id": "b01fc5b7-da7d-2cb5-62c6-388f5408b702",
 			"name": "Customer",
-			"item": [
-				{
-					"name": "Get all customers",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/customers",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"customers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store Customer",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Morshed\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/customers/store",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"customers",
-								"store"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Customer",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/customers/edit/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"customers",
-								"edit",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update customer",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Morshedul Islam\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/customers/update/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"customers",
-								"update",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete customer",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/customers/delete/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"customers",
-								"delete",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"description": "",
+			"order": [
+				"85f900ac-e9e9-b1e4-bb6a-bff07fedcfcf",
+				"d9b05a88-af33-d77e-372f-2968c908a1a6",
+				"bfae8aa1-5a4c-2081-fe89-430323284b23",
+				"578ac298-e4f3-eaab-9fa2-efa13c9ba296",
+				"459f3080-b115-d307-6e38-313165270b2f"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
 		},
 		{
+			"id": "43e5c64d-7da1-5d16-d265-a10a872f8df0",
+			"name": "Product",
+			"description": "",
+			"order": [
+				"f5947408-40d8-08a7-40b5-32dbac8d31f5",
+				"8f2aeed0-b106-c9e9-004d-01f70a03ed66",
+				"e4962cc2-0ad3-38c0-31d0-bd1b75741502",
+				"ddb266b0-ef10-af2c-52ee-6f2c819f6ae6",
+				"8a811010-7204-4c29-a1c5-3c89ee6a4277",
+				"a404f3fa-b906-06b1-59a3-cd48c75ca829"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
+		},
+		{
+			"id": "c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb",
 			"name": "Sale",
-			"item": [
-				{
-					"name": "View all invoices",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_n4yz4GfGlGx6wwsh8Afn5s9NJaFN2PfQL4Btcz1K5478a94c",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/invoice/list",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"invoice",
-								"list"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Invoice Infos",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "7|laravel_sanctum_ZeN43j3d9QQGldN0Xftca4idr4nec07jjgzZ4Bk04af5fe77",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/invoice/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"invoice",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "store invoice",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|laravel_sanctum_1r2qYlZx0SJ3wFH0ggBuA1SjAULM3Jp4K8VhoY5Z1faa3d65",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"invoice_no\": \"73683\",\r\n    \"invoice_date\": \"12/03/2023\",\r\n    \"company_name\": \"hjksajk\",\r\n    \"company_email\": \"sgdjhsd@gmail.com\",\r\n    \"company_phone\": \"02389022121\",\r\n    \"company_address\": \"ajhgjas, ghgjgagjh, jhgjhg\",\r\n    \r\n    \"customer_name\": \"jhdhhsa\",\r\n    \"customer_email\": \"demo1@gmail.com\",\r\n    \"customer_phone\": \"0123456789\",\r\n    \"customer_address\": \"jhsikas, hghuiasg, gbasdasd\",\r\n    \"discount\": \"122\",\r\n    \"shipping\": \"12\",\r\n    \"total\": \"3234\",\r\n    \"items\": [\r\n        {\r\n            \"product_id\": \"1\",\r\n            \"name\": \"uewyu\",\r\n            \"code\": \"jshjhgsj\",\r\n            \"quantity\": \"2\",\r\n            \"rate\": \"656\",\r\n            \"unit\": \"kg\",\r\n            \"description\": \"hbsxguygasej sakghkjasd\"\r\n        },\r\n        {\r\n            \"product_id\": \"2\",\r\n            \"name\": \"uewyu\",\r\n            \"code\": \"jshjhgsj\",\r\n            \"quantity\": \"2\",\r\n            \"rate\": \"656\",\r\n            \"unit\": \"kg\",\r\n            \"description\": \"hbsxguygasej sakghkjasd\"\r\n        }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/invoice/store",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"invoice",
-								"store"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"description": "",
+			"order": [
+				"88c0e0c6-7f2d-0830-1d3c-2e4c722db2f4",
+				"280dd707-efaf-01b6-abf4-a96af09c4e38",
+				"59d73574-c427-1958-8754-aeed1318cb66"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
+		},
+		{
+			"id": "bdffd2bb-8b9e-fe06-c0f3-8897d5845bd2",
+			"name": "User",
+			"description": "",
+			"order": [
+				"ab32313f-7165-2524-4b3b-ca52d1a7085b"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
 		}
 	],
-	"variable": [
+	"folders_order": [
+		"c87e0e71-3a1e-691e-b536-a08f197d58b8",
+		"4730f09a-dde2-3079-3cd2-1ca8b040a0ed",
+		"43e5c64d-7da1-5d16-d265-a10a872f8df0",
+		"3f37fca7-2a8a-9294-df6a-1396171c47c8",
+		"bdffd2bb-8b9e-fe06-c0f3-8897d5845bd2",
+		"b01fc5b7-da7d-2cb5-62c6-388f5408b702",
+		"c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb"
+	],
+	"timestamp": 0,
+	"owner": 0,
+	"public": false,
+	"requests": [
 		{
-			"key": "token",
-			"value": "26|laravel_sanctum_MU7Dw3U3fKW5GD1iwtzQXvppDbA5Fz0snHRxkzaM1d5f0899"
+			"id": "280dd707-efaf-01b6-abf4-a96af09c4e38",
+			"name": "Get Invoice Infos",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://localhost:8000/api/invoice/create",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb"
+		},
+		{
+			"id": "315e3d10-18e0-97e6-9558-20fc1f204d07",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://127.0.0.1:8000/api/roles",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get Roles",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1695718958254,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "3a6ccafb-e9e8-7a77-6cab-7ccee30e193d",
+			"name": "Logout",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "POST",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://localhost:8000/api/logout",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "c87e0e71-3a1e-691e-b536-a08f197d58b8"
+		},
+		{
+			"id": "459f3080-b115-d307-6e38-313165270b2f",
+			"name": "Delete customer",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "DELETE",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/customers/delete/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "b01fc5b7-da7d-2cb5-62c6-388f5408b702"
+		},
+		{
+			"id": "4787951e-9c86-feec-c051-62715e70dc68",
+			"name": "Get Single Category",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/categories/edit/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "4730f09a-dde2-3079-3cd2-1ca8b040a0ed"
+		},
+		{
+			"id": "4c0ab6bf-f67d-1f06-2ab0-9df12ba95951",
+			"headers": "",
+			"headerData": [],
+			"url": "",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"data": null,
+			"dataMode": "params",
+			"name": "findLoggedInUser",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1695705407739,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "c87e0e71-3a1e-691e-b536-a08f197d58b8"
+		},
+		{
+			"id": "52c61a7a-9850-8dbe-c2f8-897936a4f88d",
+			"headers": "",
+			"headerData": [],
+			"url": "",
+			"folder": "c87e0e71-3a1e-691e-b536-a08f197d58b8",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1695715203171,
+			"name": "Image link",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
+		},
+		{
+			"id": "56e1d98d-f2ba-7462-6504-54a00810a7a3",
+			"name": "Delete Category",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "DELETE",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/categories/delete/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "4730f09a-dde2-3079-3cd2-1ca8b040a0ed"
+		},
+		{
+			"id": "578ac298-e4f3-eaab-9fa2-efa13c9ba296",
+			"name": "update customer",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "PUT",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"name\": \"Morshedul Islam\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}",
+			"url": "http://127.0.0.1:8000/api/customers/update/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "b01fc5b7-da7d-2cb5-62c6-388f5408b702"
+		},
+		{
+			"id": "59d73574-c427-1958-8754-aeed1318cb66",
+			"name": "store invoice",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "POST",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"invoice_no\": \"73683\",\r\n    \"invoice_date\": \"12/03/2023\",\r\n    \"company_name\": \"hjksajk\",\r\n    \"company_email\": \"sgdjhsd@gmail.com\",\r\n    \"company_phone\": \"02389022121\",\r\n    \"company_address\": \"ajhgjas, ghgjgagjh, jhgjhg\",\r\n    \r\n    \"customer_name\": \"jhdhhsa\",\r\n    \"customer_email\": \"demo1@gmail.com\",\r\n    \"customer_phone\": \"0123456789\",\r\n    \"customer_address\": \"jhsikas, hghuiasg, gbasdasd\",\r\n    \"discount\": \"122\",\r\n    \"shipping\": \"12\",\r\n    \"total\": \"3234\",\r\n    \"items\": [\r\n        {\r\n            \"product_id\": \"1\",\r\n            \"name\": \"uewyu\",\r\n            \"code\": \"jshjhgsj\",\r\n            \"quantity\": \"2\",\r\n            \"rate\": \"656\",\r\n            \"unit\": \"kg\",\r\n            \"description\": \"hbsxguygasej sakghkjasd\"\r\n        },\r\n        {\r\n            \"product_id\": \"2\",\r\n            \"name\": \"uewyu\",\r\n            \"code\": \"jshjhgsj\",\r\n            \"quantity\": \"2\",\r\n            \"rate\": \"656\",\r\n            \"unit\": \"kg\",\r\n            \"description\": \"hbsxguygasej sakghkjasd\"\r\n        }\r\n    ]\r\n}",
+			"url": "http://localhost:8000/api/invoice/store",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb"
+		},
+		{
+			"id": "63c44cf8-c44f-254d-6974-29ecef696b95",
+			"headers": "//Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://127.0.0.1:8000/api/jwt/register",
+			"folder": "c87e0e71-3a1e-691e-b536-a08f197d58b8",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "Komor",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "komor@gmail.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "asdfasdf",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password_confirmation",
+					"value": "asdfasdf",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "role",
+					"value": "Manager",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone",
+					"value": "018447f444",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "status",
+					"value": "active",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "country",
+					"value": "Bangladesh",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "city",
+					"value": "Ctg",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address",
+					"value": "fsdafsafsa",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1695638048399,
+			"name": "Register",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
+		},
+		{
+			"id": "65227453-0ee5-5fe3-1ec7-60e21fd2654c",
+			"name": "Edit Company Info",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/company/info/edit/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "3f37fca7-2a8a-9294-df6a-1396171c47c8"
+		},
+		{
+			"id": "6785e221-f2cf-bde9-093a-10f4aecceedf",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://127.0.0.1:8000/api/roles",
+			"folder": "4730f09a-dde2-3079-3cd2-1ca8b040a0ed",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1695718921026,
+			"name": "Get Categories",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
+		},
+		{
+			"id": "70e17a48-3703-e857-d00b-bc3684e2be59",
+			"headers": "",
+			"headerData": [
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8000/api/jwt/login",
+			"folder": "c87e0e71-3a1e-691e-b536-a08f197d58b8",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "komo213r235@gmail.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "asdfasdf",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1695710896271,
+			"name": "Login",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
+		},
+		{
+			"id": "85f900ac-e9e9-b1e4-bb6a-bff07fedcfcf",
+			"name": "Get all customers",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/customers",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "b01fc5b7-da7d-2cb5-62c6-388f5408b702"
+		},
+		{
+			"id": "88c0e0c6-7f2d-0830-1d3c-2e4c722db2f4",
+			"name": "View all invoices",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://localhost:8000/api/invoice/list",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb"
+		},
+		{
+			"id": "8a811010-7204-4c29-a1c5-3c89ee6a4277",
+			"name": "Update Product",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "PUT",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"category_id\": 1,\r\n    \"name\": \"Samsung galexy M40\",\r\n    \"code\": \"SMGM40\",\r\n    \"price\": \"23990\",\r\n    \"unit\": \"Box\",\r\n    \"desc\": \"Samsung galexy M40, RAM: 6GB, ROM: 128GB\"\r\n}",
+			"url": "http://127.0.0.1:8000/api/products/update/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+		},
+		{
+			"id": "8f2aeed0-b106-c9e9-004d-01f70a03ed66",
+			"name": "Get Categories",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/products/create",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+		},
+		{
+			"id": "a404f3fa-b906-06b1-59a3-cd48c75ca829",
+			"name": "Delete Product",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "DELETE",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/products/delete/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+		},
+		{
+			"id": "ab32313f-7165-2524-4b3b-ca52d1a7085b",
+			"name": "User Delete",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "DELETE",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/users/delete/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "bdffd2bb-8b9e-fe06-c0f3-8897d5845bd2"
+		},
+		{
+			"id": "b702421c-48c0-641e-8c1a-b1b75dde4356",
+			"name": "Create Category",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "POST",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"category_name\": \"Techno\",\r\n    \"description\": \"Techno\"\r\n}",
+			"url": "http://127.0.0.1:8000/api/categories/store",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "4730f09a-dde2-3079-3cd2-1ca8b040a0ed"
+		},
+		{
+			"id": "bfae8aa1-5a4c-2081-fe89-430323284b23",
+			"name": "Edit Customer",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/customers/edit/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "b01fc5b7-da7d-2cb5-62c6-388f5408b702"
+		},
+		{
+			"id": "ccf602e2-6384-5ede-2681-e05e2ef988f4",
+			"name": "Get Company info",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/company/info",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "3f37fca7-2a8a-9294-df6a-1396171c47c8"
+		},
+		{
+			"id": "d9b05a88-af33-d77e-372f-2968c908a1a6",
+			"name": "Store Customer",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "POST",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"name\": \"Morshed\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}",
+			"url": "http://127.0.0.1:8000/api/customers/store",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "b01fc5b7-da7d-2cb5-62c6-388f5408b702"
+		},
+		{
+			"id": "ddb266b0-ef10-af2c-52ee-6f2c819f6ae6",
+			"name": "Get Single Product",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/products/edit/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+		},
+		{
+			"id": "e4962cc2-0ad3-38c0-31d0-bd1b75741502",
+			"name": "Create Product",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "POST",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"name\": \"Samsung A20\",\r\n    \"code\": \"SAMA20\",\r\n    \"category_id\": \"1\",\r\n    \"price\": \"18500\",\r\n    \"unit\": \"pich\",\r\n    \"desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
+			"url": "http://127.0.0.1:8000/api/products/store",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+		},
+		{
+			"id": "f5947408-40d8-08a7-40b5-32dbac8d31f5",
+			"name": "Get Products",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "GET",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/products",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+		},
+		{
+			"id": "f89e0f52-02eb-a97a-cfc6-c88efaefd6f7",
+			"name": "Update Company Info",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "PUT",
+			"helperAttributes": {},
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://127.0.0.1:8000/api/company/info/update/1?company_name=bsv&company_email=dhjks@gmail.com&company_phone=3487236&company_address=jbxcjgh eiuhnkjwe ew",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "company_name",
+					"value": "bsv"
+				},
+				{
+					"key": "company_email",
+					"value": "dhjks@gmail.com"
+				},
+				{
+					"key": "company_phone",
+					"value": "3487236"
+				},
+				{
+					"key": "company_address",
+					"value": "jbxcjgh eiuhnkjwe ew"
+				}
+			],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "3f37fca7-2a8a-9294-df6a-1396171c47c8"
+		},
+		{
+			"id": "ffd20007-84fa-ba67-b23d-6d02bf1ab9c1",
+			"name": "Update Category",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"method": "PUT",
+			"helperAttributes": {},
+			"headers": "",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n    \"category_name\": \"Test Updated\",\r\n    \"description\": \"Test Updated\"\r\n}",
+			"url": "http://127.0.0.1:8000/api/categories/update/4",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"folder": "4730f09a-dde2-3079-3cd2-1ca8b040a0ed"
 		}
 	]
 }
