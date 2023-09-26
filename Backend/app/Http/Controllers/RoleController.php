@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
     /**
+     *
      * @return all the roles
      */
     public function __invoke(Request $request)
