@@ -27,20 +27,24 @@ use App\Http\Controllers\CompanyInfoController;
 /* -------------------------------------------------------------------------- */
 
 Route::group(['prefix' => 'jwt', 'as' => 'jwt.'], function () {
-    Route::middleware('verifyAdmin')->post('/register', [JwtAuthController::class, 'register'])->name('register');
+    /* -------------------- verifyJwtToken is created custom -------------------- */
+    Route::middleware(['verifyAdmin', 'verifyJwtToken'])->post('/register', [JwtAuthController::class, 'register'])->name('register');
+
     Route::post('/login', [JwtAuthController::class, 'login'])->name('login');
-    Route::post('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
-    Route::group(['middleware' => 'auth:api'], function () {
+
+    Route::middleware('verifyJwtToken')->post('/findLoggedInUser', [JwtAuthController::class, 'findLoggedInUser'])->name('findLoggedInUser');
+
+    Route::group(['middleware' => 'auth:api', 'verifyJwtToken'], function () {
         Route::post('/logout', [JwtAuthController::class, 'logout'])->name('logout');
     });
 });
 
 
-Route::middleware(['auth:api'])->get('/user', function (Request $request) {
+Route::middleware(['auth:api', 'verifyJwtToken'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth:api', 'verifyJwtToken'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
