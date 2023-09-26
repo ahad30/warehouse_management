@@ -51,6 +51,7 @@ class SaleController extends Controller
     // store
     public function store(Request $request)
     {
+
         $codeValidation = Validator::make($request->all(), [
             'invoice_date' => 'required',
             'company_name' => 'string|nullable',
@@ -64,6 +65,7 @@ class SaleController extends Controller
             'discount' => 'required',
             'shipping' => 'required',
             'total' => 'required',
+            'items' => 'required'
         ]);
         if ($codeValidation->fails()) {
             return response()->json([
@@ -111,6 +113,7 @@ class SaleController extends Controller
                 'shipping' => $request->shipping,
                 'total' => $request->total,
             ]);
+
             $sale = Sale::latest()->first();
             $sale_id = $sale->id;
             $input = $request->all();
