@@ -2,6 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+// token
+let access_token = localStorage.getItem("access_token");
+access_token = JSON.parse(access_token);
+
 // WITHOUT CSRF TOKEN
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -32,12 +36,10 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    getUser: (state, action) => {
-      console.log(action);
-      let access_token = JSON.parse(localStorage.getItem("access_token"));
-      if (access_token) {
-        state.access_token = access_token;
-        state.user = action.payload;
+    getUser: (state, { payload }) => {
+      if (payload) {
+        state.access_token = payload?.jwt_token;
+        state.user = payload;
       }
     },
     logOut: (state) => {

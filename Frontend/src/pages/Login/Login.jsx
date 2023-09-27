@@ -1,11 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, loginUser } from "../../features/Auth/authSlice";
-import { useEffect, useState } from "react";
+import { loginUser } from "../../features/Auth/authSlice";
 
 const Login = () => {
-  const [user, setUser] = useState({});
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,29 +14,10 @@ const Login = () => {
     dispatch(loginUser({ email, password }));
   };
 
-  useEffect(() => {
-    let access_token = localStorage.getItem("access_token");
-    access_token = JSON.parse(access_token);
-
-    fetch(`${import.meta.env.VITE_REACT_APP_PORT}/profile/findLoggedInUser`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.status) {
-          setUser(data?.user);
-        }
-      });
-  }, []);
-
   let access_token = JSON.parse(localStorage.getItem("access_token"));
   if (access_token) {
     return navigate("/dashboard");
   }
-
-  dispatch(getUser(user));
 
   return (
     <div className="p-10  bg-gray-100">

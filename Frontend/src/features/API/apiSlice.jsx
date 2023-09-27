@@ -5,8 +5,7 @@ const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_REACT_APP_PORT,
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth?.access_token;
-      console.log(token);
+      const token = getState().auth?.user?.jwt_token;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 
 const DashboardSidebar = () => {
   const { user } = useSelector((state) => state.auth);
+  
   const [sideBarData, setSidebarData] = useState([
     {
       name: "Users",
@@ -153,7 +154,7 @@ const DashboardSidebar = () => {
   ]);
 
   useEffect(() => {
-    if (user?.role !== "admin") {
+    if (user.get_role.role !== "admin") {
       setSidebarData((prev) =>
         prev.filter((section) => section.name !== "Users")
       );
