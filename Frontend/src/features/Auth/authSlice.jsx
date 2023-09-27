@@ -2,18 +2,25 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+// token
+let access_token = localStorage.getItem("access_token");
+access_token = JSON.parse(access_token);
+
 // WITHOUT CSRF TOKEN
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     const request = await axios.post(
-      `${import.meta.env.VITE_REACT_APP_PORT}/login`,
+      `${import.meta.env.VITE_REACT_APP_PORT}/jwt/login`,
       { email, password }
     );
     const response = request.data;
 
     if (response.status) {
-      localStorage.setItem("user", JSON.stringify(response));
+      localStorage.setItem(
+        "access_token",
+        JSON.stringify(response?.user?.jwt_token)
+      );
       toast.success(response?.message, { id: 1 });
     }
     return response;
@@ -25,22 +32,20 @@ const authSlice = createSlice({
   initialState: {
     isLoading: false,
     user: null,
-    api_token: "",
+    access_token: "",
     error: null,
   },
   reducers: {
-    getUser: (state) => {
-      let user = JSON.parse(localStorage.getItem("user"));
-      let token = user?.api_token;
-      if (token) {
-        state.user = user?.user;
-        state.api_token = user?.api_token;
+    getUser: (state, { payload }) => {
+      if (payload) {
+        state.access_token = payload?.jwt_token;
+        state.user = payload;
       }
     },
     logOut: (state) => {
-      localStorage.removeItem("user");
+      localStorage.removeItem("access_token");
       state.user = null;
-      state.api_token = "";
+      state.access_token = "";
     },
   },
   extraReducers: (builder) => {
@@ -52,7 +57,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = null;
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {

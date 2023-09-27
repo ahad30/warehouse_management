@@ -4,8 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
   const { user } = useSelector((state) => state.auth);
-
-  if (!user) {
+  if (!user?.jwt_token) {
     return <Navigate to={"/login"}></Navigate>;
   }
   return children;
