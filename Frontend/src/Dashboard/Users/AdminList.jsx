@@ -108,7 +108,7 @@ const AdminList = () => {
     content = (
       <>
         <UseTable
-          data={usersData?.users.filter((user) => user.role === "admin")}
+          data={usersData?.users.filter((user) => user?.get_role?.role === "admin")}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}

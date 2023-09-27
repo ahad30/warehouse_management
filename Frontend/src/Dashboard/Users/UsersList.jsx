@@ -77,7 +77,7 @@ const UsersList = () => {
     { key: "name", header: "Name" },
     { key: "email", header: "Email" },
     { key: "phone", header: "Phone" },
-    { key: "role", header: "Role" },
+    { key: "get_role.role", header: "Role" },
     { key: "status", header: "Status" },
     { key: "address", header: "Address" },
     { key: "city", header: "City" },
