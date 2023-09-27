@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
+use App\Http\Controllers\Api\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +29,21 @@ use App\Http\Controllers\CompanyInfoController;
 
 Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
     Route::post('/login', 'login')->name('login');
-    /* -------------------- verifyJwtToken is created custom -------------------- */
+    /* -------------------- verifyJwtToken && verifyAdmin is created custom -------------------- */
     Route::group(['middleware' => 'verifyJwtToken'], function () {
         Route::middleware(['verifyAdmin'])->post('/register', 'register');
-        Route::get('/findLoggedInUser', 'findLoggedInUser');
-    });
 
+    });
     Route::middleware('auth:api')->post('/logout', 'logout')->name('logout');
 
+});
+
+/* -------------------------------------------------------------------------- */
+/*                             user profile                             */
+/* -------------------------------------------------------------------------- */
+
+Route::controller(UserProfileController::class)->middleware('verifyJwtToken')->prefix('profile')->group(function () {
+    Route::get('/findLoggedInUser', 'findLoggedInUser');
 });
 
 
@@ -66,8 +74,8 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::controller(CompanyInfoController::class)->prefix('company')->group(function () {
         Route::get('/info', 'index');
-        Route::get('/info/edit/{id}', 'edit');
-        Route::put('/info/update', 'update');
+        Route::middleware('verifyAdmin')->get('/info/edit/{id}', 'edit');
+        Route::middleware('verifyAdmin')->put('/info/update', 'update');
     });
 
     Route::controller(CustomerController::class)->prefix('customers')->group(function () {
