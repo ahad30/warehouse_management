@@ -26,11 +26,10 @@ class UserProfileController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'user  found',
+                    'message' => 'User found',
                     'user' => $roleWithUser
                 ]);
             }
-
         }
 
         return response()->json([
