@@ -102,7 +102,7 @@ const ProductsList = () => {
       </>
     ));
   }
-
+console.log(productsData?.products);
   if (productsIsSuccess && productsData?.status) {
     content = (
       <>

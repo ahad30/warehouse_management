@@ -108,7 +108,7 @@ const ManagerList = () => {
     content = (
       <>
         <UseTable
-          data={usersData?.users.filter((user) => user.role === "manager")}
+          data={usersData?.users.filter((user) => user?.get_role?.role === "manager")}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}

@@ -109,7 +109,7 @@ const SalesManList = () => {
       <>
         <UseTable
           data={usersData?.users.filter(
-            (user) => user.role === "sales_representative"
+            (user) => user?.get_role?.role === "sales_representative"
           )}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}

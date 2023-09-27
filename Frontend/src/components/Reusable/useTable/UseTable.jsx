@@ -60,20 +60,22 @@ const UseTable = ({
                 ))}
                 <td>
                   <div className="flex items-center gap-x-3">
-                    <PDFDownloadLink
-                      document={<InvoicePDF />}
-                      
-                    >
+                    <PDFDownloadLink document={<InvoicePDF />}>
                       Download pdf
                     </PDFDownloadLink>
                     {handleInvoicePDF && (
-                      <FaDownload
-                        onClick={() => {
-                          handleInvoicePDF(row);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
+                      <>
+                        <PDFDownloadLink document={<InvoicePDF />}>
+                          Download pdf
+                        </PDFDownloadLink>
+                        <FaDownload
+                          onClick={() => {
+                            handleInvoicePDF(row);
+                          }}
+                          className="cursor-pointer"
+                          size={20}
+                        />
+                      </>
                     )}
                     {handleViewInvoice && (
                       <BsFillEyeFill
