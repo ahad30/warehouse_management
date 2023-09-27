@@ -61,8 +61,8 @@ const UseTable = ({
                 <td>
                   <div className="flex items-center gap-x-3">
                     <PDFDownloadLink
-                      document={<InvoicePDF invoice={invoice} />}
-                      fileName={invoice?.invoice_no}
+                      document={<InvoicePDF />}
+                      
                     >
                       Download pdf
                     </PDFDownloadLink>

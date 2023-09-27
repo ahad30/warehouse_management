@@ -21,7 +21,7 @@ const InvoicePDF = ({ invoiceData }) => (
   <Document>
     <Page size="A5" style={styles.page}>
       <View style={styles.section}>
-        <Text>Invoice Number: {invoiceData.invoiceNumber}</Text>
+        <Text>Invoice Number: {invoiceData?.invoiceNumber}</Text>
         <Text>
           Amount <p className="text-2xl">Hello world</p>
         </Text>

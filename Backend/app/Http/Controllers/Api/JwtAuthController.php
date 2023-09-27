@@ -96,7 +96,6 @@ class JwtAuthController extends Controller
             'message' => 'Registration Successful',
             'user' => $user,
         ], 201);
-
     }
     /**
      * Get a JWT token via given
@@ -151,13 +150,11 @@ class JwtAuthController extends Controller
 
                     return response()->json([
                         'status' => true,
-                        'message' => 'user  found',
+                        'message' => 'User Login Successfully',
                         'user' => $roleWithUser
                     ]);
                 }
-
             }
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -250,7 +247,6 @@ class JwtAuthController extends Controller
                     'user' => $roleWithUser
                 ]);
             }
-
         }
 
         return response()->json([

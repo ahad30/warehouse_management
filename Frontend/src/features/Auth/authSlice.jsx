@@ -7,13 +7,16 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
     const request = await axios.post(
-      `${import.meta.env.VITE_REACT_APP_PORT}/login`,
+      `${import.meta.env.VITE_REACT_APP_PORT}/jwt/login`,
       { email, password }
     );
     const response = request.data;
 
     if (response.status) {
-      localStorage.setItem("user", JSON.stringify(response));
+      localStorage.setItem(
+        "access_token",
+        JSON.stringify(response?.user?.jwt_token)
+      );
       toast.success(response?.message, { id: 1 });
     }
     return response;
@@ -25,22 +28,22 @@ const authSlice = createSlice({
   initialState: {
     isLoading: false,
     user: null,
-    api_token: "",
+    access_token: "",
     error: null,
   },
   reducers: {
-    getUser: (state) => {
-      let user = JSON.parse(localStorage.getItem("user"));
-      let token = user?.api_token;
-      if (token) {
-        state.user = user?.user;
-        state.api_token = user?.api_token;
+    getUser: (state, action) => {
+      console.log(action);
+      let access_token = JSON.parse(localStorage.getItem("access_token"));
+      if (access_token) {
+        state.access_token = access_token;
+        state.user = action.payload;
       }
     },
     logOut: (state) => {
-      localStorage.removeItem("user");
+      localStorage.removeItem("access_token");
       state.user = null;
-      state.api_token = "";
+      state.access_token = "";
     },
   },
   extraReducers: (builder) => {
@@ -52,7 +55,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = null;
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
