@@ -76,12 +76,12 @@ class CompanyInfoController extends Controller
                 'status' => true,
                 'message' => "Company Info successfully updated",
                 'company_info' => $company_info,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => "Company Information Not Found",
-            ]);
+            ], 404);
         }
     }
 }
