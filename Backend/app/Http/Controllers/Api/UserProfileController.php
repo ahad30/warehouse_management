@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class UserProfileController extends Controller
 {
+    /**
+     *
+     * @return Logged In User
+     *
+     */
     public function findLoggedInUser()
     {
         $user = auth()->user();
@@ -32,5 +37,22 @@ class UserProfileController extends Controller
             'status' => false,
             'message' => 'user not found'
         ], 404);
+    }
+    /**
+     *
+     * to update own profile
+     *
+     */
+    public function updateProfile(Request $request)
+    {
+        $loggedInUser = auth()->user();
+        if ($loggedInUser != null && $loggedInUser->id != null) {
+            return ($loggedInUser);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => "Unauthorized"
+        ], 401);
     }
 }
