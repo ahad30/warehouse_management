@@ -4,6 +4,8 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../Inputs/SearchAndAddBtn";
 import { FaDownload } from "react-icons/fa";
 import { BsFillEyeFill } from "react-icons/bs";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import InvoicePDF from "../../PDF/InvoicePDF";
 
 // Table.jsx
 const UseTable = ({
@@ -12,7 +14,7 @@ const UseTable = ({
   onDelete,
   handleModalEditInfo,
   handleInvoicePDF,
-  handleInvoiceView,
+  handleViewInvoice,
   btnTitle,
   btnPath,
   btnIcon,
@@ -58,6 +60,12 @@ const UseTable = ({
                 ))}
                 <td>
                   <div className="flex items-center gap-x-3">
+                    <PDFDownloadLink
+                      document={<InvoicePDF />}
+                      
+                    >
+                      Download pdf
+                    </PDFDownloadLink>
                     {handleInvoicePDF && (
                       <FaDownload
                         onClick={() => {
@@ -67,30 +75,34 @@ const UseTable = ({
                         size={20}
                       />
                     )}
-                    {handleInvoiceView && (
+                    {handleViewInvoice && (
                       <BsFillEyeFill
                         onClick={() => {
-                          handleInvoiceView(row);
+                          handleViewInvoice(row);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    )}
+                    {handleModalEditInfo && (
+                      <FiEdit
+                        onClick={() => {
+                          handleModalEditInfo(row);
                         }}
                         className="cursor-pointer"
                         size={20}
                       />
                     )}
 
-                    <FiEdit
-                      onClick={() => {
-                        handleModalEditInfo(row);
-                      }}
-                      className="cursor-pointer"
-                      size={20}
-                    />
-                    <RiDeleteBin4Line
-                      onClick={() => {
-                        onDelete(row?.id);
-                      }}
-                      className="cursor-pointer"
-                      size={20}
-                    />
+                    {onDelete && (
+                      <RiDeleteBin4Line
+                        onClick={() => {
+                          onDelete(row?.id);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    )}
                   </div>
                 </td>
               </tr>
@@ -124,7 +136,7 @@ UseTable.propTypes = {
   setModalIsOpen: func,
   editItem: object,
   handleInvoicePDF: func,
-  handleInvoiceView: func,
+  handleViewInvoice: func,
 };
 
 export default UseTable;

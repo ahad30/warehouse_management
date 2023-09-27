@@ -1,3 +1,4 @@
+import InvoiceA4 from "../../../components/InvoicePages/InvoiceA4";
 import BillingInfo from "../../../components/Invoices/BillingInfo/BillingInfo";
 import Calculation from "../../../components/Invoices/Calculation/Calculation";
 // import InvoiceInfo from "../../../components/Invoices/InvoiceInfo/InvoiceInfo";
@@ -40,6 +41,7 @@ const NewInvoice = () => {
         <ItemsWithSelect products={data?.data?.products} />
         <Calculation />
         <SubmitInvoice />
+        <InvoiceA4/>
       </DashboardBackground>
     );
 };
