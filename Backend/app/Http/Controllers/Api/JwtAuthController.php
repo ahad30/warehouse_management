@@ -17,17 +17,6 @@ use Illuminate\Validation\Rules\Password;
 class JwtAuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        /* --------------------- jwtAuth has been created custom -------------------- */
-
-        // $this->middleware('jwtAuth', ['except' => ['login', 'register']]);
-    }
-    /**
      *
      * Api to register user
      */
@@ -221,37 +210,5 @@ class JwtAuthController extends Controller
     public function guard()
     {
         return Auth::guard();
-    }
-
-
-    public function findLoggedInUser()
-    {
-
-
-
-        $user = $this->guard()->user();
-
-
-
-        if (!is_null($user)) {
-
-            $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
-            $role = $roleWithUser->getRole->role;
-
-            if (!is_null($role)) {
-                // $payload = JWTAuth::decode($user);
-
-                return response()->json([
-                    'status' => true,
-                    'message' => 'user  found',
-                    'user' => $roleWithUser
-                ]);
-            }
-        }
-
-        return response()->json([
-            'status' => false,
-            'message' => 'user not found'
-        ], 404);
     }
 }
