@@ -11,8 +11,10 @@ import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddUser = () => {
+  UseTitle("Add User");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();

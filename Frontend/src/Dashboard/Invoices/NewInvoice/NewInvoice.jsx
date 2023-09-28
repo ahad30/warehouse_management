@@ -5,11 +5,13 @@ import Calculation from "../../../components/Invoices/Calculation/Calculation";
 // import ItemsWithCustom from "../../../components/Invoices/Items/ItemsWithCustom";
 import ItemsWithSelect from "../../../components/Invoices/Items/ItemsWithSelect";
 import SubmitInvoice from "../../../components/Invoices/SubmitInvoice/SubmitInvoice";
+import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
 import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
 import { useGetInvoiceInfosQuery } from "../../../features/Invoice/InvoiceApi";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 
 const NewInvoice = () => {
+  UseTitle("New Invoice");
   const { data, isLoading, isError, error, isSuccess } =
     useGetInvoiceInfosQuery();
 
@@ -41,7 +43,7 @@ const NewInvoice = () => {
         <ItemsWithSelect products={data?.data?.products} />
         <Calculation />
         <SubmitInvoice />
-        <InvoiceA4/>
+        <InvoiceA4 />
       </DashboardBackground>
     );
 };

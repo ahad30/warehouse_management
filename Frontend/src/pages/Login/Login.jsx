@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/Auth/authSlice";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Login = () => {
+  UseTitle("Login");
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();

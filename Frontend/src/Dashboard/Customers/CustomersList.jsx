@@ -11,8 +11,10 @@ import {
   useDeleteCustomerMutation,
   useGetCustomersQuery,
 } from "../../features/Customer/customerApi";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const CustomersList = () => {
+  UseTitle("Customers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [customer, setCustomer] = useState({});
 

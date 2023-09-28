@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Register = () => {
+  UseTitle("Register");
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
 
@@ -67,7 +69,10 @@ const Register = () => {
           </div>
         </form>
         <p className="text-center">
-          Already have an account? <Link to="/login" className="text-blue-700 font-semibold">Login</Link>
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-700 font-semibold">
+            Login
+          </Link>
         </p>
       </div>
     </div>

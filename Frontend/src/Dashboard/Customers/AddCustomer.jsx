@@ -8,8 +8,10 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddCustomer = () => {
+  UseTitle("Add Customer");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
