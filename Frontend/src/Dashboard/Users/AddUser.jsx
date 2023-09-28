@@ -2,12 +2,15 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { useForm } from "react-hook-form";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
-import { useAddUserMutation } from "../../features/User/userApi";
+import {
+  useAddUserMutation,
+  useGetUserRolesQuery,
+} from "../../features/User/userApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { logOut } from "../../features/Auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const AddUser = () => {
   const { register, handleSubmit } = useForm();
@@ -17,27 +20,22 @@ const AddUser = () => {
   const [addUser, { isLoading, isError, error, isSuccess, data }] =
     useAddUserMutation();
 
+  const { data: rolesData } = useGetUserRolesQuery();
+
   // GET INPUT FIELD FORM
   const onSubmit = async (data) => {
-    console.log(data);
     addUser(data);
   };
 
-  console.log(isLoading, isError, error, isSuccess, data);
+  const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
-    const handleApiError = (error) => {
-      if (error?.originalStatus === 405) {
-        toast.error("Invalid Token Please Re-Login!");
-        return dispatch(logOut());
-      } else {
-        const errorMessage = error?.data?.message || error?.status;
-        toast.error(errorMessage, { id: 1 });
-      }
-    };
-
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
     if (isError) {
-      handleApiError(error);
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
     }
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
@@ -102,16 +100,15 @@ const AddUser = () => {
               </span>
               <select
                 className="select select-bordered w-full"
-                {...register("role")}
+                {...register("role_id")}
                 required
               >
                 <option value={""}>Select Role</option>
-                <option value={"admin"}>Admin</option>
-                <option value={"accountant"}>Accountant</option>
-                <option value={"manager"}>Manager</option>
-                <option value={"sales_representative"}>
-                  Sales Representative
-                </option>
+                {rolesData?.roles?.map((userRole) => (
+                  <option key={userRole?.id} value={userRole?.id}>
+                    {userRole?.role}
+                  </option>
+                ))}
               </select>
             </label>
             <label className="input-group">
@@ -237,6 +234,15 @@ const AddUser = () => {
             icon={<AiOutlineUserAdd size={20} />}
           />
         </form>
+        {/* Display error messages */}
+        {errorMessages.map((errorMessage, index) => (
+          <p
+            key={index}
+            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+          >
+            {errorMessage}
+          </p>
+        ))}
       </DashboardBackground>
     </>
   );

@@ -5,11 +5,18 @@ const userApi = apiSlice.injectEndpoints({
     addUser: builder.mutation({
       query: (data) => ({
         method: "POST",
-        url: "/register",
+        url: "/jwt/register",
         // url: "/posts",
         body: data,
       }),
       invalidatesTags: ["Users", "Dashboard"],
+    }),
+    getUserRoles: builder.query({
+      query: () => ({
+        url: "/roles",
+        // url: "/posts",
+      }),
+      providesTags: ["Users"],
     }),
     getUsers: builder.query({
       query: () => ({
@@ -41,6 +48,7 @@ const userApi = apiSlice.injectEndpoints({
 export const {
   useAddUserMutation,
   useGetUsersQuery,
+  useGetUserRolesQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
 } = userApi;
