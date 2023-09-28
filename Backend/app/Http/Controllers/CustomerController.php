@@ -41,7 +41,7 @@ class CustomerController extends Controller
         if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
+                'message' => 'Validation Error!',
                 'errors' => $validateInput->errors()
             ], 401);
         }
@@ -91,7 +91,7 @@ class CustomerController extends Controller
     }
 
     // update
-    public function update(Request $request, )
+    public function update(Request $request,)
     {
         $customer = Customer::find($request->id);
 

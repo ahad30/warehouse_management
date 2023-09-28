@@ -102,7 +102,7 @@ class CategoryController extends Controller
             if ($validateInput->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation Error!',
                     'errors' => $validateInput->errors()
                 ], 401);
             }
