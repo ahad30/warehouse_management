@@ -10,8 +10,10 @@ import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import UseTable from "../../components/Reusable/useTable/UseTable";
 import EditCategory from "./EditCategory";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const CategoriesList = () => {
+  UseTitle("Categories");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [category, setCategory] = useState({});
 

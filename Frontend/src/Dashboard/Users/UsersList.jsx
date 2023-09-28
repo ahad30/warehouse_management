@@ -10,8 +10,10 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from "../../features/User/userApi";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const UsersList = () => {
+  UseTitle("Users");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [user, setUser] = useState({});
 

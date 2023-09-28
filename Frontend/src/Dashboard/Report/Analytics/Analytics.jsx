@@ -1,9 +1,11 @@
+import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import TotalSalesBar from "./Bars/TotalSalesBar";
 import TotalProductsChart from "./Charts/TotalProductsChart";
 import TotalCalculations from "./TotalCalculations/TotalCalculations";
 
 const Analytics = () => {
+  UseTitle("Dashboard Analytics");
   return (
     <DashboardBackground>
       <TotalCalculations />

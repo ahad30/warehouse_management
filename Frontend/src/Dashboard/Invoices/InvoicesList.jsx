@@ -11,8 +11,10 @@ import {
 } from "../../features/Invoice/InvoiceApi";
 import EditInvoice from "./EditInvoice";
 import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const InvoicesList = () => {
+  UseTitle("Invoices");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});

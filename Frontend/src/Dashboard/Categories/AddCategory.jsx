@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddCategory = () => {
+  UseTitle("Add Category");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();

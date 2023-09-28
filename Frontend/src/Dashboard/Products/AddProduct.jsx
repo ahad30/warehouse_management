@@ -9,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useDispatch } from "react-redux";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddProduct = () => {
+  UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();

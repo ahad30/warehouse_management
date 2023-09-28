@@ -17,7 +17,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100 w-full max-w-[1440px] mx-auto border-b">
       <div className="flex-1">
         <Link to={"/dashboard"} className="normal-case text-xl font-bold">
-          Invoice Generator
+          Invoice Management
         </Link>
       </div>
       <div className="flex-none gap-2">

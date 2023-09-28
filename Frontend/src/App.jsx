@@ -6,8 +6,10 @@ import { getUser, logOut } from "./features/Auth/authSlice";
 import { Toaster, toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "./components/Reusable/useLoading/UseLoading";
+import UseTitle from "./components/Reusable/UseTitle/UseTitle";
 
 function App() {
+  UseTitle("Invoice Management");
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();

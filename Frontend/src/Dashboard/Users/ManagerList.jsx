@@ -10,8 +10,10 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from "../../features/User/userApi";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const ManagerList = () => {
+  UseTitle("Managers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [user, setUser] = useState({});
 
@@ -108,7 +110,9 @@ const ManagerList = () => {
     content = (
       <>
         <UseTable
-          data={usersData?.users.filter((user) => user?.get_role?.role === "manager")}
+          data={usersData?.users.filter(
+            (user) => user?.get_role?.role === "manager"
+          )}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
