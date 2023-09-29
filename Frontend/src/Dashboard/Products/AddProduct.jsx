@@ -84,11 +84,39 @@ const AddProduct = () => {
           </label>
           <label className="input-group">
             <span className="font-semibold">
-              Price<span className="text-red-500 p-0">*</span>
+              Store<span className="text-red-500 p-0">*</span>
+            </span>
+            <select
+              className="select select-bordered w-full"
+              required
+              {...register("unit")}
+            >
+              <option value={""}>Select Store Info</option>
+              <option value={1}>Store 1</option>
+              <option value={2}>Store 2</option>
+              <option value={3}>Store 3</option>
+              <option value={4}>Store 4</option>
+            </select>
+          </label>
+          <label className="input-group">
+            <span className="font-semibold">
+              Retail<span className="text-red-500 p-0">*</span>
             </span>
             <input
               type="number"
-              placeholder="Product Price"
+              placeholder="Retail Price"
+              className="input input-bordered w-full"
+              required
+              {...register("price")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold">
+              Sold<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="number"
+              placeholder="Sold Price"
               className="input input-bordered w-full"
               required
               {...register("price")}
@@ -107,7 +135,20 @@ const AddProduct = () => {
               <option value={"pcs"}>Pcs</option>
               <option value={"box"}>Box</option>
               <option value={"kg"}>KG</option>
+              <option value={"litre"}>Litre</option>
             </select>
+          </label>
+          <label className="input-group">
+            <span className="font-semibold">
+              Quantity<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="number"
+              placeholder="Quantity"
+              className="input input-bordered w-full"
+              required
+              {...register("quantity")}
+            />
           </label>
           <label className="input-group">
             <span className="font-semibold">

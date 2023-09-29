@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const { isLoading, error } = useSelector((state) => state?.auth);
 
   const handleOnSubmit = async ({ email, password }) => {
     dispatch(loginUser({ email, password }));

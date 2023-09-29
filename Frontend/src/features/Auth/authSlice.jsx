@@ -2,11 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-// token
-let access_token = localStorage.getItem("access_token");
-access_token = JSON.parse(access_token);
-
-// WITHOUT CSRF TOKEN
+// User Login
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }) => {
@@ -24,6 +20,25 @@ export const loginUser = createAsyncThunk(
       toast.success(response?.message, { id: 1 });
     }
     return response;
+  }
+);
+
+// Get LoggedIn User and Token
+export const getLoggedInUser = createAsyncThunk(
+  "auth/getLoggedInUser",
+  async (access_token) => {
+    await fetch(
+      `${import.meta.env.VITE_REACT_APP_PORT}/profile/findLoggedInUser`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        return data;
+      });
   }
 );
 

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   AiOutlineSetting,
-  AiOutlineTable,
+  // AiOutlineTable,
   AiOutlineUserAdd,
 } from "react-icons/ai";
 import {
@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 
 const DashboardSidebar = () => {
   const { user } = useSelector((state) => state.auth);
-  
+
   const [sideBarData, setSidebarData] = useState([
     {
       name: "Users",
@@ -84,6 +84,22 @@ const DashboardSidebar = () => {
           name: "Categories",
           link: "/dashboard/category",
           icon: <BiCategory size={25} />,
+        },
+      ],
+    },
+    {
+      name: "Store",
+      icon: <BsFillCartFill size={25} />,
+      subLinks: [
+        {
+          name: "Add Store",
+          link: "/dashboard/product/add",
+          icon: <BiCartAdd size={20} />,
+        },
+        {
+          name: "Store List",
+          link: "/dashboard/product",
+          icon: <BsFillCartFill size={20} />,
         },
       ],
     },
@@ -154,9 +170,9 @@ const DashboardSidebar = () => {
   ]);
 
   useEffect(() => {
-    if (user.get_role.role !== "admin") {
+    if (user?.get_role?.role !== "admin") {
       setSidebarData((prev) =>
-        prev.filter((section) => section.name !== "Users")
+        prev.filter((section) => section?.name !== "Users")
       );
     }
   }, [user]);
