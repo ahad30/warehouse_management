@@ -17,22 +17,24 @@ function App() {
     access_token = JSON.parse(access_token);
     setLoading(false);
 
-    fetch(`${import.meta.env.VITE_REACT_APP_PORT}/profile/findLoggedInUser`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.status) {
-          setUser(data?.user);
-          setLoading(false);
-        }
+    if (access_token) {
+      fetch(`${import.meta.env.VITE_REACT_APP_PORT}/profile/findLoggedInUser`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.status) {
+            setUser(data?.user);
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    }
   }, []);
 
   dispatch(getUser(user));
