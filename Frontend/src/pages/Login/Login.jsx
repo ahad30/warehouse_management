@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/Auth/authSlice";
+
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Login = () => {
@@ -16,10 +17,16 @@ const Login = () => {
     dispatch(loginUser({ email, password }));
   };
 
+
+
   let access_token = JSON.parse(localStorage.getItem("access_token"));
+  
   if (access_token) {
-    return navigate("/dashboard");
+     navigate("/dashboard");
   }
+ 
+  
+  
 
   return (
     <div className="p-10  bg-gray-100">
