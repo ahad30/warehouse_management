@@ -88,7 +88,7 @@ const UsersList = () => {
 
   // USERS CONTENT
   let content;
-
+   console.log(usersData?.users)
   // ALL USERS
   if (usersIsLoading) {
     return (content = <UseLoading />);
@@ -109,7 +109,7 @@ const UsersList = () => {
   if (usersIsSuccess && usersData?.status) {
     content = (
       <>
-        <UseTable
+        {/* <UseTable
           data={usersData?.users}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
@@ -118,7 +118,7 @@ const UsersList = () => {
           btnPath={"/dashboard/user/add"}
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
-        />
+        /> */}
       </>
     );
   }
