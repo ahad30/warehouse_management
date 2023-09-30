@@ -168,6 +168,12 @@ class JwtAuthController extends Controller
      */
     public function logout()
     {
+        if (auth()->user() == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You are already logged out'
+            ], 400);
+        }
         $this->guard()->logout();
 
         return response()->json([
