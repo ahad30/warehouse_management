@@ -80,15 +80,21 @@ const AddCustomer = () => {
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold min-w-[100px]">
-              Email<span className="text-red-500 p-0">*</span>
-            </span>
+            <span className="font-semibold min-w-[100px]">Email</span>
             <input
               type="email"
               placeholder="Email"
               className="input input-bordered w-full"
-              required
               {...register("email")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[100px]">Web</span>
+            <input
+              type="url"
+              placeholder="Customer Web link"
+              className="input input-bordered w-full"
+              {...register("web")}
             />
           </label>
           <label className="input-group">
