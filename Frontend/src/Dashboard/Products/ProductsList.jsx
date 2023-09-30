@@ -10,8 +10,10 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditProduct from "./EditProduct";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const ProductsList = () => {
+  UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
   const {
@@ -102,7 +104,7 @@ const ProductsList = () => {
       </>
     ));
   }
-console.log(productsData?.products);
+  console.log(productsData?.products);
   if (productsIsSuccess && productsData?.status) {
     content = (
       <>

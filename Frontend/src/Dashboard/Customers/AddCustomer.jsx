@@ -6,13 +6,16 @@ import { useAddCustomerMutation } from "../../features/Customer/customerApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { logOut } from "../../features/Auth/authSlice";
 import { useDispatch } from "react-redux";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddCustomer = () => {
-  const dispatch = useDispatch();
+  UseTitle("Add Customer");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [addCustomer, { isLoading, isError, error, isSuccess, data }] =
     useAddCustomerMutation();
 
@@ -20,24 +23,18 @@ const AddCustomer = () => {
     addCustomer(data);
   };
 
-  useEffect(() => {
-    const handleApiError = (error) => {
-      if (error?.originalStatus === 405) {
-        toast.error("Invalid Token Please Re-Login!");
-        return dispatch(logOut());
-      } else {
-        let existUser =
-          error?.data?.message === "Customer Already Exist" &&
-          "Please use different Email and Phone";
+  const errorMessages = UseErrorMessages(error);
 
-        const errorMessage = existUser || error?.data?.message || error?.status;
-        toast.error(errorMessage, { id: 1 });
-      }
-    };
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
 
     if (isError) {
-      handleApiError(error);
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
     }
+
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
       return navigate("/dashboard/customer");
@@ -115,18 +112,27 @@ const AddCustomer = () => {
               {...register("notes")}
             />
           </label>
-          {/* <div className="form-control w-full">
+          <div className="form-control w-full">
             <input
               type="file"
               className="file-input file-input-bordered w-full"
             />
-          </div> */}
+          </div>
         </div>
         <SubmitButton
           icon={<AiOutlineUserAdd size={20} />}
           title={isLoading ? "Adding Customer..." : "Add Customer"}
         />
       </form>
+      {/* Display error messages */}
+      {errorMessages.map((errorMessage, index) => (
+        <p
+          key={index}
+          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+        >
+          {errorMessage}
+        </p>
+      ))}
     </DashboardBackground>
   );
 };

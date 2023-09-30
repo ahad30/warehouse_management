@@ -25,6 +25,7 @@ import AdminList from "../Dashboard/Users/AdminList";
 import ManagerList from "../Dashboard/Users/ManagerList";
 import SalesManList from "../Dashboard/Users/SalesManList";
 import CategoriesListCustom from "../Dashboard/Categories/CategoriesListCustom";
+import CustomersListCustom from "../Dashboard/Customers/CustomersListCustom";
 
 const routes = createBrowserRouter([
   {
@@ -114,7 +115,8 @@ const routes = createBrowserRouter([
       // CUSTOMERS
       {
         path: "/dashboard/customer",
-        element: <CustomersList />,
+        // element: <CustomersList />,
+         element : <CustomersListCustom></CustomersListCustom>
       },
       {
         path: "/dashboard/customer/add",

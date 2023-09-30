@@ -7,8 +7,10 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const DefaultSettings = () => {
+  UseTitle("Settings");
   const { user } = useSelector((state) => state.auth);
 
   const { data: companyInfoData } = useGetCompanyInfoQuery();

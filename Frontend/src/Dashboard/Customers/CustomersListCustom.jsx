@@ -12,8 +12,10 @@ import {
   useGetCustomersQuery,
 } from "../../features/Customer/customerApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin4Line } from "react-icons/ri";
 
-const CustomersList = () => {
+const CustomersListCustom = () => {
   UseTitle("Customers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [customer, setCustomer] = useState({});
@@ -85,6 +87,7 @@ const CustomersList = () => {
     { key: "notes", header: "Notes" },
   ];
 
+  // console.log(customersData?.customers)
   // CUSTOMERS CONTENT
   let content;
 
@@ -104,11 +107,81 @@ const CustomersList = () => {
       </>
     ));
   }
-
+  console.log()
   if (customersIsSuccess && customersData?.status) {
-    content = (
+    return content = (
+
       <>
-        <UseTable
+
+        <div className="overflow-x-scroll">
+          <table className="table table-sm table-pin-rows table-pin-cols">
+            {/* Table header */}
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {
+             customersData?.customers && customersData?.customers.map((customer) => <tr key={customer.id}>
+                  <td>{customer.id}</td>
+                  <td>{customer?.profile_image}</td>
+                  <td>{customer?.name}</td>
+                  <td>{customer?.email}</td>
+                  <td>{customer?.phone}</td>
+                  <td>{customer?.notes}</td>
+                  <td>{customer?.address}</td>
+                  <td className="flex gap-x-2 items-center">
+                    {handleModalEditInfo && (
+                      <FiEdit
+                        onClick={() => {
+                          handleModalEditInfo(customer);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    )}
+                    {onDelete && (
+                      <RiDeleteBin4Line
+                        onClick={() => {
+                          onDelete(customer?.id);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    )}
+                  </td>
+
+
+                </tr>
+
+                )
+              }
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        {/* <UseTable
           data={customersData?.customers}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
@@ -117,9 +190,10 @@ const CustomersList = () => {
           btnPath={"/dashboard/customer/add"}
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
-        />
+        /> */}
       </>
     );
+
   }
 
   return (
@@ -140,4 +214,4 @@ const CustomersList = () => {
   );
 };
 
-export default CustomersList;
+export default CustomersListCustom;

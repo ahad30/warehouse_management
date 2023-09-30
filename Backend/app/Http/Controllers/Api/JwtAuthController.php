@@ -40,7 +40,7 @@ class JwtAuthController extends Controller
         if ($codeValidation->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
+                'message' => 'Validation error!',
                 'errors' => $codeValidation->errors()
             ], 400);
         }
@@ -109,7 +109,7 @@ class JwtAuthController extends Controller
             if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation Error!',
                     'errors' => $validateUser->errors()
                 ], 401);
             }

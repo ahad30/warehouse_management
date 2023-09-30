@@ -2,12 +2,14 @@ import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import routes from "./routes/routes";
 import { useDispatch } from "react-redux";
-import { getUser } from "./features/Auth/authSlice";
-import { Toaster } from "react-hot-toast";
+import { getUser, logOut } from "./features/Auth/authSlice";
+import { Toaster, toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "./components/Reusable/useLoading/UseLoading";
+import UseTitle from "./components/Reusable/UseTitle/UseTitle";
 
 function App() {
+  UseTitle("Invoice Management");
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -15,9 +17,10 @@ function App() {
   useEffect(() => {
     let access_token = localStorage.getItem("access_token");
     access_token = JSON.parse(access_token);
-    setLoading(false);
 
     if (access_token) {
+      setLoading(true);
+
       fetch(`${import.meta.env.VITE_REACT_APP_PORT}/profile/findLoggedInUser`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -25,17 +28,18 @@ function App() {
       })
         .then((res) => res.json())
         .then((data) => {
+          if (!data.status) {
+            toast.error(data?.message, { id: 1 });
+            dispatch(logOut());
+            setLoading(false);
+          }
           if (data?.status) {
             setUser(data?.user);
             setLoading(false);
           }
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
         });
     }
-  }, []);
+  }, [dispatch]);
 
   dispatch(getUser(user));
 

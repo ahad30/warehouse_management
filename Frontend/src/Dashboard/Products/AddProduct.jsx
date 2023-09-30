@@ -8,9 +8,11 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useDispatch } from "react-redux";
-import { logOut } from "../../features/Auth/authSlice";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddProduct = () => {
+  UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,20 +25,18 @@ const AddProduct = () => {
     addProduct(data);
   };
 
+  const errorMessages = UseErrorMessages();
+
   useEffect(() => {
-    const handleApiError = (error) => {
-      if (error?.originalStatus === 405) {
-        toast.error("Invalid Token Please Re-Login!");
-        return dispatch(logOut());
-      } else {
-        const errorMessage = error?.data?.message || error?.status;
-        toast.error(errorMessage, { id: 1 });
-      }
-    };
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
 
     if (isError) {
-      handleApiError(error);
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
     }
+
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
       return navigate("/dashboard/product");
@@ -135,18 +135,27 @@ const AddProduct = () => {
               {...register("desc")}
             />
           </label>
-          {/* <div className="form-control w-full">
+          <div className="form-control w-full">
             <input
               type="file"
               className="file-input file-input-bordered w-full"
             />
-          </div> */}
+          </div>
         </div>
         <SubmitButton
           title={isLoading ? "Saving Product..." : "Save Product"}
           icon={<BiCartAdd size={20} />}
         />
       </form>
+      {/* Display error messages */}
+      {errorMessages.map((errorMessage, index) => (
+        <p
+          key={index}
+          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+        >
+          {errorMessage}
+        </p>
+      ))}
     </DashboardBackground>
   );
 };
