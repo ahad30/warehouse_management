@@ -34,8 +34,7 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
     Route::group(['middleware' => 'verifyJwtToken'], function () {
         Route::middleware(['verifyAdmin'])->post('/register', 'register');
     });
-    Route::middleware('auth:api')->post('/logout', 'logout')->name('logout');
-
+    Route::post('/logout', 'logout')->name('logout');
 });
 
 /* -------------------------------------------------------------------------- */
@@ -111,6 +110,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::get('/roles', RoleController::class)->name('role.index');
 
+
     /* -------------------------------------------------------------------------- */
     /*                              Brand controller                              */
     /* -------------------------------------------------------------------------- */
@@ -122,3 +122,4 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::delete('/delete/{id}', 'delete');
     });
 });
+
