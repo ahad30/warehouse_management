@@ -42,6 +42,12 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    userLogOut: builder.mutation({
+      query: () => ({
+        method: "POST",
+        url: `/jwt/logout`,
+      }),
+    }),
   }),
 });
 
@@ -51,4 +57,5 @@ export const {
   useGetUserRolesQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useUserLogOutMutation,
 } = userApi;
