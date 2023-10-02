@@ -15,7 +15,7 @@ class UserController extends Controller
     // index
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::latest()->with('getRole')->get();
 
         if ($users->count() <= 0) {
             return response()->json([
