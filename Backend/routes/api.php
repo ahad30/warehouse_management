@@ -33,8 +33,7 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
     Route::group(['middleware' => 'verifyJwtToken'], function () {
         Route::middleware(['verifyAdmin'])->post('/register', 'register');
     });
-    Route::middleware('auth:api')->post('/logout', 'logout')->name('logout');
-
+    Route::post('/logout', 'logout')->name('logout');
 });
 
 /* -------------------------------------------------------------------------- */
