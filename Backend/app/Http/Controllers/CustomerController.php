@@ -91,7 +91,7 @@ class CustomerController extends Controller
     }
 
     // update
-    public function update(Request $request,)
+    public function update(Request $request, )
     {
         $customer = Customer::find($request->id);
 

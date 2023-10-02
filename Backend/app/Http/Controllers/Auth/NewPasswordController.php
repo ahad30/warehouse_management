@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class NewPasswordController extends Controller
@@ -19,14 +20,23 @@ class NewPasswordController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
 
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'token' => ['required'],
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error!',
+                'errors' => $validator->errors()
+            ], 400);
+        }
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the

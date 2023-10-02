@@ -64,7 +64,7 @@ const AddProduct = () => {
             </span>
             <input
               type="text"
-              placeholder="Provide an Unique Product Name"
+              placeholder="Product Name"
               className="input input-bordered w-full"
               required
               {...register("name")}
@@ -97,6 +97,18 @@ const AddProduct = () => {
               <option value={3}>Store 3</option>
               <option value={4}>Store 4</option>
             </select>
+          </label>
+          <label className="input-group">
+            <span className="font-semibold">
+              Quantity<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="number"
+              placeholder="Quantity"
+              className="input input-bordered w-full"
+              required
+              {...register("quantity")}
+            />
           </label>
           <label className="input-group">
             <span className="font-semibold">
@@ -140,16 +152,20 @@ const AddProduct = () => {
           </label>
           <label className="input-group">
             <span className="font-semibold">
-              Quantity<span className="text-red-500 p-0">*</span>
+              Brands<span className="text-red-500 p-0">*</span>
             </span>
-            <input
-              type="number"
-              placeholder="Quantity"
-              className="input input-bordered w-full"
+            <select
+              className="select select-bordered w-full"
               required
-              {...register("quantity")}
-            />
+              {...register("brand")}
+            >
+              <option value={""}>Select Brand</option>
+              <option value={"1"}>Dell</option>
+              <option value={"2"}>Bashundhura</option>
+              <option value={"3"}>Microsoft</option>
+            </select>
           </label>
+
           <label className="input-group">
             <span className="font-semibold">
               Category<span className="text-red-500 p-0">*</span>

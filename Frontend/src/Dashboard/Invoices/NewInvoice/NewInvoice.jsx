@@ -1,7 +1,7 @@
 // import InvoiceA4 from "../../../components/InvoicePages/InvoiceA4";
 import BillingInfo from "../../../components/Invoices/BillingInfo/BillingInfo";
 import Calculation from "../../../components/Invoices/Calculation/Calculation";
-// import InvoiceInfo from "../../../components/Invoices/InvoiceInfo/InvoiceInfo";
+import InvoiceInfo from "../../../components/Invoices/InvoiceInfo/InvoiceInfo";
 // import ItemsWithCustom from "../../../components/Invoices/Items/ItemsWithCustom";
 import ItemsWithSelect from "../../../components/Invoices/Items/ItemsWithSelect";
 import SubmitInvoice from "../../../components/Invoices/SubmitInvoice/SubmitInvoice";
@@ -34,7 +34,7 @@ const NewInvoice = () => {
   if (isSuccess && data?.status)
     return (
       <DashboardBackground>
-        {/* <InvoiceInfo /> */}
+        <InvoiceInfo />
         <BillingInfo
           company_info={data?.data?.company_info}
           customers={data?.data?.customers}
