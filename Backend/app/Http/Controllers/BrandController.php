@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
@@ -39,7 +41,15 @@ class BrandController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'brand_name' => 'required',
+            'img' => 'mimes:jpg,png,jif,jpeg'
         ]);
+        $imageData = null;
+        if ($request->file('img') != null) {
+            $file = $request->file('img');
+            $filename = $file->getClientOriginalName();
+            $imageData = time() . '-' . $filename;
+            $file->move('uploads/brands', $imageData);
+        }
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -47,6 +57,16 @@ class BrandController extends Controller
                 'errors' => $validator->errors()
             ], 401);
         }
+        $user = User::create([
+            'brand_name' => $request->name,
+            'img' => $imageData
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Brand Successful',
+            'user' => $user,
+        ], 201);
     }
     /**
      *
