@@ -10,15 +10,21 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import {
   useDeleteUserMutation,
+  useGetUserRolesQuery,
   useGetUsersQuery,
 } from "../../features/User/userApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
+import { set } from "date-fns";
 
 const UsersList = () => {
   UseTitle("Users");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(null);
   const [user, setUser] = useState({});
+  const [allUserData, setAllUserData] = useState([]);
+  const { data: rolesData } = useGetUserRolesQuery();
+  const [reload, setReload] = useState(false);
+  const [filterData, setFilterData] = useState(allUserData);
 
   const {
     data: usersData,
@@ -27,6 +33,21 @@ const UsersList = () => {
     error: usersError,
     isSuccess: usersIsSuccess,
   } = useGetUsersQuery();
+
+  useEffect(() => {
+   
+      // setAllUserData(filterData);
+      if(filterData.length>0){
+        setAllUserData(filterData)
+        
+      }
+      else {
+        setAllUserData(usersData?.users)
+      }
+    
+      // setAllUserData(usersData?.users);
+  
+  }, [usersData, usersData?.users, filterData]);
 
   const [
     deleteUser,
@@ -64,6 +85,8 @@ const UsersList = () => {
     deleteData,
   ]);
 
+  // console.log(allUserData)
+
   // EDIT STARTS
   const handleModalEditInfo = (user) => {
     setUser(user);
@@ -99,8 +122,22 @@ const UsersList = () => {
     console.error(usersError);
   }
 
-  console.log(usersData.users);
+  // console.log(usersData?.users);
+  // console.log(rolesData.roles)
 
+  const handleFilter = (data) => {
+    if (data) {
+      const filterUsers = allUserData.filter((user) => user?.get_role?.role === data);
+      // console.log(filterUsers)
+      
+
+      setFilterData(filterUsers);
+      // setReload(!reload); // Apply the filter and update the state
+    }
+    
+  };
+  // console.log(allUserData)
+  console.log(filterData);
   return (
     <>
       <DashboardBackground>
@@ -115,6 +152,28 @@ const UsersList = () => {
           btnIcon={<BiSolidDuplicate size={20}></BiSolidDuplicate>}
           setFiltering={setFiltering}
         />
+
+        <div className="form-control my-5 w-1/6 ">
+          <label className="label">
+            <span className="label-text">Filter</span>
+          </label>
+
+          <select
+            onChange={(e) => handleFilter(e.target.value)}
+            className=" px-4 py-2 focus:border-0"
+          >
+            <option value={""}>Select Role</option>
+            {rolesData?.roles?.map((userRole) => (
+              <option
+                className="focus:border-0"
+                key={userRole?.id}
+                value={userRole?.role}
+              >
+                {userRole?.role}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {!usersIsSuccess && usersData?.status ? (
           <p className="text-center text-2xl mt-10">{usersData?.message}</p>
@@ -138,15 +197,15 @@ const UsersList = () => {
               </thead>
 
               <tbody>
-                {usersData?.users &&
-                  usersData?.users?.map((user) => (
+                {allUserData &&
+                  allUserData?.map((user) => (
                     <tr key={user?.id}>
                       <td>{user.id}</td>
                       <td>{user?.profile_image}</td>
                       <td>{user?.name}</td>
                       <td>{user?.email}</td>
                       <td>{user?.phone}</td>
-                      <td>{user?.role}</td>
+                      <td>{user?.get_role?.role}</td>
                       <td>{user?.status}</td>
                       <td>{user?.address}</td>
                       <td>{user?.notes}</td>

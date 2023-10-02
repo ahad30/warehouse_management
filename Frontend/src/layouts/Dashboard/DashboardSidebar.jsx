@@ -188,8 +188,7 @@ const DashboardSidebar = () => {
 
   useEffect(() => {
     if (user?.get_role?.role !== "admin") {
-      setSidebarData((prev) =>
-        prev.filter((section) => section?.name !== "Users")
+      setSidebarData((prev) => prev.filter((section) => section?.name !== "Users")
       );
     }
   }, [user]);
@@ -244,6 +243,8 @@ const DashboardSidebar = () => {
         ))}
       </div>
     </div>
+   
+   
   );
 };
 
