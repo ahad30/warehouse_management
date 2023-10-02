@@ -92,17 +92,14 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
                         {...register("brand_name")}
                       />
                     </label>
-                    <label className="input-group">
-                      <span className="font-semibold">Image</span>
+                    <div className="form-control w-full">
                       <input
-                        type="text"
-                        placeholder="Product Description"
-                        className="input input-bordered w-full"
+                        type="file"
+                        className="file-input file-input-bordered w-full"
                         {...register("brand_img")}
                       />
-                    </label>
+                    </div>
                   </div>
-
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <input
                       type="submit"

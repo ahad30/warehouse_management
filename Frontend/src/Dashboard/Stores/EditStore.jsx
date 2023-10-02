@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateCustomerMutation } from "../../features/Customer/customerApi";
 
-const EditStore = ({ modalIsOpen, setModalIsOpen, customer }) => {
+const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   const [
@@ -19,17 +19,12 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, customer }) => {
   ] = useUpdateCustomerMutation();
 
   const onSubmit = (data) => {
-    if (
-      !customer.name ||
-      !customer.email ||
-      !customer.phone ||
-      !customer.address
-    ) {
+    if (!store.name || !store.email || !store.phone || !store.address) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return; // Exit early if any required field is missing
     }
 
-    updateCustomer({ ...data, id: customer?.id });
+    updateCustomer({ ...data, id: store?.id });
   };
 
   useEffect(() => {
@@ -54,16 +49,15 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, customer }) => {
     setModalIsOpen,
   ]);
 
-  // Set default values using setValue from react-hook-form
   useEffect(() => {
-    if (customer) {
-      setValue("name", customer.name || "");
-      setValue("email", customer.email || "");
-      setValue("phone", customer.phone || "");
-      setValue("address", customer.address || "");
-      setValue("notes", customer.notes || "");
+    if (store) {
+      setValue("store_name", store.store_name || "");
+      setValue("store_email", store.store_name || "");
+      setValue("store_phone", store.store_phone || "");
+      setValue("store_web", store.store_web || "");
+      setValue("store_address", store.store_address || "");
     }
-  }, [customer, setValue]);
+  }, [store, setValue]);
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -76,62 +70,63 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, customer }) => {
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
-                Update Product
+                Update Store
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="grid gap-5 w-full">
+                  <div className="grid gap-5">
                     <label className="input-group">
-                      <span className="font-semibold">
+                      <span className="font-semibold min-w-[100px]">
                         Name<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
                         type="text"
-                        placeholder="Product Name"
+                        placeholder="Store Name"
                         className="input input-bordered w-full"
-                        {...register("name")}
+                        required
+                        {...register("store_name")}
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
-                        Email<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Email"
-                        className="input input-bordered w-full"
-                        {...register("email")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
+                      <span className="font-semibold min-w-[100px]">
                         Phone<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
                         type="text"
                         placeholder="Phone"
                         className="input input-bordered w-full"
-                        {...register("phone")}
+                        required
+                        {...register("store_phone")}
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
+                      <span className="font-semibold min-w-[100px]">Email</span>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="input input-bordered w-full"
+                        {...register("store_email")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold min-w-[100px]">Web</span>
+                      <input
+                        type="url"
+                        placeholder="Customer Web link"
+                        className="input input-bordered w-full"
+                        {...register("store_web")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold min-w-[100px]">
                         Address<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
                         type="text"
                         placeholder="Address"
                         className="input input-bordered w-full"
-                        {...register("address")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">Notes</span>
-                      <input
-                        type="text"
-                        placeholder="Notes"
-                        className="input input-bordered w-full"
-                        {...register("notes")}
+                        required
+                        {...register("store_address")}
                       />
                     </label>
                   </div>
@@ -165,7 +160,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, customer }) => {
 EditStore.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
-  customer: object,
+  store: object,
 };
 
 export default EditStore;

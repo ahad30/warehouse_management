@@ -6,25 +6,25 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditStore from "./EditStore";
-import {
-  useDeleteCustomerMutation,
-  useGetCustomersQuery,
-} from "../../features/Customer/customerApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { FaStore } from "react-icons/fa";
+import {
+  useDeleteStoreMutation,
+  useGetStoresQuery,
+} from "../../features/Store/storeApi";
 
 const StoresList = () => {
   UseTitle("Customers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [customer, setCustomer] = useState({});
+  const [store, setStore] = useState({});
 
   const {
-    data: customersData,
-    isLoading: customersIsLoading,
-    isError: customersIsError,
-    error: customersError,
-    isSuccess: customersIsSuccess,
-  } = useGetCustomersQuery();
+    data: storesData,
+    isLoading: storesIsLoading,
+    isError: storesIsError,
+    error: storesError,
+    isSuccess: storesIsSuccess,
+  } = useGetStoresQuery();
 
   const [
     deleteCustomer,
@@ -35,7 +35,7 @@ const StoresList = () => {
       isSuccess: deleteIsSuccess,
       data: deleteData,
     },
-  ] = useDeleteCustomerMutation();
+  ] = useDeleteStoreMutation();
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -64,8 +64,8 @@ const StoresList = () => {
   // DELETE ENDS
 
   // EDIT STARTS
-  const handleModalEditInfo = (customer) => {
-    setCustomer(customer);
+  const handleModalEditInfo = (store) => {
+    setStore(store);
     setModalIsOpen(true);
   };
   // EDIT ENDS
@@ -78,38 +78,38 @@ const StoresList = () => {
 
   const columns = [
     { key: "id", header: "ID" },
-    { key: "name", header: "Name" },
-    { key: "email", header: "Email" },
-    { key: "phone", header: "Phone" },
-    { key: "address", header: "Address" },
-    { key: "notes", header: "Notes" },
+    { key: "store_name", header: "Name" },
+    { key: "store_email", header: "Email" },
+    { key: "store_phone", header: "Phone" },
+    { key: "store_web", header: "Web" },
+    { key: "store_address", header: "Address" },
   ];
 
   // CUSTOMERS CONTENT
   let content;
 
   // ALL CUSTOMERS
-  if (customersIsLoading) {
+  if (storesIsLoading) {
     return (content = <UseLoading />);
   }
 
-  if (customersIsError) {
-    console.error(customersError);
+  if (storesIsError) {
+    console.error(storesError);
   }
 
-  if (!customersData?.status) {
+  if (!storesData?.status) {
     return (content = (
       <>
-        <p className="text-center text-2xl mt-10">{customersData?.message}</p>
+        <p className="text-center text-2xl mt-10">{storesData?.message}</p>
       </>
     ));
   }
 
-  if (customersIsSuccess && customersData?.status) {
+  if (storesIsSuccess && storesData?.status) {
     content = (
       <>
         <UseTable
-          data={customersData?.customers}
+          data={storesData?.customers}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
@@ -126,12 +126,12 @@ const StoresList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Stores {customersData?.customers?.length}
+          Stores {storesData?.customers?.length}
         </TableHeadingTitle>
         {/* Customers Table */}
         {content}
         <EditStore
-          customer={customer}
+          store={store}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
