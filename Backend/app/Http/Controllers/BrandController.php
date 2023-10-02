@@ -42,7 +42,7 @@ class BrandController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'brand_name' => 'required|unique:brand_name',
+            'brand_name' => 'required|unique:' . Brand::class,
             // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
         $imageData = null;
