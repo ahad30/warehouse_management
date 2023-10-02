@@ -26,6 +26,7 @@ import ManagerList from "../Dashboard/Users/ManagerList";
 import SalesManList from "../Dashboard/Users/SalesManList";
 import CategoriesListCustom from "../Dashboard/Categories/CategoriesListCustom";
 import CustomersListCustom from "../Dashboard/Customers/CustomersListCustom";
+import CatgorisListCustomAgain from "../Dashboard/Categories/CatgorisListCustomAgain";
 
 const routes = createBrowserRouter([
   {
@@ -127,6 +128,7 @@ const routes = createBrowserRouter([
         path: "/dashboard/category",
         // element: <CategoriesList />,
         element: <CategoriesListCustom />,
+        // element: <CatgorisListCustomAgain></CatgorisListCustomAgain>,
       },
       {
         path: "/dashboard/category/add",
