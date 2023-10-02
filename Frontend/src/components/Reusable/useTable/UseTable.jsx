@@ -60,9 +60,6 @@ const UseTable = ({
                 ))}
                 <td>
                   <div className="flex items-center gap-x-3">
-                    <PDFDownloadLink document={<InvoicePDF />}>
-                      Download pdf
-                    </PDFDownloadLink>
                     {handleInvoicePDF && (
                       <>
                         <PDFDownloadLink document={<InvoicePDF />}>

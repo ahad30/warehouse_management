@@ -45,6 +45,7 @@ const CustomerInfo = ({ customers }) => {
           className="input input-bordered input-md w-full my-2"
           required
           defaultValue={customer?.name}
+          disabled
         />
         <input
           onChange={handleInputChange}
@@ -53,6 +54,7 @@ const CustomerInfo = ({ customers }) => {
           placeholder="Email"
           className="input input-bordered input-md w-full my-2"
           defaultValue={customer?.email}
+          disabled
         />
         <select
           className="select select-bordered w-full my-2"
@@ -74,6 +76,7 @@ const CustomerInfo = ({ customers }) => {
           placeholder="Address"
           className="input input-bordered input-md w-full my-2"
           defaultValue={customer?.address}
+          disabled
         />
       </form>
     </>

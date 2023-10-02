@@ -14,14 +14,16 @@ const apiSlice = createApi({
     },
   }),
   tagTypes: [
+    "Dashboard",
     "Users",
     "Customers",
     "Categories",
+    "Brands",
+    "Stores",
     "Products",
     "Invoices",
     "Company",
     "Profile",
-    "Dashboard",
   ],
   endpoints: () => ({}),
 });

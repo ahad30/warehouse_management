@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { AiOutlineDelete } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { deleteItem, getItem } from "../../../features/Invoice/invoiceSlice";
-import productData from "../../../Dashboard/Products/productData.json";
+// import productData from "../../../Dashboard/Products/productData.json";
 import { array } from "prop-types";
 
 const ItemsWithSelect = ({ products }) => {
@@ -58,7 +58,6 @@ const ItemsWithSelect = ({ products }) => {
             <select
               className="select select-bordered w-full"
               onChange={(e) => handleSelectedItem(e.target.value)}
-              required
               name="name"
             >
               <option value="">Select Product</option>
@@ -76,9 +75,10 @@ const ItemsWithSelect = ({ products }) => {
             <input
               type="text"
               name="code"
-              defaultValue={selectedItem?.code}
               placeholder="Code"
               className="input input-bordered input-md w-full"
+              defaultValue={selectedItem?.code}
+              disabled
             />
           </label>
         </div>
@@ -88,9 +88,10 @@ const ItemsWithSelect = ({ products }) => {
             <input
               type="text"
               name="desc"
-              defaultValue={selectedItem?.desc}
               placeholder="Description"
               className="input input-bordered input-md w-full"
+              defaultValue={selectedItem?.desc}
+              disabled
             />
           </label>
         </div>
@@ -100,9 +101,10 @@ const ItemsWithSelect = ({ products }) => {
             <input
               type="number"
               name="price"
-              value={Number(selectedItem?.price)}
               placeholder="Price"
               className="input input-bordered input-md w-full"
+              value={Number(selectedItem?.price)}
+              disabled
             />
           </label>
         </div>
@@ -113,10 +115,10 @@ const ItemsWithSelect = ({ products }) => {
               type="number"
               name="quantity"
               placeholder="Quantity"
-              defaultValue={quantity}
               className="input input-bordered input-md w-full"
               onChange={handleQuantity}
               required
+              defaultValue={quantity}
             />
           </label>
         </div>
@@ -126,9 +128,10 @@ const ItemsWithSelect = ({ products }) => {
             <input
               type="text"
               name="desc"
-              defaultValue={selectedItem?.unit}
               placeholder="Unit"
               className="input input-bordered input-md w-full"
+              defaultValue={selectedItem?.unit}
+              disabled
             />
           </label>
         </div>

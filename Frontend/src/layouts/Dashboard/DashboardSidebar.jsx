@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   AiOutlineSetting,
-  AiOutlineTable,
+  // AiOutlineTable,
   AiOutlineUserAdd,
 } from "react-icons/ai";
 import {
@@ -12,16 +12,17 @@ import {
   BiSolidPurchaseTag,
   BiUserCircle,
 } from "react-icons/bi";
-import { FaFileInvoiceDollar } from "react-icons/fa";
+import { FaFileInvoiceDollar, FaStore } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { BsFiletypePdf, BsFillCartFill, BsPieChartFill } from "react-icons/bs";
 import { GiSettingsKnobs } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { SiBrandfolder } from "react-icons/si";
 
 const DashboardSidebar = () => {
   const { user } = useSelector((state) => state.auth);
-  
+
   const [sideBarData, setSidebarData] = useState([
     {
       name: "Users",
@@ -81,9 +82,41 @@ const DashboardSidebar = () => {
           icon: <BiSolidDuplicate size={20} />,
         },
         {
-          name: "Categories",
+          name: "Categories list",
           link: "/dashboard/category",
           icon: <BiCategory size={25} />,
+        },
+      ],
+    },
+    {
+      name: "Brand",
+      icon: <SiBrandfolder size={25} />,
+      subLinks: [
+        {
+          name: "Add Brand",
+          link: "/dashboard/brand/add",
+          icon: <SiBrandfolder size={20} />,
+        },
+        {
+          name: "Brands list",
+          link: "/dashboard/brand",
+          icon: <SiBrandfolder size={25} />,
+        },
+      ],
+    },
+    {
+      name: "Store",
+      icon: <FaStore size={25} />,
+      subLinks: [
+        {
+          name: "Add Store",
+          link: "/dashboard/store/add",
+          icon: <FaStore size={20} />,
+        },
+        {
+          name: "Store List",
+          link: "/dashboard/store",
+          icon: <FaStore size={20} />,
         },
       ],
     },
@@ -154,9 +187,9 @@ const DashboardSidebar = () => {
   ]);
 
   useEffect(() => {
-    if (user.get_role.role !== "admin") {
+    if (user?.get_role?.role !== "admin") {
       setSidebarData((prev) =>
-        prev.filter((section) => section.name !== "Users")
+        prev.filter((section) => section?.name !== "Users")
       );
     }
   }, [user]);

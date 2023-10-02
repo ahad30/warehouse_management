@@ -1,26 +1,27 @@
-import { AiOutlineUserAdd } from "react-icons/ai";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
-import { useAddCustomerMutation } from "../../features/Customer/customerApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { FaStore } from "react-icons/fa";
+import { useAddStoreMutation } from "../../features/Store/storeApi";
 
-const AddCustomer = () => {
-  UseTitle("Add Customer");
+const AddStore = () => {
+  UseTitle("Add Store");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [addCustomer, { isLoading, isError, error, isSuccess, data }] =
-    useAddCustomerMutation();
+  const [addStore, { isLoading, isError, error, isSuccess, data }] =
+    useAddStoreMutation();
 
   const onSubmit = (data) => {
-    addCustomer(data);
+    console.log(data);
+    addStore(data);
   };
 
   const errorMessages = UseErrorMessages(error);
@@ -37,7 +38,7 @@ const AddCustomer = () => {
 
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/customer");
+      return navigate("/dashboard/store");
     }
   }, [
     isLoading,
@@ -52,7 +53,7 @@ const AddCustomer = () => {
 
   return (
     <DashboardBackground>
-      <h2 className="text-xl my-5 font-semibold">Add Customer</h2>
+      <h2 className="text-xl my-5 font-semibold">Add Store</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
@@ -61,10 +62,10 @@ const AddCustomer = () => {
             </span>
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder="Store Name"
               className="input input-bordered w-full"
               required
-              {...register("name")}
+              {...register("store_name")}
             />
           </label>
           <label className="input-group">
@@ -76,7 +77,7 @@ const AddCustomer = () => {
               placeholder="Phone"
               className="input input-bordered w-full"
               required
-              {...register("phone")}
+              {...register("store_phone")}
             />
           </label>
           <label className="input-group">
@@ -85,7 +86,7 @@ const AddCustomer = () => {
               type="email"
               placeholder="Email"
               className="input input-bordered w-full"
-              {...register("email")}
+              {...register("store_email")}
             />
           </label>
           <label className="input-group">
@@ -94,7 +95,7 @@ const AddCustomer = () => {
               type="url"
               placeholder="Customer Web link"
               className="input input-bordered w-full"
-              {...register("web")}
+              {...register("store_web")}
             />
           </label>
           <label className="input-group">
@@ -106,28 +107,13 @@ const AddCustomer = () => {
               placeholder="Address"
               className="input input-bordered w-full"
               required
-              {...register("address")}
+              {...register("store_address")}
             />
           </label>
-          <label className="input-group">
-            <span className="font-semibold min-w-[100px]">Notes</span>
-            <input
-              type="text"
-              placeholder="Notes"
-              className="input input-bordered w-full"
-              {...register("notes")}
-            />
-          </label>
-          <div className="form-control w-full">
-            <input
-              type="file"
-              className="file-input file-input-bordered w-full"
-            />
-          </div>
         </div>
         <SubmitButton
-          icon={<AiOutlineUserAdd size={20} />}
-          title={isLoading ? "Adding Customer..." : "Add Customer"}
+          icon={<FaStore size={20} />}
+          title={isLoading ? "Adding Store..." : "Add Store"}
         />
       </form>
       {/* Display error messages */}
@@ -143,4 +129,4 @@ const AddCustomer = () => {
   );
 };
 
-export default AddCustomer;
+export default AddStore;
