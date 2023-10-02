@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,8 +86,9 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::delete('/delete/{id}', 'distroy');
     });
 
-    Route::controller(UserController::class)->prefix('users')->group(function () {
+    Route::middleware('verifyAdmin')->controller(UserController::class)->prefix('users')->group(function () {
         Route::get('/', 'index');
+        Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'distroy');
     });
 
@@ -107,4 +109,17 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::get('/roles', RoleController::class)->name('role.index');
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                              Brand controller                              */
+    /* -------------------------------------------------------------------------- */
+
+    Route::controller(BrandController::class)->prefix('/brands')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::put('/update', 'update');
+        Route::delete('/delete/{id}', 'delete');
+    });
 });
+

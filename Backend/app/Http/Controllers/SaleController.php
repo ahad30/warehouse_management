@@ -22,6 +22,7 @@ class SaleController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'No Invoices found',
+                'invoices' => $invoices,
             ]);
         } else {
             return response()->json([
