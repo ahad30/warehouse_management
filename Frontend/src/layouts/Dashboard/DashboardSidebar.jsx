@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AiOutlineSetting,
   // AiOutlineTable,
@@ -21,230 +21,96 @@ import { useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
 
 const DashboardSidebar = () => {
+  const location = useLocation();
   const { user } = useSelector((state) => state.auth);
 
   const [sideBarData, setSidebarData] = useState([
     {
+      name: "Dashboard",
+      icon: <BiGrid size={25}></BiGrid>,
+      path: "/dashboard",
+    },
+    {
       name: "Users",
       icon: <BiUserCircle size={25} />,
-      subLinks: [
-        {
-          name: "Add User",
-          link: "/dashboard/user/add",
-          icon: <AiOutlineUserAdd size={20} />,
-        },
-        {
-          name: "All Users list",
-          link: "/dashboard/user",
-          icon: <FiUsers size={20} />,
-        },
-        {
-          name: "Admin list",
-          link: "/dashboard/user/admins",
-          icon: <FiUsers size={20} />,
-          adminOnly: true,
-        },
-        {
-          name: "Manager list",
-          link: "/dashboard/user/managers",
-          icon: <FiUsers size={20} />,
-        },
-        {
-          name: "Sales Man list",
-          link: "/dashboard/user/sales-man",
-          icon: <FiUsers size={20} />,
-        },
-      ],
+      path: "/dashboard/user",
     },
     {
       name: "Customers",
       icon: <FiUsers size={25} />,
-      subLinks: [
-        {
-          name: "Add Customer",
-          link: "/dashboard/customer/add",
-          icon: <AiOutlineUserAdd size={20} />,
-        },
-        {
-          name: "Customers list",
-          link: "/dashboard/customer",
-          icon: <FiUsers size={20} />,
-        },
-      ],
+      path: "/dashboard/customer",
     },
     {
       name: "Category",
       icon: <BiCategory size={25} />,
-      subLinks: [
-        {
-          name: "Add Category",
-          link: "/dashboard/category/add",
-          icon: <BiSolidDuplicate size={20} />,
-        },
-        {
-          name: "Categories list",
-          link: "/dashboard/category",
-          icon: <BiCategory size={25} />,
-        },
-      ],
+      path: "/dashboard/category",
     },
     {
       name: "Brand",
       icon: <SiBrandfolder size={25} />,
-      subLinks: [
-        {
-          name: "Add Brand",
-          link: "/dashboard/brand/add",
-          icon: <SiBrandfolder size={20} />,
-        },
-        {
-          name: "Brands list",
-          link: "/dashboard/brand",
-          icon: <SiBrandfolder size={25} />,
-        },
-      ],
+      path: "/dashboard/brand",
     },
     {
       name: "Store",
       icon: <FaStore size={25} />,
-      subLinks: [
-        {
-          name: "Add Store",
-          link: "/dashboard/store/add",
-          icon: <FaStore size={20} />,
-        },
-        {
-          name: "Store List",
-          link: "/dashboard/store",
-          icon: <FaStore size={20} />,
-        },
-      ],
+      path: "/dashboard/store",
     },
     {
       name: "Product",
       icon: <BsFillCartFill size={25} />,
-      subLinks: [
-        {
-          name: "Add Product",
-          link: "/dashboard/product/add",
-          icon: <BiCartAdd size={20} />,
-        },
-        {
-          name: "Products List",
-          link: "/dashboard/product",
-          icon: <BsFillCartFill size={20} />,
-        },
-      ],
+      path: "/dashboard/product",
     },
-    // {
-    //   name: "Sales Report",
-    //   icon: <BsPieChartFill size={25} />,
-    //   subLinks: [
-    //     {
-    //       name: "Sales Report",
-    //       link: "/dashboard/report",
-    //       icon: <AiOutlineTable size={20} />,
-    //     },
-    //     {
-    //       name: "Sales Analytics",
-    //       link: "/dashboard/analytics",
-    //       icon: <BsPieChartFill size={20} />,
-    //     },
-    //   ],
-    // },
+
     {
       name: "Invoices",
       icon: <FaFileInvoiceDollar size={25} />,
-      subLinks: [
-        {
-          name: "New Invoice",
-          link: "/dashboard/invoice/new",
-          icon: <BiSolidPurchaseTag size={20} />,
-        },
-        {
-          name: "Invoices List",
-          link: "/dashboard/invoice",
-          icon: <FaFileInvoiceDollar size={20} />,
-        },
-      ],
-    },
-    {
-      name: "Settings",
-      icon: <AiOutlineSetting size={25} />,
-      subLinks: [
-        {
-          name: "Default Setting",
-          link: "/dashboard/setting/default",
-          icon: <GiSettingsKnobs size={20} />,
-        },
-        // {
-        //   name: "PDF Setting",
-        //   link: "/dashboard/setting/pdf",
-        //   icon: <BsFiletypePdf size={20} />,
-        // },
-      ],
+      path: "/dashboard/invoice",
     },
   ]);
 
   useEffect(() => {
     if (user?.get_role?.role !== "admin") {
-      setSidebarData((prev) => prev.filter((section) => section?.name !== "Users")
+      setSidebarData((prev) =>
+        prev.filter((section) => section?.name !== "Users")
+      );
+    } else if (user?.get_role?.role === "manager") {
+      setSidebarData((prev) =>
+        prev.filter(
+          (section) => section?.name !== "Users" && section?.name !== "Settings"
+        )
       );
     }
   }, [user]);
 
-  return (
-    <div className="bg-white">
-      <div className="join join-vertical w-[250px] min-h-screen text-base-content">
-        <span className="flex items-center gap-x-2 px-4 py-3 text-[18px] border-t-2">
-          {<BiGrid size={25} />}
-          <Link to={"/dashboard/analytics"}>{"Dashboard"}</Link>
-        </span>
+  const isActive = (path) => {
+    return location.pathname === path ? "active-link" : "";
+  };
 
-        {sideBarData?.map((sideBar, i) => (
-          <div
-            key={i}
-            className="collapse collapse-arrow join-item border border-base-300"
-          >
-            <input
-              type="radio"
-              name="my-accordion-4"
-              defaultChecked="checked"
-            />
-            <div className="collapse-title text-lg font-medium uppercase">
-              <span className="flex items-center gap-x-2">
-                {sideBar?.icon}
-                <span>{sideBar?.name}</span>
-              </span>
-            </div>
-            <div className="collapse-content ml-5">
-              <ul className="flex flex-col gap-3">
-                {sideBar?.subLinks?.map((link, i) =>
-                  (user?.role === "admin" && link?.adminOnly) ||
-                  user?.role !== "admin" ? (
-                    <span key={i} className="flex items-center gap-x-2">
-                      {link?.icon}
-                      <Link key={i} to={link?.link}>
-                        {link?.name}
-                      </Link>
-                    </span>
-                  ) : (
-                    <span key={i} className="flex items-center gap-x-2">
-                      {link?.icon}
-                      <Link key={i} to={link?.link}>
-                        {link?.name}
-                      </Link>
-                    </span>
-                  )
-                )}
-              </ul>
-            </div>
-          </div>
-        ))}
+  return (
+    <div className="bg-gray-50 -mt-2">
+      <div className="join join-vertical  w-[250px] px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
+        <ul className="sideBar">
+          {sideBarData &&
+            sideBarData?.map((item) => (
+              <li
+                key={item?.name}
+                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(item?.path)}`}
+              >
+                <Link to={item?.path} className="flex gap-x-2">
+                  <span>{item?.icon} </span> <span>{item?.name}</span>
+                </Link>
+              </li>
+            ))}
+        </ul>
+
+        {/* <div className="pt-40">
+          <Link className={`flex gap-x-2 ${isActive("/dashboard/setting/default")}`} to="/dashboard/setting/default">
+            <AiOutlineSetting size={25}></AiOutlineSetting>
+            <p>Settings</p>
+          </Link>
+        </div> */}
       </div>
     </div>
-   
-   
   );
 };
 

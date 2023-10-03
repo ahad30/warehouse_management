@@ -14,6 +14,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const CategoriesListCustom = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -122,6 +123,7 @@ const CategoriesListCustom = () => {
   return (
     <>
       <DashboardBackground>
+        <Link to={'/dashboard/invoice/new'}><button className="btn"> click</button></Link>
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}

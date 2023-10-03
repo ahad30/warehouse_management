@@ -6,6 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  
   const handleLogOut = () => {
     dispatch(logOut());
   };
