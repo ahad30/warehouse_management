@@ -34,6 +34,14 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    updateUserProfile: builder.mutation({
+      query: (data) => ({
+        method: "PUT",
+        url: `/profile/updateProfile`,
+        body: data,
+      }),
+      invalidatesTags: ["Profile"],
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         method: "DELETE",
@@ -41,6 +49,12 @@ const userApi = apiSlice.injectEndpoints({
         // url: `/posts/${id}`,
       }),
       invalidatesTags: ["Users"],
+    }),
+    userLogOut: builder.mutation({
+      query: () => ({
+        method: "POST",
+        url: `/jwt/logout`,
+      }),
     }),
   }),
 });
@@ -50,5 +64,7 @@ export const {
   useGetUsersQuery,
   useGetUserRolesQuery,
   useUpdateUserMutation,
+  useUpdateUserProfileMutation,
   useDeleteUserMutation,
+  useUserLogOutMutation,
 } = userApi;
