@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 import NavbarNew from "../../Shared/Navbar/NavbarNew";
-import DashboardSidebar from "./DashboardSidebarDropdown";
+import DashboardSidebar from "./DashboardSidebar";
+// import Navbar from "../../Shared/Navbar/Navbar";
+// import DashboardSidebarDropdown from "./DashboardSidebarDropdown/DashboardSidebarDropdown";
 
 const DashboardLayout = () => {
   return (
@@ -15,13 +17,14 @@ const DashboardLayout = () => {
           type="checkbox"
           className="drawer-toggle"
         />
-        <div className="drawer-content ">
+        <div className="drawer-content">
           {/* Dashboard  content*/}
           <Outlet />
         </div>
         <div className="drawer-side shadow-xl -z-0 top-auto ">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           {/* Dashboard sidebar */}
+          {/* <DashboardSidebarDropdown/> */}
           <DashboardSidebar />
         </div>
       </div>

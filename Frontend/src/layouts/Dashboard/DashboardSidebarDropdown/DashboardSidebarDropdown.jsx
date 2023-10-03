@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
 
-const DashboardSidebar = () => {
+const DashboardSidebarDropdown = () => {
   const { user } = useSelector((state) => state.auth);
 
   const [sideBarData, setSidebarData] = useState([
@@ -36,22 +36,6 @@ const DashboardSidebar = () => {
         {
           name: "All Users list",
           link: "/dashboard/user",
-          icon: <FiUsers size={20} />,
-        },
-        {
-          name: "Admin list",
-          link: "/dashboard/user/admins",
-          icon: <FiUsers size={20} />,
-          adminOnly: true,
-        },
-        {
-          name: "Manager list",
-          link: "/dashboard/user/managers",
-          icon: <FiUsers size={20} />,
-        },
-        {
-          name: "Sales Man list",
-          link: "/dashboard/user/sales-man",
           icon: <FiUsers size={20} />,
         },
       ],
@@ -247,4 +231,4 @@ const DashboardSidebar = () => {
   );
 };
 
-export default DashboardSidebar;
+export default DashboardSidebarDropdown;
