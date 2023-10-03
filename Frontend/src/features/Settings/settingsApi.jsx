@@ -16,25 +16,8 @@ const settingsApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Company"],
     }),
-    getUserProfile: builder.query({
-      query: () => ({
-        url: "/profile/update",
-      }),
-      providesTags: ["Profile"],
-    }),
-    updateUserProfile: builder.mutation({
-      query: ({ id, data }) => ({
-        method: "PUT",
-        url: `/profile/update/${id}`,
-        body: data,
-      }),
-      invalidatesTags: ["Profile"],
-    }),
   }),
 });
 
-export const {
-  useGetCompanyInfoQuery,
-  useUpdateCompanyInfoMutation,
-  useUpdateUserProfileMutation,
-} = settingsApi;
+export const { useGetCompanyInfoQuery, useUpdateCompanyInfoMutation } =
+  settingsApi;

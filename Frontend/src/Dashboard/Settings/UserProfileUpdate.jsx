@@ -1,15 +1,38 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useUpdateUserProfileMutation } from "../../features/User/userApi";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 const UserProfileUpdate = () => {
   const { user } = useSelector((state) => state?.auth);
-
-  const { handleSubmit, register, setValue } = useForm();
-
   console.log(user);
+  const { handleSubmit, register } = useForm();
+
+  const [updateProfile, { isLoading, isError, error, isSuccess, data }] =
+    useUpdateUserProfileMutation();
+
   const handleSubmitUserProfile = (data) => {
-    console.log(data);
+    const userData = {
+      ...data,
+      old_image: user?.img,
+    };
+    updateProfile(userData);
   };
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading("Loading...", { id: 1 });
+    }
+
+    if (isError) {
+      toast.error(error?.data?.message || error?.status, { id: 1 });
+    }
+
+    if (isSuccess) {
+      toast.success(data?.message, { id: 1 });
+    }
+  }, [isLoading, isError, error, isSuccess, data]);
 
   return (
     <>
@@ -19,7 +42,11 @@ const UserProfileUpdate = () => {
           <div className="avatar">
             <div className="w-28 rounded-full">
               <img
-                src={`https://cdn-icons-png.flaticon.com/512/149/149071.png`}
+                src={
+                  user?.img
+                    ? user?.img
+                    : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+                }
               />
             </div>
           </div>
@@ -40,6 +67,7 @@ const UserProfileUpdate = () => {
             className="input input-bordered input-md w-full my-2"
             defaultValue={user?.email}
             {...register("email")}
+            readOnly
           />
           <input
             name="phone"
@@ -49,39 +77,13 @@ const UserProfileUpdate = () => {
             defaultValue={user?.phone}
             {...register("phone")}
           />
-          {/* <input
-            name="role"
-            type="text"
-            placeholder="Role"
-            className="input input-bordered input-md w-full my-2"
-            defaultValue={user?.role}
-          /> */}
-          <select
-            className="select select-bordered w-full my-2"
-            {...register("role")}
-            defaultValue={user?.role}
-          >
-            <option value={""}>Select Role</option>
-            <option value={"admin"}>Admin</option>
-            <option value={"accountant"}>Accountant</option>
-            <option value={"manager"}>Manager</option>
-            <option value={"sales_representative"}>Sales Representative</option>
-          </select>
-          <select
-            className="select select-bordered w-full my-2"
-            {...register("status")}
-            defaultValue={user?.status}
-          >
-            <option value={""}>Select Status</option>
-            <option value={"active"}>Active</option>
-            <option value={"inactive"}>Inactive</option>
-          </select>
           <input
             name="address"
             type="text"
             placeholder="Address"
             className="input input-bordered input-md w-full my-2"
             defaultValue={user?.address}
+            {...register("address")}
           />
           <input
             name="zip_code"
@@ -89,6 +91,7 @@ const UserProfileUpdate = () => {
             placeholder="Zip Code"
             className="input input-bordered input-md w-full my-2"
             defaultValue={user?.zip_code}
+            {...register("zip_code")}
           />
           <input
             name="city"
@@ -96,13 +99,15 @@ const UserProfileUpdate = () => {
             placeholder="city"
             className="input input-bordered input-md w-full my-2"
             defaultValue={user?.city}
+            {...register("city")}
           />
           <input
             name="state"
             type="text"
-            placeholder="state"
+            placeholder="State"
             className="input input-bordered input-md w-full my-2"
-            defaultValue={user?.country}
+            defaultValue={user?.state}
+            {...register("state")}
           />
           <input
             name="country"
@@ -110,6 +115,7 @@ const UserProfileUpdate = () => {
             placeholder="country"
             className="input input-bordered input-md w-full my-2"
             defaultValue={user?.country}
+            {...register("country")}
           />
           <input
             type="submit"

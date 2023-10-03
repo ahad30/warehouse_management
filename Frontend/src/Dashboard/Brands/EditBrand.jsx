@@ -2,10 +2,12 @@ import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
+import { useUpdateBrandMutation } from "../../features/Brand/brandApi";
 
 const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   const { register, handleSubmit, setValue } = useForm();
+
+  console.log(brand);
 
   const [
     updateCategory,
@@ -16,15 +18,15 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
       isSuccess: updateIsSuccess,
       data: updateData,
     },
-  ] = useUpdateCategoryMutation();
+  ] = useUpdateBrandMutation();
 
   const onSubmit = (data) => {
-    if (!data.brand_name || !data.brand_img) {
+    if (!data.brand_name || data.brand_img) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
 
-    updateCategory({ ...data, id: brand.id });
+    updateCategory({ ...data, id: brand?.id, old_image: brand?.brand_img });
   };
 
   useEffect(() => {
@@ -52,18 +54,10 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (brand) {
-      setValue("brand_name", brand?.brand_img || "");
+      setValue("brand_name", brand?.brand_name || "");
       setValue("brand_img", brand?.brand_img || "");
     }
   }, [brand, setValue]);
-
-  console.log(
-    updateIsLoading,
-    updateIsError,
-    updateError,
-    updateIsSuccess,
-    updateData
-  );
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
