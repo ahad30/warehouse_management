@@ -33,7 +33,7 @@ const AddBrand = () => {
     }
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/category");
+      return navigate("/dashboard/brand");
     }
   }, [
     isLoading,

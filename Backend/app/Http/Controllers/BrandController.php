@@ -40,16 +40,18 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-
+        // return $request->file('brand_img');
         $validator = Validator::make($request->all(), [
-            'brand_name' => 'required|unique:' . Brand::class,
+            'brand_name' => 'required|max:100|unique:' . Brand::class,
             // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
         $imageData = null;
-        if ($request->file('brand_img') != null) {
-            $file = $request->file('brand_img');
+        if ($request->brand_img != null) {
+
+            $file = $request->brand_img;
+            // return $file;
             $filename = $file->getClientOriginalName();
-            $imageData = time() . '-' . $filename;
+            $imageData = $request->brand_name . "-" . time() . '-' . $filename;
             $file->move('uploads/brands', $imageData);
         }
         if ($validator->fails()) {
@@ -79,10 +81,26 @@ class BrandController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'brand_name' => 'required',
-            'brand_id' => 'required'
+            'brand_name' => 'required|max:100|unique:brands,brand_name,' . $request->id,
+            'id' => 'required'
             // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error!',
+                'errors' => $validator->errors()
+            ], 404);
+        }
+        $brand = Brand::find($request->id);
+        if ($brand == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Brand not found',
+
+            ], 400);
+        }
+
         $imageData = $request->old_image;
         if ($request->file('brand_img') != null) {
             $file = $request->file('brand_img');
@@ -90,14 +108,8 @@ class BrandController extends Controller
             $imageData = time() . '-' . $filename;
             $file->move('uploads/brands', $imageData);
         }
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error!',
-                'errors' => $validator->errors()
-            ], 400);
-        }
-        $brand = DB::where('id', $request->brand_id)->update([
+        // updating brand
+        $brand->update([
             'brand_name' => $request->brand_name,
             'brand_img' => $imageData
         ]);
