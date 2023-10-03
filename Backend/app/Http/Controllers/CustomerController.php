@@ -31,10 +31,10 @@ class CustomerController extends Controller
     {
         $validateInput = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'email|max:255',
             'profile_image' => 'nullable|string|max:255',
             'phone' => 'required|max:255',
-            'address' => 'required|string|max:255',
+            'address' => 'string|max:255',
             'notes' => 'nullable|string|max:255',
         ]);
 
@@ -98,10 +98,10 @@ class CustomerController extends Controller
         if ($customer) {
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
+                'email' => 'email|max:255',
                 'profile_image' => 'nullable|string|max:255',
                 'phone' => 'required|max:255',
-                'address' => 'required|string|max:255',
+                'address' => 'string|max:255',
                 'notes' => 'nullable|string|max:255',
             ]);
 
@@ -115,10 +115,10 @@ class CustomerController extends Controller
 
             $customer->update([
                 'name' => $request->name,
-                'email' => $request->email,
+                'email' => $request->email != null ? $request->email : $customer->email,
                 'profile_image' => $request->profile_image,
                 'phone' => $request->phone,
-                'address' => $request->address,
+                'address' => $request->address != null ? $request->address : $customer->address,
                 'notes' => $request->notes,
             ]);
 

@@ -117,7 +117,7 @@ class BrandController extends Controller
             'status' => true,
             'message' => 'Brand Updated',
             'brand' => $brand,
-        ], 201);
+        ], 200);
     }
     public function delete($id)
     {
