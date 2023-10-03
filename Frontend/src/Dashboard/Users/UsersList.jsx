@@ -1,21 +1,30 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import UseTable from "../../components/Reusable/useTable/UseTable";
-import { BiCartAdd } from "react-icons/bi";
+import { BiCartAdd, BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditUser from "./EditUser";
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin4Line } from "react-icons/ri";
 import {
   useDeleteUserMutation,
+  useGetUserRolesQuery,
   useGetUsersQuery,
 } from "../../features/User/userApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
+import { set } from "date-fns";
 
 const UsersList = () => {
   UseTitle("Users");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(null);
   const [user, setUser] = useState({});
+  const [allUserData, setAllUserData] = useState([]);
+  const { data: rolesData } = useGetUserRolesQuery();
+  const [reload, setReload] = useState(false);
+  const [filterData, setFilterData] = useState(allUserData);
 
   const {
     data: usersData,
@@ -24,6 +33,21 @@ const UsersList = () => {
     error: usersError,
     isSuccess: usersIsSuccess,
   } = useGetUsersQuery();
+
+  useEffect(() => {
+   
+      // setAllUserData(filterData);
+      if(filterData.length>0){
+        setAllUserData(filterData)
+        
+      }
+      else {
+        setAllUserData(usersData?.users)
+      }
+    
+      // setAllUserData(usersData?.users);
+  
+  }, [usersData, usersData?.users, filterData]);
 
   const [
     deleteUser,
@@ -61,6 +85,8 @@ const UsersList = () => {
     deleteData,
   ]);
 
+  // console.log(allUserData)
+
   // EDIT STARTS
   const handleModalEditInfo = (user) => {
     setUser(user);
@@ -87,42 +113,31 @@ const UsersList = () => {
   ];
 
   // USERS CONTENT
-  let content;
-
   // ALL USERS
   if (usersIsLoading) {
-    return (content = <UseLoading />);
+    return <UseLoading />;
   }
 
   if (usersIsError) {
     console.error(usersError);
   }
 
-  if (!usersData?.status) {
-    return (content = (
-      <>
-        <p className="text-center text-2xl mt-10">{usersData?.message}</p>
-      </>
-    ));
-  }
+  // console.log(usersData?.users);
+  // console.log(rolesData.roles)
 
-  if (usersIsSuccess && usersData?.status) {
-    content = (
-      <>
-        <UseTable
-          data={usersData?.users}
-          columns={columns}
-          handleModalEditInfo={handleModalEditInfo}
-          onDelete={onDelete}
-          btnTitle={"Add User"}
-          btnPath={"/dashboard/user/add"}
-          btnIcon={<BiCartAdd size={20} />}
-          setFiltering={setFiltering}
-        />
-      </>
-    );
-  }
+  const handleFilter = (data) => {
+    if (data) {
+      const filterUsers = allUserData.filter((user) => user?.get_role?.role === data);
+      // console.log(filterUsers)
+      
 
+      setFilterData(filterUsers);
+      // setReload(!reload); // Apply the filter and update the state
+    }
+    
+  };
+  // console.log(allUserData)
+  console.log(filterData);
   return (
     <>
       <DashboardBackground>
@@ -130,7 +145,107 @@ const UsersList = () => {
           Users {usersData?.customers?.length}
         </TableHeadingTitle>
         {/* Users Table */}
-        {content}
+
+        <SearchAndAddBtn
+          btnTitle={"Add user"}
+          btnPath={"/dashboard/user/add"}
+          btnIcon={<BiSolidDuplicate size={20}></BiSolidDuplicate>}
+          setFiltering={setFiltering}
+        />
+
+        <div className="form-control my-5 w-1/6 ">
+          <label className="label">
+            <span className="label-text">Filter</span>
+          </label>
+
+          <select
+            onChange={(e) => handleFilter(e.target.value)}
+            className=" px-4 py-2 focus:border-0"
+          >
+            <option value={""}>Select Role</option>
+            {rolesData?.roles?.map((userRole) => (
+              <option
+                className="focus:border-0"
+                key={userRole?.id}
+                value={userRole?.role}
+              >
+                {userRole?.role}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {!usersIsSuccess && usersData?.status ? (
+          <p className="text-center text-2xl mt-10">{usersData?.message}</p>
+        ) : (
+          <div className="overflow-x-scroll">
+            <table className="table table-sm table-pin-rows table-pin-cols">
+              {/* Table header */}
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>role</th>
+                  <th>status</th>
+                  <th>Address</th>
+                  <th>Notes</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {allUserData &&
+                  allUserData?.map((user) => (
+                    <tr key={user?.id}>
+                      <td>{user.id}</td>
+                      <td>{user?.profile_image}</td>
+                      <td>{user?.name}</td>
+                      <td>{user?.email}</td>
+                      <td>{user?.phone}</td>
+                      <td>{user?.get_role?.role}</td>
+                      <td>{user?.status}</td>
+                      <td>{user?.address}</td>
+                      <td>{user?.notes}</td>
+                      <td className="flex gap-x-2 items-center">
+                        <FiEdit
+                          onClick={() => {
+                            handleModalEditInfo(user);
+                          }}
+                          className="cursor-pointer"
+                          size={20}
+                        />
+                        <RiDeleteBin4Line
+                          onClick={() => {
+                            onDelete(user?.id);
+                          }}
+                          className="cursor-pointer"
+                          size={20}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>role</th>
+                  <th>status</th>
+                  <th>Address</th>
+                  <th>Notes</th>
+                  <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        )}
         <EditUser
           user={user}
           modalIsOpen={modalIsOpen}

@@ -20,13 +20,13 @@ class StoreController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Stores found',
-                'Stores' => $stores
+                'stores' => $stores
             ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'No store found',
-                'Stores' => $stores,
+                'stores' => $stores,
             ], 200);
         }
     }
@@ -40,7 +40,7 @@ class StoreController extends Controller
 
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
-            'store_email' => 'max:100',
+            'store_email' => 'email|max:100',
             'store_web' => 'max:100',
             'store_address' => 'required',
             'store_phone' => 'required|max:100|unique:stores,store_phone',
@@ -80,11 +80,11 @@ class StoreController extends Controller
 
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
-            'store_email' => 'max:100',
+            'store_email' => 'email|max:100',
             'store_web' => 'max:100',
             'store_address' => 'required',
             'id' => 'required',
-            'store_phone' => 'required|max:100|unique:stores,store_phone',
+            'store_phone' => 'required|max:12|unique:stores,store_phone,' . $request->id,
         ]);
         if ($validator->fails()) {
             return response()->json([

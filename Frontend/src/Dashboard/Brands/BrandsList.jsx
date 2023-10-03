@@ -124,6 +124,7 @@ const BrandsList = () => {
           Brands {brandsData?.brands?.length}
           {/* Change the table title */}
         </TableHeadingTitle>
+
         {/* Brands Table */}
         {content}
         <EditBrand

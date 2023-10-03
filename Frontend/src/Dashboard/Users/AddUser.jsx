@@ -26,6 +26,7 @@ const AddUser = () => {
 
   // GET INPUT FIELD FORM
   const onSubmit = async (data) => {
+    console.log(data)
     addUser(data);
   };
 

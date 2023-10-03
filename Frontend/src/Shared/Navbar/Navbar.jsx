@@ -13,6 +13,7 @@ const Navbar = () => {
 
   console.log(data, isLoading, isError, error, isSuccess);
 
+  
   const handleLogOut = () => {
     userLogOut();
   };

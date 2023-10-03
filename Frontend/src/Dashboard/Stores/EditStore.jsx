@@ -2,13 +2,13 @@ import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-import { useUpdateCustomerMutation } from "../../features/Customer/customerApi";
+import { useUpdateStoreMutation } from "../../features/Store/storeApi";
 
 const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   const [
-    updateCustomer,
+    updateStore,
     {
       isLoading: updateIsLoading,
       isError: updateIsError,
@@ -16,15 +16,23 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
       isSuccess: updateIsSuccess,
       data: updateData,
     },
-  ] = useUpdateCustomerMutation();
+  ] = useUpdateStoreMutation();
 
   const onSubmit = (data) => {
-    if (!store.name || !store.email || !store.phone || !store.address) {
+    console.log(data);
+    console.log(store);
+    if (
+      !store?.store_name ||
+      !store?.store_email ||
+      !store?.store_phone ||
+      !store?.store_web ||
+      !store?.store_address
+    ) {
       toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
+      return;
     }
 
-    updateCustomer({ ...data, id: store?.id });
+    updateStore({ ...data, id: store?.id });
   };
 
   useEffect(() => {
@@ -48,14 +56,21 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     updateData?.message,
     setModalIsOpen,
   ]);
-
+  console.log(
+    updateIsLoading,
+    updateIsError,
+    updateError,
+    updateIsSuccess,
+    updateData,
+    setModalIsOpen
+  );
   useEffect(() => {
     if (store) {
-      setValue("store_name", store.store_name || "");
-      setValue("store_email", store.store_name || "");
-      setValue("store_phone", store.store_phone || "");
-      setValue("store_web", store.store_web || "");
-      setValue("store_address", store.store_address || "");
+      setValue("store_name", store?.store_name || "");
+      setValue("store_email", store?.store_email || "");
+      setValue("store_phone", store?.store_phone || "");
+      setValue("store_web", store?.store_web || "");
+      setValue("store_address", store?.store_address || "");
     }
   }, [store, setValue]);
 

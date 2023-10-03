@@ -111,6 +111,7 @@ const routes = createBrowserRouter([
         path: "/dashboard/category",
         // element: <CategoriesList />,
         element: <CategoriesListCustom />,
+        // element: <CatgorisListCustomAgain></CatgorisListCustomAgain>,
       },
       {
         path: "/dashboard/category/add",
