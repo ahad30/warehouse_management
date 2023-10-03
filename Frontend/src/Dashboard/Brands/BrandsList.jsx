@@ -105,7 +105,7 @@ const BrandsList = () => {
     content = (
       <>
         <UseTable
-          data={brandsData?.categories}
+          data={brandsData?.brands}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
@@ -121,9 +121,10 @@ const BrandsList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Brands {brandsData?.categories?.length}
+          Brands {brandsData?.brands?.length}
           {/* Change the table title */}
         </TableHeadingTitle>
+
         {/* Brands Table */}
         {content}
         <EditBrand

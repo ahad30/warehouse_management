@@ -13,12 +13,12 @@ import EditCategory from "./EditCategory";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const CategoriesListCustom = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [category, setCategory] = useState({});
-
 
   const {
     data: categoriesData,
@@ -42,24 +42,19 @@ const CategoriesListCustom = () => {
   // DELETE STARTS
   const onDelete = (id) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-
       if (result.isConfirmed) {
         deleteCategory(id);
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
-    })
+    });
 
     // Change the mutation name to useDeleteCategoryMutation
   };
@@ -99,104 +94,36 @@ const CategoriesListCustom = () => {
   };
   // SEARCH FILTERING ENDS
 
-  // CATEGORIES CONTENT
-  let content;
-
   // ALL CATEGORIES
   if (categoriesIsLoading) {
-    return (content = <UseLoading />);
+    return <UseLoading />;
   }
 
   if (categoriesIsError) {
     console.error(categoriesError);
   }
 
-  if (!categoriesData?.status) {
-    return (content = (
-      <>
-        <p className="text-center text-2xl mt-10">{categoriesData?.message}</p>
-      </>
-    ));
-  }
+  // if (categoriesIsSuccess && categoriesData?.status) {
+  //   content = (
+  //     <>
 
-  console.log(categoriesData?.categories)
-
-  if (categoriesIsSuccess && categoriesData?.status) {
-    content = (
-      <>
-        <div className="overflow-x-scroll">
-          <table className="table table-sm table-pin-rows table-pin-cols">
-            {/* Table header */}
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {
-                categoriesData?.categories.map((category) => <tr key={category.id}>
-                  <td>{category.id}</td>
-                  <td>{category?.category_name}</td>
-                  <td>{category?.description}</td>
-                  <td className="flex gap-x-2 items-center">
-                    {handleModalEditInfo && (
-                      <FiEdit
-                        onClick={() => {
-                          handleModalEditInfo(category);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                    )}
-                    {onDelete && (
-                      <RiDeleteBin4Line
-                        onClick={() => {
-                          onDelete(category?.id);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                    )}
-                  </td>
-
-
-                </tr>
-
-                )
-              }
-            </tbody>
-
-            <tfoot>
-              <tr>
-                <th>ID</th>
-
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        {/* <UseTable
-          data={categoriesData?.categories}
-          columns={columns}
-          handleModalEditInfo={handleModalEditInfo}
-          onDelete={onDelete}
-          btnTitle={"Add Category"}
-          btnPath={"/dashboard/category/add"}
-          btnIcon={<BiSolidDuplicate size={20} />}
-          setFiltering={setFiltering}
-        /> */}
-      </>
-    );
-  }
+  //       {/* <UseTable
+  //         data={categoriesData?.categories}
+  //         columns={columns}
+  //         handleModalEditInfo={handleModalEditInfo}
+  //         onDelete={onDelete}
+  //         btnTitle={"Add Category"}
+  //         btnPath={"/dashboard/category/add"}
+  //         btnIcon={<BiSolidDuplicate size={20} />}
+  //         setFiltering={setFiltering}
+  //       /> */}
+  //     </>
+  //   );
+  // }
   return (
     <>
       <DashboardBackground>
+        <Link to={'/dashboard/invoice/new'}><button className="btn"> click</button></Link>
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}
@@ -209,7 +136,61 @@ const CategoriesListCustom = () => {
           setFiltering={setFiltering}
         />
         {/* Categories Table */}
-        {content}
+        {!categoriesIsSuccess && categoriesData?.status ? (
+          <p className="text-center text-2xl mt-10">
+            {categoriesData?.message}
+          </p>
+        ) : (
+          <div className="overflow-x-scroll">
+            <table className="table table-sm table-pin-rows table-pin-cols">
+              {/* Table header */}
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {categoriesData?.categories?.map((category) => (
+                  <tr key={category?.id}>
+                    <td>{category?.id}</td>
+                    <td>{category?.category_name}</td>
+                    <td>{category?.description}</td>
+                    <td className="flex gap-x-2 items-center">
+                      <FiEdit
+                        onClick={() => {
+                          handleModalEditInfo(category);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                      <RiDeleteBin4Line
+                        onClick={() => {
+                          onDelete(category?.id);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th>ID</th>
+
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        )}
         <EditCategory
           category={category}
           modalIsOpen={modalIsOpen}
