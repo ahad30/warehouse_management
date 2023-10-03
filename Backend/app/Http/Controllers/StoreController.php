@@ -37,7 +37,7 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->file('Store_img');
+
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
             'store_email' => 'max:100',
@@ -77,17 +77,21 @@ class StoreController extends Controller
      */
     public function update(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'Store_name' => 'required|unique:Stores,Store_name,' . $request->id,
-            'id' => 'required'
-            // 'Store_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
+            'store_name' => 'required|max:100',
+            'store_email' => 'max:100',
+            'store_web' => 'max:100',
+            'store_address' => 'required',
+            'id' => 'required',
+            'store_phone' => 'required|max:100|unique:stores,store_phone',
         ]);
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Validation error!',
                 'errors' => $validator->errors()
-            ], 404);
+            ], 400);
         }
         $store = Store::find($request->id);
         if ($store == null) {
@@ -98,24 +102,21 @@ class StoreController extends Controller
             ], 400);
         }
 
-        $imageData = $request->old_image;
-        if ($request->file('Store_img') != null) {
-            $file = $request->file('Store_img');
-            $filename = $file->getClientOriginalName();
-            $imageData = time() . '-' . $filename;
-            $file->move('uploads/stores', $imageData);
-        }
-        // updating Store
+
         $store->update([
-            'Store_name' => $request->Store_name,
-            'Store_img' => $imageData
+            'store_name' => $request->store_name,
+            'store_email' => $request->store_email,
+            'store_web' => $request->store_web,
+            'store_address' => $request->store_address,
+            'store_phone' => $request->store_phone,
+
         ]);
 
         return response()->json([
             'status' => true,
-            'message' => 'Store Updated',
+            'message' => 'Store Updated Successful',
             'Store' => $store,
-        ], 201);
+        ], 200);
     }
     public function delete($id)
     {
