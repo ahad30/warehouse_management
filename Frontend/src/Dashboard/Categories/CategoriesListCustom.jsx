@@ -8,7 +8,6 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
-import UseTable from "../../components/Reusable/useTable/UseTable";
 import EditCategory from "./EditCategory";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
@@ -102,28 +101,13 @@ const CategoriesListCustom = () => {
   if (categoriesIsError) {
     console.error(categoriesError);
   }
-
-  // if (categoriesIsSuccess && categoriesData?.status) {
-  //   content = (
-  //     <>
-
-  //       {/* <UseTable
-  //         data={categoriesData?.categories}
-  //         columns={columns}
-  //         handleModalEditInfo={handleModalEditInfo}
-  //         onDelete={onDelete}
-  //         btnTitle={"Add Category"}
-  //         btnPath={"/dashboard/category/add"}
-  //         btnIcon={<BiSolidDuplicate size={20} />}
-  //         setFiltering={setFiltering}
-  //       /> */}
-  //     </>
-  //   );
-  // }
+  
   return (
     <>
       <DashboardBackground>
-        <Link to={'/dashboard/invoice/new'}><button className="btn"> click</button></Link>
+        <Link to={"/dashboard/invoice/new"}>
+          <button className="btn"> click</button>
+        </Link>
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}

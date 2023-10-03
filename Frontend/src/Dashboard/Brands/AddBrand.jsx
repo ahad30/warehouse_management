@@ -46,6 +46,8 @@ const AddBrand = () => {
     dispatch,
   ]);
 
+  console.log(isLoading, isError, error, isSuccess, data);
+
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>

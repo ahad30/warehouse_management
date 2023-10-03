@@ -109,7 +109,7 @@ const StoresList = () => {
     content = (
       <>
         <UseTable
-          data={storesData?.customers}
+          data={storesData?.stores}
           columns={columns}
           handleModalEditInfo={handleModalEditInfo}
           onDelete={onDelete}
@@ -126,7 +126,7 @@ const StoresList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Stores {storesData?.customers?.length}
+          Stores {storesData?.stores?.length}
         </TableHeadingTitle>
         {/* Customers Table */}
         {content}
