@@ -6,6 +6,9 @@ const brandApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         url: "/brands/store",
+        header: {
+          encType: "mulitpart/form-data",
+        },
         body: data,
       }),
       invalidatesTags: ["Brands"],

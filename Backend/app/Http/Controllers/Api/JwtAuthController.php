@@ -127,7 +127,7 @@ class JwtAuthController extends Controller
 
 
                 $user->jwt_token = $token;
-                $user->token_expire_time = Carbon::now()->addDay();
+                $user->token_expire_time = Carbon::now()->addWeek();
                 $user->save();
                 // finding role with user using user role_id
 
