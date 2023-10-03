@@ -21,7 +21,8 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   const onSubmit = (data) => {
     console.log(data);
     console.log(store);
-    if (
+
+    /*if (
       !store?.store_name ||
       !store?.store_email ||
       !store?.store_phone ||
@@ -31,6 +32,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
+    */
 
     updateStore({ ...data, id: store?.id });
   };
@@ -62,7 +64,6 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     updateError,
     updateIsSuccess,
     updateData,
-    setModalIsOpen
   );
   useEffect(() => {
     if (store) {
