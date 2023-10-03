@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -12,7 +14,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\Api\UserProfileController;
-use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,5 +122,15 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'delete');
     });
-});
 
+    /* -------------------------------------------------------------------------- */
+    /*                              store controller                              */
+    /* -------------------------------------------------------------------------- */
+
+    Route::controller(StoreController::class)->prefix('/stores')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::put('/update', 'update');
+        Route::delete('/delete/{id}', 'delete');
+    });
+});
