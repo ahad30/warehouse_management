@@ -30,6 +30,8 @@ import AddBrand from "../Dashboard/Brands/AddBrand";
 import BrandsList from "../Dashboard/Brands/BrandsList";
 import AddStore from "../Dashboard/Stores/AddStore";
 import StoresList from "../Dashboard/Stores/StoresList";
+import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
+import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
 
 const routes = createBrowserRouter([
   {
@@ -120,7 +122,8 @@ const routes = createBrowserRouter([
       // BRANDS
       {
         path: "/dashboard/brand",
-        element: <BrandsList />,
+        // element: <BrandsList />,
+        element: <BrandListCustom></BrandListCustom>,
       },
       {
         path: "/dashboard/brand/add",
@@ -138,7 +141,8 @@ const routes = createBrowserRouter([
       // PRODUCTS
       {
         path: "/dashboard/product",
-        element: <ProductsList />,
+        // element: <ProductsList />,
+        element: <ProductsListCustom></ProductsListCustom>
       },
       {
         path: "/dashboard/product/add",
@@ -166,6 +170,7 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/setting/default",
         element: <DefaultSettings />,
+        // element: <DefaultSettingNew></DefaultSettingNew>,
       },
       {
         path: "/dashboard/setting/pdf",

@@ -103,12 +103,12 @@ const DashboardSidebar = () => {
             ))}
         </ul>
 
-        {/* <div className="pt-40">
+        <div className="pt-40">
           <Link className={`flex gap-x-2 ${isActive("/dashboard/setting/default")}`} to="/dashboard/setting/default">
             <AiOutlineSetting size={25}></AiOutlineSetting>
             <p>Settings</p>
           </Link>
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -1,35 +1,36 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import {
-  useDeleteCategoryMutation,
-  useGetCategoriesQuery,
-} from "../../features/Category/categoryApi";
-import { BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import UseTable from "../../components/Reusable/useTable/UseTable";
-import EditCategory from "./EditCategory";
+import EditBrand from "./EditBrand";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { SiBrandfolder } from "react-icons/si";
+import {
+  useDeleteBrandMutation,
+  useGetBrandsQuery,
+} from "../../features/Brand/brandApi";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { BiSolidDuplicate } from "react-icons/bi";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 
-const CategoriesListCustom = () => {
+const BrandListCustom = () => {
+  UseTitle("Categories");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [category, setCategory] = useState({});
+  const [brand, setBrand] = useState({});
 
   const {
-    data: categoriesData,
-    isLoading: categoriesIsLoading,
-    isError: categoriesIsError,
-    error: categoriesError,
-    isSuccess: categoriesIsSuccess,
-  } = useGetCategoriesQuery();
+    data: brandsData,
+    isLoading: brandsIsLoading,
+    isError: brandsIsError,
+    error: brandsError,
+    isSuccess: brandsIsSuccess,
+  } = useGetBrandsQuery();
 
   const [
-    deleteCategory,
+    deleteBrand,
     {
       isLoading: deleteIsLoading,
       isError: deleteIsError,
@@ -37,26 +38,11 @@ const CategoriesListCustom = () => {
       isSuccess: deleteIsSuccess,
       data: deleteData,
     },
-  ] = useDeleteCategoryMutation();
+  ] = useDeleteBrandMutation();
 
   // DELETE STARTS
   const onDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteCategory(id);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
-
-    // Change the mutation name to useDeleteCategoryMutation
+    deleteBrand(id);
   };
 
   useEffect(() => {
@@ -65,7 +51,6 @@ const CategoriesListCustom = () => {
     }
 
     if (deleteIsError && !deleteData?.status) {
-      console.log(deleteData, deleteError);
       toast.error(deleteData?.message || deleteError?.data?.message, { id: 1 });
     }
 
@@ -82,8 +67,8 @@ const CategoriesListCustom = () => {
   // DELETE ENDS
 
   // EDIT STARTS
-  const handleModalEditInfo = (category) => {
-    setCategory(category);
+  const handleModalEditInfo = (brand) => {
+    setBrand(brand);
     setModalIsOpen(true);
   };
   // EDIT ENDS
@@ -94,51 +79,52 @@ const CategoriesListCustom = () => {
   };
   // SEARCH FILTERING ENDS
 
+  const columns = [
+    { key: "id", header: "ID" },
+    { key: "brand_name", header: "Name" },
+    { key: "brand_img", header: "Image" },
+  ];
+
+  // CATEGORIES CONTENT
+  let content;
+
   // ALL CATEGORIES
-  if (categoriesIsLoading) {
-    return <UseLoading />;
+  if (brandsIsLoading) {
+    return  <UseLoading />;
   }
 
-  if (categoriesIsError) {
-    console.error(categoriesError);
+  if (brandsIsError) {
+    console.error(brandsError);
   }
 
-  // if (categoriesIsSuccess && categoriesData?.status) {
-  //   content = (
-  //     <>
+  
 
-  //       {/* <UseTable
-  //         data={categoriesData?.categories}
-  //         columns={columns}
-  //         handleModalEditInfo={handleModalEditInfo}
-  //         onDelete={onDelete}
-  //         btnTitle={"Add Category"}
-  //         btnPath={"/dashboard/category/add"}
-  //         btnIcon={<BiSolidDuplicate size={20} />}
-  //         setFiltering={setFiltering}
-  //       /> */}
-  //     </>
-  //   );
-  // }
+  
+
+
+  console.log(brandsData?.brands)
+
   return (
     <>
       <DashboardBackground>
-        <Link to={'/dashboard/store/add'}><button className="btn"> click</button></Link>
         <TableHeadingTitle>
-          Categories {categoriesData?.categories?.length}{" "}
+          Brands {brandsData?.brands?.length}
           {/* Change the table title */}
         </TableHeadingTitle>
-        {/* SEARCH AND BTN */}
+
+        
+
         <SearchAndAddBtn
-          btnTitle={"Add Category"}
-          btnPath={"/dashboard/category/add"}
+          btnTitle={"Add brand"}
+          btnPath={"/dashboard/brand/add"}
           btnIcon={<BiSolidDuplicate size={20} />}
           setFiltering={setFiltering}
         />
-        {/* Categories Table */}
-        {!categoriesIsSuccess && categoriesData?.status ? (
+        
+
+        {!brandsIsSuccess && brandsData?.status ? (
           <p className="text-center text-2xl mt-10">
-            {categoriesData?.message}
+            {brandsData?.message}
           </p>
         ) : (
           <div className="overflow-x-scroll">
@@ -147,29 +133,30 @@ const CategoriesListCustom = () => {
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Img</th>
                   <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
+                  <th>Action</th>
+                  
                 </tr>
               </thead>
 
               <tbody>
-                {categoriesData?.categories?.map((category) => (
-                  <tr key={category?.id}>
-                    <td>{category?.id}</td>
-                    <td>{category?.category_name}</td>
-                    <td>{category?.description}</td>
+                {brandsData?.brands?.map((brand) => (
+                  <tr key={brand?.id}>
+                    <td>{brand?.id}</td>
+                    <td><img className="w-8 h-8 rounded-full" src={brand?.brand_img ? brand?.brand_img : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"} alt="" /></td>
+                    <td>{brand?.brand_name}</td>
                     <td className="flex gap-x-2 items-center">
                       <FiEdit
                         onClick={() => {
-                          handleModalEditInfo(category);
+                          handleModalEditInfo(brand);
                         }}
                         className="cursor-pointer"
                         size={20}
                       />
                       <RiDeleteBin4Line
                         onClick={() => {
-                          onDelete(category?.id);
+                          onDelete(brand?.id);
                         }}
                         className="cursor-pointer"
                         size={20}
@@ -181,18 +168,17 @@ const CategoriesListCustom = () => {
 
               <tfoot>
                 <tr>
-                  <th>ID</th>
-
+                <th>ID</th>
+                  <th>Img</th>
                   <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
+                  <th>Action</th>
                 </tr>
               </tfoot>
             </table>
           </div>
         )}
-        <EditCategory
-          category={category}
+        <EditBrand
+          brand={brand}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
@@ -201,4 +187,4 @@ const CategoriesListCustom = () => {
   );
 };
 
-export default CategoriesListCustom;
+export default BrandListCustom;
