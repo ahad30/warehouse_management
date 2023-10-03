@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../../Shared/Navbar/Navbar";
-import DashboardSidebar from "./DashboardSidebar";
+import DashboardSidebarDropdown from "./DashboardSidebarDropdown";
 
 const DashboardLayout = () => {
   return (
@@ -21,7 +21,7 @@ const DashboardLayout = () => {
         <div className="drawer-side shadow-xl -z-0 top-auto">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           {/* Dashboard sidebar */}
-          <DashboardSidebar />
+          <DashboardSidebarDropdown />
         </div>
       </div>
     </div>

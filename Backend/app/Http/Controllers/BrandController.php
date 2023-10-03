@@ -47,6 +47,7 @@ class BrandController extends Controller
         ]);
         $imageData = null;
         if ($request->file('brand_img') != null) {
+            // return "ok";
             $file = $request->file('brand_img');
             $filename = $file->getClientOriginalName();
             $imageData = time() . '-' . $filename;

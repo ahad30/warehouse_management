@@ -33,7 +33,7 @@ const AddBrand = () => {
     }
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/category");
+      return navigate("/dashboard/brand");
     }
   }, [
     isLoading,
@@ -45,6 +45,8 @@ const AddBrand = () => {
     data?.status,
     dispatch,
   ]);
+
+  console.log(isLoading, isError, error, isSuccess, data);
 
   return (
     <DashboardBackground>

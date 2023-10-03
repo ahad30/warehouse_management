@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
 
-const DashboardSidebar = () => {
+const DashboardSidebarDropdown = () => {
   const { user } = useSelector((state) => state.auth);
 
   const [sideBarData, setSidebarData] = useState([
@@ -173,8 +173,8 @@ const DashboardSidebar = () => {
       icon: <AiOutlineSetting size={25} />,
       subLinks: [
         {
-          name: "Default Setting",
-          link: "/dashboard/setting/default",
+          name: "Setting",
+          link: "/dashboard/setting",
           icon: <GiSettingsKnobs size={20} />,
         },
         // {
@@ -247,4 +247,4 @@ const DashboardSidebar = () => {
   );
 };
 
-export default DashboardSidebar;
+export default DashboardSidebarDropdown;
