@@ -15,7 +15,7 @@ class UserController extends Controller
     // index
     public function index()
     {
-        $users = User::latest()->select('name', 'email', 'phone', 'status', 'address', 'city', 'state', 'country', 'img', 'email_verified_at', 'role_id')->with('getRole')->get();
+        $users = User::latest()->select('id', 'name', 'email', 'phone', 'status', 'address', 'city', 'state', 'country', 'img', 'email_verified_at', 'role_id')->with('getRole')->get();
 
         if ($users->count() <= 0) {
             return response()->json([
@@ -75,7 +75,7 @@ class UserController extends Controller
     public function distroy($id)
     {
         $user = User::find($id);
-        // return $user;
+
         if ($user != null) {
             $user->delete();
 

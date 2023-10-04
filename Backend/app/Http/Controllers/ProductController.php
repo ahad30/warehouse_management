@@ -61,7 +61,7 @@ class ProductController extends Controller
             'product_code' => ['string'],
             // 'category_id' => ['integer', 'nullable'],
             // 'brand_id' => ['integer'],
-            // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
+            'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ]);
 
         if ($validateInput->fails()) {
@@ -148,56 +148,82 @@ class ProductController extends Controller
     // update
     public function update(Request $request)
     {
-        $product = Product::find($request->id);
+        $validateInput = Validator::make($request->all(), [
+            'product_name' => ['required', 'string', 'max:255'],
+            'product_quantity' => ['integer', 'required'],
+            'product_unit' => ['string', 'required'],
+            'product_retail_price' => ['required'],
+            'product_sale_price' => ['required'],
+            'product_code' => ['string'],
+            // 'category_id' => ['integer', 'nullable'],
+            // 'brand_id' => ['integer'],
+            // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
+        ]);
 
-        if ($product) {
-            $validateInput = Validator::make($request->all(), [
-                'name' => 'required',
-                'string',
-                'max:255',
-                'code' => 'required',
-                'category_id' => 'required',
-                'price' => 'required',
-                'unit' => 'required',
-                'desc' => 'nullable',
-            ]);
-
-            if ($validateInput->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation error!',
-                    'errors' => $validateInput->errors()
-                ], 401);
-            }
-
-            $category = Category::where('id', $request->category_id)->first();
-            $category_name = $category->category_name;
-
-            $product->update([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name . $request->code),
-                'code' => $request->code,
-                'category_id' => $request->category_id,
-                'category_name' => $category_name,
-                'price' => $request->price,
-                'unit' => $request->unit,
-                'desc' => $request->desc,
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Product Detail Updated Successfully ',
-                'product' => $product,
-            ], 201);
-        } else {
+        if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'Product Not Found',
-            ], 500);
+                'message' => 'Validation error!',
+                'errors' => $validateInput->errors()
+            ], 400);
         }
+
+
+
+        $product = Product::find($request->id);
+        if ($product == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Product not found',
+
+            ], 404);
+        }
+
+
+        // image upload
+        $imageData = null;
+        if ($request->file('product_img') != null) {
+            $file = $request->file('product_img');
+            $filename = $file->getClientOriginalName();
+            $imageData = $request->product_name . "-" . time() . '-' . $filename;
+            $file->move('uploads/products/', $imageData);
+        }
+        // checking category is exit or not
+        if (Category::where('id', $request->category_id)->count() < 1) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Category',
+            ], 400);
+        }
+        if (Brand::where('id', $request->brand_id)->count() < 1) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Brand',
+            ], 400);
+        }
+
+        $product->update([
+            'product_name' => $request->product_name,
+            'product_img' => $request->brand_img == null ? "" : $imageData,
+            'product_quantity' => $request->product_quantity,
+            'product_unit' => $request->product_unit,
+            'product_retail_price' => $request->product_retail_price,
+            'product_sale_price' => $request->product_sale_price,
+            'slug' => Str::slug($request->product_name . $request->product_code),
+            'product_code' => $request->product_code,
+            'category_id' => $request->category_id == null ? 1 : $request->category_id,
+            'brand_id' => $request->brand_id == null ? 1 : $request->brand_id,
+        ]);
+        $product = Product::find($request->id);
+        return response()->json([
+            'status' => true,
+            'message' => 'New Product Created Successfully',
+            'product' => $product,
+        ]);
+
     }
 
-    // distroy
+    // destroy
     public function distroy($id)
     {
         $product = Product::find($id);
