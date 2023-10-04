@@ -45,15 +45,25 @@ class BrandController extends Controller
             'brand_name' => 'required|max:100|unique:' . Brand::class,
             'brand_img' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
-        if ($validator->fails()) {
+ if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Validation error!',
                 'errors' => $validator->errors()
             ], 400);
         }
+        $imageData = null;
+        if ($request->file('brand_img') != null) {
+            $file = $request->file('brand_img');
+
+            $filename = $file->getClientOriginalName();
+            $imageData = $request->brand_name . "-" . time() . '-' . $filename;
+            $file->move('uploads/brands', $imageData);
+        }
+
+       
         $data = Brand::create([
-            // 'brand_img' => $image_path,
+            'brand_img' => $image_path,
             'brand_name' => $request->brand_name,
         ]);
 

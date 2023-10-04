@@ -50,6 +50,12 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    findLoggedInUser: builder.query({
+      query: () => ({
+        url: `/profile/findLoggedInUser`,
+      }),
+      providesTags: ["Users"],
+    }),
     userLogOut: builder.mutation({
       query: () => ({
         method: "POST",
@@ -66,5 +72,6 @@ export const {
   useUpdateUserMutation,
   useUpdateUserProfileMutation,
   useDeleteUserMutation,
+  useFindLoggedInUserQuery,
   useUserLogOutMutation,
 } = userApi;
