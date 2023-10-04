@@ -1,21 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import {
-  AiOutlineSetting,
-  // AiOutlineTable,
-  AiOutlineUserAdd,
-} from "react-icons/ai";
-import {
-  BiCartAdd,
-  BiCategory,
-  BiGrid,
-  BiSolidDuplicate,
-  BiSolidPurchaseTag,
-  BiUserCircle,
-} from "react-icons/bi";
+import { AiOutlineSetting } from "react-icons/ai";
+import { BiCategory, BiGrid, BiUserCircle } from "react-icons/bi";
 import { FaFileInvoiceDollar, FaStore } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
-import { BsFiletypePdf, BsFillCartFill, BsPieChartFill } from "react-icons/bs";
-import { GiSettingsKnobs } from "react-icons/gi";
+import { BsFillCartFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
@@ -87,14 +75,16 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <div className="bg-gray-50 -mt-2">
+    <div className="bg-gray-100 -mt-2">
       <div className="join join-vertical  w-[250px] px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
         <ul className="sideBar">
           {sideBarData &&
             sideBarData?.map((item) => (
               <li
                 key={item?.name}
-                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(item?.path)}`}
+                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(
+                  item?.path
+                )}`}
               >
                 <Link to={item?.path} className="flex gap-x-2">
                   <span>{item?.icon} </span> <span>{item?.name}</span>
@@ -104,7 +94,10 @@ const DashboardSidebar = () => {
         </ul>
 
         <div className="pt-40">
-          <Link className={`flex gap-x-2 ${isActive("/dashboard/setting/default")}`} to="/dashboard/setting/default">
+          <Link
+            className={`flex gap-x-2 ${isActive("/dashboard/setting")}`}
+            to="/dashboard/setting"
+          >
             <AiOutlineSetting size={25}></AiOutlineSetting>
             <p>Settings</p>
           </Link>

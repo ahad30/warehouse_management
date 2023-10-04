@@ -4,7 +4,7 @@ const NavbarNew = () => {
   const { user } = useSelector((state) => state.auth);
   console.log(user);
   return (
-    <div className="bg-gray-50 flex justify-between border-b border-gray-300">
+    <div className="bg-gray-100 flex justify-between border-b border-gray-300">
       <div className="border-r w-[250px] p-4 border-gray-300 "><p className="font-bold">Invoice management</p></div>
 
       {/* right side */}

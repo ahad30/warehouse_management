@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../../Shared/Navbar/Navbar";
-import DashboardSidebar from "./DashboardSidebar";
 import NavbarNew from "../../Shared/Navbar/NavbarNew";
+import DashboardSidebar from "./DashboardSidebarDropdown";
 
 const DashboardLayout = () => {
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="max-w-[1920px] mx-auto">
       <div className="sticky top-0 z-10">
         {/* <Navbar /> */}
         <NavbarNew></NavbarNew>

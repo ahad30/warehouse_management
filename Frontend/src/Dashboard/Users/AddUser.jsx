@@ -154,23 +154,6 @@ const AddUser = () => {
                 <option value={"inactive"}>Inactive</option>
               </select>
             </label>
-            {/* <label className="input-group">
-              <span className="font-semibold min-w-[100px]">
-                Branch<span className="text-red-500 p-0">*</span>
-              </span>
-              <select
-                className="select select-bordered w-full"
-                {...register("branch")}
-                required
-              >
-                <option value={""}>Select Branch</option>
-                {[...Array(5)].map((b, i) => (
-                  <option key={i} value={`Branch ${i + 1}`}>
-                    Branch {i + 1}
-                  </option>
-                ))}
-              </select>
-            </label> */}
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Address<span className="text-red-500 p-0">*</span>
@@ -189,7 +172,7 @@ const AddUser = () => {
                 type="number"
                 placeholder="Zip Code"
                 className="input input-bordered w-full"
-                {...register("zip")}
+                {...register("zip_code")}
               />
             </label>
             <label className="input-group">

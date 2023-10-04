@@ -12,7 +12,6 @@ import UsersList from "../Dashboard/Users/UsersList";
 // import CustomersList from "../Dashboard/Customers/CustomersList";
 import InvoicesList from "../Dashboard/Invoices/InvoicesList";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
-import DefaultSettings from "../Dashboard/Settings/DefaultSettings";
 import PdfSettings from "../Dashboard/Settings/PdfSettings";
 import ReportList from "../Dashboard/Report/Reports/ReportList";
 import Analytics from "../Dashboard/Report/Analytics/Analytics";
@@ -32,6 +31,8 @@ import AddStore from "../Dashboard/Stores/AddStore";
 import StoresList from "../Dashboard/Stores/StoresList";
 import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
 import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
+import Settings from "../Dashboard/Settings/Settings";
+import SettingsNew from "../Dashboard/Settings/SettingsNew";
 
 const routes = createBrowserRouter([
   {
@@ -168,9 +169,9 @@ const routes = createBrowserRouter([
       },
       // SETTING
       {
-        path: "/dashboard/setting/default",
-        element: <DefaultSettings />,
-        // element: <DefaultSettingNew></DefaultSettingNew>,
+        path: "/dashboard/setting",
+        // element: <Settings></Settings>,
+        element: <SettingsNew></SettingsNew>
       },
       {
         path: "/dashboard/setting/pdf",

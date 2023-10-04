@@ -37,91 +37,38 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        if ($request->id != null) {
-            $user = User::find($request->id);
-            if ($user == null) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'User Not Found',
-
-                ], 404);
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error!',
-                'errors' => 'User id is required'
-            ], 400);
-        }
-        $codeValidation = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'unique:users,email,' . $request->id],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'role_id' => ['required', 'int'],
-            'status' => ['required', 'string'],
-            'phone' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'zip_code' => ['nullable', 'string'],
-            'city' => ['required', 'string'],
-            'state' => ['nullable', 'string'],
-            'country' => ['required', 'string'],
-            'id' => ['required'],
-
+        $validator = Validator::make($request->all(), [
+            'role_id' => 'required',
+            'status' => 'required',
+            'id' => 'required'
         ]);
-
-        if ($codeValidation->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Validation error!',
-                'errors' => $codeValidation->errors()
-            ], 400);
-        }
-
-
-
-        $role = Role::find($request->role_id);
-        if ($role == null) {
-            return response()->json([
-                'status' => false,
-                'message' => "role doesn't exist",
-
+                'errors' => $validator->errors()
             ], 404);
         }
+        $user = User::find($request->id);
+        if ($user == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found',
 
-        /* ------------------------------ image upload ------------------------------ */
-
-        $imageData = $request->oldImg;
-
-        if ($request->img != null) {
-            $file = $request->file('img');
-            $filename = $file->getClientOriginalName();
-            $imageData = time() . '-' . $filename;
-            $file->move('uploads/users', $imageData);
-
-            // deleting old image image
-
-            unlink('uploads/users/' . $request->oldImg);
+            ], 400);
         }
 
+
+        // updating brand
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
             'role_id' => $request->role_id,
             'status' => $request->status,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'zip_code' => $request->zip_code,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'img' => $imageData
         ]);
 
         return response()->json([
             'status' => true,
-            'message' => 'Registration Successful',
-            'user' => $user,
+            'message' => 'User Updated',
+            'brand' => $user,
         ], 200);
     }
     // distroy
