@@ -2,29 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     // index
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->with('categories')->get();
 
         if ($products->count() > 0) {
             return response()->json([
                 'status' => true,
                 'products' => $products,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'No Products Found',
-            ]);
+                'products' => $products,
+            ], 404);
         }
     }
 
@@ -51,12 +53,13 @@ class ProductController extends Controller
     {
         $validateInput = Validator::make($request->all(), [
             'product_name' => ['required', 'string', 'max:255'],
-            'product_quantity' => ['integer'],
-            'product_unit' => ['string'],
-            'product_code' => 'unique,products,product_code',
+            'product_quantity' => ['integer', 'required'],
+            'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required'],
             'product_sale_price' => ['required'],
-            'category_id' => ['integer'],
+            'product_code' => ['string'],
+            // 'category_id' => ['integer', 'nullable'],
+            // 'brand_id' => ['integer'],
             // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
 
@@ -68,24 +71,48 @@ class ProductController extends Controller
             ], 400);
         }
 
-        $productexist = Product::where('product_code', Str::slug($request->name . $request->code))->first();
-        if ($productexist) {
+        $productExist = Product::where('slug', Str::slug($request->product_name . $request->product_code))->first();
+
+
+        if ($productExist != null) {
             return response()->json([
                 'status' => false,
                 'message' => 'Product Already Exist',
-            ], 401);
+            ], 400);
         } else {
-            $category = Category::where('id', $request->category_id)->first();
-            $category_name = $category->category_name;
+            // image upload
+            $imageData = null;
+            if ($request->file('product_img') != null) {
+                $file = $request->file('product_img');
+                $filename = $file->getClientOriginalName();
+                $imageData = $request->product_name . "-" . time() . '-' . $filename;
+                $file->move('uploads/products/', $imageData);
+            }
+            // checking category is exit or not
+            if (Category::where('id', $request->category_id)->count() < 1) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid Category',
+                ], 400);
+            }
+            if (Brand::where('id', $request->brand_id)->count() < 1) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid Brand',
+                ], 400);
+            }
+
             Product::create([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name . $request->code),
-                'code' => $request->code,
-                'category_id' => $request->category_id,
-                'category_name' => $category_name,
-                'price' => $request->price,
-                'unit' => $request->unit,
-                'desc' => $request->desc,
+                'product_name' => $request->product_name,
+                'product_img' => $imageData,
+                'product_quantity' => $request->product_quantity,
+                'product_unit' => $request->product_unit,
+                'product_retail_price' => $request->product_retail_price,
+                'product_sale_price' => $request->product_sale_price,
+                'slug' => Str::slug($request->product_name . $request->product_code),
+                'product_code' => $request->product_code,
+                'category_id' => $request->category_id == null ? 1 : $request->category_id,
+                'brand_id' => $request->brand_id == null ? 1 : $request->brand_id,
             ]);
             $product = Product::latest()->first();
             return response()->json([
@@ -185,7 +212,7 @@ class ProductController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Product not found'
-            ], 500);
+            ], 404);
         }
     }
 }
