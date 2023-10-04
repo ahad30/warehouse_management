@@ -122,7 +122,7 @@ const BrandListCustom = () => {
               {/* Table header */}
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Sl</th>
                   <th>Img</th>
                   <th>Name</th>
                   <th>Action</th>
@@ -130,9 +130,9 @@ const BrandListCustom = () => {
               </thead>
 
               <tbody>
-                {brandsData?.brands?.map((brand) => (
+                {brandsData?.brands?.map((brand,index) => (
                   <tr key={brand?.id}>
-                    <td>{brand?.id}</td>
+                    <td>{index + 1}</td>
                     <td>
                       <img
                         className="w-8 h-8 rounded-full"
@@ -167,7 +167,7 @@ const BrandListCustom = () => {
 
               <tfoot>
                 <tr>
-                  <th>ID</th>
+                  <th>Sl</th>
                   <th>Img</th>
                   <th>Name</th>
                   <th>Action</th>

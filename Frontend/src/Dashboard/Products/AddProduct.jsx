@@ -158,7 +158,7 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("product_brand")}
+              {...register("brand_id")}
             >
               <option value={""}>Select Brand</option>
               {brandsData?.brands?.map((brand) => (
