@@ -57,16 +57,19 @@ const ReportList = () => {
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
           <div className="flex flex-col lg:flex-row gap-2">
             <label htmlFor="from">
-              From:{" "}
+              From:
+              <input
+                className="input input-sm input-bordered"
+                type="date"
+              />
+            </label>
+            <label htmlFor="to">
+              To:
               <input
                 className="input input-sm input-bordered"
                 type="date"
                 value={toDay}
-              />{" "}
-            </label>
-            <label htmlFor="to">
-              To:{" "}
-              <input className="input input-sm input-bordered" type="date" />{" "}
+              />
             </label>
             <input
               type="submit"

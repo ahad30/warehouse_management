@@ -4,8 +4,7 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../features/Product/productApi";
-import UseTable from "../../components/Reusable/useTable/UseTable";
-import { BiCartAdd, BiSolidDuplicate } from "react-icons/bi";
+import {  BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
@@ -77,19 +76,6 @@ const ProductsListCustom = () => {
   };
   // SEARCH FILTERING ENDS
 
-  const columns = [
-    { key: "id", header: "ID" },
-    { key: "img", header: "Image" },
-    { key: "name", header: "Name" },
-    { key: "code", header: "Code" },
-    { key: "price", header: "Price" },
-    { key: "unit", header: "Unit" },
-    { key: "category_name", header: "Category" },
-    { key: "desc", header: "Description" },
-  ];
-
-  // PRODUCTS CONTENT
-
   // ALL PRODUCTS
   if (productsIsLoading) {
     return <UseLoading />;
@@ -98,8 +84,6 @@ const ProductsListCustom = () => {
   if (productsIsError) {
     console.error(productsError);
   }
-
-  console.log(productsData?.products);
 
   return (
     <>
@@ -142,8 +126,19 @@ const ProductsListCustom = () => {
                 {productsData?.products?.map((product, index) => (
                   <tr key={product?.id}>
                     <td>{index + 1}</td>
-                    <td><img className="w-8 h-8 rounded-full" src={product?.product_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/products/${product?.product_img}`
-                     : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"} alt="" /></td>
+                    <td>
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src={
+                          product?.product_img
+                            ? `${
+                                import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                              }/uploads/products/${product?.product_img}`
+                            : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+                        }
+                        alt=""
+                      />
+                    </td>
                     <td>{product?.product_name}</td>
                     <td>{product?.product_code}</td>
                     <td>{product?.product_unit}</td>
@@ -152,7 +147,7 @@ const ProductsListCustom = () => {
                     <td>{product?.product_sale_price}</td>
                     <td>{product?.category_id}</td>
                     <td>{product?.brand_id}</td>
-                  
+
                     <td className="flex gap-x-2 items-center">
                       <FiEdit
                         onClick={() => {
@@ -175,7 +170,7 @@ const ProductsListCustom = () => {
 
               <tfoot>
                 <tr>
-                <th>Sl</th>
+                  <th>Sl</th>
                   <th>Image</th>
                   <th>Name</th>
                   <th>code</th>

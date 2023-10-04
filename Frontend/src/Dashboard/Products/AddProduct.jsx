@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const AddProduct = () => {
   UseTitle("Add Product");
@@ -19,19 +20,21 @@ const AddProduct = () => {
   const dispatch = useDispatch();
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
+  const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
 
   const onSubmit = (data) => {
-    addProduct(data);
+    console.log(data);
+    // addProduct(data);
   };
 
   const errorMessages = UseErrorMessages();
 
   useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
+    // if (isLoading) {
+    //   toast.loading(<p>Loading...</p>, { id: 1 });
+    // }
 
     if (isError) {
       const errorMessage = error?.data?.message || error?.status;
@@ -52,6 +55,8 @@ const AddProduct = () => {
     data?.status,
     dispatch,
   ]);
+
+  console.log(isLoading, isError, error, isSuccess, data);
 
   return (
     <DashboardBackground>
@@ -90,13 +95,14 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("product_unit")}
+              {...register("store_id")}
             >
               <option value={""}>Select Store Info</option>
-              <option value={1}>Store 1</option>
-              <option value={2}>Store 2</option>
-              <option value={3}>Store 3</option>
-              <option value={4}>Store 4</option>
+              {storesData?.stores?.map((store) => (
+                <option key={store?.id} value={store?.id}>
+                  {store?.store_name}
+                </option>
+              ))}
             </select>
           </label>
           <label className="input-group">
