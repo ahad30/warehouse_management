@@ -13,18 +13,19 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->with('categories')->get();
 
         if ($products->count() > 0) {
             return response()->json([
                 'status' => true,
                 'products' => $products,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'No Products Found',
-            ]);
+                'products' => $products,
+            ], 404);
         }
     }
 
@@ -50,12 +51,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validateInput = Validator::make($request->all(), [
-            'name' => 'required', 'string', 'max:255',
-            'code' => 'nullable',
-            'category_id' => 'required',
-            'price' => 'required',
-            'unit' => 'required',
-            'desc' => 'nullable',
+            'product_name' => ['required', 'string', 'max:255'],
+            'product_quantity' => ['integer'],
+            'product_unit' => ['string'],
+            'product_retail_price' => ['required'],
+            'product_sale_price' => ['required'],
+            'category_id' => ['integer'],
+            // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
 
         if ($validateInput->fails()) {
@@ -63,20 +65,28 @@ class ProductController extends Controller
                 'status' => false,
                 'message' => 'Validation error!',
                 'errors' => $validateInput->errors()
-            ], 401);
+            ], 400);
         }
 
-        $productexist = Product::where('slug', Str::slug($request->name . $request->code))->first();
-        if ($productexist) {
+        $productExist = Product::where('slug', Str::slug($request->name . $request->code))->first();
+        if ($productExist) {
             return response()->json([
                 'status' => false,
                 'message' => 'Product Already Exist',
             ], 401);
         } else {
+            // image upload
+            $imageData = null;
+            if ($request->file('product_img') != null) {
+                $file = $request->file('product_img');
+                $filename = $file->getClientOriginalName();
+                $imageData = $request->product_name . "-" . time() . '-' . $filename;
+                $file->move('uploads/products/', $imageData);
+            }
             $category = Category::where('id', $request->category_id)->first();
             $category_name = $category->category_name;
             Product::create([
-                'name' => $request->name,
+                'product_name' => $request->name,
                 'slug' => Str::slug($request->name . $request->code),
                 'code' => $request->code,
                 'category_id' => $request->category_id,
@@ -117,13 +127,14 @@ class ProductController extends Controller
 
     // update
     public function update(Request $request)
-
     {
         $product = Product::find($request->id);
 
         if ($product) {
             $validateInput = Validator::make($request->all(), [
-                'name' => 'required', 'string', 'max:255',
+                'name' => 'required',
+                'string',
+                'max:255',
                 'code' => 'required',
                 'category_id' => 'required',
                 'price' => 'required',
@@ -166,7 +177,7 @@ class ProductController extends Controller
         }
     }
 
-    // distroy 
+    // distroy
     public function distroy($id)
     {
         $product = Product::find($id);

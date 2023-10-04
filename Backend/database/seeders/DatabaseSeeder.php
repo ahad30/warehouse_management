@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\BrandTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(CompanyInfoSeeder::class);
         $this->call(CategoryTableSeeder::class);
-        $this->call(ProductTableSeeder::class);
+        // $this->call(ProductTableSeeder::class);
+        $this->call(BrandTableSeeder::class);
     }
 }

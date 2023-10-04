@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useAddBrandMutation } from "../../features/Brand/brandApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const AddBrand = () => {
   UseTitle("Add Brand");
@@ -18,9 +19,14 @@ const AddBrand = () => {
   const [addBrand, { isLoading, isError, error, isSuccess, data }] =
     useAddBrandMutation();
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    addBrand(data);
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("brand_name", data?.brand_name);
+    if (data?.brand_img) {
+      formData.append("brand_img", data?.brand_img[0]);
+    }
+
+    addBrand(formData);
   };
 
   useEffect(() => {
@@ -45,13 +51,15 @@ const AddBrand = () => {
     data?.status,
     dispatch,
   ]);
+  console.log(isLoading, isError, error, isSuccess, data);
+  const errorMessages = UseErrorMessages(error);
 
   console.log(isLoading, isError, error, isSuccess, data);
 
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} encType="mulitpart/form-data">
         <div className="grid lg:grid-cols-2 gap-5">
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">
@@ -78,6 +86,16 @@ const AddBrand = () => {
           icon={<SiBrandfolder size={20} />}
         />
       </form>
+
+      {/* Display error messages */}
+      {errorMessages.map((errorMessage, index) => (
+        <p
+          key={index}
+          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+        >
+          {errorMessage}
+        </p>
+      ))}
     </DashboardBackground>
   );
 };

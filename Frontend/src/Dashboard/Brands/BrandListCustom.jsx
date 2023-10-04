@@ -90,19 +90,14 @@ const BrandListCustom = () => {
 
   // ALL CATEGORIES
   if (brandsIsLoading) {
-    return  <UseLoading />;
+    return <UseLoading />;
   }
 
   if (brandsIsError) {
     console.error(brandsError);
   }
 
-  
-
-  
-
-
-  console.log(brandsData?.brands)
+  console.log(brandsData?.brands);
 
   return (
     <>
@@ -112,20 +107,15 @@ const BrandListCustom = () => {
           {/* Change the table title */}
         </TableHeadingTitle>
 
-        
-
         <SearchAndAddBtn
           btnTitle={"Add brand"}
           btnPath={"/dashboard/brand/add"}
           btnIcon={<BiSolidDuplicate size={20} />}
           setFiltering={setFiltering}
         />
-        
 
         {!brandsIsSuccess && brandsData?.status ? (
-          <p className="text-center text-2xl mt-10">
-            {brandsData?.message}
-          </p>
+          <p className="text-center text-2xl mt-10">{brandsData?.message}</p>
         ) : (
           <div className="overflow-x-scroll">
             <table className="table table-sm table-pin-rows table-pin-cols">
@@ -136,7 +126,6 @@ const BrandListCustom = () => {
                   <th>Img</th>
                   <th>Name</th>
                   <th>Action</th>
-                  
                 </tr>
               </thead>
 
@@ -144,7 +133,17 @@ const BrandListCustom = () => {
                 {brandsData?.brands?.map((brand) => (
                   <tr key={brand?.id}>
                     <td>{brand?.id}</td>
-                    <td><img className="w-8 h-8 rounded-full" src={brand?.brand_img ? brand?.brand_img : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"} alt="" /></td>
+                    <td>
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src={
+                          brand?.brand_img
+                            ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/brands/${brand?.brand_img}`
+                            : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+                        }
+                        alt=""
+                      />
+                    </td>
                     <td>{brand?.brand_name}</td>
                     <td className="flex gap-x-2 items-center">
                       <FiEdit
@@ -168,7 +167,7 @@ const BrandListCustom = () => {
 
               <tfoot>
                 <tr>
-                <th>ID</th>
+                  <th>ID</th>
                   <th>Img</th>
                   <th>Name</th>
                   <th>Action</th>

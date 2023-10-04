@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 
 class BrandController extends Controller
 {
@@ -18,7 +19,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        $brands = Brand::latest()->get();
         if ($brands->count() > 0) {
             return response()->json([
                 'status' => true,
@@ -40,19 +41,10 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->file('brand_img');
         $validator = Validator::make($request->all(), [
             'brand_name' => 'required|max:100|unique:' . Brand::class,
-            // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
+            // 'brand_img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
-        $imageData = null;
-        if ($request->brand_img != null) {
-            $file = $request->brand_img;
-
-            $filename = $file->getClientOriginalName();
-            $imageData = $request->brand_name . "-" . time() . '-' . $filename;
-            $file->move('uploads/brands', $imageData);
-        }
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -60,15 +52,24 @@ class BrandController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
-        $brand = Brand::create([
+        $imageData = null;
+        if ($request->file('brand_img') != null) {
+            $file = $request->file('brand_img');
+            $filename = $file->getClientOriginalName();
+            $imageData = $request->brand_name . "-" . time() . '-' . $filename;
+            $file->move('uploads/brands', $imageData);
+        }
+
+
+        $data = Brand::create([
+            'brand_img' => $imageData,
             'brand_name' => $request->brand_name,
-            'brand_img' => $imageData
         ]);
 
         return response()->json([
             'status' => true,
             'message' => 'Brand Successful',
-            'brand' => $brand,
+            'brand' => $data,
         ], 201);
     }
     /**
@@ -79,17 +80,17 @@ class BrandController extends Controller
      */
     public function update(Request $request)
     {
+        // return response()->json($request->all(), 400);
         $validator = Validator::make($request->all(), [
             'brand_name' => 'required|max:100|unique:brands,brand_name,' . $request->id,
-            'id' => 'required'
-            // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
+            // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Validation error!',
                 'errors' => $validator->errors()
-            ], 404);
+            ], 400);
         }
         $brand = Brand::find($request->id);
         if ($brand == null) {
@@ -97,15 +98,19 @@ class BrandController extends Controller
                 'status' => false,
                 'message' => 'Brand not found',
 
-            ], 400);
+            ], 404);
         }
 
-        $imageData = $request->old_image;
+        $imageData = null;
         if ($request->file('brand_img') != null) {
             $file = $request->file('brand_img');
             $filename = $file->getClientOriginalName();
-            $imageData = time() . '-' . $filename;
-            $file->move('uploads/brands', $imageData);
+            $imageData = $request->brand_name . "-" . time() . '-' . $filename;
+            $file->move('uploads/brands/', $imageData);
+            // deleting old image
+            if ($brand->brand_img != null) {
+                unlink("uploads/brands/$brand->brand_img");
+            }
         }
         // updating brand
         $brand->update([
@@ -124,9 +129,11 @@ class BrandController extends Controller
         if ($id != null) {
             $brand = Brand::where('id', $id)->first();
 
-
             if ($brand != null) {
                 $brand->delete();
+                if ($brand->brand_img != null) {
+                    unlink("uploads/brands/$brand->brand_img");
+                }
                 return response()->json([
                     'status' => true,
                     'message' => 'Brand delete successfully',

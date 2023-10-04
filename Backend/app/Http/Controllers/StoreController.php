@@ -43,7 +43,7 @@ class StoreController extends Controller
             'store_email' => 'email|max:100',
             'store_web' => 'max:100',
             'store_address' => 'required',
-            'store_phone' => 'required|max:100|unique:stores,store_phone',
+            'store_phone' => 'required|max:20|unique:stores,store_phone',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -84,7 +84,9 @@ class StoreController extends Controller
             'store_web' => 'max:100',
             'store_address' => 'required',
             'id' => 'required',
-            'store_phone' => 'required|max:12|unique:stores,store_phone,' . $request->id,
+
+            'store_phone' => 'required|max:20|unique:stores,store_phone,' . $request->id,
+
         ]);
         if ($validator->fails()) {
             return response()->json([

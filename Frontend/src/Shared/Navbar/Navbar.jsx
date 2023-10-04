@@ -1,31 +1,46 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../features/Auth/authSlice";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useUserLogOutMutation } from "../../features/User/userApi";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [userLogOut, { isLoading, isError, error, isSuccess, data }] =
     useUserLogOutMutation();
 
-  console.log(data, isLoading, isError, error, isSuccess);
-
-  
   const handleLogOut = () => {
     userLogOut();
   };
 
-  if (isError && !data?.status) {
-    toast.error(error?.data?.message);
-  }
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
+    if (isError && !data?.status) {
+      toast.error(error?.data?.message);
+    }
 
-  if (isSuccess && data?.status) {
-    dispatch(logOut());
-    toast.success(data?.message, { id: 1 });
-  }
+    if (isSuccess && data?.status) {
+      dispatch(logOut());
+      navigate("/login");
+      toast.success(data?.message, { id: 1 });
+    }
+  }, [
+    data?.message,
+    data?.status,
+    dispatch,
+    error?.data?.message,
+    isError,
+    isLoading,
+    isSuccess,
+    navigate,
+  ]);
 
   return (
     <div className="navbar bg-base-100 w-full max-w-[1440px] mx-auto border-b">

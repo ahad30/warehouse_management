@@ -5,12 +5,15 @@ import {
   useGetProductsQuery,
 } from "../../features/Product/productApi";
 import UseTable from "../../components/Reusable/useTable/UseTable";
-import { BiCartAdd } from "react-icons/bi";
+import { BiCartAdd, BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditProduct from "./EditProduct";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin4Line } from "react-icons/ri";
+import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 
 const ProductsListCustom = () => {
   UseTitle("Products");
@@ -86,41 +89,17 @@ const ProductsListCustom = () => {
   ];
 
   // PRODUCTS CONTENT
-  let content;
 
   // ALL PRODUCTS
   if (productsIsLoading) {
-    return (content = <UseLoading />);
+    return <UseLoading />;
   }
 
   if (productsIsError) {
     console.error(productsError);
   }
 
-  if (!productsData?.status) {
-    return (content = (
-      <>
-        <p className="text-center text-2xl mt-10">{productsData?.message}</p>
-      </>
-    ));
-  }
   console.log(productsData?.products);
-  if (productsIsSuccess && productsData?.status) {
-    content = (
-      <>
-        <UseTable
-          data={productsData?.products}
-          columns={columns}
-          handleModalEditInfo={handleModalEditInfo}
-          onDelete={onDelete}
-          btnTitle={"Add Product"}
-          btnPath={"/dashboard/product/add"}
-          btnIcon={<BiCartAdd size={20} />}
-          setFiltering={setFiltering}
-        />
-      </>
-    );
-  }
 
   return (
     <>
@@ -128,8 +107,90 @@ const ProductsListCustom = () => {
         <TableHeadingTitle>
           Products {productsData?.products?.length}
         </TableHeadingTitle>
+
+        <SearchAndAddBtn
+          btnTitle={"Add Product"}
+          btnPath={"/dashboard/product/add"}
+          btnIcon={<BiSolidDuplicate size={20} />}
+          setFiltering={setFiltering}
+        />
+
         {/* Products Table */}
-        {content}
+        {!productsIsSuccess && productsData?.status ? (
+          <p className="text-center text-2xl mt-10">{productsData?.message}</p>
+        ) : (
+          <div className="overflow-x-scroll">
+            <table className="table table-sm table-pin-rows table-pin-cols">
+              {/* Table header */}
+              <thead>
+                <tr>
+                  <th>Sl</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>code</th>
+                  <th>unit</th>
+                  <th>Quantity</th>
+                  <th>Retail price</th>
+                  <th>Sold Price</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {productsData?.products?.map((product, index) => (
+                  <tr key={product?.id}>
+                    <td>{index + 1}</td>
+                    <td><img src={product?.product_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/products/${product?.product_img}`
+                     : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"} alt="" /></td>
+                    <td>{product?.product_name}</td>
+                    <td>{product?.product_code}</td>
+                    <td>{product?.product_unit}</td>
+                    <td>{product?.product_quantity}</td>
+                    <td>{product?.product_retail_price}</td>
+                    <td>{product?.product_sale_price}</td>
+                    <td>{product?.category_id}</td>
+                    <td>{product?.product_brand}</td>
+                  
+                    <td className="flex gap-x-2 items-center">
+                      <FiEdit
+                        onClick={() => {
+                          handleModalEditInfo(product);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                      <RiDeleteBin4Line
+                        onClick={() => {
+                          onDelete(product?.id);
+                        }}
+                        className="cursor-pointer"
+                        size={20}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+
+              <tfoot>
+                <tr>
+                <th>Sl</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>code</th>
+                  <th>unit</th>
+                  <th>Quantity</th>
+                  <th>Retail price</th>
+                  <th>Sold Price</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Action</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        )}
         <EditProduct
           product={product}
           modalIsOpen={modalIsOpen}

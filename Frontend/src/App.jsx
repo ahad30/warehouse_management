@@ -11,7 +11,7 @@ function App() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
+  
   let access_token = JSON.parse(localStorage.getItem("access_token"));
 
   useEffect(() => {
