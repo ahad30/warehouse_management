@@ -2,10 +2,14 @@ import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-import { useUpdateUserMutation } from "../../features/User/userApi";
+import {
+  useGetUserRolesQuery,
+  useUpdateUserMutation,
+} from "../../features/User/userApi";
 
 const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   const { register, handleSubmit, setValue } = useForm();
+  const { data: rolesData } = useGetUserRolesQuery();
 
   const [
     updateUser,
@@ -46,18 +50,13 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
       setValue("name", user.name || "");
       setValue("email", user.email || "");
       setValue("phone", user.phone || "");
-      setValue("role", user.role || "");
+      setValue("role_id", user.role_id || "");
       setValue("status", user.status || "");
       setValue("address", user.address || "");
       setValue("city", user.city || "");
       setValue("country", user.country || "");
     }
   }, [user, setValue]);
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   updateUser(product?.id, data);
-  // };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -66,7 +65,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
       !data.name ||
       !data.email ||
       !data.phone ||
-      !data.role ||
+      !data.role_id ||
       !data.status ||
       !data.address ||
       !data.city ||
@@ -76,7 +75,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
       return; // Exit early if any required field is missing
     }
 
-    updateUser({ id: user?.id, data });
+    updateUser({ ...data, id: user?.id });
   };
 
   return modalIsOpen ? (
@@ -115,6 +114,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         placeholder="Email"
                         className="input input-bordered w-full"
                         {...register("email")}
+                        readOnly
                       />
                     </label>
                     <label className="input-group">
@@ -134,28 +134,28 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       </span>
                       <select
                         className="select select-bordered w-full"
-                        {...register("role")}
+                        {...register("role_id")}
                         required
                       >
                         <option value={""}>Select Role</option>
-                        <option value={"admin"}>Admin</option>
-                        <option value={"accountant"}>Accountant</option>
-                        <option value={"manager"}>Manager</option>
-                        <option value={"sales_representative"}>
-                          Sales Representative
-                        </option>
+                        {rolesData?.roles?.map((userRole) => (
+                          <option key={userRole?.id} value={userRole?.id}>
+                            {userRole?.role}
+                          </option>
+                        ))}
                       </select>
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
+                      <span className="font-semibold min-w-[100px]">
                         Status<span className="text-red-500 p-0">*</span>
                       </span>
-                      <input
-                        type="text"
-                        placeholder="Status"
-                        className="input input-bordered w-full"
+                      <select
+                        className="select select-bordered w-full"
                         {...register("status")}
-                      />
+                      >
+                        <option value={"active"}>Active</option>
+                        <option value={"inactive"}>Inactive</option>
+                      </select>
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">

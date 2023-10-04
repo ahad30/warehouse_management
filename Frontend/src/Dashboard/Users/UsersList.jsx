@@ -1,7 +1,6 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import UseTable from "../../components/Reusable/useTable/UseTable";
-import { BiCartAdd, BiSolidDuplicate } from "react-icons/bi";
+import { BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
@@ -15,7 +14,6 @@ import {
 } from "../../features/User/userApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
-import { set } from "date-fns";
 
 const UsersList = () => {
   UseTitle("Users");
@@ -23,7 +21,7 @@ const UsersList = () => {
   const [user, setUser] = useState({});
   const [allUserData, setAllUserData] = useState([]);
   const { data: rolesData } = useGetUserRolesQuery();
-  const [reload, setReload] = useState(false);
+  // const [reload, setReload] = useState(false);
   const [filterData, setFilterData] = useState(allUserData);
 
   const {
@@ -35,18 +33,14 @@ const UsersList = () => {
   } = useGetUsersQuery();
 
   useEffect(() => {
-   
-      // setAllUserData(filterData);
-      if(filterData.length>0){
-        setAllUserData(filterData)
-        
-      }
-      else {
-        setAllUserData(usersData?.users)
-      }
-    
-      // setAllUserData(usersData?.users);
-  
+    // setAllUserData(filterData);
+    if (filterData.length > 0) {
+      setAllUserData(filterData);
+    } else {
+      setAllUserData(usersData?.users);
+    }
+
+    // setAllUserData(usersData?.users);
   }, [usersData, usersData?.users, filterData]);
 
   const [
@@ -62,6 +56,7 @@ const UsersList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
+    console.log(id);
     deleteUser(id);
   };
 
@@ -71,7 +66,7 @@ const UsersList = () => {
     }
 
     if (deleteIsError) {
-      toast.error(deleteData?.message || deleteError?.status, { id: 1 });
+      toast.error(deleteData?.data?.message || deleteError?.status, { id: 1 });
     }
 
     if (deleteIsSuccess) {
@@ -99,7 +94,7 @@ const UsersList = () => {
     console.log(data);
   };
   // SEARCH FILTERING ENDS
-
+  /*
   const columns = [
     { key: "id", header: "ID" },
     { key: "name", header: "Name" },
@@ -111,8 +106,7 @@ const UsersList = () => {
     { key: "city", header: "City" },
     { key: "country", header: "Country" },
   ];
-
-  // USERS CONTENT
+*/
   // ALL USERS
   if (usersIsLoading) {
     return <UseLoading />;
@@ -127,14 +121,14 @@ const UsersList = () => {
 
   const handleFilter = (data) => {
     if (data) {
-      const filterUsers = allUserData.filter((user) => user?.get_role?.role === data);
+      const filterUsers = allUserData.filter(
+        (user) => user?.get_role?.role === data
+      );
       // console.log(filterUsers)
-      
 
       setFilterData(filterUsers);
       // setReload(!reload); // Apply the filter and update the state
     }
-    
   };
   // console.log(allUserData)
   console.log(filterData);
@@ -188,8 +182,8 @@ const UsersList = () => {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone Number</th>
-                  <th>role</th>
-                  <th>status</th>
+                  <th>Role</th>
+                  <th>Status</th>
                   <th>Address</th>
                   <th>Notes</th>
                   <th>Actions</th>
@@ -198,10 +192,18 @@ const UsersList = () => {
 
               <tbody>
                 {allUserData &&
-                  allUserData?.map((user) => (
+                  allUserData?.map((user, idx) => (
                     <tr key={user?.id}>
-                      <td>{user.id}</td>
-                      <td>{user?.profile_image}</td>
+                      <td>{idx + 1}</td>
+                      <td>
+                        <img
+                          className="w-8 h-auto rounded-full"
+                          src={`${
+                            import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                          }/uploads/users/${user?.img}`}
+                          alt=""
+                        />
+                      </td>
                       <td>{user?.name}</td>
                       <td>{user?.email}</td>
                       <td>{user?.phone}</td>
