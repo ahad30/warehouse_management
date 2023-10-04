@@ -46,8 +46,8 @@ class BrandController extends Controller
             // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
         $imageData = null;
-        if ($request->brand_img != null) {
-            $file = $request->brand_img;
+        if ($request->file('brand_img') != null) {
+            $file = $request->file('brand_img');
 
             $filename = $file->getClientOriginalName();
             $imageData = $request->brand_name . "-" . time() . '-' . $filename;
