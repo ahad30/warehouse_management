@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('product_name');
             $table->string('product_img')->nullable();
             $table->string('product_code')->unique()->nullable();
+            $table->string('slug');
             $table->string('product_unit');
             $table->integer('product_quantity')->default(0);
             $table->text('product_desc')->nullable();
