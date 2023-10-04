@@ -1,21 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import {
-  AiOutlineSetting,
-  // AiOutlineTable,
-  AiOutlineUserAdd,
-} from "react-icons/ai";
-import {
-  BiCartAdd,
-  BiCategory,
-  BiGrid,
-  BiSolidDuplicate,
-  BiSolidPurchaseTag,
-  BiUserCircle,
-} from "react-icons/bi";
+import { AiOutlineSetting } from "react-icons/ai";
+import { BiCategory, BiGrid, BiUserCircle } from "react-icons/bi";
 import { FaFileInvoiceDollar, FaStore } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
-import { BsFiletypePdf, BsFillCartFill, BsPieChartFill } from "react-icons/bs";
-import { GiSettingsKnobs } from "react-icons/gi";
+import { BsFillCartFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
@@ -94,7 +82,9 @@ const DashboardSidebar = () => {
             sideBarData?.map((item) => (
               <li
                 key={item?.name}
-                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(item?.path)}`}
+                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(
+                  item?.path
+                )}`}
               >
                 <Link to={item?.path} className="flex gap-x-2">
                   <span>{item?.icon} </span> <span>{item?.name}</span>
@@ -103,12 +93,15 @@ const DashboardSidebar = () => {
             ))}
         </ul>
 
-        {/* <div className="pt-40">
-          <Link className={`flex gap-x-2 ${isActive("/dashboard/setting/default")}`} to="/dashboard/setting/default">
+        <div className="pt-40">
+          <Link
+            className={`flex gap-x-2 ${isActive("/dashboard/setting/default")}`}
+            to="/dashboard/setting"
+          >
             <AiOutlineSetting size={25}></AiOutlineSetting>
             <p>Settings</p>
           </Link>
-        </div> */}
+        </div>
       </div>
     </div>
   );
