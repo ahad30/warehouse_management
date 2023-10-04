@@ -1,4 +1,3 @@
-
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import CompanyInfoUpdate from "./CompanyInfoUpdate";
@@ -19,3 +18,5 @@ const Settings = () => {
 };
 
 export default Settings;
+
+

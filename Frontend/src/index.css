@@ -19,9 +19,19 @@ body {
 .sideBar .active-link {
   color: #0369a1;
   background-color: #F0F9FF;
-  border-left: 2px solid #0369a1
+  border-left: 4px solid #0369a1
   
 }
+
+
+
+
+
+
+
+
+
+
 
 
 /* .sideBar a.active {

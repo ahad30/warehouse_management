@@ -29,7 +29,11 @@ import AddBrand from "../Dashboard/Brands/AddBrand";
 import BrandsList from "../Dashboard/Brands/BrandsList";
 import AddStore from "../Dashboard/Stores/AddStore";
 import StoresList from "../Dashboard/Stores/StoresList";
+import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
+import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
 import Settings from "../Dashboard/Settings/Settings";
+import SettingsNew from "../Dashboard/Settings/SettingsNew";
+import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
 
 const routes = createBrowserRouter([
   {
@@ -120,7 +124,8 @@ const routes = createBrowserRouter([
       // BRANDS
       {
         path: "/dashboard/brand",
-        element: <BrandsList />,
+        // element: <BrandsList />,
+        element: <BrandListCustom></BrandListCustom>,
       },
       {
         path: "/dashboard/brand/add",
@@ -129,7 +134,8 @@ const routes = createBrowserRouter([
       // STORE
       {
         path: "/dashboard/store",
-        element: <StoresList />,
+        // element: <StoresList />,
+        element: <StoreListCustom></StoreListCustom>
       },
       {
         path: "/dashboard/store/add",
@@ -138,7 +144,8 @@ const routes = createBrowserRouter([
       // PRODUCTS
       {
         path: "/dashboard/product",
-        element: <ProductsList />,
+        // element: <ProductsList />,
+        element: <ProductsListCustom></ProductsListCustom>
       },
       {
         path: "/dashboard/product/add",
@@ -165,7 +172,8 @@ const routes = createBrowserRouter([
       // SETTING
       {
         path: "/dashboard/setting",
-        element: <Settings />,
+        // element: <Settings></Settings>,
+        element: <SettingsNew></SettingsNew>
       },
       {
         path: "/dashboard/setting/pdf",
