@@ -26,8 +26,27 @@ const AddUser = () => {
 
   // GET INPUT FIELD FORM
   const onSubmit = async (data) => {
-    console.log(data)
-    addUser(data);
+    const formData = new FormData();
+    formData.append("name", data?.name);
+    formData.append("phone", data?.phone);
+    formData.append("email", data?.email);
+    formData.append("role_id", data?.role_id);
+    formData.append("password", data?.password);
+    formData.append("password_confirmation", data?.password_confirmation);
+    formData.append("status", data?.status);
+    formData.append("address", data?.address);
+    formData.append("city", data?.city);
+    formData.append("country", data?.country);
+    if (data?.zip_code) {
+      formData.append("zip_code", data?.zip_code);
+    }
+    if (data?.state) {
+      formData.append("state", data?.state);
+    }
+    if (data?.img) {
+      formData.append("img", data?.img[0]);
+    }
+    addUser(formData);
   };
 
   const errorMessages = UseErrorMessages(error);
@@ -212,6 +231,7 @@ const AddUser = () => {
               <input
                 type="file"
                 className="file-input file-input-bordered w-full"
+                {...register("img")}
               />
             </div>
           </div>
