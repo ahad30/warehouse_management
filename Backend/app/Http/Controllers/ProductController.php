@@ -51,7 +51,7 @@ class ProductController extends Controller
     // store
     public function store(Request $request)
     {
-        return $request->all();
+
         $validateInput = Validator::make($request->all(), [
             'product_name' => ['required', 'string', 'max:255'],
             'product_quantity' => ['integer', 'required'],
@@ -59,9 +59,9 @@ class ProductController extends Controller
             'product_retail_price' => ['required'],
             'product_sale_price' => ['required'],
             'product_code' => ['string'],
-            // 'category_id' => ['integer', 'nullable'],
-            // 'brand_id' => ['integer'],
-            'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
+            'category_id' => ['required'],
+            'brand_id' => ['nullable'],
+            'product_img' => ['nullable', 'max:5000'],
         ]);
 
         if ($validateInput->fails()) {
@@ -157,7 +157,7 @@ class ProductController extends Controller
             'product_code' => ['string'],
             // 'category_id' => ['integer', 'nullable'],
             // 'brand_id' => ['integer'],
-            // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
+            // 'product_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ]);
 
         if ($validateInput->fails()) {
