@@ -33,6 +33,7 @@ import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
 import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
 import Settings from "../Dashboard/Settings/Settings";
 import SettingsNew from "../Dashboard/Settings/SettingsNew";
+import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
 
 const routes = createBrowserRouter([
   {
@@ -133,7 +134,8 @@ const routes = createBrowserRouter([
       // STORE
       {
         path: "/dashboard/store",
-        element: <StoresList />,
+        // element: <StoresList />,
+        element: <StoreListCustom></StoreListCustom>
       },
       {
         path: "/dashboard/store/add",

@@ -10,13 +10,14 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useDispatch } from "react-redux";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 
 const AddProduct = () => {
   UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
@@ -67,7 +68,7 @@ const AddProduct = () => {
               placeholder="Product Name"
               className="input input-bordered w-full"
               required
-              {...register("name")}
+              {...register("product_name")}
             />
           </label>
           <label className="input-group">
@@ -79,7 +80,7 @@ const AddProduct = () => {
               placeholder="Product Code"
               className="input input-bordered w-full"
               required
-              {...register("code")}
+              {...register("product_code")}
             />
           </label>
           <label className="input-group">
@@ -89,7 +90,7 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("unit")}
+              {...register("product_unit")}
             >
               <option value={""}>Select Store Info</option>
               <option value={1}>Store 1</option>
@@ -107,7 +108,7 @@ const AddProduct = () => {
               placeholder="Quantity"
               className="input input-bordered w-full"
               required
-              {...register("quantity")}
+              {...register("product_quantity")}
             />
           </label>
           <label className="input-group">
@@ -119,7 +120,7 @@ const AddProduct = () => {
               placeholder="Retail Price"
               className="input input-bordered w-full"
               required
-              {...register("price")}
+              {...register("product_retail_price")}
             />
           </label>
           <label className="input-group">
@@ -131,7 +132,7 @@ const AddProduct = () => {
               placeholder="Sold Price"
               className="input input-bordered w-full"
               required
-              {...register("price")}
+              {...register("product_sale_price")}
             />
           </label>
           <label className="input-group">
@@ -141,7 +142,7 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("unit")}
+              {...register("product_unit")}
             >
               <option value={""}>Select Unit</option>
               <option value={"pcs"}>Pcs</option>
@@ -157,12 +158,14 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("brand")}
+              {...register("product_brand")}
             >
               <option value={""}>Select Brand</option>
-              <option value={"1"}>Dell</option>
-              <option value={"2"}>Bashundhura</option>
-              <option value={"3"}>Microsoft</option>
+              {brandsData?.brands?.map((brand) => (
+                <option value={brand?.id} key={brand?.id}>
+                  {brand?.brand_name}
+                </option>
+              ))}
             </select>
           </label>
 
@@ -189,13 +192,14 @@ const AddProduct = () => {
               type="text"
               placeholder="Product Description"
               className="input input-bordered w-full"
-              {...register("desc")}
+              {...register("product_desc")}
             />
           </label>
           <div className="form-control w-full">
             <input
               type="file"
               className="file-input file-input-bordered w-full"
+              {...register("product_img")}
             />
           </div>
         </div>
