@@ -101,11 +101,11 @@ const CategoriesListCustom = () => {
   if (categoriesIsError) {
     console.error(categoriesError);
   }
-  
+
   return (
     <>
       <DashboardBackground>
-        <Link to={"/dashboard/brand/add"}>
+        <Link to={"/dashboard/invoice/new"}>
           <button className="btn"> click</button>
         </Link>
         <TableHeadingTitle>

@@ -58,7 +58,7 @@ class JwtAuthController extends Controller
 
         /* ------------------------------ image upload ------------------------------ */
         $imageData = null;
-        if ($request->img != null) {
+        if ($request->file('img') != null) {
             $file = $request->file('img');
             $filename = $file->getClientOriginalName();
             $imageData = time() . '-' . $filename;
