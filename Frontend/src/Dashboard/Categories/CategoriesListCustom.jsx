@@ -105,7 +105,7 @@ const CategoriesListCustom = () => {
   return (
     <>
       <DashboardBackground>
-        <Link to={"/dashboard/invoice/new"}>
+        <Link to={"/dashboard/brand/add"}>
           <button className="btn"> click</button>
         </Link>
         <TableHeadingTitle>
