@@ -15,6 +15,13 @@ class CategoryTableSeeder extends Seeder
     public function run(): void
     {
         Category::create([
+            'category_name' => 'Other',
+            'slug' => 'other',
+            'description' => 'The Uncategorized Products',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        Category::create([
             'category_name' => 'Mobile',
             'slug' => 'mobile',
             'description' => 'The Best mobile collection',

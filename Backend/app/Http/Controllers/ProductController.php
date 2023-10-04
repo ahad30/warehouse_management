@@ -50,12 +50,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validateInput = Validator::make($request->all(), [
-            'name' => 'required', 'string', 'max:255',
-            'code' => 'nullable',
-            'category_id' => 'required',
-            'price' => 'required',
-            'unit' => 'required',
-            'desc' => 'nullable',
+            'product_name' => ['required', 'string', 'max:255'],
+            'product_quantity' => ['integer'],
+            'product_unit' => ['string'],
+            'product_code' => 'unique,products,product_code',
+            'product_retail_price' => ['required'],
+            'product_sale_price' => ['required'],
+            'category_id' => ['integer'],
+            // 'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
 
         if ($validateInput->fails()) {
@@ -63,10 +65,10 @@ class ProductController extends Controller
                 'status' => false,
                 'message' => 'Validation error!',
                 'errors' => $validateInput->errors()
-            ], 401);
+            ], 400);
         }
 
-        $productexist = Product::where('slug', Str::slug($request->name . $request->code))->first();
+        $productexist = Product::where('product_code', Str::slug($request->name . $request->code))->first();
         if ($productexist) {
             return response()->json([
                 'status' => false,
@@ -117,13 +119,14 @@ class ProductController extends Controller
 
     // update
     public function update(Request $request)
-
     {
         $product = Product::find($request->id);
 
         if ($product) {
             $validateInput = Validator::make($request->all(), [
-                'name' => 'required', 'string', 'max:255',
+                'name' => 'required',
+                'string',
+                'max:255',
                 'code' => 'required',
                 'category_id' => 'required',
                 'price' => 'required',
@@ -166,7 +169,7 @@ class ProductController extends Controller
         }
     }
 
-    // distroy 
+    // distroy
     public function distroy($id)
     {
         $product = Product::find($id);
