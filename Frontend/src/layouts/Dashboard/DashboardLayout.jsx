@@ -6,7 +6,7 @@ import DashboardSidebar from "./DashboardSidebar";
 
 const DashboardLayout = () => {
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="max-w-[1920px] mx-auto">
       <div className="sticky top-0 z-10">
         {/* <Navbar /> */}
         <NavbarNew></NavbarNew>

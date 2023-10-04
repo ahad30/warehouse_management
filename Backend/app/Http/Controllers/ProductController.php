@@ -51,6 +51,7 @@ class ProductController extends Controller
     // store
     public function store(Request $request)
     {
+        return $request->all();
         $validateInput = Validator::make($request->all(), [
             'product_name' => ['required', 'string', 'max:255'],
             'product_quantity' => ['integer', 'required'],

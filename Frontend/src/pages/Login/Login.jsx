@@ -22,7 +22,7 @@ const Login = () => {
   let access_token = JSON.parse(localStorage.getItem("access_token"));
   
   if (access_token) {
-     navigate("/dashboard");
+    return navigate("/dashboard");
   }
  
   

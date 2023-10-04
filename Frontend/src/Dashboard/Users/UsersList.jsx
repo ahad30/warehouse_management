@@ -131,7 +131,7 @@ const UsersList = () => {
     }
   };
   // console.log(allUserData)
-  console.log(filterData);
+  // console.log(filterData);
   return (
     <>
       <DashboardBackground>
@@ -153,7 +153,8 @@ const UsersList = () => {
           </label>
 
           <select
-            onChange={(e) => handleFilter(e.target.value)}
+           
+           onClick={(e) => handleFilter(e.target.value)}
             className=" px-4 py-2 focus:border-0"
           >
             <option value={""}>Select Role</option>
