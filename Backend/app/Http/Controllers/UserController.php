@@ -75,8 +75,8 @@ class UserController extends Controller
     public function distroy($id)
     {
         $user = User::find($id);
-
-        if ($user) {
+        // return $user;
+        if ($user != null) {
             $user->delete();
 
             return response()->json([

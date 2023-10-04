@@ -28,7 +28,8 @@
 			"order": [
 				"2dab2a41-468e-f5f5-741e-f35a75c99ba0",
 				"ffe98afd-456c-984e-eefc-bd3d0522d21a",
-				"6b6d6437-9aca-ea36-c206-263693a768f3"
+				"6b6d6437-9aca-ea36-c206-263693a768f3",
+				"a0411883-6225-ab9f-004c-c6eae79ea1a2"
 			],
 			"owner": 0,
 			"folders_order": [],
@@ -107,13 +108,28 @@
 			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2"
 		},
 		{
+			"name": "Stores",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"order": [
+				"16cdf862-3b85-9a29-2bdd-8b3094161a21",
+				"62b9bcb9-bf98-9a7d-fa21-f0ff3e46c78d",
+				"28addd5b-1adc-d149-9ce0-0cbc4e70ae5f",
+				"46568bf0-5a7b-2439-8181-83f016fd2c81"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"id": "3d10e397-7589-f91d-5f8d-3458cf3c5aca"
+		},
+		{
 			"id": "bdffd2bb-8b9e-fe06-c0f3-8897d5845bd2",
 			"name": "User",
 			"description": "",
 			"order": [
 				"ab32313f-7165-2524-4b3b-ca52d1a7085b",
 				"5cb18f29-2768-170f-4c38-bc8a3a20eabe",
-				"951b3039-216f-c9d8-76eb-18822d32e468"
+				"951b3039-216f-c9d8-76eb-18822d32e468",
+				"9cbaccf1-2cdc-19f9-c445-2a966d58660d"
 			],
 			"folders_order": [
 				"2ad2ad70-2843-9cea-b2e2-d83fd6c9322e"
@@ -143,7 +159,8 @@
 		"bdffd2bb-8b9e-fe06-c0f3-8897d5845bd2",
 		"b01fc5b7-da7d-2cb5-62c6-388f5408b702",
 		"c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb",
-		"d5f77ca1-14da-62d1-fefe-a868eba15c6a"
+		"d5f77ca1-14da-62d1-fefe-a868eba15c6a",
+		"3d10e397-7589-f91d-5f8d-3458cf3c5aca"
 	],
 	"timestamp": 0,
 	"owner": 0,
@@ -245,6 +262,30 @@
 			"responses": []
 		},
 		{
+			"id": "16cdf862-3b85-9a29-2bdd-8b3094161a21",
+			"headers": "",
+			"headerData": [],
+			"url": "locahost:8000/api/stores",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get all stores",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1696311959249,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "3d10e397-7589-f91d-5f8d-3458cf3c5aca"
+		},
+		{
 			"id": "21e5a087-fb47-4058-c897-ab22acb528ac",
 			"headers": "",
 			"headerData": [],
@@ -294,28 +335,101 @@
 			"folder": "c4a9c935-ef6a-a50f-119b-0b8b5d6eb5bb"
 		},
 		{
-			"id": "2dab2a41-468e-f5f5-741e-f35a75c99ba0",
-			"headers": "",
-			"headerData": [],
-			"url": "",
+			"id": "28addd5b-1adc-d149-9ce0-0cbc4e70ae5f",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8000/api/stores/update",
 			"queryParams": [],
 			"pathVariables": {},
 			"pathVariableData": [],
 			"preRequestScript": null,
-			"method": "GET",
+			"method": "PUT",
 			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
-			"data": null,
+			"data": [
+				{
+					"key": "store_name",
+					"value": "test store",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_email",
+					"value": "test@gmail.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_address",
+					"value": "test address ",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_phone",
+					"value": "018795445",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_web",
+					"value": "http://localhost:5173/dashboard/store/add",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
 			"dataMode": "params",
-			"name": "Get all Brands",
+			"name": "Update Store",
 			"description": "",
 			"descriptionFormat": "html",
-			"time": 1696143859574,
+			"time": 1696315037419,
 			"version": 2,
 			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "d5f77ca1-14da-62d1-fefe-a868eba15c6a"
+			"folder": "3d10e397-7589-f91d-5f8d-3458cf3c5aca"
+		},
+		{
+			"id": "2dab2a41-468e-f5f5-741e-f35a75c99ba0",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8000/api/brands/",
+			"folder": "d5f77ca1-14da-62d1-fefe-a868eba15c6a",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1696311041485,
+			"name": "Get all Brands",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
 		},
 		{
 			"id": "315e3d10-18e0-97e6-9558-20fc1f204d07",
@@ -412,6 +526,71 @@
 			"headerData": [],
 			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
 			"folder": "b01fc5b7-da7d-2cb5-62c6-388f5408b702"
+		},
+		{
+			"id": "46568bf0-5a7b-2439-8181-83f016fd2c81",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8000/api/stores/delete/1",
+			"folder": "3d10e397-7589-f91d-5f8d-3458cf3c5aca",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [
+				{
+					"key": "store_name",
+					"value": "test store",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_email",
+					"value": "test@gmail.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_address",
+					"value": "test address ",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_phone",
+					"value": "018795445",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "store_web",
+					"value": "http://localhost:5173/dashboard/store/add",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1696315074557,
+			"name": "Delete Store",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
 		},
 		{
 			"id": "4787951e-9c86-feec-c051-62715e70dc68",
@@ -516,6 +695,37 @@
 			"description": "",
 			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
 			"responses": []
+		},
+		{
+			"id": "62b9bcb9-bf98-9a7d-fa21-f0ff3e46c78d",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8000/api/stores/store",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"data": null,
+			"dataMode": "params",
+			"name": "Create Store",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1696312551990,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "3d10e397-7589-f91d-5f8d-3458cf3c5aca"
 		},
 		{
 			"id": "63c44cf8-c44f-254d-6974-29ecef696b95",
@@ -689,6 +899,7 @@
 				}
 			],
 			"url": "http://localhost:8000/api/brands/delete/1",
+			"folder": "d5f77ca1-14da-62d1-fefe-a868eba15c6a",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -732,7 +943,7 @@
 			"data": [
 				{
 					"key": "email",
-					"value": "admin@gmail.com",
+					"value": "admin@mail.com",
 					"description": "",
 					"type": "text",
 					"enabled": true
@@ -749,7 +960,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1696143924614,
+			"time": 1696409830323,
 			"name": "Login",
 			"description": "",
 			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
@@ -959,6 +1170,65 @@
 			"responses": []
 		},
 		{
+			"id": "9cbaccf1-2cdc-19f9-c445-2a966d58660d",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQxMjQwNiwiZXhwIjoxNjk2NDE2MDA2LCJuYmYiOjE2OTY0MTI0MDYsImp0aSI6IlFsY0lxUG5DTk13eG1YM1kiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.USk4Ga12hBaMZLeuqsNKE27jTyrlqHIHJilXmE1BEqQ\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQxMjQwNiwiZXhwIjoxNjk2NDE2MDA2LCJuYmYiOjE2OTY0MTI0MDYsImp0aSI6IlFsY0lxUG5DTk13eG1YM1kiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.USk4Ga12hBaMZLeuqsNKE27jTyrlqHIHJilXmE1BEqQ",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8000/api/users/delete/2",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1696413287220,
+			"name": "Delete User",
+			"description": "",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"responses": []
+		},
+		{
+			"id": "a0411883-6225-ab9f-004c-c6eae79ea1a2",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8000/api/brands/update",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
+			"data": null,
+			"dataMode": "params",
+			"name": "Update Brand",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1696311065041,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "d5f77ca1-14da-62d1-fefe-a868eba15c6a"
+		},
+		{
 			"id": "a404f3fa-b906-06b1-59a3-cd48c75ca829",
 			"name": "Delete Product",
 			"description": "",
@@ -1112,40 +1382,138 @@
 		},
 		{
 			"id": "e4962cc2-0ad3-38c0-31d0-bd1b75741502",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQxMjQwNiwiZXhwIjoxNjk2NDE2MDA2LCJuYmYiOjE2OTY0MTI0MDYsImp0aSI6IlFsY0lxUG5DTk13eG1YM1kiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.USk4Ga12hBaMZLeuqsNKE27jTyrlqHIHJilXmE1BEqQ\n//Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQxMjQwNiwiZXhwIjoxNjk2NDE2MDA2LCJuYmYiOjE2OTY0MTI0MDYsImp0aSI6IlFsY0lxUG5DTk13eG1YM1kiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.USk4Ga12hBaMZLeuqsNKE27jTyrlqHIHJilXmE1BEqQ",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://127.0.0.1:8000/api/products/store",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "product_name",
+					"value": "Orange",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "product_img",
+					"value": "service-center.jpg",
+					"description": "",
+					"type": "file",
+					"enabled": true
+				},
+				{
+					"key": "product_code",
+					"value": "15fsd5f",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "product_unit",
+					"value": "KG",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "product_quantity",
+					"value": "10",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "product_desc",
+					"value": "Test Description",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "product_retail_price",
+					"value": "230",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "product_sale_price",
+					"value": "250",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "category_id",
+					"value": "2",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "brand_id",
+					"value": "1",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1696413111493,
 			"name": "Create Product",
 			"description": "",
 			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
-			"method": "POST",
-			"helperAttributes": {},
-			"headers": "",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\r\n    \"name\": \"Samsung A20\",\r\n    \"code\": \"SAMA20\",\r\n    \"category_id\": \"1\",\r\n    \"price\": \"18500\",\r\n    \"unit\": \"pich\",\r\n    \"desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
-			"url": "http://127.0.0.1:8000/api/products/store",
-			"responses": [],
-			"pathVariableData": [],
-			"queryParams": [],
-			"headerData": [],
-			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
-			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+			"responses": []
 		},
 		{
 			"id": "f5947408-40d8-08a7-40b5-32dbac8d31f5",
+			"headers": "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQwOTgzMiwiZXhwIjoxNjk2NDEzNDMyLCJuYmYiOjE2OTY0MDk4MzIsImp0aSI6ImxhalhqVjRvNVVWVUhYREYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.KKjf0FmdLqOe8_4aJ_RpiOyhYECjUW6gR_Eb7X-mqLg\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQwOTgzMiwiZXhwIjoxNjk2NDEzNDMyLCJuYmYiOjE2OTY0MDk4MzIsImp0aSI6ImxhalhqVjRvNVVWVUhYREYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.KKjf0FmdLqOe8_4aJ_RpiOyhYECjUW6gR_Eb7X-mqLg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://127.0.0.1:8000/api/products",
+			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1696409979569,
 			"name": "Get Products",
 			"description": "",
 			"collectionId": "df387797-4872-4a3f-facc-e6ec71296aa2",
-			"method": "GET",
-			"helperAttributes": {},
-			"headers": "",
-			"data": [],
-			"rawModeData": "",
-			"url": "http://127.0.0.1:8000/api/products",
-			"responses": [],
-			"pathVariableData": [],
-			"queryParams": [],
-			"headerData": [],
-			"collection_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
-			"folder": "43e5c64d-7da1-5d16-d265-a10a872f8df0"
+			"responses": []
 		},
 		{
 			"id": "f89e0f52-02eb-a97a-cfc6-c88efaefd6f7",
