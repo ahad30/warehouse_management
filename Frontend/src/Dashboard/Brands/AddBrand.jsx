@@ -59,7 +59,7 @@ const AddBrand = () => {
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} encType="mulitpart/form-data">
         <div className="grid lg:grid-cols-2 gap-5">
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">

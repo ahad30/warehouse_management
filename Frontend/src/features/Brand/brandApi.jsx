@@ -7,7 +7,7 @@ const brandApi = apiSlice.injectEndpoints({
         method: "POST",
         url: "/brands/store",
         header: {
-          encType: "mulitpart/form-data",
+          // contentType,
         },
         body: data,
       }),

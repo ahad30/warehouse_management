@@ -32,7 +32,7 @@ class CustomerController extends Controller
         $validateInput = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'email|max:255',
-            'profile_image' => 'nullable|string|max:255',
+            // 'profile_image' => 'nullable|string|max:255',
             'phone' => 'required|max:255',
             'address' => 'string|max:255',
             'notes' => 'nullable|string|max:255',
@@ -45,6 +45,14 @@ class CustomerController extends Controller
                 'errors' => $validateInput->errors()
             ], 401);
         }
+        // uploading image
+        $imageData = null;
+        if ($request->file('profile_image') != null) {
+            $file = $request->file('profile_image');
+            $filename = $file->getClientOriginalName();
+            $imageData = $request->name . "-" . time() . '-' . $filename;
+            $file->move('uploads/customers/', $imageData);
+        }
 
         $customerexist = Customer::where('phone', $request->phone)->first();
         if ($customerexist) {
@@ -56,7 +64,7 @@ class CustomerController extends Controller
             Customer::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'profile_image' => $request->profile_image,
+                'profile_image' => $imageData,
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'notes' => $request->notes,
