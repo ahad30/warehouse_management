@@ -13,18 +13,19 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->with('categories')->get();
 
         if ($products->count() > 0) {
             return response()->json([
                 'status' => true,
                 'products' => $products,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'No Products Found',
-            ]);
+                'products' => $products,
+            ], 404);
         }
     }
 
@@ -53,7 +54,6 @@ class ProductController extends Controller
             'product_name' => ['required', 'string', 'max:255'],
             'product_quantity' => ['integer'],
             'product_unit' => ['string'],
-            'product_code' => 'unique,products,product_code',
             'product_retail_price' => ['required'],
             'product_sale_price' => ['required'],
             'category_id' => ['integer'],
@@ -68,17 +68,25 @@ class ProductController extends Controller
             ], 400);
         }
 
-        $productexist = Product::where('product_code', Str::slug($request->name . $request->code))->first();
-        if ($productexist) {
+        $productExist = Product::where('slug', Str::slug($request->name . $request->code))->first();
+        if ($productExist) {
             return response()->json([
                 'status' => false,
                 'message' => 'Product Already Exist',
             ], 401);
         } else {
+            // image upload
+            $imageData = null;
+            if ($request->file('product_img') != null) {
+                $file = $request->file('product_img');
+                $filename = $file->getClientOriginalName();
+                $imageData = $request->product_name . "-" . time() . '-' . $filename;
+                $file->move('uploads/products/', $imageData);
+            }
             $category = Category::where('id', $request->category_id)->first();
             $category_name = $category->category_name;
             Product::create([
-                'name' => $request->name,
+                'product_name' => $request->name,
                 'slug' => Str::slug($request->name . $request->code),
                 'code' => $request->code,
                 'category_id' => $request->category_id,
