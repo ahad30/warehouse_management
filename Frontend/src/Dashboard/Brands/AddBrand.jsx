@@ -51,7 +51,7 @@ const AddBrand = () => {
     data?.status,
     dispatch,
   ]);
-
+  console.log(isLoading, isError, error, isSuccess, data);
   const errorMessages = UseErrorMessages(error);
 
   console.log(isLoading, isError, error, isSuccess, data);

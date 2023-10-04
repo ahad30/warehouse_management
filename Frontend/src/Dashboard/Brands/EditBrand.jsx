@@ -21,12 +21,12 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   ] = useUpdateBrandMutation();
 
   const onSubmit = (data) => {
-    if (!data.brand_name || data.brand_img) {
+    if (!data.brand_name || data?.brand_img) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
 
-    updateCategory({ ...data, id: brand?.id, old_image: brand?.brand_img });
+    updateCategory({ ...data, id: brand?.id });
   };
 
   useEffect(() => {
