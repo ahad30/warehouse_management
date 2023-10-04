@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 
 class BrandController extends Controller
 {
@@ -40,19 +41,10 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->file('brand_img');
         $validator = Validator::make($request->all(), [
             'brand_name' => 'required|max:100|unique:' . Brand::class,
-            // 'brand_img' => 'mimes:jpeg,jpg,png,gif|max:10000'
+            'brand_img' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024'
         ]);
-        $imageData = null;
-        if ($request->brand_img != null) {
-            $file = $request->brand_img;
-
-            $filename = $file->getClientOriginalName();
-            $imageData = $request->brand_name . "-" . time() . '-' . $filename;
-            $file->move('uploads/brands', $imageData);
-        }
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -60,15 +52,15 @@ class BrandController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
-        $brand = Brand::create([
+        $data = Brand::create([
+            // 'brand_img' => $image_path,
             'brand_name' => $request->brand_name,
-            'brand_img' => $imageData
         ]);
 
         return response()->json([
             'status' => true,
             'message' => 'Brand Successful',
-            'brand' => $brand,
+            'brand' => $data,
         ], 201);
     }
     /**
