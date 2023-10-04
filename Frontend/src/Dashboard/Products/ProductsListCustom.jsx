@@ -142,7 +142,7 @@ const ProductsListCustom = () => {
                 {productsData?.products?.map((product, index) => (
                   <tr key={product?.id}>
                     <td>{index + 1}</td>
-                    <td><img src={product?.product_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/products/${product?.product_img}`
+                    <td><img className="w-8 h-8 rounded-full" src={product?.product_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/products/${product?.product_img}`
                      : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"} alt="" /></td>
                     <td>{product?.product_name}</td>
                     <td>{product?.product_code}</td>
@@ -151,7 +151,7 @@ const ProductsListCustom = () => {
                     <td>{product?.product_retail_price}</td>
                     <td>{product?.product_sale_price}</td>
                     <td>{product?.category_id}</td>
-                    <td>{product?.product_brand}</td>
+                    <td>{product?.brand_id}</td>
                   
                     <td className="flex gap-x-2 items-center">
                       <FiEdit
