@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
   return (
     <>
-      <div className="flex justify-between my-5 w-full gap-x-2">
+      <div className="flex justify-between my-5 w-full gap-x-2 border bg-[#F3F4F6] border-gray-300 rounded-lg p-3">
         <input
           type="text"
           className="input input-bordered rounded-full mb-3 lg:mb-0 w-full sm:w-1/2 md:w-1/3"

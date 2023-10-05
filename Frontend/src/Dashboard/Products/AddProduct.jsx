@@ -25,16 +25,35 @@ const AddProduct = () => {
     useAddProductMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
-    // addProduct(data);
+    const formData = new FormData();
+
+    formData.append("product_name", data?.product_name);
+    formData.append("product_code", data?.product_code);
+    formData.append("product_retail_price", data?.product_retail_price);
+    formData.append("product_sale_price", data?.product_sale_price);
+    formData.append("product_unit", data?.product_unit);
+    formData.append("category_id", data?.category_id);
+    formData.append("brand_id", data?.brand_id);
+    formData.append("store_id", data?.store_id);
+    formData.append("product_quantity", data?.product_quantity);
+    if (data?.product_img) {
+      formData.append("product_img", data?.product_img[0]);
+    }
+    if (data?.product_desc) {
+      formData.append("product_desc", data?.product_desc);
+    }
+
+    addProduct(formData);
   };
+
+  console.log(isLoading, isError, error, isSuccess, data);
 
   const errorMessages = UseErrorMessages();
 
   useEffect(() => {
-    // if (isLoading) {
-    //   toast.loading(<p>Loading...</p>, { id: 1 });
-    // }
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
 
     if (isError) {
       const errorMessage = error?.data?.message || error?.status;
