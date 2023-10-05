@@ -20,8 +20,6 @@ const AddCustomer = () => {
     useAddCustomerMutation();
 
   const onSubmit = (data) => {
-    const formData = new FormData()
-    
     addCustomer(data);
   };
 

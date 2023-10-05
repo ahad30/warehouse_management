@@ -226,7 +226,6 @@ class ProductController extends Controller
             'message' => 'New Product Created Successfully',
             'product' => $product,
         ]);
-
     }
 
     // destroy

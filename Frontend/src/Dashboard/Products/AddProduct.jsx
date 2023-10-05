@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const AddProduct = () => {
   UseTitle("Add Product");
@@ -19,12 +20,33 @@ const AddProduct = () => {
   const dispatch = useDispatch();
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
+  const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
 
   const onSubmit = (data) => {
-    addProduct(data);
+    const formData = new FormData();
+
+    formData.append("product_name", data?.product_name);
+    formData.append("product_code", data?.product_code);
+    formData.append("product_retail_price", data?.product_retail_price);
+    formData.append("product_sale_price", data?.product_sale_price);
+    formData.append("product_unit", data?.product_unit);
+    formData.append("category_id", data?.category_id);
+    formData.append("brand_id", data?.brand_id);
+    formData.append("store_id", data?.store_id);
+    formData.append("product_quantity", data?.product_quantity);
+    if (data?.product_img) {
+      formData.append("product_img", data?.product_img[0]);
+    }
+    if (data?.product_desc) {
+      formData.append("product_desc", data?.product_desc);
+    }
+
+    addProduct(formData);
   };
+
+  console.log(isLoading, isError, error, isSuccess, data);
 
   const errorMessages = UseErrorMessages();
 
@@ -52,6 +74,8 @@ const AddProduct = () => {
     data?.status,
     dispatch,
   ]);
+
+  console.log(isLoading, isError, error, isSuccess, data);
 
   return (
     <DashboardBackground>
@@ -90,13 +114,14 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("product_unit")}
+              {...register("store_id")}
             >
               <option value={""}>Select Store Info</option>
-              <option value={1}>Store 1</option>
-              <option value={2}>Store 2</option>
-              <option value={3}>Store 3</option>
-              <option value={4}>Store 4</option>
+              {storesData?.stores?.map((store) => (
+                <option key={store?.id} value={store?.id}>
+                  {store?.store_name}
+                </option>
+              ))}
             </select>
           </label>
           <label className="input-group">

@@ -25,7 +25,7 @@ const AddBrand = () => {
     if (data?.brand_img) {
       formData.append("brand_img", data?.brand_img[0]);
     }
-
+    console.log(data);
     addBrand(formData);
   };
 

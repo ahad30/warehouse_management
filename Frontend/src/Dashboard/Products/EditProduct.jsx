@@ -4,9 +4,15 @@ import { useUpdateProductMutation } from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
+import { useGetBrandsQuery } from "../../features/Brand/brandApi";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   const { register, handleSubmit, setValue } = useForm();
+
+  const { data: categoriesData } = useGetCategoriesQuery();
+  const { data: brandsData } = useGetBrandsQuery();
+  const { data: storesData } = useGetStoresQuery();
 
   const [
     updateProduct,
@@ -18,8 +24,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       data: updateData,
     },
   ] = useUpdateProductMutation();
-
-  const { data: categoriesData } = useGetCategoriesQuery();
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -46,29 +50,35 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (product) {
-      setValue("name", product.name || "");
-      setValue("code", product.code || "");
-      setValue("price", product.price || "");
-      setValue("unit", product.unit || "pcs");
-      setValue("category_id", product.category_id || "1");
-      setValue("desc", product.desc || "");
+      setValue("product_name", product?.product_name || "");
+      // setValue("product_img", product?.product_img || "");
+      setValue("product_code", product?.product_code || "");
+      setValue("product_unit", product?.product_unit || "");
+      setValue("product_quantity", product?.product_quantity || "1");
+      setValue("product_desc", product?.product_desc || "");
+      setValue("product_retail_price", product?.product_retail_price || "");
+      setValue("product_sale_price", product?.product_sale_price || "");
+      setValue("store_id", product?.store_id || "");
+      setValue("category_id", product?.category_id || "");
+      setValue("brand_id", product?.brand_id || "");
     }
   }, [product, setValue]);
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   updateProduct(product?.id, data);
-  // };
 
   const onSubmit = (data) => {
     console.log(data);
     // Ensure all required fields have values
     if (
-      !data.name ||
-      !data.code ||
-      !data.price ||
-      !data.unit ||
-      !data.category_id
+      !data?.product_name
+      /* !data?.product_img || */
+      /*!data?.product_code ||*/
+      /*!data?.product_unit ||*/
+      /*!data?.product_quantity ||*/
+      /*!data?.product_desc ||*/
+      /*!data?.product_retail_price ||*/
+      /*!data?.product_sale_price ||*/
+      /*!data?.store_id ||*/
+      /*!data?.category_id ||*/
+      /*!data?.brand_id*/
     ) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return; // Exit early if any required field is missing
@@ -101,7 +111,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         type="text"
                         placeholder="Product Name"
                         className="input input-bordered w-full"
-                        {...register("name")}
+                        {...register("product_name")}
                       />
                     </label>
                     <label className="input-group">
@@ -112,18 +122,40 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         type="text"
                         placeholder="Product Code"
                         className="input input-bordered w-full"
-                        {...register("code")}
+                        {...register("product_code")}
                       />
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">
-                        Price<span className="text-red-500 p-0">*</span>
+                        Retail<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
                         type="number"
-                        placeholder="Product Price"
+                        placeholder="Retail"
                         className="input input-bordered w-full"
-                        {...register("price")}
+                        {...register("product_retail_price")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Sold<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="number"
+                        placeholder="Sold"
+                        className="input input-bordered w-full"
+                        {...register("product_sale_price")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Quantity<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="number"
+                        placeholder="Quantity"
+                        className="input input-bordered w-full"
+                        {...register("product_quantity")}
                       />
                     </label>
                     <label className="input-group">
@@ -132,12 +164,47 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                       </span>
                       <select
                         className="select select-bordered w-full"
-                        {...register("unit")}
+                        {...register("product_unit")}
                       >
                         <option>Select Unit</option>
                         <option value={"pcs"}>Pcs</option>
                         <option value={"box"}>Box</option>
                         <option value={"kg"}>KG</option>
+                        <option value={"litre"}>Litre</option>
+                      </select>
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Brands<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <select
+                        className="select select-bordered w-full"
+                        required
+                        {...register("brand_id")}
+                      >
+                        <option value={""}>Select Brand</option>
+                        {brandsData?.brands?.map((brand) => (
+                          <option value={brand?.id} key={brand?.id}>
+                            {brand?.brand_name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">
+                        Store<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <select
+                        className="select select-bordered w-full"
+                        required
+                        {...register("store_id")}
+                      >
+                        <option value={""}>Select Store Info</option>
+                        {storesData?.stores?.map((store) => (
+                          <option key={store?.id} value={store?.id}>
+                            {store?.store_name}
+                          </option>
+                        ))}
                       </select>
                     </label>
                     <label className="input-group">
