@@ -8,7 +8,7 @@ import { array } from "prop-types";
 
 const ItemsWithSelect = ({ products }) => {
   const dispatch = useDispatch();
-
+  console.log(products);
   const [selectedItem, setSelectedItem] = useState({});
   const [item, setItem] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -58,12 +58,12 @@ const ItemsWithSelect = ({ products }) => {
             <select
               className="select select-bordered w-full"
               onChange={(e) => handleSelectedItem(e.target.value)}
-              name="name"
+              name="product_name"
             >
               <option value="">Select Product</option>
               {products?.map((item, i) => (
                 <option key={i} value={item?.id}>
-                  {item?.name}
+                  {item?.product_name}
                 </option>
               ))}
             </select>
@@ -74,23 +74,10 @@ const ItemsWithSelect = ({ products }) => {
             <p>Code:</p>
             <input
               type="text"
-              name="code"
+              name="product_code"
               placeholder="Code"
               className="input input-bordered input-md w-full"
-              defaultValue={selectedItem?.code}
-              disabled
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="description" className="">
-            <p>Description:</p>
-            <input
-              type="text"
-              name="desc"
-              placeholder="Description"
-              className="input input-bordered input-md w-full"
-              defaultValue={selectedItem?.desc}
+              defaultValue={selectedItem?.product_code}
               disabled
             />
           </label>
@@ -100,10 +87,10 @@ const ItemsWithSelect = ({ products }) => {
             <p>Price:</p>
             <input
               type="number"
-              name="price"
+              name="product_sale_price"
               placeholder="Price"
               className="input input-bordered input-md w-full"
-              value={Number(selectedItem?.price)}
+              value={Number(selectedItem?.product_sale_price)}
               disabled
             />
           </label>
@@ -127,10 +114,10 @@ const ItemsWithSelect = ({ products }) => {
             <p>Unit:</p>
             <input
               type="text"
-              name="desc"
+              name="product_unit"
               placeholder="Unit"
               className="input input-bordered input-md w-full"
-              defaultValue={selectedItem?.unit}
+              defaultValue={selectedItem?.product_unit}
               disabled
             />
           </label>
@@ -139,7 +126,7 @@ const ItemsWithSelect = ({ products }) => {
       <div className="flex justify-end">
         <button
           className="btn btn-primary btn-sm mt-2"
-          disabled={!selectedItem?.name}
+          disabled={!selectedItem?.product_name}
           onClick={handleAddItem}
         >
           Add item
@@ -155,7 +142,6 @@ const ItemsWithSelect = ({ products }) => {
               <th className="text-sm">#</th>
               <th className="text-sm">Item Name</th>
               <th className="text-sm">Code</th>
-              <th className="text-sm">Description</th>
               <th className="text-sm">Price</th>
               <th className="text-sm">Quantity</th>
               <th className="text-sm">Unit</th>
@@ -168,19 +154,18 @@ const ItemsWithSelect = ({ products }) => {
           <tbody>
             {/* row 1 */}
             {itemList &&
-              itemList?.map((itm, i) => {
+              itemList?.map((item, i) => {
                 return (
                   <tr key={i}>
                     <th>{i + 1}</th>
-                    <td>{itm?.name}</td>
-                    <td>{itm?.code}</td>
-                    <td>{itm?.desc}</td>
-                    <td>{itm?.price}</td>
-                    <td>{itm?.quantity}</td>
-                    <td>{itm?.unit}</td>
-                    <td>{itm?.quantity * itm?.price}</td>
+                    <td>{item?.product_name}</td>
+                    <td>{item?.product_code}</td>
+                    <td>{item?.product_sale_price}</td>
+                    <td>{item?.quantity}</td>
+                    <td>{item?.product_unit}</td>
+                    <td>{item?.quantity * item?.product_sale_price}</td>
                     <td
-                      onClick={() => handleDeleteItem(itm?.id)}
+                      onClick={() => handleDeleteItem(item?.id)}
                       className="cursor-pointer"
                     >
                       <AiOutlineDelete size={20} />
