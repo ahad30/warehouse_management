@@ -6,8 +6,8 @@ const BillingInfo = ({ company_info, customers }) => {
   return (
     <>
       <div className="my-5">
-        <div className="grid  md:grid-cols-2 gap-10">
-          <CompanyInfo company_info={company_info} />
+        <div className="">
+          {/* <CompanyInfo company_info={company_info} /> */}
           <CustomerInfo customers={customers} />
         </div>
       </div>

@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/Main/MainLayout";
 import Login from "../pages/Login/Login";
 import AddUser from "../Dashboard/Users/AddUser";
-import ProductsList from "../Dashboard/Products/ProductsList";
+// import ProductsList from "../Dashboard/Products/ProductsList";
 import AddProduct from "../Dashboard/Products/AddProduct";
 // import CategoriesList from "../Dashboard/Categories/CategoriesList";
 import AddCategory from "../Dashboard/Categories/AddCategory";
@@ -26,14 +26,15 @@ import SalesManList from "../Dashboard/Users/SalesManList";
 import CategoriesListCustom from "../Dashboard/Categories/CategoriesListCustom";
 import CustomersListCustom from "../Dashboard/Customers/CustomersListCustom";
 import AddBrand from "../Dashboard/Brands/AddBrand";
-import BrandsList from "../Dashboard/Brands/BrandsList";
+// import BrandsList from "../Dashboard/Brands/BrandsList";
 import AddStore from "../Dashboard/Stores/AddStore";
-import StoresList from "../Dashboard/Stores/StoresList";
+// import StoresList from "../Dashboard/Stores/StoresList";
 import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
 import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
-import Settings from "../Dashboard/Settings/Settings";
+// import Settings from "../Dashboard/Settings/Settings";
 import SettingsNew from "../Dashboard/Settings/SettingsNew";
 import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
+import GenerateNewInvoice from "../Dashboard/Invoices/GenerateNewInvoice/GenerateNewInvoice";
 
 const routes = createBrowserRouter([
   {
@@ -135,7 +136,7 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/store",
         // element: <StoresList />,
-        element: <StoreListCustom></StoreListCustom>
+        element: <StoreListCustom></StoreListCustom>,
       },
       {
         path: "/dashboard/store/add",
@@ -145,7 +146,7 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/product",
         // element: <ProductsList />,
-        element: <ProductsListCustom></ProductsListCustom>
+        element: <ProductsListCustom></ProductsListCustom>,
       },
       {
         path: "/dashboard/product/add",
@@ -166,6 +167,10 @@ const routes = createBrowserRouter([
         element: <NewInvoice />,
       },
       {
+        path: "/dashboard/invoice/add",
+        element: <GenerateNewInvoice />,
+      },
+      {
         path: "/dashboard/invoice",
         element: <InvoicesList />,
       },
@@ -173,7 +178,7 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/setting",
         // element: <Settings></Settings>,
-        element: <SettingsNew></SettingsNew>
+        element: <SettingsNew></SettingsNew>,
       },
       {
         path: "/dashboard/setting/pdf",

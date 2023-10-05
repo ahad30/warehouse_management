@@ -20,10 +20,11 @@ const initialState = {
   },
   items: [],
   calculation: {
-    subTotalPrice: 0,
-    discountPrice: 0,
-    shippingCost: 0,
-    totalPrice: 0,
+    subTotal: 0,
+    discount: 0,
+    shipping: 0,
+    total: 0,
+    due: 0,
   },
 };
 
