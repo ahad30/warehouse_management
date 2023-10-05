@@ -1,13 +1,10 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-
-import UseTable from "../../components/Reusable/useTable/UseTable";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditStore from "./EditStore";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
-import { FaStore } from "react-icons/fa";
 import {
   useDeleteStoreMutation,
   useGetStoresQuery,
@@ -80,31 +77,14 @@ const StoreListCustom = () => {
   };
   // SEARCH FILTERING ENDS
 
-  const columns = [
-    { key: "id", header: "ID" },
-    { key: "store_name", header: "Name" },
-    { key: "store_email", header: "Email" },
-    { key: "store_phone", header: "Phone" },
-    { key: "store_web", header: "Web" },
-    { key: "store_address", header: "Address" },
-  ];
-
-  // CUSTOMERS CONTENT
- 
-
   // ALL CUSTOMERS
   if (storesIsLoading) {
-    return  <UseLoading />;
+    return <UseLoading />;
   }
 
   if (storesIsError) {
     console.error(storesError);
   }
-
-  
-
-
-  
 
   return (
     <>
@@ -112,7 +92,6 @@ const StoreListCustom = () => {
         <TableHeadingTitle>
           Stores {storesData?.stores?.length}
         </TableHeadingTitle>
-        
 
         <SearchAndAddBtn
           btnTitle={"Add store"}
@@ -120,15 +99,11 @@ const StoreListCustom = () => {
           btnIcon={<BiSolidDuplicate size={20} />}
           setFiltering={setFiltering}
         />
-    
-
 
         {!storesIsSuccess && storesData?.status ? (
-          <p className="text-center text-2xl mt-10">
-            {storesData?.message}
-          </p>
+          <p className="text-center text-2xl mt-10">{storesData?.message}</p>
         ) : (
-            <div className="overflow-x-scroll">
+          <div className="overflow-x-scroll">
             <table className="table table-sm table-pin-rows table-pin-cols">
               {/* Table header */}
               <thead>
@@ -144,10 +119,9 @@ const StoreListCustom = () => {
               </thead>
 
               <tbody>
-                {storesData?.stores?.map((store,index) => (
+                {storesData?.stores?.map((store, index) => (
                   <tr key={store?.id}>
-
-                    <td>{index +1}</td>
+                    <td>{index + 1}</td>
                     <td>{store?.store_name}</td>
                     <td>{store?.store_phone}</td>
                     <td>{store?.store_email}</td>
@@ -175,7 +149,7 @@ const StoreListCustom = () => {
 
               <tfoot>
                 <tr>
-                <th>Serial no</th>
+                  <th>Serial no</th>
                   <th>Name</th>
                   <th>Phone</th>
                   <th>Email</th>
@@ -187,7 +161,7 @@ const StoreListCustom = () => {
             </table>
           </div>
         )}
-        
+
         <EditStore
           store={store}
           modalIsOpen={modalIsOpen}

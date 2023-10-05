@@ -4,7 +4,7 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../features/Product/productApi";
-import {  BiSolidDuplicate } from "react-icons/bi";
+import { BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
@@ -112,10 +112,10 @@ const ProductsListCustom = () => {
                   <th>Image</th>
                   <th>Name</th>
                   <th>code</th>
-                  <th>unit</th>
-                  <th>Quantity</th>
                   <th>Retail price</th>
                   <th>Sold Price</th>
+                  <th>Quantity</th>
+                  <th>unit</th>
                   <th>Category</th>
                   <th>Brand</th>
                   <th>Action</th>
@@ -141,12 +141,12 @@ const ProductsListCustom = () => {
                     </td>
                     <td>{product?.product_name}</td>
                     <td>{product?.product_code}</td>
-                    <td>{product?.product_unit}</td>
-                    <td>{product?.product_quantity}</td>
                     <td>{product?.product_retail_price}</td>
                     <td>{product?.product_sale_price}</td>
-                    <td>{product?.category_id}</td>
-                    <td>{product?.brand_id}</td>
+                    <td>{product?.product_quantity}</td>
+                    <td>{product?.product_unit}</td>
+                    <td>{product?.get_category?.category_name}</td>
+                    <td>{product?.get_brand?.brand_name}</td>
 
                     <td className="flex gap-x-2 items-center">
                       <FiEdit
@@ -174,10 +174,10 @@ const ProductsListCustom = () => {
                   <th>Image</th>
                   <th>Name</th>
                   <th>code</th>
-                  <th>unit</th>
-                  <th>Quantity</th>
                   <th>Retail price</th>
                   <th>Sold Price</th>
+                  <th>Quantity</th>
+                  <th>unit</th>
                   <th>Category</th>
                   <th>Brand</th>
                   <th>Action</th>
