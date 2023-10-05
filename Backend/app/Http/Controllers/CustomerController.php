@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -33,7 +32,6 @@ class CustomerController extends Controller
         $validateInput = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'email|max:255',
-            // 'profile_image' => 'nullable|string|max:255',
             'phone' => 'required|max:255',
             'address' => 'string|max:255',
             'notes' => 'nullable|string|max:255',
@@ -65,7 +63,6 @@ class CustomerController extends Controller
             Customer::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'profile_image' => $imageData,
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'notes' => $request->notes,
@@ -100,7 +97,7 @@ class CustomerController extends Controller
     }
 
     // update
-    public function update(Request $request, )
+    public function update(Request $request)
     {
         $customer = Customer::find($request->id);
 
@@ -108,8 +105,7 @@ class CustomerController extends Controller
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'email|max:255',
-                'profile_image' => 'nullable|string|max:255',
-                'phone' => 'required|max:255',
+                'phone' => 'required|max:13',
                 'address' => 'string|max:255',
                 'notes' => 'nullable|string|max:255',
             ]);
@@ -125,7 +121,6 @@ class CustomerController extends Controller
             $customer->update([
                 'name' => $request->name,
                 'email' => $request->email != null ? $request->email : $customer->email,
-                'profile_image' => $request->profile_image,
                 'phone' => $request->phone,
                 'address' => $request->address != null ? $request->address : $customer->address,
                 'notes' => $request->notes,
@@ -151,15 +146,6 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if ($customer) {
-            // deleting image
-            if ($customer->profile_image != null) {
-                $imagePath = public_path('uploads/customers/' . $customer->profile_image);
-                // Check if the file exists before attempting to delete it
-                if (File::exists($imagePath)) {
-
-                    File::delete($imagePath);
-                }
-            }
             $customer->delete();
 
             return response()->json([

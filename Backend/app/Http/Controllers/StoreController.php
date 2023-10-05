@@ -37,7 +37,6 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
             'store_email' => 'email|max:100',
@@ -52,15 +51,12 @@ class StoreController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
-
-
         $store = Store::create([
             'store_name' => $request->store_name,
             'store_email' => $request->store_email,
             'store_web' => $request->store_web,
             'store_address' => $request->store_address,
             'store_phone' => $request->store_phone,
-
         ]);
 
         return response()->json([
@@ -77,14 +73,12 @@ class StoreController extends Controller
      */
     public function update(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
             'store_email' => 'email|max:100',
             'store_web' => 'max:100',
             'store_address' => 'required',
             'id' => 'required',
-
             'store_phone' => 'required|max:20|unique:stores,store_phone,' . $request->id,
 
         ]);
@@ -124,13 +118,11 @@ class StoreController extends Controller
     {
         if ($id != null) {
             $store = Store::find($id);
-
-
             if ($store != null) {
                 $store->delete();
                 return response()->json([
                     'status' => true,
-                    'message' => 'Store delete successfully',
+                    'message' => 'Store successfully deleted',
                 ], 200);
             } else {
                 return response()->json([

@@ -76,12 +76,10 @@ class ProductController extends Controller
         }
 
         $productExist = Product::where('slug', Str::slug($request->product_name . $request->product_code))->first();
-
-
         if ($productExist != null) {
             return response()->json([
                 'status' => false,
-                'message' => 'Product Already Exist',
+                'message' => 'Product already exist',
             ], 400);
         } else {
             // image upload
@@ -160,11 +158,10 @@ class ProductController extends Controller
             'product_retail_price' => ['required'],
             'product_sale_price' => ['required'],
             'product_code' => ['string'],
-            // 'category_id' => ['integer', 'nullable'],
-            // 'brand_id' => ['integer'],
-            // 'product_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
+            'category_id' => ['required'],
+            'brand_id' => ['nullable'],
+            'product_img' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:5000']
         ]);
-
         if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,
@@ -172,8 +169,6 @@ class ProductController extends Controller
                 'errors' => $validateInput->errors()
             ], 400);
         }
-
-
 
         $product = Product::find($request->id);
         if ($product == null) {
@@ -183,7 +178,6 @@ class ProductController extends Controller
 
             ], 404);
         }
-
 
         // image upload
         $imageData = null;
@@ -240,7 +234,6 @@ class ProductController extends Controller
                 $imagePath = public_path('uploads/products/' . $product->product_img);
                 // Check if the file exists before attempting to delete it
                 if (File::exists($imagePath)) {
-
                     File::delete($imagePath);
                 }
             }
