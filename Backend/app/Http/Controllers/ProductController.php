@@ -121,7 +121,7 @@ class ProductController extends Controller
             $product = Product::latest()->first();
             return response()->json([
                 'status' => true,
-                'message' => 'New Product Created Successfully',
+                'message' => 'New Product Updated Successfully',
                 'product' => $product,
             ]);
         }
