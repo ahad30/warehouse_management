@@ -89,6 +89,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {
 
+
         $codeValidation = Validator::make($request->all(), [
             'invoice_date' => 'required',
             'company_name' => 'string|nullable',
@@ -152,6 +153,7 @@ class SaleController extends Controller
             ]);
 
             $sale = Sale::latest()->first();
+
             $sale_id = $sale->id;
             $input = $request->all();
             foreach ($input['items'] as $key => $value) {

@@ -21,11 +21,13 @@ class SaleItem extends Model
         'rate',
     ];
 
-    public function sales(){
+    public function sales()
+    {
         return $this->belongsTo(Sale::class);
     }
 
-    public function products(){
+    public function products()
+    {
         return $this->belongsTo(Product::class);
     }
 
