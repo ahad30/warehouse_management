@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -14,7 +16,7 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->with('categories')->get();
+        $products = Product::orderBy('id', 'DESC')->with('getCategory', 'getBrand', 'getStore')->get();
 
         if ($products->count() > 0) {
             return response()->json([
@@ -60,6 +62,7 @@ class ProductController extends Controller
             'product_sale_price' => ['required'],
             'product_code' => ['string'],
             'category_id' => ['required'],
+            'store_id' => ['nullable'],
             'brand_id' => ['nullable'],
             'product_img' => ['nullable', 'max:5000'],
         ]);
@@ -83,7 +86,8 @@ class ProductController extends Controller
         } else {
             // image upload
             $imageData = null;
-            if ($request->file('product_img') != null) {
+
+            if ($request->hasFile('product_img')) {
                 $file = $request->file('product_img');
                 $filename = $file->getClientOriginalName();
                 $imageData = $request->product_name . "-" . time() . '-' . $filename;
@@ -112,6 +116,7 @@ class ProductController extends Controller
                 'product_sale_price' => $request->product_sale_price,
                 'slug' => Str::slug($request->product_name . $request->product_code),
                 'product_code' => $request->product_code,
+                'store_id' => $request->store_id == null ? 1 : $request->store_id,
                 'category_id' => $request->category_id == null ? 1 : $request->category_id,
                 'brand_id' => $request->brand_id == null ? 1 : $request->brand_id,
             ]);
@@ -182,7 +187,7 @@ class ProductController extends Controller
 
         // image upload
         $imageData = null;
-        if ($request->file('product_img') != null) {
+        if ($request->hasFile('product_img')) {
             $file = $request->file('product_img');
             $filename = $file->getClientOriginalName();
             $imageData = $request->product_name . "-" . time() . '-' . $filename;
@@ -211,8 +216,9 @@ class ProductController extends Controller
             'product_sale_price' => $request->product_sale_price,
             'slug' => Str::slug($request->product_name . $request->product_code),
             'product_code' => $request->product_code,
-            'category_id' => $request->category_id == null ? 1 : $request->category_id,
-            'brand_id' => $request->brand_id == null ? 1 : $request->brand_id,
+            'category_id' => $request->category_id == null ? $product->category_id : $request->category_id,
+            'brand_id' => $request->brand_id == null ? $product->brand_id : $request->brand_id,
+            'store_id' => $request->store_id == null ? $product->store_id : $request->store_id,
         ]);
         $product = Product::find($request->id);
         return response()->json([
@@ -228,7 +234,17 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if ($product) {
+        if ($product != null) {
+
+            // deleting image
+            if ($product->product_img != null) {
+                $imagePath = public_path('uploads/products/' . $product->product_img);
+                // Check if the file exists before attempting to delete it
+                if (File::exists($imagePath)) {
+
+                    File::delete($imagePath);
+                }
+            }
             $product->delete();
 
             return response()->json([

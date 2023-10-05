@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -47,7 +48,7 @@ class CustomerController extends Controller
         }
         // uploading image
         $imageData = null;
-        if ($request->file('profile_image') != null) {
+        if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
             $filename = $file->getClientOriginalName();
             $imageData = $request->name . "-" . time() . '-' . $filename;
@@ -150,6 +151,15 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if ($customer) {
+            // deleting image
+            if ($customer->profile_image != null) {
+                $imagePath = public_path('uploads/customers/' . $customer->profile_image);
+                // Check if the file exists before attempting to delete it
+                if (File::exists($imagePath)) {
+
+                    File::delete($imagePath);
+                }
+            }
             $customer->delete();
 
             return response()->json([
