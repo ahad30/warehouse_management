@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->text('product_desc')->nullable();
             $table->float('product_retail_price');
             $table->float('product_sale_price', 10, 2);
+            $table->unsignedBigInteger('store_id')->default(1)->nullable();
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
             $table->unsignedBigInteger('category_id')->default(1)->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->unsignedBigInteger('brand_id')->default(1)->nullable();

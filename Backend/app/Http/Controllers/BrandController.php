@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
 
 class BrandController extends Controller
 {
@@ -53,7 +54,7 @@ class BrandController extends Controller
             ], 400);
         }
         $imageData = null;
-        if ($request->file('brand_img') != null) {
+        if ($request->hasFile('brand_img')) {
             $file = $request->file('brand_img');
             $filename = $file->getClientOriginalName();
             $imageData = $request->brand_name . "-" . time() . '-' . $filename;
@@ -102,14 +103,21 @@ class BrandController extends Controller
         }
 
         $imageData = null;
-        if ($request->file('brand_img') != null) {
+        if ($request->hasFile('brand_img')) {
             $file = $request->file('brand_img');
             $filename = $file->getClientOriginalName();
             $imageData = $request->brand_name . "-" . time() . '-' . $filename;
             $file->move('uploads/brands/', $imageData);
             // deleting old image
+
+            // deleting image
             if ($brand->brand_img != null) {
-                unlink("uploads/brands/$brand->brand_img");
+                $imagePath = public_path('uploads/brands/' . $brand->brand_img);
+                // Check if the file exists before attempting to delete it
+                if (File::exists($imagePath)) {
+
+                    File::delete($imagePath);
+                }
             }
         }
         // updating brand
@@ -130,10 +138,17 @@ class BrandController extends Controller
             $brand = Brand::where('id', $id)->first();
 
             if ($brand != null) {
-                $brand->delete();
+                // deleting image
                 if ($brand->brand_img != null) {
-                    unlink("uploads/brands/$brand->brand_img");
+                    $imagePath = public_path('uploads/brands/' . $brand->brand_img);
+                    // Check if the file exists before attempting to delete it
+                    if (File::exists($imagePath)) {
+
+                        File::delete($imagePath);
+                    }
                 }
+                $brand->delete();
+
                 return response()->json([
                     'status' => true,
                     'message' => 'Brand delete successfully',
