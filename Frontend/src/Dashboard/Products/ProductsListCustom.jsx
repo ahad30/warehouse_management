@@ -150,7 +150,7 @@ const ProductsListCustom = () => {
                     <td>{product?.product_quantity}</td>
                     <td>{product?.product_retail_price}</td>
                     <td>{product?.product_sale_price}</td>
-                    <td>{product?.category_id}</td>
+                    <td>{product?.categories.category_name}</td>
                     <td>{product?.brand_id}</td>
                   
                     <td className="flex gap-x-2 items-center">

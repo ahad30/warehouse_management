@@ -14,6 +14,8 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import InvoicePDF from "../../components/PDF/InvoicePDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const CategoriesListCustom = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -108,6 +110,8 @@ const CategoriesListCustom = () => {
         <Link to={"/dashboard/invoice/new"}>
           <button className="btn"> click</button>
         </Link>
+
+        <PDFDownloadLink document={<InvoicePDF></InvoicePDF>} fileName="blog.pdf" className="btn btn-primary"> Download  </PDFDownloadLink>
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}

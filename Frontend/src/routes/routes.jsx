@@ -34,6 +34,8 @@ import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
 import Settings from "../Dashboard/Settings/Settings";
 import SettingsNew from "../Dashboard/Settings/SettingsNew";
 import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
+import Test from "../components/PDF/Test";
+import TestTable from "../Dashboard/Stores/TestTable";
 
 const routes = createBrowserRouter([
   {
@@ -179,6 +181,15 @@ const routes = createBrowserRouter([
         path: "/dashboard/setting/pdf",
         element: <PdfSettings />,
       },
+      {
+        path: "/dashboard/test",
+        element: <Test></Test>,
+      },
+      {
+        path: "/dashboard/table",
+        element: <TestTable></TestTable>,
+      },
+
     ],
   },
 ]);
