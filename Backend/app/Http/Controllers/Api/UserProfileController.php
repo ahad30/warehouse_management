@@ -21,7 +21,6 @@ class UserProfileController extends Controller
      */
     public function findLoggedInUser()
     {
-
         $user = auth()->user();
         if (!is_null($user)) {
 
