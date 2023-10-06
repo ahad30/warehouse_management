@@ -124,11 +124,6 @@ class JwtAuthController extends Controller
             // checking users input with database's data. If exists receiving a jwt token and saving it to database
             if ($token = $this->guard()->attempt($credentials)) {
                 $user = auth()->user();
-
-
-                // $user->jwt_token = $token;
-                $user->token_expire_time = Carbon::now()->addWeek();
-                $user->save();
                 $tokenData = $this->respondWithToken($token);
                 // finding role with user using user role_id
 
