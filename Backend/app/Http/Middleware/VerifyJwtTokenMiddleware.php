@@ -14,7 +14,7 @@ class VerifyJwtTokenMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         $user = auth()->user();
 
@@ -22,18 +22,19 @@ class VerifyJwtTokenMiddleware
             $tokenExpireTime = strtotime($user->token_expire_time);
             $timeNow = strtotime(Carbon::now());
             $diff = $tokenExpireTime - $timeNow;
-            if ($diff <= 0) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Unauthorized or Access token has expired'
-                ], 401);
-            }
             return $next($request);
+            if ($diff > 0) {
+            }
+            return response()->json([
+                'status' => false,
+                'message' => 'Unauthorized or Access token has expired '
+            ], 401);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => "Unauthorized"
             ], 401);
         }
+
     }
 }
