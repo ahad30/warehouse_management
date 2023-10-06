@@ -126,24 +126,24 @@ class JwtAuthController extends Controller
                 $user = auth()->user();
 
 
-                $user->jwt_token = $token;
+                // $user->jwt_token = $token;
                 $user->token_expire_time = Carbon::now()->addWeek();
                 $user->save();
-
                 $tokenData = $this->respondWithToken($token);
                 // finding role with user using user role_id
 
                 $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
+                $roleWithUser['jwt_token'] = $tokenData->original['access_token'];
                 $role = $roleWithUser->getRole->role;
 
-                if (!is_null($role)) {
-                    // $payload = JWTAuth::decode($user);
 
+
+                if (!is_null($role)) {
                     return response()->json([
                         'status' => true,
                         'message' => 'User Login Successfully',
                         'user' => $roleWithUser,
-                        'token' => $tokenData
+                        // 'tokenData' => $tokenData
                     ]);
                 }
             }
@@ -204,10 +204,17 @@ class JwtAuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        // Calculate the expiration timestamp by adding 7 days to the current time
+        $expiration = Carbon::now()->addDays(7);
+
+        // Calculate the TTL for a token that will expire in 7 days
+        $ttlFor7Days = $expiration->diffInSeconds(Carbon::now());
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 336
+            'expires_in' => $this->guard()->factory()->getTTL()
+            // 'expires_in' => $this->guard()->factory()->make(['exp' => $ttlFor7Days])
         ]);
     }
 

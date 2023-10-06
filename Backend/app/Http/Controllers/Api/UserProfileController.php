@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -20,12 +21,13 @@ class UserProfileController extends Controller
      */
     public function findLoggedInUser()
     {
+
         $user = auth()->user();
         if (!is_null($user)) {
 
             $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
             $role = $roleWithUser->getRole->role;
-
+            $roleWithUser['jwt_token'] = request()->bearerToken();
             if (!is_null($role)) {
                 // $payload = JWTAuth::decode($user);
 

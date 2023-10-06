@@ -110,6 +110,7 @@ class ProductController extends Controller
                 'product_img' => $imageData,
                 'product_quantity' => $request->product_quantity,
                 'product_unit' => $request->product_unit,
+                'product_desc' => $request->product_desc,
                 'product_retail_price' => $request->product_retail_price,
                 'product_sale_price' => $request->product_sale_price,
                 'slug' => Str::slug($request->product_name . $request->product_code),
@@ -203,6 +204,7 @@ class ProductController extends Controller
 
         $product->update([
             'product_name' => $request->product_name,
+            'product_desc' => $request->product_desc,
             'product_img' => $request->brand_img == null ? "" : $imageData,
             'product_quantity' => $request->product_quantity,
             'product_unit' => $request->product_unit,

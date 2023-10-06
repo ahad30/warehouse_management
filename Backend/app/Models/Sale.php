@@ -25,13 +25,17 @@ class Sale extends Model
         'discount',
         'shipping',
         'total',
+        'issue_date',
+        'due_date',
     ];
 
-    public function saleitems(){
+    public function saleitems()
+    {
         return $this->hasMany(SaleItem::class);
     }
 
-    public function customers(){
+    public function customers()
+    {
         return $this->belongsTo(Customer::class);
     }
 }

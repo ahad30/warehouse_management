@@ -1,32 +1,23 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "ef58d80a-2b0e-461f-b629-f102300bb972",
 		"name": "Invoice Generator Sys",
-		"_postman_id": "df387797-4872-4a3f-facc-e6ec71296aa2",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23937081"
 	},
 	"item": [
 		{
 			"name": "Auth",
-			"description": "",
 			"item": [
 				{
 					"name": "Register",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/jwt/register",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
-								"description": "",
 								"disabled": true
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjIyMjI5OSwiZXhwIjoxNjk2MjI1ODk5LCJuYmYiOjE2OTYyMjIyOTksImp0aSI6Im1xQm1BaTlETVh2WWdYdlgiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.eX3GbqF8w4qZz2x_XXopY0U_CJHc7iaCIf7X61Ysn0c",
-								"description": ""
 							}
 						],
 						"body": {
@@ -35,91 +26,87 @@
 								{
 									"key": "name",
 									"value": "Komor",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "komor2@gmail.com",
-									"description": "",
+									"value": "komor@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "asdfasdf",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password_confirmation",
 									"value": "asdfasdf",
-									"description": "",
 									"type": "text"
 								},
 								{
-									"key": "role_id",
-									"value": "2",
-									"description": "",
+									"key": "role",
+									"value": "Manager",
 									"type": "text"
 								},
 								{
 									"key": "phone",
 									"value": "018447f444",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "status",
 									"value": "active",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "country",
 									"value": "Bangladesh",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Ctg",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "address",
 									"value": "fsdafsafsa",
-									"description": "",
 									"type": "text"
-								},
-								{
-									"key": "img",
-									"description": "",
-									"type": "file",
-									"src": "project3.jpg"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/jwt/register",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"jwt",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Login",
 					"request": {
-						"url": "http://localhost:8000/api/jwt/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "",
 								"value": "",
-								"description": "",
 								"disabled": true
 							},
 							{
 								"key": "",
 								"value": "",
-								"description": "",
 								"disabled": true
 							}
 						],
@@ -129,64 +116,117 @@
 								{
 									"key": "email",
 									"value": "admin@mail.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "password",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8000/api/jwt/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"jwt",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Logout",
 					"request": {
-						"url": "http://localhost:8000/api/logout",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4MjgyMywiZXhwIjoxNjk2NTg2NDIzLCJuYmYiOjE2OTY1ODI4MjMsImp0aSI6IjNOUFBJV0xZZ1pORnJYbEoiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.k71kuPplTGhhXvWSUIpz2TIoAjSWUvkvo5dkleSoWWc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "http://localhost:8000/api/jwt/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"jwt",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findLoggedInUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4NzI0NSwiZXhwIjoxNjk2NTkwODQ1LCJuYmYiOjE2OTY1ODcyNDUsImp0aSI6IlVXcXVvQWlCS3IzNDJ1aTkiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.IrguyINxSiaL7G5gExwrJFhQKUi9WIMvcSa5Hi7EOuI",
+									"type": "string"
+								}
+							]
 						},
-						"description": ""
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/profile/findLoggedInUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"profile",
+								"findLoggedInUser"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "image",
 					"request": {
-						"url": "http://localhost:8000/uploads/",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Forgotten Password",
-					"request": {
-						"url": "http://localhost:8000/api/forgot-password",
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "email",
-									"value": "admin@mail.com",
-									"description": "",
-									"type": "text"
-								}
+						"url": {
+							"raw": "http://localhost:8000/uploads/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"uploads",
+								""
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -194,78 +234,152 @@
 		},
 		{
 			"name": "Category",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Categories",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/roles",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA",
-								"description": ""
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA"
 							}
 						],
-						"body": {},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/roles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"roles"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Create Category",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/categories/store",
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"category_name\": \"Techno\",\r\n    \"description\": \"Techno\"\r\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"store"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Single Category",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/categories/edit/1",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"edit",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"url": "http://127.0.0.1:8000/api/categories/update/4",
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMyMTM3MSwiZXhwIjoxNjk2MzI0OTcxLCJuYmYiOjE2OTYzMjEzNzEsImp0aSI6ImFyWEZ1STBXakRTS3lEaWoiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.MEzlzv5kSK1R5L5qtQJMPvUh9Lo_wqu7RtqXBQyyCh4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"category_name\": \"Test Updated\",\r\n    \"description\": \"Test Updated\"\r\n}"
+							"raw": "{\r\n    \"id\": 454,\r\n    \"category_name\": \"Test Updated\",\r\n    \"description\": \"Test Updated\"\r\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/update/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"update",
+								"4"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Delete Category",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/categories/delete/1",
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -273,168 +387,239 @@
 		},
 		{
 			"name": "Product",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Products",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/products",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NjY3MiwiZXhwIjoxNjk2NDkwMjcyLCJuYmYiOjE2OTY0ODY2NzIsImp0aSI6ImhoQUs0UERRVlpyYkd2cmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.q-3HjhkWdX7Y0MViLu9oymz6Qz249tFAEh8jydvoeRQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4Mjk2MCwiZXhwIjoxNjk2NDg2NTYwLCJuYmYiOjE2OTY0ODI5NjAsImp0aSI6InJKUGFwelloWnFkZDh3YXMiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.LkjMaxAQq4oyHudCB85sdFrxtkOF9VcEeNjdj-wWlZU",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Categories",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/products/create",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Create Product",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/products/store",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NDMxMSwiZXhwIjoxNjk2NDg3OTExLCJuYmYiOjE2OTY0ODQzMTEsImp0aSI6IkJwaFhSb1ZTODVHVzFyQnIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.H6nFKz6pfSlwe5trkGTI42AxXziHIAZxTHkIly95HAY",
-								"description": ""
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": "",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "product_name",
-									"value": "Orange8",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "product_img",
-									"description": "",
-									"type": "file",
-									"src": "4k-abstract-wallpaper_689242249.jpg"
-								},
-								{
-									"key": "product_code",
-									"value": "15fsf5ffdffFs",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "product_unit",
-									"value": "KG",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "product_quantity",
-									"value": "10",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "product_desc",
-									"value": "Test Description",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "product_retail_price",
-									"value": "230",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "product_sale_price",
-									"value": "250",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "category_id",
-									"value": "2",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "brand_id",
-									"value": "1",
-									"description": "",
-									"type": "text"
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4ODY2NiwiZXhwIjoxNjk2NTkyMjY2LCJuYmYiOjE2OTY1ODg2NjYsImp0aSI6Ilk4dHlZZk5wRXNRN2dtQnEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.9o32ryCqjklCwYqsG-H7eBwBjDHBDJ7EO7iQTPOhbKo",
+									"type": "string"
 								}
 							]
 						},
-						"description": ""
+						"method": "POST",
+						"header": [
+							{
+								"key": "product_name",
+								"value": "tefdf",
+								"type": "text"
+							},
+							{
+								"key": "product_quantity",
+								"value": "stfsafa",
+								"type": "text"
+							},
+							{
+								"key": "product_unit",
+								"value": "45",
+								"type": "text"
+							},
+							{
+								"key": "product_retail_price",
+								"value": "455",
+								"type": "text"
+							},
+							{
+								"key": "product_sale_price",
+								"value": "454",
+								"type": "text"
+							},
+							{
+								"key": "category_id",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "product_des",
+								"value": "fsafasfsafsafasfasfsafsa ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_name\": \"Samsung A20\",\r\n    \"category_id\": \"1\",\r\n        \"brand_id\": \"1\",\r\n        \"product_code\": \"testCode1\",\r\n    \"price\": \"18500\",\r\n    \"product_unit\": \"pich\",\r\n    \"product_quantity\": 30,\r\n    \"product_retail_price\" : 40,\r\n    \"product_sale_price\" : 50,\r\n    \"product_desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"store"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Single Product",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/products/edit/1",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4OTAyOCwiZXhwIjoxNjk2NDkyNjI4LCJuYmYiOjE2OTY0ODkwMjgsImp0aSI6Ik1CQnlxY2VjZ1A3eFE0OGsiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.lCkSKTdZKZKqMlu3EgV8ViNlqQJBFk_AjyZ3H_5NIVE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"edit",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update Product",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/products/update/1",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4OTAyOCwiZXhwIjoxNjk2NDkyNjI4LCJuYmYiOjE2OTY0ODkwMjgsImp0aSI6Ik1CQnlxY2VjZ1A3eFE0OGsiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.lCkSKTdZKZKqMlu3EgV8ViNlqQJBFk_AjyZ3H_5NIVE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"category_id\": 1,\r\n    \"name\": \"Samsung galexy M40\",\r\n    \"code\": \"SMGM40\",\r\n    \"price\": \"23990\",\r\n    \"unit\": \"Box\",\r\n    \"desc\": \"Samsung galexy M40, RAM: 6GB, ROM: 128GB\"\r\n}"
+							"raw": "{\r\n        \"id\": 1,\r\n        \"product_name\": \"Brock Lindsey\",\r\n        \"product_img\": \"Brock Lindsey-1696488025-invoice lists.png\",\r\n        \"product_code\": \"Dolores dolor quidem\",\r\n        \"slug\": \"brock-lindseydolores-dolor-quidem\",\r\n        \"product_unit\": \"box\",\r\n        \"product_quantity\": 10000,\r\n        \"product_desc\": null,\r\n        \"product_retail_price\": 864,\r\n        \"product_sale_price\": 220,\r\n        \"store_id\": 1,\r\n        \"category_id\": 3,\r\n        \"brand_id\": 1,\r\n        \"created_at\": \"2023-10-05T06:40:25.000000Z\",\r\n        \"updated_at\": \"2023-10-05T06:40:25.000000Z\"\r\n    },"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/update/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"update",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Delete Product",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/products/delete/10",
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NDMxMSwiZXhwIjoxNjk2NDg3OTExLCJuYmYiOjE2OTY0ODQzMTEsImp0aSI6IkJwaFhSb1ZTODVHVzFyQnIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.H6nFKz6pfSlwe5trkGTI42AxXziHIAZxTHkIly95HAY",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -442,39 +627,62 @@
 		},
 		{
 			"name": "Company info",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Company info",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/company/info",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Edit Company Info",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/company/info/edit/1",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info",
+								"edit",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update Company Info",
 					"request": {
+						"method": "PUT",
+						"header": [],
 						"url": {
 							"raw": "http://127.0.0.1:8000/api/company/info/update/1?company_name=bsv&company_email=dhjks@gmail.com&company_phone=3487236&company_address=jbxcjgh eiuhnkjwe ew",
 							"protocol": "http",
@@ -509,425 +717,49 @@
 									"key": "company_address",
 									"value": "jbxcjgh eiuhnkjwe ew"
 								}
-							],
-							"variable": []
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
-					},
-					"response": [
-						{
-							"id": "62f741bb-8527-4387-91c7-87198b4fb9eb",
-							"name": "Update Company Info",
-							"originalRequest": {
-								"url": "http://127.0.0.1:8000/api/company/info/update",
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTc4ODcwOSwiZXhwIjoxNjk1NzkyMzA5LCJuYmYiOjE2OTU3ODg3MDksImp0aSI6InhtZVBuMmtRUmNGOGxiNGkiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Fr36SYU8DKSz4giVr6nyxLDMePIo4rzfZJe-xKN1wbE",
-										"description": "",
-										"warning": ""
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "id",
-											"value": "1",
-											"description": "",
-											"type": "text"
-										},
-										{
-											"key": "email",
-											"value": "test",
-											"description": "",
-											"type": "text"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"_postman_previewtype": "text",
-							"header": [
-								{
-									"name": "access-control-allow-credentials",
-									"key": "access-control-allow-credentials",
-									"value": "true",
-									"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
-								},
-								{
-									"name": "access-control-allow-origin",
-									"key": "access-control-allow-origin",
-									"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
-									"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
-								},
-								{
-									"name": "cache-control",
-									"key": "cache-control",
-									"value": "no-cache, private",
-									"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
-								},
-								{
-									"name": "connection",
-									"key": "connection",
-									"value": "close",
-									"description": "Options that are desired for the connection"
-								},
-								{
-									"name": "content-type",
-									"key": "content-type",
-									"value": "application/json",
-									"description": "The mime type of this content"
-								},
-								{
-									"name": "date",
-									"key": "date",
-									"value": "Wed, 27 Sep 2023 04:35:01 GMT, Wed, 27 Sep 2023 04:35:01 GMT",
-									"description": "The date and time that the message was sent"
-								},
-								{
-									"name": "host",
-									"key": "host",
-									"value": "127.0.0.1:8000",
-									"description": "Custom header"
-								},
-								{
-									"name": "vary",
-									"key": "vary",
-									"value": "Origin",
-									"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
-								},
-								{
-									"name": "x-powered-by",
-									"key": "x-powered-by",
-									"value": "PHP/8.1.12-1ubuntu4.3",
-									"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
-								},
-								{
-									"name": "x-ratelimit-limit",
-									"key": "x-ratelimit-limit",
-									"value": "60",
-									"description": "Custom header"
-								},
-								{
-									"name": "x-ratelimit-remaining",
-									"key": "x-ratelimit-remaining",
-									"value": "59",
-									"description": "Custom header"
-								}
-							],
-							"cookie": [],
-							"responseTime": 81,
-							"body": "[]"
+							]
 						}
-					]
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "User",
-			"description": "",
 			"item": [
-				{
-					"name": "User Profile",
-					"description": "",
-					"item": [
-						{
-							"name": "findLoggedInUser",
-							"request": {
-								"url": "http://localhost:8000/api/profile/findLoggedInUser",
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcyNjc2OCwiZXhwIjoxNjk1NzMwMzY4LCJuYmYiOjE2OTU3MjY3NjgsImp0aSI6IkJEdk9wV3M2MDdXZVd4WUciLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.ccSkOxYTP1FjFIpSKF69cEq-9S4IylaFSndxDCxGn8Y",
-										"description": ""
-									}
-								],
-								"body": {},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Profile Update",
-							"request": {
-								"url": {
-									"raw": "http://localhost:8000/api/profile/updateProfile?email=admin@gmail.com&name=admin&phone=0145458785454&address=test address&city=Chittagong&country=bd&role_id=1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"profile",
-										"updateProfile"
-									],
-									"query": [
-										{
-											"key": "email",
-											"value": "admin@gmail.com",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "name",
-											"value": "admin",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "phone",
-											"value": "0145458785454",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "address",
-											"value": "test address",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "city",
-											"value": "Chittagong",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "country",
-											"value": "bd",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "role_id",
-											"value": "1",
-											"equals": true,
-											"description": ""
-										},
-										{
-											"key": "img",
-											"value": "",
-											"equals": false,
-											"description": "",
-											"disabled": true
-										}
-									],
-									"variable": []
-								},
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjIzNjYyNywiZXhwIjoxNjk2MjQwMjI3LCJuYmYiOjE2OTYyMzY2MjcsImp0aSI6ImwxaXlVczJtTjJkRXZpZVIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.T1153tjrKnW8i6dZz-vydujcmA6hlFIhhL7tiLxLDjw",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "img",
-											"description": "",
-											"type": "file",
-											"src": "project6.jpg"
-										}
-									]
-								},
-								"description": ""
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
 				{
 					"name": "User Delete",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/users/delete/1",
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Users",
 					"request": {
-						"url": "localhost:8000/api/users",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjI0MTg0NCwiZXhwIjoxNjk2MjQ1NDQ0LCJuYmYiOjE2OTYyNDE4NDQsImp0aSI6IjR5cUNycVdiU2xBbGNtTHAiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.RBRJGiSZRIK9U8GRQ9xRoRXwxSHXCfF86W_7FWXZpBs",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Update User",
-					"request": {
+						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/users/update?name=test&email=test@gmail.com&password=password",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"users",
-								"update"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "test",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "email",
-									"value": "test@gmail.com",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "password",
-									"value": "password",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "id",
-									"value": "1",
-									"equals": true,
-									"description": "",
-									"disabled": true
-								}
-							],
-							"variable": []
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjIzMDY4OCwiZXhwIjoxNjk2MjM0Mjg4LCJuYmYiOjE2OTYyMzA2ODgsImp0aSI6IkhSbzFQZmVhOGFlcTFkZHEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.AOM4OvdaN_W9fwPgcl5TpZ-DCyXOxA13QzBTIdvxJHQ",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"value": "test",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "email",
-									"value": "test@gmail.com",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "password",
-									"value": "password",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "role_id",
-									"value": "3",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "status",
-									"value": "active",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "phone",
-									"value": "01545884545",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "address",
-									"value": "test address",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "city",
-									"value": "Ctg",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "country",
-									"value": "BD",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "id",
-									"value": "2",
-									"description": "",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Delete User",
-					"request": {
-						"url": "http://localhost:8000/api/users/delete/2",
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQxMjQwNiwiZXhwIjoxNjk2NDE2MDA2LCJuYmYiOjE2OTY0MTI0MDYsImp0aSI6IlFsY0lxUG5DTk13eG1YM1kiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.USk4Ga12hBaMZLeuqsNKE27jTyrlqHIHJilXmE1BEqQ",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -935,75 +767,134 @@
 		},
 		{
 			"name": "Customer",
-			"description": "",
 			"item": [
 				{
 					"name": "Get all customers",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/customers",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Store Customer",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/customers/store",
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"Morshed\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"store"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Edit Customer",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/customers/edit/1",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"edit",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "update customer",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/customers/update/1",
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"Morshedul Islam\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/update/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"update",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Delete customer",
 					"request": {
-						"url": "http://127.0.0.1:8000/api/customers/delete/1",
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1011,297 +902,96 @@
 		},
 		{
 			"name": "Sale",
-			"description": "",
 			"item": [
 				{
 					"name": "View all invoices",
 					"request": {
-						"url": "http://localhost:8000/api/invoice/list",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"list"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Invoice Infos",
 					"request": {
-						"url": "http://localhost:8000/api/invoice/create/",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NjY3MiwiZXhwIjoxNjk2NDkwMjcyLCJuYmYiOjE2OTY0ODY2NzIsImp0aSI6ImhoQUs0UERRVlpyYkd2cmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.q-3HjhkWdX7Y0MViLu9oymz6Qz249tFAEh8jydvoeRQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ5NjEzMiwiZXhwIjoxNjk2NDk5NzMyLCJuYmYiOjE2OTY0OTYxMzIsImp0aSI6IjlKUDFkYmNBME95ajNFZVIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.pTz-XKzvq87E_zVZT6lzH1NaoREQHEX3by9odqImYlQ",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "store invoice",
 					"request": {
-						"url": "http://localhost:8000/api/invoice/store",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4ODY2NiwiZXhwIjoxNjk2NTkyMjY2LCJuYmYiOjE2OTY1ODg2NjYsImp0aSI6Ilk4dHlZZk5wRXNRN2dtQnEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.9o32ryCqjklCwYqsG-H7eBwBjDHBDJ7EO7iQTPOhbKo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjUwNTEzNiwiZXhwIjoxNjk2NTA4NzM2LCJuYmYiOjE2OTY1MDUxMzYsImp0aSI6IkxVSVIzczZmUHJ5WlN3N1oiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6neV0ZM5IgBc4wUKxTuJXWbeFEVABWb70hInyPbJQc4",
-								"description": ""
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"invoiceInfo\": {\n\t\t\"issueDate\": \"05-Oct-2023\",\n\t\t\"dueDate\": \"09-Oct-2023\"\n\t},\n    \"calculation\": {\n        \"discount\": 500,\n        \"shipping\": 200,\n        \"subTotal\": 17998,\n        \"total\": 17698,\n        \"due\" : 30\n    },\n    \"customer\": {\n        \"address\": \"Rahattar pul\",\n        \"email\": \"deaizy@gmail.com\",\n        \"id\": 6,\n        \"name\": \"Deaizy Apu\",\n        \"notes\": null,\n        \"phone\": \"01464654562\"\n    },\n    \n    \"items\": [\n        {\n            \"category_id\": 3,\n            \"category_name\": \"Electronices\",\n            \"code\": \"NRC867M\",\n            \"desc\": \"NOVA Rice Cooker 867M, quantity: 2.5kg\",\n            \"id\": 5,\n            \"name\": \"NOVA Rice Cooker 867M\",\n            \"price\": 8999,\n            \"quantity\": 2,\n            \"unit\": \"kg\"\n        },\n        {\n            \"category_id\": 3,\n            \"category_name\": \"Electronices\",\n            \"code\": \"NRC867M\",\n            \"desc\": \"NOVA Rice Cooker 867M, quantity: 2.5kg\",\n            \"id\": 5,\n            \"name\": \"NOVA Rice Cooker 867M\",\n            \"price\": 8999,\n            \"quantity\": 2,\n            \"unit\": \"kg\"\n        }\n    ]\n}"
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Brands",
-			"description": "",
-			"item": [
-				{
-					"name": "Get all Brands",
-					"request": {
-						"url": "http://localhost:8000/api/brands/",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Store Brands",
-					"request": {
-						"url": "http://localhost:8000/api/brands/store",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjI0NTgyMSwiZXhwIjoxNjk2MjQ5NDIxLCJuYmYiOjE2OTYyNDU4MjEsImp0aSI6IkZhRFBkUHQ4NmlneU5JWHUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.SD76tbLqkIcAMrofa14o-_PnwCTaTWM77N35ugvxcSs",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "brand_name",
-									"value": "Apple",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "brand_img",
-									"value": "",
-									"description": "",
-									"type": "file"
+							"raw": "{\r\n\t\"invoiceInfo\": {\r\n\t\t\"issueDate\": \"05-Oct-2023\",\r\n\t\t\"dueDate\": \"09-Oct-2023\"\r\n\t},\r\n    \"calculation\": {\r\n        \"discount\": 500,\r\n        \"shipping\": 200,\r\n        \"subTotal\": 17998,\r\n        \"total\": 17698,\r\n        \"due\" : 30\r\n    },\r\n    \"customer\": {\r\n        \"address\": \"Rahattar pul\",\r\n        \"email\": \"deaizy@gmail.com\",\r\n        \"id\": 6,\r\n        \"name\": \"Deaizy Apu\",\r\n        \"notes\": null,\r\n        \"phone\": \"01464654562\"\r\n    },\r\n    \r\n    \"items\": [\r\n        {\r\n            \"category_id\": 1,\r\n            \"category_name\": \"Electronices\",\r\n            \"code\": \"NRC867M\",\r\n            \"desc\": \"NOVA Rice Cooker 867M, quantity: 2.5kg\",\r\n            \"id\": 5,\r\n            \"name\": \"NOVA Rice Cooker 867M\",\r\n            \"price\": 8999,\r\n            \"quantity\": 2,\r\n            \"unit\": \"kg\"\r\n        },\r\n        {\r\n            \"category_id\": 1,\r\n            \"category_name\": \"Electronices\",\r\n            \"code\": \"NRC867M\",\r\n            \"desc\": \"NOVA Rice Cooker 867M, quantity: 2.5kg\",\r\n            \"id\": 5,\r\n            \"name\": \"NOVA Rice Cooker 867M\",\r\n            \"price\": 8999,\r\n            \"quantity\": 2,\r\n            \"unit\": \"kg\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Delete brand",
-					"request": {
-						"url": "http://localhost:8000/api/brands/delete/1",
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjI0NjcwNiwiZXhwIjoxNjk2MjUwMzA2LCJuYmYiOjE2OTYyNDY3MDYsImp0aSI6IjZTR1BGYWtQM3hFa3JIWlIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tw1HaFzL158AEQF_-uo2s7RJmnYh5l11YXg55yTw714",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Update Brand",
-					"request": {
-						"url": "http://localhost:8000/api/brands/update",
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQxMjQwNiwiZXhwIjoxNjk2NDE2MDA2LCJuYmYiOjE2OTY0MTI0MDYsImp0aSI6IlFsY0lxUG5DTk13eG1YM1kiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.USk4Ga12hBaMZLeuqsNKE27jTyrlqHIHJilXmE1BEqQ",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "brand_name",
-									"value": "test brand",
-									"description": "",
-									"type": "text"
-								}
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"store"
 							]
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Stores",
-			"description": "",
-			"item": [
-				{
-					"name": "Get all stores",
-					"request": {
-						"url": "locahost:8000/api/stores",
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Create Store",
-					"request": {
-						"url": "http://localhost:8000/api/stores/store",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Update Store",
-					"request": {
-						"url": "http://localhost:8000/api/stores/update",
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "store_name",
-									"value": "test store",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_email",
-									"value": "test@gmail.com",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_address",
-									"value": "test address ",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_phone",
-									"value": "018795445",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_web",
-									"value": "http://localhost:5173/dashboard/store/add",
-									"description": "",
-									"type": "text"
-								}
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Store",
-					"request": {
-						"url": "http://localhost:8000/api/stores/delete/1",
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMxMTAyOCwiZXhwIjoxNjk2MzE0NjI4LCJuYmYiOjE2OTYzMTEwMjgsImp0aSI6Im5ibmg1c2tWVW91TkJWelUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6tuSZNtfETMvovyolrEeYxC4gZWS-XingmZ29pvj8KU",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "store_name",
-									"value": "test store",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_email",
-									"value": "test@gmail.com",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_address",
-									"value": "test address ",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_phone",
-									"value": "018795445",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "store_web",
-									"value": "http://localhost:5173/dashboard/store/add",
-									"description": "",
-									"type": "text"
-								}
-							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -1310,17 +1000,57 @@
 		{
 			"name": "Get Roles",
 			"request": {
-				"url": "http://127.0.0.1:8000/api/roles",
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMyMjMzMCwiZXhwIjoxNjk2MzI1OTMwLCJuYmYiOjE2OTYzMjIzMzAsImp0aSI6IkFQS3N1aFNUU0ZoWGkxSTQiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.qQfT_U6jlAoOLmBDKP3xtplj1TizfbXGKOcDuXnWXTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA",
-						"description": ""
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA"
 					}
 				],
-				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/stores/update?id=2&store_name=test store&store_address=test address&store_phone=01548754878",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"stores",
+						"update"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						},
+						{
+							"key": "store_name",
+							"value": "test store"
+						},
+						{
+							"key": "store_address",
+							"value": "test address"
+						},
+						{
+							"key": "store_phone",
+							"value": "01548754878"
+						}
+					]
+				}
 			},
 			"response": []
 		}
