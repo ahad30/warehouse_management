@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\BrandTableSeeder;
+use Database\Seeders\StoreTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoryTableSeeder::class);
         // $this->call(ProductTableSeeder::class);
         $this->call(BrandTableSeeder::class);
+        $this->call(StoreTableSeeder::class);
     }
 }

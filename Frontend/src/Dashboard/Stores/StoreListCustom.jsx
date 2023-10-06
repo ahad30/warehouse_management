@@ -1,13 +1,10 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-
-import UseTable from "../../components/Reusable/useTable/UseTable";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditStore from "./EditStore";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
-import { FaStore } from "react-icons/fa";
 import {
   useDeleteStoreMutation,
   useGetStoresQuery,
@@ -16,11 +13,19 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { BiSolidDuplicate } from "react-icons/bi";
+import { FaEdit } from "react-icons/fa";
+import DataTable from "react-data-table-component";
 
 const StoreListCustom = () => {
   UseTitle("Customers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [store, setStore] = useState({});
+
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
+  const itemsPerPage = 10;
 
   const {
     data: storesData,
@@ -29,6 +34,10 @@ const StoreListCustom = () => {
     error: storesError,
     isSuccess: storesIsSuccess,
   } = useGetStoresQuery();
+
+  useEffect(() => {
+    setFilterData(storesData?.stores);
+  }, [storesData?.stores, storesData]);
 
   const [
     deleteCustomer,
@@ -75,36 +84,84 @@ const StoreListCustom = () => {
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS
-  const setFiltering = (data) => {
-    console.log(data);
-  };
-  // SEARCH FILTERING ENDS
-
   const columns = [
-    { key: "id", header: "ID" },
-    { key: "store_name", header: "Name" },
-    { key: "store_email", header: "Email" },
-    { key: "store_phone", header: "Phone" },
-    { key: "store_web", header: "Web" },
-    { key: "store_address", header: "Address" },
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber =
+          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
+
+    
+    {
+      name: "Name",
+      selector: "store_name",
+    },
+    {
+      name: "email",
+      selector: "store_email",
+      // cell: (row) => {
+      // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
+      //     {row?.email}
+      //   </div>
+      // }
+    },
+    {
+      name: "phone",
+      selector: "store_phone",
+    },
+    {
+      name: "web",
+      selector: "store_web",
+    },
+    
+    
+    {
+      name: "address",
+      selector: "store_address",
+    },
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button onClick={() => handleModalEditInfo(row)}>
+            <FaEdit size={20}></FaEdit>
+          </button>
+          <button onClick={() => onDelete(row?.id)}>
+            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+        </div>
+      ),
+    },
   ];
 
-  // CUSTOMERS CONTENT
- 
+
+  const setFiltering = (search) => {
+    const filteredData = storesData?.stores.filter((item) =>
+      item?.store_name?.toLowerCase().includes(search.toLowerCase())
+      );
+      if(filteredData){
+        setFilterData(filteredData);
+      }
+      
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // SEARCH FILTERING ENDS
 
   // ALL CUSTOMERS
   if (storesIsLoading) {
-    return  <UseLoading />;
+    return <UseLoading />;
   }
 
   if (storesIsError) {
     console.error(storesError);
   }
-
-  
-
-
-  
 
   return (
     <>
@@ -112,7 +169,6 @@ const StoreListCustom = () => {
         <TableHeadingTitle>
           Stores {storesData?.stores?.length}
         </TableHeadingTitle>
-        
 
         <SearchAndAddBtn
           btnTitle={"Add store"}
@@ -120,74 +176,23 @@ const StoreListCustom = () => {
           btnIcon={<BiSolidDuplicate size={20} />}
           setFiltering={setFiltering}
         />
-    
-
 
         {!storesIsSuccess && storesData?.status ? (
-          <p className="text-center text-2xl mt-10">
-            {storesData?.message}
-          </p>
+          <p className="text-center text-2xl mt-10">{storesData?.message}</p>
         ) : (
-            <div className="overflow-x-scroll">
-            <table className="table table-sm table-pin-rows table-pin-cols">
-              {/* Table header */}
-              <thead>
-                <tr>
-                  <th>Serial no</th>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>web</th>
-                  <th>Address</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {storesData?.stores?.map((store,index) => (
-                  <tr key={store?.id}>
-
-                    <td>{index +1}</td>
-                    <td>{store?.store_name}</td>
-                    <td>{store?.store_phone}</td>
-                    <td>{store?.store_email}</td>
-                    <td>{store?.store_web}</td>
-                    <td>{store?.store_address}</td>
-                    <td className="flex gap-x-2 items-center">
-                      <FiEdit
-                        onClick={() => {
-                          handleModalEditInfo(store);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                      <RiDeleteBin4Line
-                        onClick={() => {
-                          onDelete(store?.id);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-
-              <tfoot>
-                <tr>
-                <th>Serial no</th>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>web</th>
-                  <th>Address</th>
-                  <th>Action</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
+          filterData?.length > 0 && (
+            <DataTable
+              columns={columns}
+              data={filterData}
+              pagination
+              paginationPerPage={itemsPerPage}
+              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+              paginationTotalRows={filterData?.length}
+              onChangePage={(page) => setCurrentPage(page)}
+            />
+          )
         )}
-        
+
         <EditStore
           store={store}
           modalIsOpen={modalIsOpen}

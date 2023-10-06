@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Brand;
+use App\Models\Store;
 use App\Models\Category;
 use App\Models\SaleItem;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -22,16 +24,26 @@ class Product extends Model
         "product_desc",
         "category_id",
         "brand_id",
+        "store_id",
         "slug",
     ];
 
-    public function categories()
+    public function getCategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+    public function getBrand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+    public function getStore()
+    {
+        return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
-    public function saleitems()
-    {
-        return $this->belongsTo(SaleItem::class);
-    }
+    // public function saleitems()
+    // {
+    //     return $this->belongsTo(SaleItem::class);
+    // }
+
 }

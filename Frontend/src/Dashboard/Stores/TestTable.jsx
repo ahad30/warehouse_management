@@ -29,32 +29,16 @@ function TestTable() {
 
 
 
-  const data = [
-    {
-      id: 1,
-      name: "John Doe",
-      age: 30,
-      city: "New York",
-      imageUrl: "https://example.com/john-doe.jpg",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      age: 25,
-      city: "Los Angeles",
-      imageUrl: "https://example.com/jane-smith.jpg",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      age: 35,
-      city: "Chicago",
-      imageUrl: "https://example.com/bob-johnson.jpg",
-    },
-    // Add more data as needed
-  ];
 
   const columns = [
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber = (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
     {
       name: "ID",
       selector: "id",
@@ -63,13 +47,11 @@ function TestTable() {
       name: "Name",
       selector: "brand_name",
     },
-
     {
       name: "Image",
       cell: (row) => (
         <img
-          src={row.brand_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/brands/${row?.brand_img}`:          "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
-        }
+          src={row.brand_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/brands/${row?.brand_img}` : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"}
           alt="User"
           style={{ maxWidth: "100px", maxHeight: "100px" }}
         />
@@ -121,23 +103,23 @@ function TestTable() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 //   const currentItems = filteredData?.slice(indexOfFirstItem, indexOfLastItem);
 
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search by Name"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <SearchAndAddBtn
-        btnTitle={"Add brand"}
-        btnPath={"/dashboard/brand/add"}
-        btnIcon={<BiSolidDuplicate size={20} />}
-        setFiltering={setFiltering}
-      />
+return (
+  <div>
+    <input
+      type="text"
+      placeholder="Search by Name"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+    <SearchAndAddBtn
+      btnTitle={"Add brand"}
+      btnPath={"/dashboard/brand/add"}
+      btnIcon={<BiSolidDuplicate size={20} />}
+      setFiltering={setFiltering}
+    />
 
-      {
-        filterData?.length>0 && <DataTable
+    {filterData?.length > 0 && (
+      <DataTable
         columns={columns}
         data={filterData}
         pagination
@@ -146,10 +128,9 @@ function TestTable() {
         paginationTotalRows={filterData?.length}
         onChangePage={(page) => setCurrentPage(page)}
       />
-      }
-
-    </div>
-  );
+    )}
+  </div>
+);
 }
 
 export default TestTable;

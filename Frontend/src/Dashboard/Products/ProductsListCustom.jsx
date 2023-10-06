@@ -4,8 +4,7 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../features/Product/productApi";
-import UseTable from "../../components/Reusable/useTable/UseTable";
-import { BiCartAdd, BiSolidDuplicate } from "react-icons/bi";
+import { BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
@@ -14,11 +13,20 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
+import DataTable from "react-data-table-component";
+import { FaEdit } from "react-icons/fa";
 
 const ProductsListCustom = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
+ 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
+  const itemsPerPage = 10;
+
+
   const {
     data: productsData,
     isLoading: productsIsLoading,
@@ -26,6 +34,11 @@ const ProductsListCustom = () => {
     error: productsError,
     isSuccess: productsIsSuccess,
   } = useGetProductsQuery();
+
+  useEffect(() => {
+    setFilterData(productsData?.products);
+  }, [productsData?.products , productsData]);
+
 
   const [
     deleteProduct,
@@ -72,23 +85,99 @@ const ProductsListCustom = () => {
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS
-  const setFiltering = (data) => {
-    console.log(data);
-  };
-  // SEARCH FILTERING ENDS
-
   const columns = [
-    { key: "id", header: "ID" },
-    { key: "img", header: "Image" },
-    { key: "name", header: "Name" },
-    { key: "code", header: "Code" },
-    { key: "price", header: "Price" },
-    { key: "unit", header: "Unit" },
-    { key: "category_name", header: "Category" },
-    { key: "desc", header: "Description" },
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber =
+          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
+
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row?.product_img
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }/uploads/products/${row?.product_img}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          alt="User"
+          className=" w-12 h-12 rounded-full"
+        />
+      ),
+    },
+    {
+      name: "Name",
+      selector: "product_name",
+    },
+    {
+      name: "Code",
+      selector: "product_code",
+    },
+    {
+      name: "Retail price",
+      selector: "product_retail_price",
+    },
+    {
+      name: "Sold price",
+      selector: "product_sale_price",
+    },
+    {
+      name: "Quantity",
+      selector: "product_quantity",
+    },
+    {
+      name: "Unit",
+      selector: "product_unit",
+    },
+    {
+      name: "Category",
+      selector: (row)=> row?.get_category?.category_name
+    },
+    {
+      name: "Brand",
+      selector: (row)=> row?.get_brand?.brand_name
+    },
+    
+  
+   
+    
+    
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button onClick={() => handleModalEditInfo(row)}>
+            <FaEdit size={20}></FaEdit>
+          </button>
+          <button onClick={() => onDelete(row?.id)}>
+            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+        </div>
+      ),
+    },
   ];
 
-  // PRODUCTS CONTENT
+  const setFiltering = (search) => {
+    const filteredData = productsData?.products.filter((item) =>
+      item?.product_name?.toLowerCase().includes(search.toLowerCase())
+      );
+      if(filteredData){
+        setFilterData(filteredData);
+      }
+      
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // SEARCH FILTERING ENDS
 
   // ALL PRODUCTS
   if (productsIsLoading) {
@@ -98,8 +187,6 @@ const ProductsListCustom = () => {
   if (productsIsError) {
     console.error(productsError);
   }
-
-  console.log(productsData?.products);
 
   return (
     <>
@@ -119,77 +206,17 @@ const ProductsListCustom = () => {
         {!productsIsSuccess && productsData?.status ? (
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
-          <div className="overflow-x-scroll">
-            <table className="table table-sm table-pin-rows table-pin-cols">
-              {/* Table header */}
-              <thead>
-                <tr>
-                  <th>Sl</th>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>code</th>
-                  <th>unit</th>
-                  <th>Quantity</th>
-                  <th>Retail price</th>
-                  <th>Sold Price</th>
-                  <th>Category</th>
-                  <th>Brand</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {productsData?.products?.map((product, index) => (
-                  <tr key={product?.id}>
-                    <td>{index + 1}</td>
-                    <td><img className="w-8 h-8 rounded-full" src={product?.product_img ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/products/${product?.product_img}`
-                     : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"} alt="" /></td>
-                    <td>{product?.product_name}</td>
-                    <td>{product?.product_code}</td>
-                    <td>{product?.product_unit}</td>
-                    <td>{product?.product_quantity}</td>
-                    <td>{product?.product_retail_price}</td>
-                    <td>{product?.product_sale_price}</td>
-                    <td>{product?.categories.category_name}</td>
-                    <td>{product?.brand_id}</td>
-                  
-                    <td className="flex gap-x-2 items-center">
-                      <FiEdit
-                        onClick={() => {
-                          handleModalEditInfo(product);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                      <RiDeleteBin4Line
-                        onClick={() => {
-                          onDelete(product?.id);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-
-              <tfoot>
-                <tr>
-                <th>Sl</th>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>code</th>
-                  <th>unit</th>
-                  <th>Quantity</th>
-                  <th>Retail price</th>
-                  <th>Sold Price</th>
-                  <th>Category</th>
-                  <th>Brand</th>
-                  <th>Action</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
+          filterData?.length > 0 && (
+            <DataTable
+              columns={columns}
+              data={filterData}
+              pagination
+              paginationPerPage={itemsPerPage}
+              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+              paginationTotalRows={filterData?.length}
+              onChangePage={(page) => setCurrentPage(page)}
+            />
+          )
         )}
         <EditProduct
           product={product}

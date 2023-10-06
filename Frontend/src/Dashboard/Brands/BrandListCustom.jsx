@@ -3,10 +3,8 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
-import UseTable from "../../components/Reusable/useTable/UseTable";
 import EditBrand from "./EditBrand";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
-import { SiBrandfolder } from "react-icons/si";
 import {
   useDeleteBrandMutation,
   useGetBrandsQuery,
@@ -15,11 +13,18 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { BiSolidDuplicate } from "react-icons/bi";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
+import { FaEdit } from "react-icons/fa";
+import DataTable from "react-data-table-component";
 
 const BrandListCustom = () => {
   UseTitle("Categories");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [brand, setBrand] = useState({});
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
+  const itemsPerPage = 10;
 
   const {
     data: brandsData,
@@ -28,6 +33,10 @@ const BrandListCustom = () => {
     error: brandsError,
     isSuccess: brandsIsSuccess,
   } = useGetBrandsQuery();
+
+  useEffect(() => {
+    setFilterData(brandsData?.brands);
+  }, [brandsData?.brands ,brandsData]);
 
   const [
     deleteBrand,
@@ -73,22 +82,73 @@ const BrandListCustom = () => {
   };
   // EDIT ENDS
 
-  // SEARCH FILTERING STARTS
-  const setFiltering = (data) => {
-    console.log(data);
-  };
-  // SEARCH FILTERING ENDS
 
   const columns = [
-    { key: "id", header: "ID" },
-    { key: "brand_name", header: "Name" },
-    { key: "brand_img", header: "Image" },
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber =
+          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
+
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row.brand_img
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }/uploads/brands/${row?.brand_img}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          alt="User"
+          className=" w-12 h-12 rounded-full"
+        />
+      ),
+    },
+    {
+      name: "Name",
+      selector: "brand_name",
+    },
+    
+    
+  
+   
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button onClick={() => handleModalEditInfo(row)}>
+            <FaEdit size={20}></FaEdit>
+          </button>
+          <button onClick={() => onDelete(row?.id)}>
+            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+        </div>
+      ),
+    },
   ];
 
-  // CATEGORIES CONTENT
-  let content;
+  // SEARCH FILTERING STARTS
+  const setFiltering = (search) => {
+    const filteredData = brandsData?.brands?.filter((item) =>
+      item?.brand_name?.toLowerCase().includes(search.toLowerCase())
+      );
+      if(filteredData){
+        setFilterData(filteredData);
+      }
+      
+  };
 
-  // ALL CATEGORIES
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // SEARCH FILTERING ENDS
+
   if (brandsIsLoading) {
     return <UseLoading />;
   }
@@ -96,8 +156,6 @@ const BrandListCustom = () => {
   if (brandsIsError) {
     console.error(brandsError);
   }
-
-  console.log(brandsData?.brands);
 
   return (
     <>
@@ -117,64 +175,19 @@ const BrandListCustom = () => {
         {!brandsIsSuccess && brandsData?.status ? (
           <p className="text-center text-2xl mt-10">{brandsData?.message}</p>
         ) : (
-          <div className="overflow-x-scroll">
-            <table className="table table-sm table-pin-rows table-pin-cols">
-              {/* Table header */}
-              <thead>
-                <tr>
-                  <th>Sl</th>
-                  <th>Img</th>
-                  <th>Name</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {brandsData?.brands?.map((brand,index) => (
-                  <tr key={brand?.id}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <img
-                        className="w-8 h-8 rounded-full"
-                        src={
-                          brand?.brand_img
-                            ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/uploads/brands/${brand?.brand_img}`
-                            : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
-                        }
-                        alt=""
-                      />
-                    </td>
-                    <td>{brand?.brand_name}</td>
-                    <td className="flex gap-x-2 items-center">
-                      <FiEdit
-                        onClick={() => {
-                          handleModalEditInfo(brand);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                      <RiDeleteBin4Line
-                        onClick={() => {
-                          onDelete(brand?.id);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-
-              <tfoot>
-                <tr>
-                  <th>Sl</th>
-                  <th>Img</th>
-                  <th>Name</th>
-                  <th>Action</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
+          
+            filterData?.length > 0 && (
+              <DataTable
+                columns={columns}
+                data={filterData}
+                pagination
+                paginationPerPage={itemsPerPage}
+                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+                paginationTotalRows={filterData?.length}
+                onChangePage={(page) => setCurrentPage(page)}
+              />
+            )
+          
         )}
         <EditBrand
           brand={brand}
