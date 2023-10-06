@@ -95,6 +95,7 @@ const AddBrand = () => {
         >
           {errorMessage}
         </p>
+        
       ))}
     </DashboardBackground>
   );

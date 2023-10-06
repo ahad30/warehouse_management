@@ -2,14 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/Main/MainLayout";
 import Login from "../pages/Login/Login";
 import AddUser from "../Dashboard/Users/AddUser";
-// import ProductsList from "../Dashboard/Products/ProductsList";
 import AddProduct from "../Dashboard/Products/AddProduct";
-// import CategoriesList from "../Dashboard/Categories/CategoriesList";
 import AddCategory from "../Dashboard/Categories/AddCategory";
 import DashboardLayout from "../layouts/Dashboard/DashboardLayout";
 import AddCustomer from "../Dashboard/Customers/AddCustomer";
 import UsersList from "../Dashboard/Users/UsersList";
-// import CustomersList from "../Dashboard/Customers/CustomersList";
 import InvoicesList from "../Dashboard/Invoices/InvoicesList";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import PdfSettings from "../Dashboard/Settings/PdfSettings";
@@ -19,21 +16,19 @@ import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import InvoiceA4 from "../components/InvoicePages/InvoiceA4";
-// import AdminRoute from "./AdminRoute";
 import AdminList from "../Dashboard/Users/AdminList";
 import ManagerList from "../Dashboard/Users/ManagerList";
 import SalesManList from "../Dashboard/Users/SalesManList";
 import CategoriesListCustom from "../Dashboard/Categories/CategoriesListCustom";
 import CustomersListCustom from "../Dashboard/Customers/CustomersListCustom";
 import AddBrand from "../Dashboard/Brands/AddBrand";
-// import BrandsList from "../Dashboard/Brands/BrandsList";
 import AddStore from "../Dashboard/Stores/AddStore";
-// import StoresList from "../Dashboard/Stores/StoresList";
 import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
 import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
-// import Settings from "../Dashboard/Settings/Settings";
 import SettingsNew from "../Dashboard/Settings/SettingsNew";
 import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
+import Test from "../components/PDF/Test";
+import TestTable from "../Dashboard/Stores/TestTable";
 
 const routes = createBrowserRouter([
   {
@@ -178,6 +173,14 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/setting/pdf",
         element: <PdfSettings />,
+      },
+      {
+        path: "/dashboard/test",
+        element: <Test></Test>,
+      },
+      {
+        path: "/dashboard/table",
+        element: <TestTable></TestTable>,
       },
     ],
   },

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyJwtTokenMiddleware
@@ -14,26 +15,31 @@ class VerifyJwtTokenMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        $user = auth()->user();
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
 
-        if (!is_null($user)) {
-            $tokenExpireTime = strtotime($user->token_expire_time);
-            $timeNow = strtotime(Carbon::now());
-            $diff = $tokenExpireTime - $timeNow;
-            if ($diff <= 0) {
+        } catch (\Exception $e) {
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Unauthorized or Access token has expired'
+                    'message' => 'Invalid token'
+                ], 401);
+            } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Token has expired'
+                ], 401);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Token not found'
                 ], 401);
             }
-            return $next($request);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => "Unauthorized"
-            ], 401);
         }
+        // You can access the authenticated user using $user if needed.
+        return $next($request);
+
     }
 }

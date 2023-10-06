@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Role;
 
+
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -34,7 +35,6 @@ class User extends Authenticatable implements JWTSubject
         'state',
         'country',
         'profile_image',
-        'jwt_token',
         'token_expire_time',
         'img'
     ];
