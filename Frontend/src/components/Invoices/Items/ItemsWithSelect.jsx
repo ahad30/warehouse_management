@@ -5,11 +5,17 @@ import { GiCancel } from "react-icons/gi";
 import { deleteItem, getItem } from "../../../features/Invoice/invoiceSlice";
 // import productData from "../../../Dashboard/Products/productData.json";
 import { array } from "prop-types";
+import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
+import { useGetBrandsQuery } from "../../../features/Brand/brandApi";
 
 const ItemsWithSelect = ({ products }) => {
   const dispatch = useDispatch();
-  console.log(products);
+  const { data: categoryData } = useGetCategoriesQuery();
+  const { data: brandsData } = useGetBrandsQuery();
+
   const [selectedItem, setSelectedItem] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
   const [item, setItem] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [itemList, setItemList] = useState([]);
@@ -30,6 +36,16 @@ const ItemsWithSelect = ({ products }) => {
     setItem({ ...selectedItem, quantity });
   }, [selectedItem, quantity, dispatch]);
 
+  //
+  const filteredProducts = products
+    ?.filter(
+      (product) =>
+        selectedCategory == "" || product?.category_id == selectedCategory
+    )
+    ?.filter(
+      (product) => selectedBrand == "" || product?.brand_id == selectedBrand
+    );
+
   // ADD TO ITEM LIST
   const handleAddItem = () => {
     if (item) {
@@ -46,94 +62,123 @@ const ItemsWithSelect = ({ products }) => {
     setItemList(newItemList);
     dispatch(deleteItem(newItemList));
   };
-
+  console.log(products);
   return (
     <div className="my-5">
-      <h2 className="text-2xl font-bold mb-3">Items</h2>
-      {/* <form> */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-[2fr_1fr_2fr_1fr_1fr_1fr] gap-2">
-        <div>
-          <label htmlFor="Item Name" className="">
-            <p>Item Name:</p>
-            <select
-              className="select select-bordered w-full"
-              onChange={(e) => handleSelectedItem(e.target.value)}
-              name="product_name"
-            >
-              <option value="">Select Product</option>
-              {products?.map((item, i) => (
-                <option key={i} value={item?.id}>
-                  {item?.product_name}
-                </option>
-              ))}
-            </select>
-          </label>
+      <div className="bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
+        {/* Select Category or Brand */}
+        <div className="grid sm:grid-cols-2 gap-5 mb-5">
+          <select
+            className="select select-bordered w-full"
+            onChange={(e) => setSelectedCategory(e?.target?.value)}
+            value={selectedCategory}
+          >
+            <option value={""}>Select Category</option>
+            {categoryData?.categories?.map((category, idx) => (
+              <option key={idx} value={category?.id}>
+                {category?.category_name}
+              </option>
+            ))}
+          </select>
+          <select
+            className="select select-bordered w-full"
+            onChange={(e) => setSelectedBrand(e?.target?.value)}
+            value={selectedBrand}
+          >
+            <option value={""}>Select Brand</option>
+            {brandsData?.brands?.map((brand) => (
+              <option value={brand?.id} key={brand?.id}>
+                {brand?.brand_name}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
-          <label htmlFor="description" className="">
-            <p>Code:</p>
-            <input
-              type="text"
-              name="product_code"
-              placeholder="Code"
-              className="input input-bordered input-md w-full"
-              defaultValue={selectedItem?.product_code}
-              disabled
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="invoice" className="">
-            <p>Price:</p>
-            <input
-              type="number"
-              name="product_sale_price"
-              placeholder="Price"
-              className="input input-bordered input-md w-full"
-              value={Number(selectedItem?.product_sale_price)}
-              disabled
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="invoice" className="">
-            <p>Quantity:</p>
-            <input
-              type="number"
-              name="quantity"
-              placeholder="Quantity"
-              className="input input-bordered input-md w-full"
-              onChange={handleQuantity}
-              required
-              defaultValue={quantity}
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="description" className="">
-            <p>Unit:</p>
-            <input
-              type="text"
-              name="product_unit"
-              placeholder="Unit"
-              className="input input-bordered input-md w-full"
-              defaultValue={selectedItem?.product_unit}
-              disabled
-            />
-          </label>
-        </div>
-      </div>
-      <div className="flex justify-end">
-        <button
-          className="btn btn-primary btn-sm mt-2"
-          disabled={!selectedItem?.product_name}
-          onClick={handleAddItem}
-        >
-          Add item
-        </button>
-      </div>
-      {/* </form> */}
+        {/* Select Products */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 ">
+          <div>
+            <label htmlFor="description" className="">
+              <p>Code:</p>
+              <input
+                type="text"
+                name="product_code"
+                placeholder="Code"
+                className="input input-bordered input-md w-full"
+                defaultValue={selectedItem?.product_code}
+                readOnly
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="Item Name" className="">
+              <p>Item Name:</p>
+              <select
+                className="select select-bordered w-full"
+                onChange={(e) => handleSelectedItem(e.target.value)}
+                name="product_name"
+              >
+                <option value="">Select Product</option>
+                {filteredProducts?.map((item, i) => (
+                  <option key={i} value={item?.id}>
+                    {item?.product_name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div>
+            <label htmlFor="invoice" className="">
+              <p>Price:</p>
+              <input
+                type="number"
+                name="product_sale_price"
+                placeholder="Price"
+                className="input input-bordered input-md w-full"
+                value={Number(selectedItem?.product_sale_price)}
+                readOnly
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="invoice" className="">
+              <p>Quantity:</p>
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
+                className="input input-bordered input-md w-full"
+                onChange={handleQuantity}
+                required
+                defaultValue={quantity}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="description" className="">
+              <p>Unit:</p>
+              <input
+                type="text"
+                name="product_unit"
+                placeholder="Unit"
+                className="input input-bordered input-md w-full"
+                defaultValue={selectedItem?.product_unit}
+                readOnly
+              />
+            </label>
+          </div>
 
+          <div className="flex items-center">
+            <button
+              className="w-full bg-[#0369A1] text-white inline"
+              // disabled={!selectedItem?.product_name}
+              onClick={handleAddItem}
+            >
+              Add item
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Invoice items */}
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
