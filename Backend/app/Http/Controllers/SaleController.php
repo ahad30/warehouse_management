@@ -189,6 +189,7 @@ class SaleController extends Controller
                 if ($product['product_desc'] == null) {
                     return $product->id . " description is empty";
                 }
+
                 $item['sale_id'] = $sale_id;
                 $item['product_id'] = $value['id'];
                 $item['name'] = $product['product_name'];
