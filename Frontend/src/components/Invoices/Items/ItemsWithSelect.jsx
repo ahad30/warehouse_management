@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { deleteItem, getItem } from "../../../features/Invoice/invoiceSlice";
 // import productData from "../../../Dashboard/Products/productData.json";
@@ -34,7 +34,7 @@ const ItemsWithSelect = ({ products }) => {
   // SET ITEM AFTER GETTING QUANTITY
   useEffect(() => {
     setItem({ ...selectedItem, quantity });
-  }, [selectedItem, quantity, dispatch]);
+  }, [selectedItem, quantity]);
 
   //
   const filteredProducts = products
@@ -50,11 +50,14 @@ const ItemsWithSelect = ({ products }) => {
   const handleAddItem = () => {
     if (item) {
       setItemList([...itemList, item]);
-      dispatch(getItem(item));
       setSelectedItem({});
       setQuantity(1);
     }
   };
+
+  useEffect(() => {
+    dispatch(getItem(itemList));
+  }, [dispatch, itemList]);
 
   // DELETE FROM ITEM LIST
   const handleDeleteItem = (id) => {
@@ -62,7 +65,7 @@ const ItemsWithSelect = ({ products }) => {
     setItemList(newItemList);
     dispatch(deleteItem(newItemList));
   };
-  console.log(products);
+
   return (
     <div className="my-5">
       <div className="bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
@@ -94,9 +97,9 @@ const ItemsWithSelect = ({ products }) => {
           </select>
         </div>
         {/* Select Products */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 ">
+        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 items-end">
           <div>
-            <label htmlFor="description" className="">
+            <label htmlFor="description">
               <p>Code:</p>
               <input
                 type="text"
@@ -109,7 +112,7 @@ const ItemsWithSelect = ({ products }) => {
             </label>
           </div>
           <div>
-            <label htmlFor="Item Name" className="">
+            <label htmlFor="Item Name">
               <p>Item Name:</p>
               <select
                 className="select select-bordered w-full"
@@ -126,7 +129,7 @@ const ItemsWithSelect = ({ products }) => {
             </label>
           </div>
           <div>
-            <label htmlFor="invoice" className="">
+            <label htmlFor="invoice">
               <p>Price:</p>
               <input
                 type="number"
@@ -139,7 +142,7 @@ const ItemsWithSelect = ({ products }) => {
             </label>
           </div>
           <div>
-            <label htmlFor="invoice" className="">
+            <label htmlFor="invoice">
               <p>Quantity:</p>
               <input
                 type="number"
@@ -148,12 +151,12 @@ const ItemsWithSelect = ({ products }) => {
                 className="input input-bordered input-md w-full"
                 onChange={handleQuantity}
                 required
-                defaultValue={quantity}
+                value={quantity}
               />
             </label>
           </div>
           <div>
-            <label htmlFor="description" className="">
+            <label htmlFor="description">
               <p>Unit:</p>
               <input
                 type="text"
@@ -165,11 +168,12 @@ const ItemsWithSelect = ({ products }) => {
               />
             </label>
           </div>
-
-          <div className="flex items-center">
+          <div className="flex items-center justify-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 text-sm mb-1">
+            <AiOutlinePlusCircle size={25} />
+            {/* <Link to={"/dashboard/invoice/new"}>New Invoice</Link> */}
             <button
-              className="w-full bg-[#0369A1] text-white inline"
-              // disabled={!selectedItem?.product_name}
+              className="w-full bg-[#0369A1] text-white cursor-pointer" 
+              disabled={!selectedItem?.product_name}
               onClick={handleAddItem}
             >
               Add item
@@ -179,47 +183,60 @@ const ItemsWithSelect = ({ products }) => {
       </div>
 
       {/* Invoice items */}
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-sm">#</th>
-              <th className="text-sm">Item Name</th>
-              <th className="text-sm">Code</th>
-              <th className="text-sm">Price</th>
-              <th className="text-sm">Quantity</th>
-              <th className="text-sm">Unit</th>
-              <th className="text-sm">Total Price</th>
-              <th className="text-sm">
-                <GiCancel />
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {itemList &&
-              itemList?.map((item, i) => {
-                return (
-                  <tr key={i}>
-                    <th>{i + 1}</th>
-                    <td>{item?.product_name}</td>
-                    <td>{item?.product_code}</td>
-                    <td>{item?.product_sale_price}</td>
-                    <td>{item?.quantity}</td>
-                    <td>{item?.product_unit}</td>
-                    <td>{item?.quantity * item?.product_sale_price}</td>
-                    <td
-                      onClick={() => handleDeleteItem(item?.id)}
-                      className="cursor-pointer"
-                    >
-                      <AiOutlineDelete size={20} />
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+      <div className="bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5 mt-5">
+        <div className="overflow-x-auto">
+          <table className="table table-zebra">
+            {/* head */}
+            <thead>
+              <tr>
+                <th className="text-sm">#</th>
+                <th className="text-sm">Code</th>
+                <th className="text-sm">Item Name</th>
+                <th className="text-sm">Price</th>
+                <th className="text-sm">Quantity</th>
+                <th className="text-sm">Total Price</th>
+                <th className="text-sm">
+                  <GiCancel />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {itemList &&
+                itemList?.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <th>{i + 1}</th>
+                      <td>{item?.product_code}</td>
+                      <td>{item?.product_name}</td>
+                      <td>{item?.product_sale_price}</td>
+                      <td>{item?.quantity}</td>
+                      <td>{item?.quantity * item?.product_sale_price}</td>
+                      <td
+                        onClick={() => handleDeleteItem(item?.id)}
+                        className="cursor-pointer"
+                      >
+                        <AiOutlineDelete size={20} />
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th className="text-sm">#</th>
+                <th className="text-sm">Code</th>
+                <th className="text-sm">Item Name</th>
+                <th className="text-sm">Price</th>
+                <th className="text-sm">Quantity</th>
+                <th className="text-sm">Total Price</th>
+                <th className="text-sm">
+                  <GiCancel />
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
     </div>
   );

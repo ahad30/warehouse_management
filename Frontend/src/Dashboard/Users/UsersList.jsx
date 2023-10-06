@@ -18,8 +18,6 @@ import DataTable from "react-data-table-component";
 import { FaCheckCircle, FaEdit, FaStore, FaTimesCircle } from "react-icons/fa";
 
 const UsersList = () => {
-
-
   UseTitle("Users");
   const [modalIsOpen, setModalIsOpen] = useState(null);
   const [user, setUser] = useState({});
@@ -122,7 +120,7 @@ const UsersList = () => {
     {
       name: "Name",
       selector: "name",
-      sortable: true
+      sortable: true,
     },
     {
       name: "email",
@@ -181,11 +179,10 @@ const UsersList = () => {
   const setFiltering = (search) => {
     const filteredData = usersData?.users?.filter((item) =>
       item?.name?.toLowerCase().includes(search.toLowerCase())
-      );
-      if(filteredData){
-        setFilterData(filteredData);
-      }
-      
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;

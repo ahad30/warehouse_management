@@ -2,7 +2,7 @@
 import { toast } from "react-hot-toast";
 // import BillingInfo from "../../../components/Invoices/BillingInfo/BillingInfo";
 import Calculation from "../../../components/Invoices/Calculation/Calculation";
-import InvoiceInfo from "../../../components/Invoices/InvoiceInfo/InvoiceInfo";
+import InvoiceDate from "../../../components/Invoices/InvoiceDate/InvoiceDate";
 // import ItemsWithCustom from "../../../components/Invoices/Items/ItemsWithCustom";
 import ItemsWithSelect from "../../../components/Invoices/Items/ItemsWithSelect";
 import SubmitInvoice from "../../../components/Invoices/SubmitInvoice/SubmitInvoice";
@@ -11,11 +11,15 @@ import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
 import { useGetInvoiceInfosQuery } from "../../../features/Invoice/InvoiceApi";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import CustomerInfo from "../../../components/Invoices/CustomerInfo/CustomerInfo";
+import { useSelector } from "react-redux";
 
 const NewInvoice = () => {
   UseTitle("New Invoice");
   const { data, isLoading, isError, error, isSuccess } =
     useGetInvoiceInfosQuery();
+
+  const invoice = useSelector((state) => state?.invoice);
+  console.log(invoice);
 
   if (isLoading) {
     return <UseLoading />;
@@ -23,13 +27,12 @@ const NewInvoice = () => {
 
   if (isError) {
     toast.error(error?.data?.message || data?.message);
-    console.error(error);
   }
 
   if (!data?.status) {
     return (
       <>
-        <p className="text-center text-2xl mt-10">{data?.message}</p>
+        <p className="text-center text-2xl mb-10">{data?.message}</p>
       </>
     );
   }
@@ -37,11 +40,7 @@ const NewInvoice = () => {
   if (isSuccess && data?.status)
     return (
       <DashboardBackground>
-        <InvoiceInfo />
-        {/* <BillingInfo
-          company_info={data?.data?.company_info}
-          customers={data?.data?.customers}
-        /> */}
+        <InvoiceDate />
         <CustomerInfo customers={data?.data?.customers} />
         {/* <ItemsWithCustom /> */}
         <ItemsWithSelect products={data?.data?.products} />

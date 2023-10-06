@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateStoreMutation } from "../../features/Store/storeApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -19,23 +20,15 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   ] = useUpdateStoreMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(store);
-
-    /*if (
-      !store?.store_name ||
-      !store?.store_email ||
-      !store?.store_phone ||
-      !store?.store_web ||
-      !store?.store_address
-    ) {
+    if (!store?.store_name || !store?.store_phone || !store?.store_address) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
-    */
 
     updateStore({ ...data, id: store?.id });
   };
+
+  const errorMessages = UseErrorMessages(updateError);
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -63,7 +56,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     updateIsError,
     updateError,
     updateIsSuccess,
-    updateData,
+    updateData
   );
   useEffect(() => {
     if (store) {
@@ -111,7 +104,6 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         type="text"
                         placeholder="Phone"
                         className="input input-bordered w-full"
-                        required
                         {...register("store_phone")}
                       />
                     </label>
@@ -141,7 +133,6 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         type="text"
                         placeholder="Address"
                         className="input input-bordered w-full"
-                        required
                         {...register("store_address")}
                       />
                     </label>
@@ -163,6 +154,15 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                   </div>
                 </form>
               </div>
+              {/* Display error messages */}
+              {errorMessages.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>

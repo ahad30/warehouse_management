@@ -6,6 +6,7 @@ import {
   useGetUserRolesQuery,
   useUpdateUserMutation,
 } from "../../features/User/userApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -47,29 +48,25 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (user) {
-      setValue("name", user.name || "");
-      setValue("email", user.email || "");
-      setValue("phone", user.phone || "");
-      setValue("role_id", user.role_id || "");
-      setValue("status", user.status || "");
-      setValue("address", user.address || "");
-      setValue("city", user.city || "");
-      setValue("country", user.country || "");
+      setValue("name", user?.name || "");
+      setValue("email", user?.email || "");
+      setValue("phone", user?.phone || "");
+      setValue("role_id", user?.role_id || "");
+      setValue("status", user?.status || "");
+      setValue("address", user?.address || "");
+      setValue("city", user?.city || "");
+      setValue("country", user?.country || "");
+      setValue("img", user?.img || "");
     }
   }, [user, setValue]);
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Ensure all required fields have values
     if (
       !data.name ||
       !data.email ||
       !data.phone ||
       !data.role_id ||
-      !data.status ||
-      !data.address ||
-      !data.city ||
-      !data.country
+      !data.status
     ) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return; // Exit early if any required field is missing
@@ -77,6 +74,8 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
 
     updateUser({ ...data, id: user?.id });
   };
+
+  const errorMessages = UseErrorMessages(updateError);
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -89,7 +88,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
-                Update Product
+                Update User
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +99,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       </span>
                       <input
                         type="text"
-                        placeholder="Product Name"
+                        placeholder="User Name"
                         className="input input-bordered w-full"
                         {...register("name")}
                       />
@@ -158,9 +157,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       </select>
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
-                        Address<span className="text-red-500 p-0">*</span>
-                      </span>
+                      <span className="font-semibold">Address</span>
                       <input
                         type="text"
                         placeholder="Address"
@@ -169,9 +166,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
-                        City<span className="text-red-500 p-0">*</span>
-                      </span>
+                      <span className="font-semibold">City</span>
                       <input
                         type="text"
                         placeholder="City"
@@ -180,9 +175,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
-                        Country<span className="text-red-500 p-0">*</span>
-                      </span>
+                      <span className="font-semibold">Country</span>
                       <input
                         type="text"
                         placeholder="Country"
@@ -190,6 +183,13 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         {...register("country")}
                       />
                     </label>
+                    <div className="form-control w-full">
+                      <input
+                        type="file"
+                        className="file-input file-input-bordered w-full"
+                        {...register("img")}
+                      />
+                    </div>
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">
@@ -208,6 +208,15 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                   </div>
                 </form>
               </div>
+              {/* Display error messages */}
+              {errorMessages.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>
