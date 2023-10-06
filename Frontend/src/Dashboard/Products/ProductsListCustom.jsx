@@ -15,17 +15,24 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
+import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
+import { useGetBrandsQuery } from "../../features/Brand/brandApi";
+import { da } from "date-fns/locale";
 
 const ProductsListCustom = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
- 
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
 
+  const { data: brandsData } = useGetBrandsQuery();
+  const { data: categoryData } = useGetCategoriesQuery();
+  const { data: storesData } = useGetStoresQuery();
 
   const {
     data: productsData,
@@ -37,8 +44,7 @@ const ProductsListCustom = () => {
 
   useEffect(() => {
     setFilterData(productsData?.products);
-  }, [productsData?.products , productsData]);
-
+  }, [productsData?.products, productsData]);
 
   const [
     deleteProduct,
@@ -85,6 +91,7 @@ const ProductsListCustom = () => {
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS
+  console.log(productsData?.products);
   const columns = [
     {
       name: "Serial",
@@ -138,17 +145,16 @@ const ProductsListCustom = () => {
     },
     {
       name: "Category",
-      selector: (row)=> row?.get_category?.category_name
+      selector: (row) => row?.get_category?.category_name,
+    },
+    {
+      name: "Store",
+      selector: (row) => row?.get_store?.store_name,
     },
     {
       name: "Brand",
-      selector: (row)=> row?.get_brand?.brand_name
+      selector: (row) => row?.get_brand?.brand_name,
     },
-    
-  
-   
-    
-    
 
     {
       name: "Actions",
@@ -168,11 +174,10 @@ const ProductsListCustom = () => {
   const setFiltering = (search) => {
     const filteredData = productsData?.products.filter((item) =>
       item?.product_name?.toLowerCase().includes(search.toLowerCase())
-      );
-      if(filteredData){
-        setFilterData(filteredData);
-      }
-      
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -188,6 +193,38 @@ const ProductsListCustom = () => {
     console.error(productsError);
   }
 
+  const filterCategory = (data) => {
+    if (data && productsData?.products) {
+      const filter = productsData?.products.filter(
+        (product) => product?.get_category?.id == data
+      );
+      filter && setFilterData(filter);
+    } else {
+      setFilterData(productsData?.products);
+    }
+  };
+  const filterBrand = (data) => {
+    if (data && productsData?.products) {
+      const filter = productsData?.products.filter(
+        (product) => product?.get_brand?.id == data
+      );
+      filter && setFilterData(filter);
+    } else {
+      setFilterData(productsData?.products);
+    }
+  };
+  const filterStore = (data) => {
+    if (data && productsData?.products) {
+      const filter = productsData?.products.filter(
+        (product) => product?.get_store?.id == data
+      );
+      filter && setFilterData(filter);
+    } else {
+      setFilterData(productsData?.products);
+    }
+  };
+  // console.log(brandsData.brands)
+
   return (
     <>
       <DashboardBackground>
@@ -202,20 +239,85 @@ const ProductsListCustom = () => {
           setFiltering={setFiltering}
         />
 
+        {/* filler by category , store brand */}
+        <div className="flex gap-x-7">
+          {/* category */}
+          <div className="form-control my-5 w-1/6 ">
+            <label className="label">
+              <span className="label-text font-bold">Filter by category</span>
+            </label>
+
+            <select
+              onChange={(e) => filterCategory(e?.target?.value)}
+              className=" px-4 py-2  border-2"
+            >
+              <option value={""}>Select category</option>
+              {categoryData?.categories &&
+                categoryData?.categories.map((item) => (
+                  <option key={item?.id} value={item?.id}>
+                    {item?.category_name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* store */}
+          <div className="form-control my-5 w-1/6 ">
+            <label className="label">
+              <span className="label-text font-bold">Filter by store</span>
+            </label>
+
+            <select
+              onChange={(e) => filterStore(e?.target?.value)}
+              className=" px-4 py-2  border-2"
+            >
+              <option value={""}>Select store</option>
+              {storesData?.stores &&
+                storesData?.stores.map((item) => (
+                  <option key={item?.id} value={item?.id}>
+                    {item?.store_name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* brand */}
+          <div className="form-control my-5 w-1/6 ">
+            <label className="label">
+              <span className="label-text font-bold">Filter by brand</span>
+            </label>
+
+            <select
+              onChange={(e) => filterBrand(e?.target?.value)}
+              className=" px-4 py-2  border-2"
+            >
+              <option value={""}>Select brand</option>
+              {brandsData?.brands &&
+                brandsData?.brands.map((item) => (
+                  <option key={item?.id} value={item?.id}>
+                    {item?.brand_name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        </div>
+
         {/* Products Table */}
         {!productsIsSuccess && productsData?.status ? (
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
           filterData?.length > 0 && (
-            <DataTable
-              columns={columns}
-              data={filterData}
-              pagination
-              paginationPerPage={itemsPerPage}
-              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-              paginationTotalRows={filterData?.length}
-              onChangePage={(page) => setCurrentPage(page)}
-            />
+            <div className="overflow-x-scroll">
+              <DataTable
+                columns={columns}
+                data={filterData}
+                pagination
+                paginationPerPage={itemsPerPage}
+                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+                paginationTotalRows={filterData?.length}
+                onChangePage={(page) => setCurrentPage(page)}
+              />
+            </div>
           )
         )}
         <EditProduct

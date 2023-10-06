@@ -204,14 +204,15 @@ const UsersList = () => {
   // console.log(rolesData.roles)
 
   const handleFilter = (data) => {
-    if (data) {
-      const filterUsers = allUserData.filter(
-        (user) => user?.get_role?.role === data
-      );
-
-      setFilterData(filterUsers);
-      // setReload(!reload); // Apply the filter and update the state
+    if(usersData?.users && data){
+      const filter = usersData?.users.filter((user)=> user?.get_role?.role === data)
+      setFilterData(filter)
+      
     }
+    else {
+      setFilterData(usersData?.users)
+    }
+   
   };
   // console.log(usersData?.users)
   return (
@@ -231,12 +232,12 @@ const UsersList = () => {
 
         <div className="form-control my-5 w-1/6 ">
           <label className="label">
-            <span className="label-text">Filter</span>
+            <span className="label-text font-bold">Filter by role</span>
           </label>
 
           <select
-            onClick={(e) => handleFilter(e.target.value)}
-            className=" px-4 py-2 focus:border-0"
+            onChange={(e) => handleFilter(e?.target?.value)}
+            className=" px-4 py-2  border-2"
           >
             <option value={""}>Select Role</option>
             {rolesData?.roles?.map((userRole) => (
