@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('country')->nullable();
             $table->string('img')->nullable();
             $table->rememberToken();
-            $table->text('jwt_token')->nullable();
+            // $table->text('jwt_token')->nullable();
             $table->date('token_expire_time')->nullable();
             $table->unsignedBigInteger("role_id");
             $table->foreign('role_id')->references('id')->on('roles');

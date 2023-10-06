@@ -17,16 +17,11 @@ const Login = () => {
     dispatch(loginUser({ email, password }));
   };
 
-
-
   let access_token = JSON.parse(localStorage.getItem("access_token"));
-  
+
   if (access_token) {
     return navigate("/dashboard");
   }
- 
-  
-  
 
   return (
     <div className="p-10  bg-gray-100">

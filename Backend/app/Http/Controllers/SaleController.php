@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompanyInfo;
-use App\Models\Customer;
-use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\Sale;
+use App\Models\Product;
+use App\Models\Customer;
 use App\Models\SaleItem;
+use App\Models\CompanyInfo;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class SaleController extends Controller
 {
@@ -89,21 +90,28 @@ class SaleController extends Controller
     public function store(Request $request)
     {
 
-
         $codeValidation = Validator::make($request->all(), [
-            'invoiceInfo.issueDate' => 'required',
-            'company_name' => 'string|nullable',
-            'company_email' => 'nullable|email',
-            'company_phone' => 'nullable',
-            'company_address' => 'nullable',
-            'customer_name' => 'string|required',
-            'customer_email' => 'nullable|email',
-            'customer_phone' => 'nullable',
-            'customer_address' => 'nullable',
-            'discount' => 'required',
-            'shipping' => 'required',
-            'total' => 'required',
-            'items' => 'required'
+            'invoiceInfo.issueDate' => 'required|date_format:d-M-Y',
+            'invoiceInfo.dueDate' => 'required|date_format:d-M-Y',
+            'calculation.discount' => 'required|numeric',
+            'calculation.shipping' => 'required|numeric',
+            'calculation.subTotal' => 'required|numeric',
+            'calculation.total' => 'required|numeric',
+            'calculation.due' => 'required|numeric',
+            'customer.address' => 'required|string',
+            'customer.email' => 'required|email',
+            'customer.id' => 'required|numeric',
+            'customer.name' => 'required|string',
+            'customer.phone' => 'required|string',
+            'items.*.category_id' => 'required|numeric',
+            'items.*.category_name' => 'required|string',
+            'items.*.code' => 'required|string',
+            'items.*.desc' => 'required|string',
+            'items.*.id' => 'required|numeric',
+            'items.*.name' => 'required|string',
+            'items.*.price' => 'required|numeric',
+            'items.*.quantity' => 'required|numeric',
+            'items.*.unit' => 'required|string',
         ]);
         if ($codeValidation->fails()) {
             return response()->json([
@@ -111,31 +119,43 @@ class SaleController extends Controller
                 'errors' => $codeValidation->errors()
             ], 500);
         } else {
-            $customer = Customer::where('phone', $request->customer_phone)->orWhere('email', $request->customer_email)->first();
-            if ($customer) {
+            $customerInfo = (object) $request->customer;
+            $customer = Customer::where('phone', $customerInfo->phone)->orWhere('email', $customerInfo->email)->first();
+            if ($customer != null) {
                 $customer_id = $customer->id;
                 $customer_name = $customer->name;
                 $customer_email = $customer->email;
                 $customer_phone = $customer->phone;
                 $customer_address = $customer->address;
             } else {
-                Customer::create([
-                    'name' => $request->customer_name,
-                    'email' => $request->customer_email,
-                    'phone' => $request->customer_phone,
-                    'address' => $request->customer_address,
+                $customer = Customer::create([
+                    'name' => $customerInfo->name,
+                    'email' => $customerInfo->email,
+                    'phone' => $customerInfo->phone,
+                    'address' => $customerInfo->address,
                 ]);
-                $newcustomer = Customer::latest()->first();
-                $customer_id = $newcustomer->id;
-                $customer_name = $newcustomer->name;
-                $customer_email = $newcustomer->email;
-                $customer_phone = $newcustomer->phone;
-                $customer_address = $newcustomer->address;
+                $newCustomer = Customer::find($customer->id);
+                $customer_id = $newCustomer->id;
+                $customer_name = $newCustomer->name;
+                $customer_email = $newCustomer->email;
+                $customer_phone = $newCustomer->phone;
+                $customer_address = $newCustomer->address;
             }
 
             $prefix = "#INV-";
-            $invoice_no = $prefix . $customer->id . Str::random(3);
-            Sale::create([
+            $year = date("y");
+            $latestSale = Sale::latest()->first();
+            if ($latestSale != null) {
+                $newSaleId = $latestSale->id + 1;
+            } else {
+                $newSaleId = 1;
+            }
+            $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
+            $invoiceInfo = (object) $request->invoiceInfo;
+            $calculation = (object) $request->calculation;
+            $formattedIssueDate = date('Y-m-d', strtotime($invoiceInfo->issueDate));
+            $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
+            $sale = Sale::create([
                 'invoice_no' => $invoice_no,
                 'invoice_date' => $request->invoice_date,
                 'company_name' => $request->company_name,
@@ -147,24 +167,39 @@ class SaleController extends Controller
                 'customer_email' => $customer_email,
                 'customer_phone' => $customer_phone,
                 'customer_address' => $customer_address,
-                'discount' => $request->discount,
-                'shipping' => $request->shipping,
-                'total' => $request->total,
+                'discount' => $calculation->discount,
+                'shipping' => $calculation->shipping,
+                'total' => $calculation->total,
+                'issue_date' => $formattedIssueDate,
+                'due_date' => $formattedDueDate
             ]);
 
-            $sale = Sale::latest()->first();
-
+            $sale = Sale::find($sale->id);
             $sale_id = $sale->id;
             $input = $request->all();
             foreach ($input['items'] as $key => $value) {
+                $product = Product::find($value['id']);
+
+                if ($product == null) {
+                    return response()->json([
+                        'status' => false,
+                        'error' => "Product not found"
+                    ], 404);
+                }
+                if ($product['product_desc'] == null) {
+                    return $product->id . " description is empty";
+                }
+
                 $item['sale_id'] = $sale_id;
-                $item['product_id'] = $value['product_id'];
-                $item['name'] = $value['name'];
-                $item['code'] = $value['code'];
+                $item['product_id'] = $value['id'];
+                $item['name'] = $product['product_name'];
+                $item['code'] = $product['product_code'];
                 $item['quantity'] = $value['quantity'];
-                $item['rate'] = $value['rate'];
+                $item['rate'] = $value['price'];
+                $item['product_retail_price'] = $product->product_retail_price;
                 $item['unit'] = $value['unit'];
-                $item['description'] = $value['description'];
+
+                $item['description'] = $product['product_desc'];
                 SaleItem::create($item);
             }
 

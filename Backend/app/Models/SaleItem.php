@@ -19,6 +19,7 @@ class SaleItem extends Model
         'unit',
         'quantity',
         'rate',
+        'product_retail_price',
     ];
 
     public function sales()
