@@ -91,7 +91,7 @@ class SaleController extends Controller
 
 
         $codeValidation = Validator::make($request->all(), [
-            'invoice_date' => 'required',
+            'invoiceInfo.issueDate' => 'required',
             'company_name' => 'string|nullable',
             'company_email' => 'nullable|email',
             'company_phone' => 'nullable',
