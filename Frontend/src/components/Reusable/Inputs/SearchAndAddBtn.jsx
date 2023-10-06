@@ -9,7 +9,7 @@ const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
           type="text"
           className="input input-bordered rounded-full mb-3 lg:mb-0 w-full sm:w-1/2 md:w-1/3"
           onChange={(e) => setFiltering(e.target.value)}
-          placeholder="Search"
+          placeholder="Search by name"
         />
 
         <Link

@@ -14,10 +14,21 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import InvoicePDF from "../../components/PDF/InvoicePDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import DataTable from "react-data-table-component";
+import { FaEdit } from "react-icons/fa";
 
 const CategoriesListCustom = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [category, setCategory] = useState({});
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
+  const itemsPerPage = 10;
+
+
 
   const {
     data: categoriesData,
@@ -37,6 +48,11 @@ const CategoriesListCustom = () => {
       data: deleteData,
     },
   ] = useDeleteCategoryMutation();
+
+
+  useEffect(() => {
+    setFilterData(categoriesData?.categories);
+  }, [categoriesData?.categories ,categoriesData]);
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -88,9 +104,60 @@ const CategoriesListCustom = () => {
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS
-  const setFiltering = (data) => {
-    console.log(data);
+  const setFiltering = (search) => {
+    const filteredData = categoriesData?.categories?.filter((item) =>
+      item?.category_name?.toLowerCase().includes(search.toLowerCase())
+      );
+      if(filteredData){
+        setFilterData(filteredData);
+      }
+      
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+ 
+  const columns = [
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber =
+          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
+
+   
+    {
+      name: "Name",
+      selector: "category_name",
+    },
+    {
+      name: "Description",
+      selector: "description",
+    },
+   
+    
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button onClick={() => handleModalEditInfo(row)}>
+            <FaEdit size={20}></FaEdit>
+          </button>
+          <button onClick={() => onDelete(row?.id)}>
+            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+        </div>
+      ),
+    },
+  ];
+
+
+
   // SEARCH FILTERING ENDS
 
   // ALL CATEGORIES
@@ -108,6 +175,8 @@ const CategoriesListCustom = () => {
         <Link to={"/dashboard/invoice/new"}>
           <button className="btn"> click</button>
         </Link>
+
+        <PDFDownloadLink document={<InvoicePDF invoiceData={'h'}></InvoicePDF>} fileName="blog.pdf" className="btn btn-primary"> Download  </PDFDownloadLink>
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}
@@ -120,61 +189,17 @@ const CategoriesListCustom = () => {
           setFiltering={setFiltering}
         />
         {/* Categories Table */}
-        {!categoriesIsSuccess && categoriesData?.status ? (
-          <p className="text-center text-2xl mt-10">
-            {categoriesData?.message}
-          </p>
-        ) : (
-          <div className="overflow-x-scroll">
-            <table className="table table-sm table-pin-rows table-pin-cols">
-              {/* Table header */}
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {categoriesData?.categories?.map((category) => (
-                  <tr key={category?.id}>
-                    <td>{category?.id}</td>
-                    <td>{category?.category_name}</td>
-                    <td>{category?.description}</td>
-                    <td className="flex gap-x-2 items-center">
-                      <FiEdit
-                        onClick={() => {
-                          handleModalEditInfo(category);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                      <RiDeleteBin4Line
-                        onClick={() => {
-                          onDelete(category?.id);
-                        }}
-                        className="cursor-pointer"
-                        size={20}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-
-              <tfoot>
-                <tr>
-                  <th>ID</th>
-
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        )}
+        {filterData?.length > 0 && (
+            <DataTable
+              columns={columns}
+              data={filterData}
+              pagination
+              paginationPerPage={itemsPerPage}
+              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+              paginationTotalRows={filterData?.length}
+              onChangePage={(page) => setCurrentPage(page)}
+            /> )}
+       
         <EditCategory
           category={category}
           modalIsOpen={modalIsOpen}
