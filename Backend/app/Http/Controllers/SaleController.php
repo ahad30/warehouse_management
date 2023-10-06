@@ -88,28 +88,38 @@ class SaleController extends Controller
     // store
     public function store(Request $request)
     {
-
-
-        $codeValidation = Validator::make($request->all(), [
-            'invoiceInfo.issueDate' => 'required',
-            'company_name' => 'string|nullable',
-            'company_email' => 'nullable|email',
-            'company_phone' => 'nullable',
-            'company_address' => 'nullable',
-            'customer_name' => 'string|required',
-            'customer_email' => 'nullable|email',
-            'customer_phone' => 'nullable',
-            'customer_address' => 'nullable',
-            'discount' => 'required',
-            'shipping' => 'required',
-            'total' => 'required',
-            'items' => 'required'
-        ]);
+        // return $request->all();
+        if ($request->invoiceInfo) {
+            $codeValidation = Validator::make($request->invoiceInfo, [
+                'issueDate' => 'required',
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => "Please Provide invoice information"
+            ], 400);
+        }
+        // $codeValidation = Validator::make($request->all(), [
+        //     'invoiceInfo.issueDate' => 'required',
+        //     'company_name' => 'string|nullable',
+        //     'company_email' => 'nullable|email',
+        //     'company_phone' => 'nullable',
+        //     'company_address' => 'nullable',
+        //     'customer_name' => 'string|required',
+        //     'customer_email' => 'nullable|email',
+        //     'customer_phone' => 'nullable',
+        //     'customer_address' => 'nullable',
+        //     'discount' => 'required',
+        //     'shipping' => 'required',
+        //     'total' => 'required',
+        //     'items' => 'required'
+        // ]);
         if ($codeValidation->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $codeValidation->errors()
-            ], 500);
+            ], 400);
+
         } else {
             $customer = Customer::where('phone', $request->customer_phone)->orWhere('email', $request->customer_email)->first();
             if ($customer) {
@@ -179,5 +189,6 @@ class SaleController extends Controller
                 ]
             ]);
         }
+
     }
 }

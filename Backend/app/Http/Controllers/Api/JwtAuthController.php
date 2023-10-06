@@ -129,6 +129,8 @@ class JwtAuthController extends Controller
                 $user->jwt_token = $token;
                 $user->token_expire_time = Carbon::now()->addWeek();
                 $user->save();
+
+                $tokenData = $this->respondWithToken($token);
                 // finding role with user using user role_id
 
                 $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
@@ -140,7 +142,8 @@ class JwtAuthController extends Controller
                     return response()->json([
                         'status' => true,
                         'message' => 'User Login Successfully',
-                        'user' => $roleWithUser
+                        'user' => $roleWithUser,
+                        'token' => $tokenData
                     ]);
                 }
             }
@@ -204,7 +207,7 @@ class JwtAuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'expires_in' => $this->guard()->factory()->getTTL() * 336
         ]);
     }
 

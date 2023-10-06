@@ -29,6 +29,7 @@ return new class extends Migration {
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->date('issue_date');
             $table->date('due_date')->nullable();
+            $table->timestamps();
         });
     }
 
