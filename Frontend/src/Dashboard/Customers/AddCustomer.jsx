@@ -98,14 +98,11 @@ const AddCustomer = () => {
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold min-w-[100px]">
-              Address<span className="text-red-500 p-0">*</span>
-            </span>
+            <span className="font-semibold min-w-[100px]">Address</span>
             <input
               type="text"
               placeholder="Address"
               className="input input-bordered w-full"
-              required
               {...register("address")}
             />
           </label>
@@ -118,12 +115,6 @@ const AddCustomer = () => {
               {...register("notes")}
             />
           </label>
-          <div className="form-control w-full">
-            <input
-              type="file"
-              className="file-input file-input-bordered w-full"
-            />
-          </div>
         </div>
         <SubmitButton
           icon={<AiOutlineUserAdd size={20} />}

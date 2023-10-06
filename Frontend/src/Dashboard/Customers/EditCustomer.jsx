@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateCustomerMutation } from "../../features/Customer/customerApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -19,18 +20,15 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   ] = useUpdateCustomerMutation();
 
   const onSubmit = (data) => {
-    if (
-      !customer.name ||
-      !customer.email ||
-      !customer.phone ||
-      !customer.address
-    ) {
+    if (!customer?.name || !customer?.email) {
       toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
+      return;
     }
 
     updateCustomer({ ...data, id: customer?.id });
   };
+
+  const errorMessages = UseErrorMessages(updateError);
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -57,11 +55,11 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (customer) {
-      setValue("name", customer.name || "");
-      setValue("email", customer.email || "");
-      setValue("phone", customer.phone || "");
-      setValue("address", customer.address || "");
-      setValue("notes", customer.notes || "");
+      setValue("name", customer?.name || "");
+      setValue("email", customer?.email || "");
+      setValue("phone", customer?.phone || "");
+      setValue("address", customer?.address || "");
+      setValue("notes", customer?.notes || "");
     }
   }, [customer, setValue]);
 
@@ -76,7 +74,7 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
-                Update Product
+                Update Customer
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -87,20 +85,9 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
                       </span>
                       <input
                         type="text"
-                        placeholder="Product Name"
+                        placeholder="Customer Name"
                         className="input input-bordered w-full"
                         {...register("name")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Email<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Email"
-                        className="input input-bordered w-full"
-                        {...register("email")}
                       />
                     </label>
                     <label className="input-group">
@@ -115,9 +102,16 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
                       />
                     </label>
                     <label className="input-group">
-                      <span className="font-semibold">
-                        Address<span className="text-red-500 p-0">*</span>
-                      </span>
+                      <span className="font-semibold">Email</span>
+                      <input
+                        type="text"
+                        placeholder="Email"
+                        className="input input-bordered w-full"
+                        {...register("email")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold">Address</span>
                       <input
                         type="text"
                         placeholder="Address"
@@ -152,6 +146,15 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
                   </div>
                 </form>
               </div>
+              {/* Display error messages */}
+              {errorMessages.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>
