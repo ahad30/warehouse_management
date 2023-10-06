@@ -61,6 +61,7 @@ const authSlice = createSlice({
       localStorage.removeItem("access_token");
       state.user = null;
       state.access_token = "";
+      // window.location.replace("/login");
     },
   },
   extraReducers: (builder) => {

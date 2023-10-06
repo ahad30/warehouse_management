@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getInvoice } from "../../../features/Invoice/invoiceSlice";
+import { addDays, format } from "date-fns";
 
 const InvoiceInfo = () => {
   const dispatch = useDispatch();
+  const issueDate = format(new Date(), "yyyy-MM-dd");
 
-  const [invoice, setInvoice] = useState({
-    invoiceNo: 0,
-    issueDate: "",
-    dueDate: "",
+  const dueDate = addDays(new Date(), 3);
+  const formattedDueDate = format(dueDate, "yyyy-MM-dd");
+
+  const [invoiceInfo, setInvoiceInfo] = useState({
+    issueDate: issueDate || "",
+    dueDate: formattedDueDate || "",
   });
 
   // GET INPUT VALUE FROM INPUT FIELD
   const handleOnChange = (event) => {
     const { name, value } = event.target;
 
-    setInvoice((prev) => ({
+    setInvoiceInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -23,51 +27,33 @@ const InvoiceInfo = () => {
 
   // INVOICE SEND TO REDUX STORE
   useEffect(() => {
-    dispatch(getInvoice(invoice));
-  }, [dispatch, invoice]);
+    dispatch(getInvoice(invoiceInfo));
+  }, [dispatch, invoiceInfo]);
 
   return (
-    <div className="my-5">
-      <h2 className="text-2xl font-bold mb-3">Invoice</h2>
-      <form className="flex flex-col md:flex-row justify-normal md:justify-between md:items-center gap-5">
-        <div className="form-control">
-          <label className="input-group input-group-sm">
-            <span>Invoice #</span>
-            <input
-              onChange={handleOnChange}
-              name="invoiceNo"
-              type="text"
-              placeholder="123456"
-              className="input input-bordered input-sm"
-            />
-          </label>
-        </div>
-        <div className="form-control">
-          <label className="input-group input-group-sm">
-            <span>Invoice Issue Date:</span>
-            <input
-              onChange={handleOnChange}
-              name="issueDate"
-              type="date"
-              placeholder="Type here"
-              className="input input-bordered input-sm"
-            />
-          </label>
-        </div>
-
-        <div className="form-control">
-          <label className="input-group input-group-sm">
-            <span>Invoice Due Date:</span>
-            <input
-              onChange={handleOnChange}
-              name="dueDate"
-              type="date"
-              placeholder=""
-              className="input input-bordered input-sm"
-            />
-          </label>
-        </div>
-      </form>
+    <div className="my-5 bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
+      <div className="grid grid-cols-2 gap-x-5 ">
+        <label htmlFor="Issue Date">
+          Issue Date
+          <input
+            onChange={handleOnChange}
+            name="issueDate"
+            type="date"
+            className="input input-bordered w-full"
+            defaultValue={issueDate}
+          />
+        </label>
+        <label htmlFor="Due Date">
+          Due Date
+          <input
+            onChange={handleOnChange}
+            name="dueDate"
+            type="date"
+            className="input input-bordered w-full"
+            defaultValue={formattedDueDate}
+          />
+        </label>
+      </div>
     </div>
   );
 };

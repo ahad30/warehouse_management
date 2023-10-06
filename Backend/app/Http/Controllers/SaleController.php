@@ -24,7 +24,10 @@ class SaleController extends Controller
                 'message' => 'No Invoices found',
                 'invoices' => $invoices,
             ]);
+
+
         } else {
+
             return response()->json([
                 'status' => true,
                 'invoices' => $invoices,
@@ -33,25 +36,59 @@ class SaleController extends Controller
     }
 
     // create
-    public function create()
+    public function create($brand_id = null, $category_id = null)
     {
         $company_info = CompanyInfo::latest()->first();
         $customers = Customer::all();
-        $products = Product::all();
+        $products = Product::where('product_quantity', '>', '0')->with('getCategory', 'getBrand', 'getStore')->get();
+        if ($brand_id == null && $category_id == null) {
+            return response()->json([
+                'status' => true,
+                'data' => [
+                    'company_info' => $company_info,
+                    'customers' => $customers,
+                    'products' => $products,
+                ],
+            ]);
 
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'company_info' => $company_info,
-                'customers' => $customers,
-                'products' => $products,
-            ],
-        ]);
+        } elseif ($brand_id != null && $category_id == null) {
+            $products = Product::where('product_quantity', '>', '0')->where('brand_id', $brand_id)->with('getCategory', 'getBrand', 'getStore')->get();
+            return response()->json([
+                'status' => true,
+                'data' => [
+                    'company_info' => $company_info,
+                    'customers' => $customers,
+                    'products' => $products,
+                ],
+            ]);
+        } elseif ($brand_id == null && $category_id != null) {
+            $products = Product::where('product_quantity', '>', '0')->where('category_id', $category_id)->with('getCategory', 'getBrand', 'getStore')->get();
+            return response()->json([
+                'status' => true,
+                'data' => [
+                    'company_info' => $company_info,
+                    'customers' => $customers,
+                    'products' => $products,
+                ],
+            ]);
+        } else {
+            $products = Product::where('product_quantity', '>', '0')->where('brand_id', $brand_id)->where('category_id', $category_id)->with('getCategory', 'getBrand', 'getStore')->get();
+            return response()->json([
+                'status' => true,
+                'data' => [
+                    'company_info' => $company_info,
+                    'customers' => $customers,
+                    'products' => $products,
+                ],
+            ]);
+        }
+
     }
 
     // store
     public function store(Request $request)
     {
+
 
         $codeValidation = Validator::make($request->all(), [
             'invoice_date' => 'required',
@@ -116,6 +153,7 @@ class SaleController extends Controller
             ]);
 
             $sale = Sale::latest()->first();
+
             $sale_id = $sale->id;
             $input = $request->all();
             foreach ($input['items'] as $key => $value) {

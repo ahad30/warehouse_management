@@ -24,7 +24,7 @@ const CustomerInfo = ({ customers }) => {
 
   const handleSelectedPhone = (phone) => {
     const matchedCustomer = customers?.find(
-      (customer) => customer.phone === phone
+      (customer) => customer?.phone === phone
     );
     setCustomer(matchedCustomer);
   };
@@ -34,52 +34,75 @@ const CustomerInfo = ({ customers }) => {
   }, [dispatch, customer]);
 
   return (
-    <>
+    <div className="bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
+      <h2 className="text-2xl font-semibold mb-3">Billing To</h2>
       <form>
-        <h2 className="text-xl font-semibold mb-3">Billing To:</h2>
-        <input
-          onChange={handleInputChange}
-          name="name"
-          type="text"
-          placeholder="Customer Name"
-          className="input input-bordered input-md w-full my-2"
-          required
-          defaultValue={customer?.name}
-          disabled
-        />
-        <input
-          onChange={handleInputChange}
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="input input-bordered input-md w-full my-2"
-          defaultValue={customer?.email}
-          disabled
-        />
-        <select
-          className="select select-bordered w-full my-2"
-          onChange={(e) => handleSelectedPhone(e.target.value)}
-          required
-          name="name"
-        >
-          <option value="">Select Customer Phone</option>
-          {customers?.map((customer, i) => (
-            <option key={i} value={customer?.phone}>
-              {customer?.phone}
-            </option>
-          ))}
-        </select>
-        <input
-          onChange={handleInputChange}
-          name="address"
-          type="text"
-          placeholder="Address"
-          className="input input-bordered input-md w-full my-2"
-          defaultValue={customer?.address}
-          disabled
-        />
+        <label htmlFor="">
+          Select Customers <br />
+          <select
+            className="select select-bordered sm:w-full my-2"
+            onChange={(e) => handleSelectedPhone(e.target.value)}
+            name="name"
+          >
+            <option value="">Select Customer Phone</option>
+            {customers?.map((customer, i) => (
+              <option key={i} value={customer?.phone}>
+                {customer?.phone}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="grid sm:grid-cols-2 gap-x-5">
+          <label htmlFor="Name">
+            Customer Name
+            <input
+              onChange={handleInputChange}
+              name="name"
+              type="text"
+              placeholder="Customer Name"
+              className="input input-bordered input-md w-full my-2"
+              required
+              defaultValue={customer?.name}
+            />
+          </label>
+          <label htmlFor="Phone">
+            Customer Phone
+            <input
+              onChange={handleInputChange}
+              name="phone"
+              type="text"
+              placeholder="Customer Phone"
+              className="input input-bordered input-md w-full my-2"
+              required
+              defaultValue={customer?.phone}
+            />
+          </label>
+          <label htmlFor="">
+            Customer Email
+            <input
+              onChange={handleInputChange}
+              name="email"
+              type="email"
+              placeholder="Customer Email"
+              className="input input-bordered input-md w-full my-2"
+              defaultValue={customer?.email}
+            />
+          </label>
+
+          <label htmlFor="Address">
+            Customer Address
+            <input
+              onChange={handleInputChange}
+              name="address"
+              type="text"
+              placeholder="Customer Address"
+              className="input input-bordered input-md w-full my-2"
+              defaultValue={customer?.address}
+            />
+          </label>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 
