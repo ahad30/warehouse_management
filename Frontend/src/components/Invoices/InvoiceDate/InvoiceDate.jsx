@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getInvoice } from "../../../features/Invoice/invoiceSlice";
 import { addDays, format } from "date-fns";
 
-const InvoiceInfo = () => {
+const InvoiceDate = () => {
   const dispatch = useDispatch();
   const issueDate = format(new Date(), "yyyy-MM-dd");
 
@@ -31,7 +31,7 @@ const InvoiceInfo = () => {
   }, [dispatch, invoiceInfo]);
 
   return (
-    <div className="my-5 bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
+    <div className="mb-5 bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
       <div className="grid grid-cols-2 gap-x-5 ">
         <label htmlFor="Issue Date">
           Issue Date
@@ -58,4 +58,4 @@ const InvoiceInfo = () => {
   );
 };
 
-export default InvoiceInfo;
+export default InvoiceDate;

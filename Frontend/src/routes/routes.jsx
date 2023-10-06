@@ -34,7 +34,6 @@ import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
 // import Settings from "../Dashboard/Settings/Settings";
 import SettingsNew from "../Dashboard/Settings/SettingsNew";
 import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
-import GenerateNewInvoice from "../Dashboard/Invoices/GenerateNewInvoice/GenerateNewInvoice";
 
 const routes = createBrowserRouter([
   {
@@ -165,10 +164,6 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/invoice/new",
         element: <NewInvoice />,
-      },
-      {
-        path: "/dashboard/invoice/add",
-        element: <GenerateNewInvoice />,
       },
       {
         path: "/dashboard/invoice",
