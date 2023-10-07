@@ -25,7 +25,13 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
       return;
     }
 
-    updateCategory({ ...data, id: brand?.id });
+    const formData = new FormData();
+    formData.append("brand_name", data?.brand_name);
+    if (data?.brand_img) {
+      formData.append("brand_img", data?.brand_img[0]);
+    }
+
+    updateCategory({ ...formData, id: brand?.id });
   };
 
   const errorMessages = UseErrorMessages(updateError);

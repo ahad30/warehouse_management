@@ -7,6 +7,7 @@ import { deleteItem, getItem } from "../../../features/Invoice/invoiceSlice";
 import { array } from "prop-types";
 import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../../features/Brand/brandApi";
+import { toast } from "react-hot-toast";
 
 const ItemsWithSelect = ({ products }) => {
   const dispatch = useDispatch();
@@ -49,9 +50,14 @@ const ItemsWithSelect = ({ products }) => {
   // ADD TO ITEM LIST
   const handleAddItem = () => {
     if (item) {
-      setItemList([...itemList, item]);
-      setSelectedItem({});
-      setQuantity(1);
+      let existItem = itemList.find((Item) => Item?.id === item?.id);
+      if (existItem) {
+        return toast.error("Item already added", { id: 1 });
+      } else if (!existItem) {
+        setItemList([...itemList, item]);
+        setSelectedItem({});
+        setQuantity(1);
+      }
     }
   };
 
@@ -151,6 +157,7 @@ const ItemsWithSelect = ({ products }) => {
                 className="input input-bordered input-md w-full"
                 onChange={handleQuantity}
                 min={1}
+                max={selectedItem?.product_quantity}
                 required
                 value={quantity}
               />
@@ -172,7 +179,9 @@ const ItemsWithSelect = ({ products }) => {
           <div className="flex items-center justify-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 text-sm mb-1">
             <AiOutlinePlusCircle size={25} />
             <button
-              className="w-full bg-[#0369A1] text-white cursor-pointer"
+              className={`w-full bg-[#0369A1] text-white ${
+                selectedItem?.product_name && "cursor-pointer"
+              }`}
               disabled={!selectedItem?.product_name}
               onClick={handleAddItem}
             >
