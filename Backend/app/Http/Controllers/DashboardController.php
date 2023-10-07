@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $totalCategory = Category::all();
         $totalBrand = Brand::all();
         $totalRevenue = sale::all()->sum('paid_amount');
-        $totalRevenueInOneMonth = SaleItem::
+        // $totalRevenueInOneMonth = SaleItem::
         return response()->json([
             'status' => true,
             'data' => [

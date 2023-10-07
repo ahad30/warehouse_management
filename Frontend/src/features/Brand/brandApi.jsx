@@ -29,6 +29,7 @@ const brandApi = apiSlice.injectEndpoints({
       query: (categoryData) => ({
         method: "PUT",
         url: `/brands/update`,
+        headers: { "Content-Type": "multipart/form-data" },
         body: categoryData,
       }),
       invalidatesTags: ["Brands"],

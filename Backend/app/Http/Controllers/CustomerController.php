@@ -35,6 +35,7 @@ class CustomerController extends Controller
             'email' => 'nullable|email|max:255',
             'address' => 'nullable|string|max:255',
             'notes' => 'nullable|string|max:255',
+            'profile_image' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ]);
 
         if ($validateInput->fails()) {

@@ -22,10 +22,10 @@ const AddBrand = () => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("brand_name", data?.brand_name);
-    if (data?.brand_img) {
+    if (data?.brand_img.length > 0) {
       formData.append("brand_img", data?.brand_img[0]);
     }
-    console.log(data);
+    // console.log(data);
     addBrand(formData);
   };
 
@@ -95,7 +95,6 @@ const AddBrand = () => {
         >
           {errorMessage}
         </p>
-        
       ))}
     </DashboardBackground>
   );
