@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
-import { logOut } from "../../../features/Auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { UseErrorMessages } from "../../Reusable/UseErrorMessages/UseErrorMessages";
 
@@ -10,32 +9,29 @@ const SubmitInvoice = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const invoice = useSelector((state) => state?.invoice);
-
+  const { customer, items } = invoice;
+  console.log(items);
   const [
     newInvoice,
     { isLoading, isError, error, isSuccess, data: newInvoiceData },
   ] = useNewInvoiceMutation();
 
   const handleNewInvoice = () => {
-    console.log(invoice?.calculation);
-    newInvoice(invoice);
+    if (!customer?.name || (!customer?.phone && !customer?.email)) {
+      toast.error("Please Provide Customer Info", { id: 1 });
+    } else if (items?.length === 0) {
+      toast.error("Please select items", { id: 1 });
+    } else if (items?.length > 0) {
+      newInvoice(invoice);
+    }
   };
 
   const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
-    const handleApiError = (error) => {
-      if (error?.originalStatus === 405) {
-        toast.error("Invalid Token Please Re-Login!");
-        return dispatch(logOut());
-      } else {
-        const errorMessage = error?.data?.message || error?.status;
-        toast.error(errorMessage, { id: 1 });
-      }
-    };
-
     if (isError) {
-      handleApiError(error);
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
     }
     if (isSuccess && newInvoiceData?.status) {
       toast.success(newInvoiceData?.message, { id: 1 });
@@ -51,13 +47,15 @@ const SubmitInvoice = () => {
     navigate,
   ]);
 
-  console.log(isLoading, isError, error, isSuccess, newInvoiceData);
-
   return (
     <>
       <div className="w-[300px] ml-auto flex justify-center bg-[#0369A1] text-white rounded-md px-3 py-2">
-        <button className="" onClick={handleNewInvoice}>
-          Save Invoice
+        <button
+          className=""
+          onClick={handleNewInvoice}
+          disabled={items?.length === 0}
+        >
+          {isLoading ? "Saving..." : "Save Invoice"}
         </button>
       </div>
       {errorMessages &&
