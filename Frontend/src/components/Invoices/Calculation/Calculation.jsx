@@ -39,10 +39,12 @@ const Calculation = () => {
       discount,
       shipping,
       total,
+      paidAmount,
+      due,
     };
 
     dispatch(getTotalPrice(calculation));
-  }, [subTotal, discount, shipping, total, dispatch]);
+  }, [subTotal, discount, shipping, total, paidAmount, due, dispatch]);
 
   const handleDiscountPrice = (event) => {
     const { value } = event.target;

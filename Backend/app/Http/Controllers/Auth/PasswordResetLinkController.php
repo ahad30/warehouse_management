@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -31,6 +32,14 @@ class PasswordResetLinkController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
+
+        $user = User::where('email', $request->email)->first();
+        if ($user == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found!',
+            ], 400);
+        }
         // if (env('MAIL_USERNAME') == null || env('MAIL_PASSWORD')) {
         //     return response()->json([
         //         'status' => false,
@@ -40,16 +49,16 @@ class PasswordResetLinkController extends Controller
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
+        $message = Password::sendResetLink(
             $request->only('email')
         );
 
-        if ($status != Password::RESET_LINK_SENT) {
+        if ($message != Password::RESET_LINK_SENT) {
             throw ValidationException::withMessages([
-                'email' => [__($status)],
+                'email' => [__($message)],
             ]);
         }
 
-        return response()->json(['status' => __($status)]);
+        return response()->json(['status' => true, 'message' => __($message)]);
     }
 }

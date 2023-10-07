@@ -9,6 +9,7 @@ use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,12 +24,13 @@ class DashboardController extends Controller
         $totalStore = Store::all();
         $totalCategory = Category::all();
         $totalBrand = Brand::all();
-        // $totalRevenue = Proudct->sum('total')
+        $totalRevenue = sale::all()->sum('paid_amount');
+        $totalRevenueInOneMonth = SaleItem::
         return response()->json([
             'status' => true,
             'data' => [
                 'totalSales' => $totalsales->count(),
-                // 'totalRevenue' => ,
+                'totalRevenue' => $totalRevenue,
                 'totalProducts' => $totalproducts->count(),
                 'totalCustomers' => $totalcustomers->count(),
                 'totalUsers' => $totalusers->count(),

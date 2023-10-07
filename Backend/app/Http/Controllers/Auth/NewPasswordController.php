@@ -41,7 +41,7 @@ class NewPasswordController extends Controller
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
-        $status = Password::reset(
+        $message = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
                 $user->forceFill([
@@ -53,12 +53,12 @@ class NewPasswordController extends Controller
             }
         );
 
-        if ($status != Password::PASSWORD_RESET) {
+        if ($message != Password::PASSWORD_RESET) {
             throw ValidationException::withMessages([
-                'email' => [__($status)],
+                'email' => [__($message)],
             ]);
         }
 
-        return response()->json(['status' => __($status)]);
+        return response()->json(['status' => true, 'message' => __($message)]);
     }
 }

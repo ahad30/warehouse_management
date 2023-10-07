@@ -114,7 +114,7 @@ class JwtAuthController extends Controller
                 ], 401);
             }
 
-            if (!Auth::attempt($request->only(['email', 'password']))) {
+            if (!JWTAuth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -125,6 +125,7 @@ class JwtAuthController extends Controller
             if ($token = $this->guard()->attempt($credentials)) {
                 $user = auth()->user();
                 $tokenData = $this->respondWithToken($token);
+
                 // finding role with user using user role_id
 
                 $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
@@ -199,17 +200,10 @@ class JwtAuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        // Calculate the expiration timestamp by adding 7 days to the current time
-        $expiration = Carbon::now()->addDays(7);
-
-        // Calculate the TTL for a token that will expire in 7 days
-        $ttlFor7Days = $expiration->diffInSeconds(Carbon::now());
-
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->factory()->getTTL()
-            // 'expires_in' => $this->guard()->factory()->make(['exp' => $ttlFor7Days])
         ]);
     }
 

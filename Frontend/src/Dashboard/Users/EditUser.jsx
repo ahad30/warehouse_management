@@ -102,6 +102,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         placeholder="User Name"
                         className="input input-bordered w-full"
                         {...register("name")}
+                        readOnly
                       />
                     </label>
                     <label className="input-group">
@@ -125,6 +126,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         placeholder="Phone"
                         className="input input-bordered w-full"
                         {...register("phone")}
+                        readOnly
                       />
                     </label>
                     <label className="input-group">
@@ -172,6 +174,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         placeholder="City"
                         className="input input-bordered w-full"
                         {...register("city")}
+                        readOnly
                       />
                     </label>
                     <label className="input-group">
@@ -181,6 +184,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         placeholder="Country"
                         className="input input-bordered w-full"
                         {...register("country")}
+                        readOnly
                       />
                     </label>
                     <div className="form-control w-full">
@@ -188,6 +192,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         type="file"
                         className="file-input file-input-bordered w-full"
                         {...register("img")}
+                        readOnly
                       />
                     </div>
                   </div>

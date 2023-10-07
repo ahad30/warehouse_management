@@ -27,6 +27,9 @@ class UserProfileController extends Controller
             $roleWithUser = User::where('id', $user->id)->with('getRole')->first();
             $role = $roleWithUser->getRole->role;
             $roleWithUser['jwt_token'] = request()->bearerToken();
+
+
+
             if (!is_null($role)) {
                 // $payload = JWTAuth::decode($user);
 
@@ -56,7 +59,7 @@ class UserProfileController extends Controller
             $codeValidation = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'unique:users,email,' . $loggedInUser->id],
-                'password' => ['confirmed', Password::defaults()],
+                'password' => ['nullable', 'confirmed', Password::defaults()],
                 'phone' => ['required', 'string'],
                 'address' => ['required', 'string'],
                 'zip_code' => ['nullable', 'string'],

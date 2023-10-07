@@ -41,9 +41,9 @@ class Product extends Model
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
-    // public function saleitems()
-    // {
-    //     return $this->belongsTo(SaleItem::class);
-    // }
+    public function saleitems()
+    {
+        return $this->belongsTo(SaleItem::class);
+    }
 
 }
