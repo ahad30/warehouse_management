@@ -166,7 +166,10 @@ class SaleController extends Controller
             $invoiceInfo = (object) $request->invoiceInfo;
             $calculation = (object) $request->calculation;
             $formattedIssueDate = date('Y-m-d', strtotime($invoiceInfo->issueDate));
-            $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
+            $formattedDueDate = null;
+            if ($calculation->due > 0) {
+                $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
+            }
             DB::beginTransaction();
             try {
                 $sale = Sale::create([
