@@ -25,8 +25,12 @@ class Sale extends Model
         'discount',
         'shipping',
         'total',
+        'sub_total',
         'issue_date',
         'due_date',
+        'paid_amount',
+        'due_amount',
+        'status',
     ];
 
     public function saleitems()
@@ -34,8 +38,8 @@ class Sale extends Model
         return $this->hasMany(SaleItem::class);
     }
 
-    public function customers()
+    public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 }

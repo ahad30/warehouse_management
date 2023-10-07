@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\Product;
@@ -10,6 +11,7 @@ use App\Models\SaleItem;
 use App\Models\CompanyInfo;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
@@ -17,7 +19,7 @@ class SaleController extends Controller
     // index
     public function index()
     {
-        $invoices = Sale::latest()->get();
+        $invoices = Sale::with('saleitems', 'customer')->latest()->get();
 
         if ($invoices->count() <= 0) {
             return response()->json([
@@ -92,12 +94,13 @@ class SaleController extends Controller
 
         $codeValidation = Validator::make($request->all(), [
             'invoiceInfo.issueDate' => 'required|date_format:d-M-Y',
-            'invoiceInfo.dueDate' => 'required|date_format:d-M-Y',
+            'invoiceInfo.dueDate' => 'date_format:d-M-Y',
             'calculation.discount' => 'required|numeric',
             'calculation.shipping' => 'required|numeric',
             'calculation.subTotal' => 'required|numeric',
             'calculation.total' => 'required|numeric',
-            'calculation.due' => 'required|numeric',
+            'calculation.paidAmount' => 'required',
+            // 'calculation.due' => 'numeric',
             'customer.address' => 'required|string',
             'customer.email' => 'required|email',
             'customer.id' => 'required|numeric',
@@ -155,62 +158,79 @@ class SaleController extends Controller
             $calculation = (object) $request->calculation;
             $formattedIssueDate = date('Y-m-d', strtotime($invoiceInfo->issueDate));
             $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
-            $sale = Sale::create([
-                'invoice_no' => $invoice_no,
-                'invoice_date' => $request->invoice_date,
-                'company_name' => $request->company_name,
-                'company_email' => $request->company_email,
-                'company_phone' => $request->company_phone,
-                'company_address' => $request->company_address,
-                'customer_id' => $customer_id,
-                'customer_name' => $customer_name,
-                'customer_email' => $customer_email,
-                'customer_phone' => $customer_phone,
-                'customer_address' => $customer_address,
-                'discount' => $calculation->discount,
-                'shipping' => $calculation->shipping,
-                'total' => $calculation->total,
-                'issue_date' => $formattedIssueDate,
-                'due_date' => $formattedDueDate
-            ]);
+            DB::beginTransaction();
+            try {
+                $sale = Sale::create([
+                    'invoice_no' => $invoice_no,
+                    'customer_id' => $customer_id,
+                    'discount' => $calculation->discount,
+                    'shipping' => $calculation->shipping,
+                    'sub_total' => $calculation->subTotal,
+                    'total' => $calculation->total,
+                    'paid_amount' => $calculation->paidAmount,
+                    'due_amount' => $calculation->due,
+                    'issue_date' => $formattedIssueDate,
+                    'due_date' => $formattedDueDate,
+                    'status' => $formattedDueDate != null ? 0 : 1,
+                ]);
 
-            $sale = Sale::find($sale->id);
-            $sale_id = $sale->id;
-            $input = $request->all();
-            foreach ($input['items'] as $key => $value) {
-                $product = Product::find($value['id']);
+                $sale = Sale::find($sale->id);
+                $sale_id = $sale->id;
+                $input = $request->all();
+                foreach ($input['items'] as $key => $value) {
+                    $product = Product::find($value['id']);
+                    $quantityLeft = $product->product_quantity;
+                    // when product is not available as desired
+                    if ($quantityLeft < $value['quantity']) {
+                        return response()->json(['error' => $product->product_name . " only " . $quantityLeft . " items left "], 203);
+                    } else {
+                        // decreasing items from stock
+                        $product->update(['product_quantity' => $quantityLeft - $value['quantity']]);
+                    }
+                    // when product is not available
+                    if ($product == null) {
+                        return response()->json([
+                            'status' => false,
+                            'error' => "Product not found"
+                        ], 404);
+                    }
 
-                if ($product == null) {
-                    return response()->json([
-                        'status' => false,
-                        'error' => "Product not found"
-                    ], 404);
+
+                    $item['sale_id'] = $sale_id;
+                    $item['product_id'] = $value['id'];
+                    $item['name'] = $product['product_name'];
+                    $item['code'] = $product['product_code'];
+                    $item['quantity'] = $value['quantity'];
+                    $item['rate'] = $value['price'];
+                    $item['product_retail_price'] = $product->product_retail_price;
+                    $item['unit'] = $value['unit'];
+
+                    $item['description'] = $product['product_desc'];
+                    SaleItem::create($item);
+
+
+
+
                 }
-                if ($product['product_desc'] == null) {
-                    return $product->id . " description is empty";
-                }
-
-                $item['sale_id'] = $sale_id;
-                $item['product_id'] = $value['id'];
-                $item['name'] = $product['product_name'];
-                $item['code'] = $product['product_code'];
-                $item['quantity'] = $value['quantity'];
-                $item['rate'] = $value['price'];
-                $item['product_retail_price'] = $product->product_retail_price;
-                $item['unit'] = $value['unit'];
-
-                $item['description'] = $product['product_desc'];
-                SaleItem::create($item);
+            } catch (Exception $e) {
+                // rolling back transaction if transaction failed
+                DB::rollBack();
+                return response()->json([
+                    'status' => false,
+                    'message' => $e->getMessage()
+                ], 500);
             }
-
+            // committing after transaction
+            DB::commit();
             $items = SaleItem::where('sale_id', $sale_id)->get();
-
+            $customer = Customer::find($customer_id);
             return response()->json([
                 'status' => true,
                 'message' => 'Invoice successfully created',
                 'data' => [
                     'invoice' => $sale,
                     'items' => $items,
+                    'customer' => $customer
                 ]
             ]);
         }
