@@ -11,7 +11,7 @@ const settingsApi = apiSlice.injectEndpoints({
     updateCompanyInfo: builder.mutation({
       query: (data) => ({
         method: "PUT",
-        url: `/company/update`,
+        url: `/company/info/update`,
         body: data,
       }),
       invalidatesTags: ["Company"],

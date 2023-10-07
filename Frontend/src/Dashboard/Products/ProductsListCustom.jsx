@@ -312,6 +312,7 @@ const ProductsListCustom = () => {
                 columns={columns}
                 data={filterData}
                 pagination
+                responsive
                 paginationPerPage={itemsPerPage}
                 paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
                 paginationTotalRows={filterData?.length}
