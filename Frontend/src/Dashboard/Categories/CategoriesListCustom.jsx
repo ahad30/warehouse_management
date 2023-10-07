@@ -172,11 +172,8 @@ const CategoriesListCustom = () => {
   return (
     <>
       <DashboardBackground>
-        <Link to={"/dashboard/invoice/new"}>
-          <button className="btn"> click</button>
-        </Link>
+        
 
-        <PDFDownloadLink document={<InvoicePDF invoiceData={'h'}></InvoicePDF>} fileName="blog.pdf" className="btn btn-primary"> Download  </PDFDownloadLink>
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}

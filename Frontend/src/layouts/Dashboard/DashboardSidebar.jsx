@@ -113,8 +113,8 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <div className="bg-gray-100 -mt-2">
-      <div className="join join-vertical  w-[250px] px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
+    <div className="bg-gray-100 lg:w-2/12 fixed -mt-2">
+      <div className="join join-vertical w-full  px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
         <ul className="sideBar">
           {sideBarData &&
             sideBarData?.map((item) => (
