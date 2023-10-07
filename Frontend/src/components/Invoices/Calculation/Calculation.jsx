@@ -126,7 +126,9 @@ const Calculation = () => {
             disabled
           />
         </div>
-        <SubmitInvoice />
+        <div>
+          <SubmitInvoice />
+        </div>
       </div>
     </div>
   );

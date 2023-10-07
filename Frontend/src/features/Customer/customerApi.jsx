@@ -25,7 +25,7 @@ const customerApi = apiSlice.injectEndpoints({
         // url: `/posts/${id}`,
         body: customerData,
       }),
-      invalidatesTags: ["Customers"],
+      invalidatesTags: ["Customers", "Invoices"],
     }),
     deleteCustomer: build.mutation({
       query: (id) => ({
@@ -33,7 +33,7 @@ const customerApi = apiSlice.injectEndpoints({
         url: `/customers/delete/${id}`,
         // url: `/posts/${id}`,
       }),
-      invalidatesTags: ["Customers"],
+      invalidatesTags: ["Customers", "Invoices", "Dashboard"],
     }),
   }),
 });

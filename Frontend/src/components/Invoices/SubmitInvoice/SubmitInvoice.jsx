@@ -10,7 +10,6 @@ const SubmitInvoice = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const invoice = useSelector((state) => state?.invoice);
-  console.log(invoice);
 
   const [
     newInvoice,
@@ -56,8 +55,8 @@ const SubmitInvoice = () => {
 
   return (
     <>
-      <div className="w-fit bg-[#0369A1] text-white rounded-md px-3 py-2">
-        <button onClick={handleNewInvoice} to={"/dashboard/invoice/new"}>
+      <div className="w-[300px] ml-auto flex justify-center bg-[#0369A1] text-white rounded-md px-3 py-2">
+        <button className="" onClick={handleNewInvoice}>
           Save Invoice
         </button>
       </div>

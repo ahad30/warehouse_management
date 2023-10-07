@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 class SaleController extends Controller
 {
     // index
-    public function index()
+    public function index($from = null, $to = null)
     {
         $invoices = Sale::with('saleitems', 'customer')->latest()->get();
 
@@ -30,11 +30,30 @@ class SaleController extends Controller
 
 
         } else {
+            if ($from == null && $to == null) {
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
+            } else if ($from != null && $to == null) {
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
 
-            return response()->json([
-                'status' => true,
-                'invoices' => $invoices,
-            ]);
+            } else if ($from != null && $to != null) {
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
+            } else {
+                $invoices = Sale::whereBetween('created_at', [$from, $to])->get();
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
+            }
+
         }
     }
 
@@ -93,28 +112,18 @@ class SaleController extends Controller
     {
 
         $codeValidation = Validator::make($request->all(), [
-            'invoiceInfo.issueDate' => 'required|date_format:d-M-Y',
-            'invoiceInfo.dueDate' => 'date_format:d-M-Y',
+            'invoiceInfo.issueDate' => 'required|date_format:Y-m-d',
+            'invoiceInfo.dueDate' => 'date_format:Y-m-d',
             'calculation.discount' => 'required|numeric',
             'calculation.shipping' => 'required|numeric',
             'calculation.subTotal' => 'required|numeric',
             'calculation.total' => 'required|numeric',
             'calculation.paidAmount' => 'required',
-            // 'calculation.due' => 'numeric',
-            'customer.address' => 'required|string',
-            'customer.email' => 'required|email',
-            'customer.id' => 'required|numeric',
             'customer.name' => 'required|string',
             'customer.phone' => 'required|string',
             'items.*.category_id' => 'required|numeric',
-            'items.*.category_name' => 'required|string',
-            'items.*.code' => 'required|string',
-            'items.*.desc' => 'required|string',
             'items.*.id' => 'required|numeric',
-            'items.*.name' => 'required|string',
-            'items.*.price' => 'required|numeric',
             'items.*.quantity' => 'required|numeric',
-            'items.*.unit' => 'required|string',
         ]);
         if ($codeValidation->fails()) {
             return response()->json([
@@ -157,7 +166,10 @@ class SaleController extends Controller
             $invoiceInfo = (object) $request->invoiceInfo;
             $calculation = (object) $request->calculation;
             $formattedIssueDate = date('Y-m-d', strtotime($invoiceInfo->issueDate));
-            $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
+            $formattedDueDate = null;
+            if ($calculation->due > 0) {
+                $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
+            }
             DB::beginTransaction();
             try {
                 $sale = Sale::create([
@@ -194,16 +206,14 @@ class SaleController extends Controller
                             'error' => "Product not found"
                         ], 404);
                     }
-
-
                     $item['sale_id'] = $sale_id;
                     $item['product_id'] = $value['id'];
                     $item['name'] = $product['product_name'];
                     $item['code'] = $product['product_code'];
                     $item['quantity'] = $value['quantity'];
-                    $item['rate'] = $value['price'];
+                    $item['rate'] = $product['product_sale_price'];
                     $item['product_retail_price'] = $product->product_retail_price;
-                    $item['unit'] = $value['unit'];
+                    $item['unit'] = $product->product_unit;
 
                     $item['description'] = $product['product_desc'];
                     SaleItem::create($item);
