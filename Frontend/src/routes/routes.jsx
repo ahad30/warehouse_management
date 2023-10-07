@@ -29,6 +29,7 @@ import SettingsNew from "../Dashboard/Settings/SettingsNew";
 import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
 import Test from "../components/PDF/Test";
 import TestTable from "../Dashboard/Stores/TestTable";
+import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 
 const routes = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/forget-password",
+        element: <ForgetPassword></ForgetPassword>,
       },
       {
         path: "/print/a4",
