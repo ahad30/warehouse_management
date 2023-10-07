@@ -34,7 +34,7 @@ const InvoicesList = () => {
     error: invoicesError,
     isSuccess: invoicesIsSuccess,
   } = useGetInvoicesQuery();
-
+  console.log(invoicesData);
   const [
     deleteInvoice,
     {

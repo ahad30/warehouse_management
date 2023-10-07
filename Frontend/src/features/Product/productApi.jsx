@@ -32,7 +32,7 @@ const productApi = apiSlice.injectEndpoints({
         // url: `/posts/${id}`,
         body: productData,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["Products", "Invoices"],
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -40,7 +40,7 @@ const productApi = apiSlice.injectEndpoints({
         url: `/products/delete/${id}`,
         // url: `/posts/${id}`,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["Products", "Invoices", "Dashboard"],
     }),
   }),
 });
