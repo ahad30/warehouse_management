@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Role;
 
 
+use Tymon\JWTAuth\JWTAuth;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;

@@ -31,9 +31,9 @@ class CustomerController extends Controller
     {
         $validateInput = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'email|max:255',
-            'phone' => 'required|max:255',
-            'address' => 'string|max:255',
+            'phone' => 'required|max:255|max:20',
+            'email' => 'nullable|email|max:255',
+            'address' => 'nullable|string|max:255',
             'notes' => 'nullable|string|max:255',
         ]);
 
@@ -104,9 +104,9 @@ class CustomerController extends Controller
         if ($customer) {
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'email|max:255',
-                'phone' => 'required|max:13',
-                'address' => 'string|max:255',
+                'email' => 'nullable|email|max:255',
+                'phone' => 'required|max:20',
+                'address' => 'nullable|string|max:255',
                 'notes' => 'nullable|string|max:255',
             ]);
 

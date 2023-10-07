@@ -13,22 +13,26 @@ return new class extends Migration {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_no')->unique();
-            $table->string('invoice_date')->nullable();
-            $table->string('company_name')->nullable();
-            $table->string('company_email')->nullable();
-            $table->string('company_phone')->nullable();
-            $table->string('company_address')->nullable();
-            $table->string('customer_name')->nullable();
-            $table->string('customer_email')->nullable();
-            $table->string('customer_phone')->nullable();
-            $table->string('customer_address')->nullable();
+            // $table->string('invoice_date')->nullable();
+            // $table->string('company_name')->nullable();
+            // $table->string('company_email')->nullable();
+            // $table->string('company_phone')->nullable();
+            // $table->string('company_address')->nullable();
+            // $table->string('customer_name')->nullable();
+            // $table->string('customer_email')->nullable();
+            // $table->string('customer_phone')->nullable();
+            // $table->string('customer_address')->nullable();
             $table->string('discount')->nullable();
             $table->string('shipping')->nullable();
-            $table->string('total');
+            $table->float('sub_total');
+            $table->float('total');
+            $table->float('paid_amount');
+            $table->float('due_amount')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->date('issue_date');
             $table->date('due_date')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
