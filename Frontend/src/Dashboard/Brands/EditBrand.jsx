@@ -31,7 +31,7 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
       formData.append("brand_img", data?.brand_img[0]);
     }
 
-    updateCategory({ ...formData, id: brand?.id });
+    updateCategory({ ...data, id: brand?.id });
   };
 
   const errorMessages = UseErrorMessages(updateError);

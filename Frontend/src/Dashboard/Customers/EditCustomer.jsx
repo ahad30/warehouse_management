@@ -20,7 +20,7 @@ const EditCustomer = ({ modalIsOpen, setModalIsOpen, customer }) => {
   ] = useUpdateCustomerMutation();
 
   const onSubmit = (data) => {
-    if (!customer?.name || !customer?.email) {
+    if (!customer?.name || !customer?.phone) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }

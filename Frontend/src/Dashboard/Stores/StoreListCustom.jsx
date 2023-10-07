@@ -20,9 +20,7 @@ const StoreListCustom = () => {
   UseTitle("Customers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [store, setStore] = useState({});
-
-
-  const [searchTerm, setSearchTerm] = useState("");
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
@@ -95,7 +93,6 @@ const StoreListCustom = () => {
       },
     },
 
-    
     {
       name: "Name",
       selector: "store_name",
@@ -117,8 +114,7 @@ const StoreListCustom = () => {
       name: "web",
       selector: "store_web",
     },
-    
-    
+
     {
       name: "address",
       selector: "store_address",
@@ -139,15 +135,13 @@ const StoreListCustom = () => {
     },
   ];
 
-
   const setFiltering = (search) => {
     const filteredData = storesData?.stores.filter((item) =>
       item?.store_name?.toLowerCase().includes(search.toLowerCase())
-      );
-      if(filteredData){
-        setFilterData(filteredData);
-      }
-      
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -185,6 +179,7 @@ const StoreListCustom = () => {
               columns={columns}
               data={filterData}
               pagination
+              responsive
               paginationPerPage={itemsPerPage}
               paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
               paginationTotalRows={filterData?.length}
