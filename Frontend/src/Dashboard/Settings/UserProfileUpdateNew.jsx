@@ -1,28 +1,46 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import {
-  useGetUserRolesQuery,
-  useUpdateUserProfileMutation,
-} from "../../features/User/userApi";
+import { useUpdateUserProfileMutation } from "../../features/User/userApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const UserProfileUpdateNew = () => {
   const { user } = useSelector((state) => state?.auth);
   //   console.log(user);
   const { handleSubmit, register } = useForm();
-  const { data: rolesData } = useGetUserRolesQuery();
 
   const [updateProfile, { isLoading, isError, error, isSuccess, data }] =
     useUpdateUserProfileMutation();
 
   const handleSubmitUserProfile = (data) => {
-    const userData = {
-      ...data,
-      old_image: user?.img,
-    };
-    updateProfile(userData);
+    const formData = new FormData();
+    formData.append("name", data?.name);
+    formData.append("phone", data?.phone);
+    formData.append("email", data?.email);
+    formData.append("address", data?.address);
+    formData.append("city", data?.city);
+    formData.append("country", data?.country);
+    if (data?.zip_code) {
+      formData.append("zip_code", data?.zip_code);
+    }
+    if (data?.state) {
+      formData.append("state", data?.state);
+    }
+    if (data?.img) {
+      formData.append("img", data?.img[0]);
+    }
+    if (data?.password) {
+      formData.append("password", data?.password);
+    }
+    if (data?.password_confirmation) {
+      formData.append("password_confirmation", data?.password_confirmation);
+    }
+
+    updateProfile(data);
   };
+
+  const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
     if (isLoading) {
@@ -50,7 +68,7 @@ const UserProfileUpdateNew = () => {
           <div className="w-full row-span-5 flex flex-col items-center ">
             <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
               <img
-                className="w-full h-auto p"
+                className="w-full h-auto"
                 src={`https://cdn-icons-png.flaticon.com/512/149/149071.png`}
               />
             </div>
@@ -180,8 +198,30 @@ const UserProfileUpdateNew = () => {
               />
             </div>
           </div>
+          <div className="col-span-4 flex items-center justify-between gap-x-4">
+            <label htmlFor="" className="w-full ">
+              New Password
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="input input-bordered input-md w-full my-2"
+                {...register("password")}
+              />
+            </label>
+            <label htmlFor="" className="w-full ">
+              Confirm Password
+              <input
+                name="password_confirmation"
+                type="password"
+                placeholder="Confirm Password"
+                className="input input-bordered input-md w-full my-2"
+                {...register("password_confirmation")}
+              />
+            </label>
+          </div>
 
-          <div className="col-span-5 flex justify-end ">
+          <div className="col-span-5 flex justify-end">
             <input
               type="submit"
               // className="input input-bordered input-md my-2"
@@ -191,6 +231,15 @@ const UserProfileUpdateNew = () => {
           </div>
         </form>
       </div>
+      {/* Display error messages */}
+      {errorMessages.map((errorMessage, index) => (
+        <p
+          key={index}
+          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+        >
+          {errorMessage}
+        </p>
+      ))}
     </>
   );
 };
