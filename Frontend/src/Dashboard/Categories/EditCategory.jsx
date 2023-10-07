@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -19,15 +20,15 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   ] = useUpdateCategoryMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Ensure all required fields have values
     if (!data.category_name || !data.description) {
       toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
+      return;
     }
 
     updateCategory({ ...data, id: category.id });
   };
+
+  const errorMessages = UseErrorMessages(updateError);
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -59,7 +60,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     }
   }, [category, setValue]);
 
-
   console.log(
     updateIsLoading,
     updateIsError,
@@ -90,7 +90,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                       </span>
                       <input
                         type="text"
-                        placeholder="Product Name"
+                        placeholder="Category Name"
                         className="input input-bordered w-full"
                         {...register("category_name")}
                       />
@@ -99,7 +99,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                       <span className="font-semibold">Description</span>
                       <input
                         type="text"
-                        placeholder="Product Description"
+                        placeholder="Category Description"
                         className="input input-bordered w-full"
                         {...register("description")}
                       />
@@ -122,6 +122,15 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                   </div>
                 </form>
               </div>
+              {/* Display error messages */}
+              {errorMessages.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>

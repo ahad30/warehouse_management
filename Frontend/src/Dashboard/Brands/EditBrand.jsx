@@ -3,11 +3,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateBrandMutation } from "../../features/Brand/brandApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   const { register, handleSubmit, setValue } = useForm();
-
-  console.log(brand);
 
   const [
     updateCategory,
@@ -21,13 +20,15 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   ] = useUpdateBrandMutation();
 
   const onSubmit = (data) => {
-    if (!data.brand_name || data?.brand_img) {
+    if (!data.brand_name) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
 
     updateCategory({ ...data, id: brand?.id });
   };
+
+  const errorMessages = UseErrorMessages(updateError);
 
   useEffect(() => {
     if (updateIsLoading) {
@@ -110,6 +111,15 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
                   </div>
                 </form>
               </div>
+              {/* Display error messages */}
+              {errorMessages.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>

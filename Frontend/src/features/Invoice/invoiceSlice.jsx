@@ -24,6 +24,7 @@ const initialState = {
     discount: 0,
     shipping: 0,
     total: 0,
+    paidAmount: 0,
     due: 0,
   },
 };
@@ -42,7 +43,7 @@ export const invoiceSlice = createSlice({
       state.customer = action.payload;
     },
     getItem: (state, action) => {
-      state.items.push(action.payload);
+      state.items = action.payload;
     },
     deleteItem: (state, action) => {
       state.items = action.payload;

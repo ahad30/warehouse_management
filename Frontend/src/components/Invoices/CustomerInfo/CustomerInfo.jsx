@@ -40,7 +40,7 @@ const CustomerInfo = ({ customers }) => {
         <label htmlFor="">
           Select Customers <br />
           <select
-            className="select select-bordered sm:w-full my-2"
+            className="select select-bordered w-full my-2"
             onChange={(e) => handleSelectedPhone(e.target.value)}
             name="name"
           >

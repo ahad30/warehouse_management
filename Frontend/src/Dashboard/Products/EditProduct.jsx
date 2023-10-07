@@ -51,7 +51,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   useEffect(() => {
     if (product) {
       setValue("product_name", product?.product_name || "");
-      // setValue("product_img", product?.product_img || "");
       setValue("product_code", product?.product_code || "");
       setValue("product_unit", product?.product_unit || "");
       setValue("product_quantity", product?.product_quantity || "1");
@@ -61,29 +60,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("store_id", product?.store_id || "");
       setValue("category_id", product?.category_id || "");
       setValue("brand_id", product?.brand_id || "");
+      setValue("product_img", product?.product_img || "");
     }
   }, [product, setValue]);
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Ensure all required fields have values
-    if (
-      !data?.product_name
-      /* !data?.product_img || */
-      /*!data?.product_code ||*/
-      /*!data?.product_unit ||*/
-      /*!data?.product_quantity ||*/
-      /*!data?.product_desc ||*/
-      /*!data?.product_retail_price ||*/
-      /*!data?.product_sale_price ||*/
-      /*!data?.store_id ||*/
-      /*!data?.category_id ||*/
-      /*!data?.brand_id*/
-    ) {
-      toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
-    }
-
     updateProduct({ ...data, id: product?.id });
   };
 
@@ -229,9 +210,16 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         type="text"
                         placeholder="Product Description"
                         className="input input-bordered w-full"
-                        {...register("desc")}
+                        {...register("product_desc")}
                       />
                     </label>
+                    <div className="form-control w-full">
+                      <input
+                        type="file"
+                        className="file-input file-input-bordered w-full"
+                        {...register("product_img")}
+                      />
+                    </div>
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">

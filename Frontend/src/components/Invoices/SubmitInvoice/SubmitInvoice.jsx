@@ -19,7 +19,7 @@ const SubmitInvoice = () => {
   ] = useNewInvoiceMutation();
 
   const handleNewInvoice = () => {
-    console.log(invoice);
+    // console.log(invoice);
     /* let data = {
       calculation: {
         discount: 500,
@@ -124,7 +124,7 @@ const SubmitInvoice = () => {
     navigate,
   ]);
 
-  console.log(isLoading, isError, error, isSuccess, newInvoiceData);
+  // console.log(isLoading, isError, error, isSuccess, newInvoiceData);
 
   const handleResetState = () => {
     dispatch(resetState());

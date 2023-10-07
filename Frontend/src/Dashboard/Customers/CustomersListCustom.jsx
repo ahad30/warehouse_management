@@ -1,20 +1,18 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditCustomer from "./EditCustomer";
 import { BiSolidDuplicate } from "react-icons/bi";
-
 import {
   useDeleteCustomerMutation,
   useGetCustomersQuery,
 } from "../../features/Customer/customerApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
-import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 
 const CustomersListCustom = () => {
@@ -23,7 +21,6 @@ const CustomersListCustom = () => {
 
   const [customer, setCustomer] = useState({});
 
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
