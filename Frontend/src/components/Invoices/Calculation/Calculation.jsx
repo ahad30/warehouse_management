@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getTotalPrice } from "../../../features/Invoice/invoiceSlice";
+import SubmitInvoice from "../SubmitInvoice/SubmitInvoice";
 
 const Calculation = () => {
   const dispatch = useDispatch();
@@ -124,6 +125,9 @@ const Calculation = () => {
             className="input input-bordered w-full max-w-xs"
             disabled
           />
+        </div>
+        <div>
+          <SubmitInvoice />
         </div>
       </div>
     </div>

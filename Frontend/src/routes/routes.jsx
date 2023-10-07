@@ -30,6 +30,7 @@ import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
 import Test from "../components/PDF/Test";
 import TestTable from "../Dashboard/Stores/TestTable";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 const routes = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const routes = createBrowserRouter([
       {
         path: "/forget-password",
         element: <ForgetPassword></ForgetPassword>,
+      },
+      {
+        path: "/password-reset/:token",
+        element: <ResetPassword></ResetPassword>,
       },
       {
         path: "/print/a4",

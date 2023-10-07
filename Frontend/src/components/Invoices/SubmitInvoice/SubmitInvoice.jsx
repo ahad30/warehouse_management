@@ -1,28 +1,27 @@
-import { ImDownload2, ImPrinter } from "react-icons/im";
-import { GrPowerReset } from "react-icons/gr";
-import { AiOutlineSave } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { resetState } from "../../../features/Invoice/invoiceSlice";
 import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { logOut } from "../../../features/Auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { UseErrorMessages } from "../../Reusable/UseErrorMessages/UseErrorMessages";
 
 const SubmitInvoice = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const invoice = useSelector((state) => state?.invoice);
+
   const [
     newInvoice,
     { isLoading, isError, error, isSuccess, data: newInvoiceData },
   ] = useNewInvoiceMutation();
 
   const handleNewInvoice = () => {
+    console.log(invoice?.calculation);
     newInvoice(invoice);
   };
 
-  console.log(isLoading, isError, error, isSuccess, newInvoiceData);
+  const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
     const handleApiError = (error) => {
@@ -52,40 +51,25 @@ const SubmitInvoice = () => {
     navigate,
   ]);
 
-  // console.log(isLoading, isError, error, isSuccess, newInvoiceData);
-
-  const handleResetState = () => {
-    dispatch(resetState());
-    window.location.reload(false);
-  };
+  console.log(isLoading, isError, error, isSuccess, newInvoiceData);
 
   return (
-    <div className="flex justify-center mt-10">
-      <div className="btn-group border btn-group-vertical lg:btn-group-horizontal">
-        <button
-          onClick={handleNewInvoice}
-          className="btn btn-success text-white"
-        >
-          <AiOutlineSave /> Save
-        </button>
-        <button className="btn btn-secondary text-white">
-          {" "}
-          <ImDownload2 /> Download
-        </button>
-        <button className="btn btn-accent text-white">
-          {" "}
-          <ImPrinter />
-          Print
-        </button>
-        <button
-          onClick={handleResetState}
-          className="btn bg-red-600 text-white"
-        >
-          {" "}
-          <GrPowerReset color="white" /> Reset
+    <>
+      <div className="w-[300px] ml-auto flex justify-center bg-[#0369A1] text-white rounded-md px-3 py-2">
+        <button className="" onClick={handleNewInvoice}>
+          Save Invoice
         </button>
       </div>
-    </div>
+      {errorMessages &&
+        errorMessages?.map((errorMessage, index) => (
+          <p
+            key={index}
+            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+          >
+            {errorMessage}
+          </p>
+        ))}
+    </>
   );
 };
 

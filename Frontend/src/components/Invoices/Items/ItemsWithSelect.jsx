@@ -150,6 +150,7 @@ const ItemsWithSelect = ({ products }) => {
                 placeholder="Quantity"
                 className="input input-bordered input-md w-full"
                 onChange={handleQuantity}
+                min={1}
                 required
                 value={quantity}
               />
@@ -170,9 +171,8 @@ const ItemsWithSelect = ({ products }) => {
           </div>
           <div className="flex items-center justify-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 text-sm mb-1">
             <AiOutlinePlusCircle size={25} />
-            {/* <Link to={"/dashboard/invoice/new"}>New Invoice</Link> */}
             <button
-              className="w-full bg-[#0369A1] text-white cursor-pointer" 
+              className="w-full bg-[#0369A1] text-white cursor-pointer"
               disabled={!selectedItem?.product_name}
               onClick={handleAddItem}
             >
