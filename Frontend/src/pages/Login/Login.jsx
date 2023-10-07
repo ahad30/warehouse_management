@@ -59,7 +59,7 @@ const Login = () => {
           </form>
           {error && <p className="text-center">{error}</p>}
           <p className="text-center">
-            <Link to="/" className="text-blue-700 font-semibold">
+            <Link to="/forget-password" className="text-blue-700 font-semibold">
               Forgot password?
             </Link>
           </p>
