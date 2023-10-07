@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 class SaleController extends Controller
 {
     // index
-    public function index()
+    public function index($from = null, $to = null)
     {
         $invoices = Sale::with('saleitems', 'customer')->latest()->get();
 
@@ -30,11 +30,30 @@ class SaleController extends Controller
 
 
         } else {
+            if ($from == null && $to == null) {
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
+            } else if ($from != null && $to == null) {
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
 
-            return response()->json([
-                'status' => true,
-                'invoices' => $invoices,
-            ]);
+            } else if ($from != null && $to != null) {
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
+            } else {
+                $invoices = Sale::whereBetween('created_at', [$from, $to])->get();
+                return response()->json([
+                    'status' => true,
+                    'invoices' => $invoices,
+                ]);
+            }
+
         }
     }
 
