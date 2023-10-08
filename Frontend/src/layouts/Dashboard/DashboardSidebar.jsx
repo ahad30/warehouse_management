@@ -120,7 +120,7 @@ const DashboardSidebar = () => {
             sideBarData?.map((item) => (
               <li
                 key={item?.name}
-                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(
+                className={`my-2 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(
                   item?.path
                 )}`}
               >
@@ -132,7 +132,7 @@ const DashboardSidebar = () => {
         </ul>
 
         <div>
-          <div className="pt-20">
+          <div>
             <Link
               className={`flex gap-x-2 ${isActive("/dashboard/setting")}`}
               to="/dashboard/setting"

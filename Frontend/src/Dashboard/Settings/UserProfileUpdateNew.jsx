@@ -69,7 +69,7 @@ const UserProfileUpdateNew = () => {
             <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
               <img
                 className="w-full h-auto"
-                src={`https://cdn-icons-png.flaticon.com/512/149/149071.png`}
+                src={user?.img ? user?.img : `https://cdn-icons-png.flaticon.com/512/149/149071.png`}
               />
             </div>
 
