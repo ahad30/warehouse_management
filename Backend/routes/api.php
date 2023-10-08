@@ -99,7 +99,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'distroy');
+        Route::middleware('verifyAdmin')->delete('/delete/{id}', 'destroy');
     });
 
 
