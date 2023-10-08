@@ -34,7 +34,19 @@ const CompanyInfoUpdateNew = () => {
 
   const handleSubmitCompanyInfo = (data) => {
     console.log({ ...data, id: companyInfo?.id });
-    updateCompanyInfo({ ...data, id: companyInfo?.id });
+
+    const formData = new FormData();
+    formData.append("_method", "PUT");
+    formData.append("company_name", data?.company_name);
+    formData.append("company_email", data?.company_email);
+    formData.append("company_phone", data?.company_phone);
+    formData.append("company_address", data?.company_address);
+    formData.append("id", companyInfo?.id);
+    if (data?.company_img.length > 0) {
+      formData.append("company_img", data?.company_img[0]);
+    }
+
+    updateCompanyInfo(formData);
   };
 
   useEffect(() => {
@@ -71,17 +83,20 @@ const CompanyInfoUpdateNew = () => {
         onSubmit={handleSubmit(handleSubmitCompanyInfo)}
         className="grid grid-cols-5 gap-5 items-center justify-center"
       >
-
         {/* file upload  */}
         <div className="w-full row-span-2 flex flex-col justify-center items-center">
           <div className=" bg-white  p-5 w-40 h-40  flex justify-center items-center rounded-lg">
             <img
               className="w-full"
-
-              src={`https://cdn-icons-png.flaticon.com/512/149/149071.png`}
+              src={
+                companyInfo?.company_img
+                  ? `${
+                      import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                    }/uploads/companyInfo/${companyInfo?.company_img}`
+                  : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+              }
             />
           </div>
-
 
           {/* <label htmlFor="" id="customFileInput" className="custom-file-input text-black opacity-70">choose file</label> */}
 
@@ -89,7 +104,7 @@ const CompanyInfoUpdateNew = () => {
             type="file"
             className="file-input file-input-ghost w-full max-w-xs custom-file-input"
             id="customFileInput"
-            {...register("company_logo")}
+            {...register("company_img")}
           />
         </div>
 
@@ -123,7 +138,7 @@ const CompanyInfoUpdateNew = () => {
           />
         </div>
 
-          {/* phone field */}
+        {/* phone field */}
         <div className=" col-span-2">
           <label htmlFor="phone"> Phone</label>
           <input
@@ -135,19 +150,18 @@ const CompanyInfoUpdateNew = () => {
             {...register("company_phone")}
           />
         </div>
-         
 
-         {/* address field */}
+        {/* address field */}
         <div className="col-span-2">
           <label htmlFor="address">Address</label>
-        <input
-          name="address"
-          type="text"
-          placeholder="Address"
-          className="input input-bordered input-md my-2 w-full"
-          required
-          {...register("company_address")}
-        />
+          <input
+            name="address"
+            type="text"
+            placeholder="Address"
+            className="input input-bordered input-md my-2 w-full"
+            required
+            {...register("company_address")}
+          />
         </div>
 
         <div className=" flex justify-end col-span-5">

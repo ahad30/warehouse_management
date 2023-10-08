@@ -13,5 +13,6 @@ class CompanyInfo extends Model
         'company_email',
         'company_phone',
         'company_address',
+        'company_img',
     ];
 }
