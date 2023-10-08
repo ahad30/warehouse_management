@@ -1,7 +1,10 @@
 import { bool, func, object } from "prop-types";
 import { QRCodeCanvas } from "qrcode.react";
+import { useGetCompanyInfoQuery } from "../../features/Settings/settingsApi";
 
 const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+  console.log(companyInfo);
   return viewInvoiceOpen ? (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div
@@ -17,23 +20,31 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
               <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                 <div>
                   <h5 className="text-2xl font-bold">
-                    Invoice No{" "}
-                    <span className="text-gray-400">{invoice.invoice_no}</span>
+                    Invoice No
+                    <span className="text-gray-400">{invoice?.invoice_no}</span>
                   </h5>
-                  <p className="text-lg">Date: 17/09/2023</p>
+                  <p className="text-lg">Date: {invoice?.issue_date}</p>
                 </div>
                 <div>
                   <img
                     className="w-28"
-                    src="https://z8tech.dev/wp-content/uploads/2022/11/tras_ZL-01-removebg-preview.png"
-                    alt=""
+                    src={
+                      companyInfo?.company_info?.company_logo
+                        ? `${
+                            import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                          }/uploads/companyInfo/${
+                            companyInfo?.company_info?.company_logo
+                          }`
+                        : "https://z8tech.dev/wp-content/uploads/2022/11/tras_ZL-01-removebg-preview.png"
+                    }
+                    alt={companyInfo?.company_info?.company_logo}
                   />
                 </div>
                 <div className="text-[#84878B] text-right">
                   <address className="space-y-2">
-                    <p>{invoice?.company_address}</p>
-                    <p>{invoice?.company_phone}</p>
-                    <p>{invoice?.company_email}</p>
+                    <p>{companyInfo?.company_info?.company_address}</p>
+                    <p>{companyInfo?.company_info?.company_phone}</p>
+                    <p>{companyInfo?.company_info?.company_email}</p>
                   </address>
                 </div>
               </div>
@@ -43,9 +54,10 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                 <div>
                   <h5 className="text-xl font-bold">Invoiced To</h5>
                   <div className="text-[#84878B]">
-                    <h5>{invoice?.customer_name}</h5>
-                    <p>{invoice?.customer_phone}</p>
-                    <p>{invoice?.customer_address} </p>
+                    <h5>{invoice?.customer?.name}</h5>
+                    <p>{invoice?.customer?.phone}</p>
+                    <p>{invoice?.customer?.email}</p>
+                    <p>{invoice?.customer?.address} </p>
                   </div>
                 </div>
                 <div className="flex gap-10 w-20">
