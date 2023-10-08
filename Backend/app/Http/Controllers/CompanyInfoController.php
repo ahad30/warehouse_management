@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanyInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyInfoController extends Controller
@@ -47,6 +48,7 @@ class CompanyInfoController extends Controller
     // update
     public function update(Request $request)
     {
+
         $company_info = CompanyInfo::find($request->id);
 
         if ($company_info) {
@@ -55,7 +57,7 @@ class CompanyInfoController extends Controller
                 'company_email' => 'required|email',
                 'company_phone' => 'required',
                 'company_address' => 'required',
-                'company_logo' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
+                'company_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
             ]);
 
             if ($codeValidation->fails()) {
@@ -66,18 +68,27 @@ class CompanyInfoController extends Controller
                 ], 500);
             }
             $imageData = null;
-            if ($request->hasFile('company_logo')) {
-                $file = $request->file('company_logo');
+            if ($request->hasFile('company_img')) {
+                $file = $request->file('company_img');
                 $filename = $file->getClientOriginalName();
-                $imageData = $request->brand_name . "-" . time() . '-' . $filename;
+                $imageData = $request->company_name . "-" . time() . '-' . $filename;
                 $file->move('uploads/companyInfo/', $imageData);
+
+                if ($company_info->company_img != null) {
+                    $imagePath = public_path('uploads/companyInfo/' . $company_info->company_img);
+                    // Check if the file exists before attempting to delete it
+                    if (File::exists($imagePath)) {
+
+                        File::delete($imagePath);
+                    }
+                }
             }
             $company_info->update([
                 'company_name' => $request->company_name,
                 'company_email' => $request->company_email,
                 'company_phone' => $request->company_phone,
                 'company_address' => $request->company_address,
-                'imageData' => $imageData
+                'company_img' => $imageData != null ? $imageData : $company_info->company_img
             ]);
 
             return response()->json([

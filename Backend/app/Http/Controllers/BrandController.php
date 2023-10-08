@@ -82,13 +82,17 @@ class BrandController extends Controller
      */
     public function update(Request $request)
     {
-        return response()->json([
-            'error' => $request->hasFile('brand_img'),
-        ], 500);
-        $validator = Validator::make($request->all(), [
-            'brand_name' => 'required|max:100|unique:brands,brand_name,' . $request->id,
-            'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
-        ]);
+        if ($request->hasFile('brand_img')) {
+            $validator = Validator::make($request->all(), [
+                'brand_name' => 'required|max:100|unique:brands,brand_name,' . $request->id,
+                'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:5000'
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'brand_name' => 'required|max:100|unique:brands,brand_name,' . $request->id,
+            ]);
+        }
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -126,7 +130,7 @@ class BrandController extends Controller
         // updating brand
         $brand->update([
             'brand_name' => $request->brand_name,
-            'brand_img' => $imageData
+            'brand_img' => $imageData != null ? $imageData : $brand->brand_img
         ]);
 
         return response()->json([

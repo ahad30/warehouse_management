@@ -10,11 +10,11 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   const [file, setFile] = useState(null);
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    console.log(file);
+    // console.log(file);
   };
 
   const [
-    updateCategory,
+    updateBrand,
     {
       isLoading: updateIsLoading,
       isError: updateIsError,
@@ -25,19 +25,19 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   ] = useUpdateBrandMutation();
 
   const onSubmit = (data) => {
-    const formData = new FormData();
     if (!data.brand_name) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
-
-
+    const formData = new FormData();
+    formData.append("_method", "PUT");
+    formData.append("brand_name", data?.brand_name);
+    formData.append("id", brand.id);
     if (data?.brand_img.length > 0) {
-      formData.append("brand_img", file);
+      formData.append("brand_img", data?.brand_img[0]);
     }
-    updateCategory({ ...data, ...formData, id: brand?.id });
 
-    updateCategory({ ...formData, id: brand?.id });
+    updateBrand(formData);
   };
 
   const errorMessages = UseErrorMessages(updateError);
