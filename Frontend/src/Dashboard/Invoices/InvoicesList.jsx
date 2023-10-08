@@ -13,32 +13,34 @@ import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import { BsFiletypeCsv, BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
+import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
-import { format } from "date-fns";
 import DataTable from "react-data-table-component";
+import InvoiceAsCSV from "./InvoiceAsCSV";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
-  const toDay = format(new Date(), "yyyy-MM-dd");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  console.log(startDate, endDate);
+
   const {
     data: invoicesData,
     isLoading: invoicesIsLoading,
-    isError: invoicesIsError,
-    error: invoicesError,
-    isSuccess: invoicesIsSuccess,
-  } = useGetInvoicesQuery();
+    refetch,
+  } = useGetInvoicesQuery({ startDate, endDate });
 
   useEffect(() => {
     setFilterData(invoicesData?.invoices);
@@ -97,11 +99,11 @@ const InvoicesList = () => {
     },
     {
       name: "Invoice Date",
-      selector: "invoice_date",
+      selector: "issue_date",
     },
     {
       name: "Customer Name",
-      selector: "customer_name",
+      selector: "customer.name",
     },
     {
       name: "Total",
@@ -110,17 +112,23 @@ const InvoicesList = () => {
 
     {
       name: "Paid",
-      selector: "paid",
+      selector: "paid_amount",
     },
     {
       name: "Due",
-      selector: "due",
+      selector: "due_amount",
     },
     {
       name: "Status",
       selector: (row) => (
         <div>
-          <button>Paid</button>
+          <button
+            className={`rounded-lg text-white px-3 py-1 ${
+              row?.status === 0 ? "bg-[#DC2626]" : "bg-[#16A34A]"
+            }`}
+          >
+            {row?.status === 0 ? "Due" : "Paid"}
+          </button>
         </div>
       ),
     },
@@ -164,7 +172,7 @@ const InvoicesList = () => {
   //  search filtering
   const setFiltering = (search) => {
     const filteredData = invoicesData?.invoices?.filter((item) =>
-      item?.name?.toLowerCase().includes(search.toLowerCase())
+      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
     );
     if (filteredData) {
       setFilterData(filteredData);
@@ -178,7 +186,6 @@ const InvoicesList = () => {
   const handleViewInvoice = (data) => {
     setInvoice(data);
     setViewInvoiceOpen(true);
-    console.log(data);
   };
 
   // ALL INVOICES
@@ -200,32 +207,35 @@ const InvoicesList = () => {
         />
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
-          <form className="flex flex-col lg:flex-row gap-2">
+          <div className="flex flex-col lg:flex-row gap-2">
             <label htmlFor="from">
-              From:
-              <input className="input input-sm input-bordered" type="date" />
-            </label>
-            <label htmlFor="to">
-              To:
+              Start:
               <input
                 className="input input-sm input-bordered"
                 type="date"
-                defaultValue={toDay}
+                onChange={(e) => setStartDate(e.target.value)}
               />
             </label>
-            <input
-              type="submit"
-              // className="btn btn-accent btn-sm inline-block w-fit"
-              className="flex items-center gap-x-2 btn-primary px-2 py-1 rounded-md w-full sm:w-fit cursor-pointer"
-              value={"Get Report"}
-            />
-          </form>
-          <div className="flex lg:flex-row justify-between gap-2">
-            <button className="flex items-center gap-x-2 btn-primary px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
-              <BsFiletypeCsv size={20} /> CSV
+            <label htmlFor="to">
+              End:
+              <input
+                className="input input-sm input-bordered"
+                type="date"
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </label>
+            <button
+              onClick={() => refetch()}
+              className="bg-[#0369A1] text-white rounded-md px-3 py-1"
+            >
+              Go
             </button>
-            <button className="flex items-center gap-x-2 btn-primary px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
-              <BsFiletypePdf size={20} /> PDF
+          </div>
+
+          <div className="flex lg:flex-row justify-between gap-2">
+            <InvoiceAsCSV data={filterData} />
+            <button className="flex items-center gap-x-2 text-[white] bg-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
+              <BsFiletypePdf size={20} /> Download as PDF
             </button>
           </div>
         </div>
