@@ -13,12 +13,11 @@ import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import { BsFiletypeCsv, BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
+import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
-import { format } from "date-fns";
 import DataTable from "react-data-table-component";
 import InvoiceAsCSV from "./InvoiceAsCSV";
 
@@ -27,19 +26,21 @@ const InvoicesList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
-  const toDay = format(new Date(), "yyyy-MM-dd");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  console.log(startDate, endDate);
+
   const {
     data: invoicesData,
     isLoading: invoicesIsLoading,
-    isError: invoicesIsError,
-    error: invoicesError,
-    isSuccess: invoicesIsSuccess,
-  } = useGetInvoicesQuery();
+    refetch,
+  } = useGetInvoicesQuery({ startDate, endDate });
 
   useEffect(() => {
     setFilterData(invoicesData?.invoices);
@@ -171,7 +172,7 @@ const InvoicesList = () => {
   //  search filtering
   const setFiltering = (search) => {
     const filteredData = invoicesData?.invoices?.filter((item) =>
-      item?.invoice_no?.toLowerCase().includes(search.toLowerCase())
+      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
     );
     if (filteredData) {
       setFilterData(filteredData);
@@ -206,26 +207,30 @@ const InvoicesList = () => {
         />
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
-          <form className="flex flex-col lg:flex-row gap-2">
+          <div className="flex flex-col lg:flex-row gap-2">
             <label htmlFor="from">
-              From:
-              <input className="input input-sm input-bordered" type="date" />
-            </label>
-            <label htmlFor="to">
-              To:
+              Start:
               <input
                 className="input input-sm input-bordered"
                 type="date"
-                defaultValue={toDay}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </label>
+            <label htmlFor="to">
+              End:
+              <input
+                className="input input-sm input-bordered"
+                type="date"
+                onChange={(e) => setEndDate(e.target.value)}
               />
             </label>
             <button
-              type="submit"
+              onClick={() => refetch()}
               className="bg-[#0369A1] text-white rounded-md px-3 py-1"
             >
               Go
             </button>
-          </form>
+          </div>
 
           <div className="flex lg:flex-row justify-between gap-2">
             <InvoiceAsCSV data={filterData} />

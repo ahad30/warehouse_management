@@ -4,7 +4,7 @@ import { useGetCompanyInfoQuery } from "../../features/Settings/settingsApi";
 
 const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
   const { data: companyInfo } = useGetCompanyInfoQuery();
-  console.log(companyInfo);
+
   return viewInvoiceOpen ? (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div
@@ -88,23 +88,21 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     <tr>
                       <th className="text-sm font-extrabold">#</th>
                       <th className="text-sm font-extrabold">Item Name</th>
-                      <th className="text-sm font-extrabold">Description</th>
-                      <th className="text-sm font-extrabold">Rate</th>
+                      <th className="text-sm font-extrabold">Price</th>
                       <th className="text-sm font-extrabold">Quantity</th>
                       <th className="text-sm font-extrabold">Total Price</th>
                     </tr>
                   </thead>
                   <tbody>
                     {/* row 1 */}
-                    {[...Array(3)]?.map((itm, i) => {
+                    {invoice?.saleitems?.map((item, i) => {
                       return (
                         <tr key={i}>
                           <th>{i + 1}</th>
-                          <td>{"Nikon D5600 DSLR"}</td>
-                          <td>{"NK9903"}</td>
-                          <td>{"Creative Control"}</td>
-                          <td>{"5"}</td>
-                          <td>{"275000"}</td>
+                          <td>{item?.name}</td>
+                          <td>{item?.rate}</td>
+                          <td>{item?.quantity}</td>
+                          <td>{item?.rate * item?.quantity}</td>
                         </tr>
                       );
                     })}
@@ -118,7 +116,9 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     <span className="text-bold text-xl text-right">
                       Subtotal:
                     </span>
-                    <span className="text-gray-500 text-lg">16000.00</span>
+                    <span className="text-gray-500 text-lg">
+                      {invoice?.sub_total}
+                    </span>
                   </p>
                   <p className="flex justify-between items-center">
                     <span className="text-bold text-xl text-right">

@@ -25,8 +25,7 @@ const InvoiceAsCSV = ({ data }) => {
   return (
     <>
       <CSVLink
-        data={csvData}
-        // headers={headers}
+        data={data ? csvData : []}
         filename="Invoices Report.csv"
         className="flex items-center gap-x-2 bg-[#0369A1] text-white px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer"
       >
