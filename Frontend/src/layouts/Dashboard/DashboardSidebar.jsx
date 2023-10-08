@@ -113,14 +113,14 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <div className="bg-gray-100 -mt-2">
-      <div className="join join-vertical  w-[250px] px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
+    <div className="bg-gray-100 lg:w-2/12 fixed -mt-2">
+      <div className="join join-vertical w-full  px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
         <ul className="sideBar">
           {sideBarData &&
             sideBarData?.map((item) => (
               <li
                 key={item?.name}
-                className={`my-3 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(
+                className={`my-2 flex items-center gap-x-2 hover:bg-sky-50 p-3 ${isActive(
                   item?.path
                 )}`}
               >
@@ -132,7 +132,7 @@ const DashboardSidebar = () => {
         </ul>
 
         <div>
-          <div className="pt-20">
+          <div>
             <Link
               className={`flex gap-x-2 ${isActive("/dashboard/setting")}`}
               to="/dashboard/setting"
