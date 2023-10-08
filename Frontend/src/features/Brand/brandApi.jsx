@@ -27,9 +27,9 @@ const brandApi = apiSlice.injectEndpoints({
     }),
     updateBrand: builder.mutation({
       query: (categoryData) => ({
-        method: "PUT",
+        method: "POST",
         url: `/brands/update`,
-        headers: { "Content-Type": "multipart/form-data" },
+        // headers: { "Content-Type": "multipart/form-data" },
         body: categoryData,
       }),
       invalidatesTags: ["Brands"],

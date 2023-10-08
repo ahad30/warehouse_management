@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\SaleItem;
+
+use App\Models\Product;
 use App\Models\Customer;
+use App\Models\SaleItem;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Sale extends Model
 {
@@ -42,4 +44,6 @@ class Sale extends Model
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
+
+
 }

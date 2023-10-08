@@ -10,7 +10,7 @@ const settingsApi = apiSlice.injectEndpoints({
     }),
     updateCompanyInfo: builder.mutation({
       query: (data) => ({
-        method: "PUT",
+        method: "POST",
         url: `/company/info/update`,
         body: data,
       }),

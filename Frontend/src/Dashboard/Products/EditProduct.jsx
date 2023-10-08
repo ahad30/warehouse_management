@@ -65,7 +65,30 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   }, [product, setValue]);
 
   const onSubmit = (data) => {
-    updateProduct({ ...data, id: product?.id });
+    console.log(data);
+    if (!data.product_name) {
+      toast.error("Please fill in all required fields.", { id: 1 });
+      return;
+    }
+    const formData = new FormData();
+    formData.append("_method", "PUT");
+    formData.append("product_name", data?.product_name);
+    formData.append("product_code", data?.product_code);
+    formData.append("product_quantity", data?.product_quantity);
+    formData.append("product_unit", data?.product_unit);
+    formData.append("product_desc", data?.product_desc);
+    formData.append("product_retail_price", data?.product_retail_price);
+    formData.append("product_sale_price", data?.product_sale_price);
+    formData.append("product_sale_price", data?.product_sale_price);
+    formData.append("store_id", data?.store_id);
+    formData.append("category_id", data?.category_id);
+    formData.append("brand_id", data?.brand_id);
+    formData.append("id", product.id);
+    if (data?.product_img.length > 0) {
+      formData.append("product_img", data?.product_img[0]);
+    }
+
+    updateProduct(formData);
   };
 
   return modalIsOpen ? (
