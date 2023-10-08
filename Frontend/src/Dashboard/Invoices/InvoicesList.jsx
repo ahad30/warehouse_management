@@ -87,7 +87,7 @@ const InvoicesList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
-
+console.log(invoice)
   // SEARCH FILTERING STARTS
   const columns = [
     {
@@ -137,7 +137,7 @@ const InvoicesList = () => {
             size={20}
           />
 
-          <PDFDownloadLink document={<InvoicePDF />}>
+          <PDFDownloadLink document={<InvoicePDF invoiceData={invoice} />}>
             <FaDownload className="cursor-pointer" size={20} />
           </PDFDownloadLink>
 
