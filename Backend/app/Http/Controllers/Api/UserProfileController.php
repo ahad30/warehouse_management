@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\File;
 
 class UserProfileController extends Controller
 {
@@ -53,7 +54,6 @@ class UserProfileController extends Controller
      */
     public function updateProfile(Request $request)
     {
-        // return $request->file('img');
         $loggedInUser = auth()->user();
         if ($loggedInUser != null && $loggedInUser->id != null) {
             $codeValidation = Validator::make($request->all(), [
@@ -80,20 +80,31 @@ class UserProfileController extends Controller
 
 
 
-            /* ------------------------------ image upload ------------------------------ */
-
-            $imageData = $request->oldImg;
-
-            if ($request->img != null) {
-
-                $file = $request->img;
+            $imageData = null;
+            if ($request->hasFile('user_Photo')) {
+                $validateInput = Validator::make($request->all(), [
+                    'user_Photo' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:5000']
+                ]);
+                if ($validateInput->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Validation error!',
+                        'errors' => $validateInput->errors()
+                    ], 400);
+                }
+                $file = $request->file('user_Photo');
                 $filename = $file->getClientOriginalName();
-                $imageData = time() . '-' . $filename;
-                $file->move('uploads/users', $imageData);
+                $imageData = $request->user_Photo . "-" . time() . '-' . $filename;
+                $file->move('uploads/users/', $imageData);
 
-                // deleting old image image
+                if ($loggedInUser->user_Photo != null) {
+                    $imagePath = public_path('uploads/users/' . $loggedInUser->user_Photo);
+                    // Check if the file exists before attempting to delete it
+                    if (File::exists($imagePath)) {
 
-                unlink('uploads/users/' . $request->oldImg);
+                        File::delete($imagePath);
+                    }
+                }
             }
 
 

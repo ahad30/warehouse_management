@@ -152,6 +152,7 @@ class ProductController extends Controller
     // update
     public function update(Request $request)
     {
+
         $validateInput = Validator::make($request->all(), [
             'product_name' => ['required', 'string', 'max:255'],
             'product_quantity' => ['integer', 'required'],
@@ -183,10 +184,30 @@ class ProductController extends Controller
         // image upload
         $imageData = null;
         if ($request->hasFile('product_img')) {
+            // using validator product img
+            $validateInput = Validator::make($request->all(), [
+                'product_img' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:5000']
+            ]);
+            if ($validateInput->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validation error!',
+                    'errors' => $validateInput->errors()
+                ], 400);
+            }
             $file = $request->file('product_img');
             $filename = $file->getClientOriginalName();
             $imageData = $request->product_name . "-" . time() . '-' . $filename;
             $file->move('uploads/products/', $imageData);
+
+            if ($product->brand_img != null) {
+                $imagePath = public_path('uploads/products/' . $product->product_img);
+                // Check if the file exists before attempting to delete it
+                if (File::exists($imagePath)) {
+
+                    File::delete($imagePath);
+                }
+            }
         }
         // checking category is exit or not
         if (Category::where('id', $request->category_id)->count() < 1) {
@@ -205,7 +226,7 @@ class ProductController extends Controller
         $product->update([
             'product_name' => $request->product_name,
             'product_desc' => $request->product_desc,
-            'product_img' => $request->brand_img == null ? "" : $imageData,
+            'product_img' => $request->product_img == null ? $product->product_img : $imageData,
             'product_quantity' => $request->product_quantity,
             'product_unit' => $request->product_unit,
             'product_retail_price' => $request->product_retail_price,

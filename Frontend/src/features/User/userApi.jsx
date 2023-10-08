@@ -27,7 +27,7 @@ const userApi = apiSlice.injectEndpoints({
     }),
     updateUser: builder.mutation({
       query: (userData) => ({
-        method: "PUT",
+        method: "POST",
         url: `/users/update`,
         // url: `/posts/${id}`,
         body: userData,
@@ -40,7 +40,7 @@ const userApi = apiSlice.injectEndpoints({
         url: `/profile/updateProfile`,
         body: data,
       }),
-      invalidatesTags: ["Profile"],
+      invalidatesTags: ["Profile", "Users"],
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
@@ -48,7 +48,7 @@ const userApi = apiSlice.injectEndpoints({
         url: `/users/delete/${id}`,
         // url: `/posts/${id}`,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ["Users", "Dashboard"],
     }),
     findLoggedInUser: builder.query({
       query: () => ({

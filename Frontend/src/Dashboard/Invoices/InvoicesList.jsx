@@ -2,7 +2,7 @@ import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitl
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
   useDeleteInvoiceMutation,
@@ -19,7 +19,8 @@ import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
 import DataTable from "react-data-table-component";
-import InvoiceAsCSV from "./InvoiceAsCSV";
+import InvoicesAsCSV from "./InvoicesAsCSV";
+import InvoiceDateFiltering from "./InvoiceDateFiltering";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -143,8 +144,14 @@ const InvoicesList = () => {
             size={20}
           />
 
-          <PDFDownloadLink document={<InvoicePDF invoiceData={invoice} />}>
-            <FaDownload className="cursor-pointer" size={20} />
+          <PDFDownloadLink
+            document={<InvoicePDF invoice={invoice && invoice} />}
+          >
+            <FaDownload
+              onMouseOver={() => setInvoice(row)}
+              className="cursor-pointer"
+              size={20}
+            />
           </PDFDownloadLink>
 
           <FiEdit
@@ -157,7 +164,7 @@ const InvoicesList = () => {
 
           <RiDeleteBin4Line
             onClick={() => {
-              onDelete(1);
+              onDelete(row?.id);
             }}
             className="cursor-pointer"
             size={20}
@@ -205,34 +212,15 @@ const InvoicesList = () => {
         />
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
-          <div className="flex flex-col lg:flex-row gap-2">
-            <label htmlFor="from">
-              Start:
-              <input
-                className="input input-sm input-bordered"
-                type="date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-            </label>
-            <label htmlFor="to">
-              End:
-              <input
-                className="input input-sm input-bordered"
-                type="date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </label>
-            <button
-              onClick={() => refetch()}
-              className="bg-[#0369A1] text-white rounded-md px-3 py-1"
-            >
-              Go
-            </button>
-          </div>
+          <InvoiceDateFiltering
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            refetch={refetch}
+          />
 
           <div className="flex lg:flex-row justify-between gap-2">
-            <InvoiceAsCSV data={filterData} />
-            <button className="flex items-center gap-x-2 text-[white] bg-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
+            <InvoicesAsCSV data={filterData} />
+            <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
               <BsFiletypePdf size={20} /> Download as PDF
             </button>
           </div>

@@ -12,6 +12,7 @@ use App\Models\CompanyInfo;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
@@ -43,7 +44,6 @@ class SaleController extends Controller
                     'invoices' => $invoices,
                 ]);
             }
-
         }
     }
 
@@ -62,7 +62,6 @@ class SaleController extends Controller
                     'products' => $products,
                 ],
             ]);
-
         } elseif ($brand_id != null && $category_id == null) {
             $products = Product::where('product_quantity', '>', '0')->where('brand_id', $brand_id)->with('getCategory', 'getBrand', 'getStore')->get();
             return response()->json([
@@ -94,7 +93,6 @@ class SaleController extends Controller
                 ],
             ]);
         }
-
     }
 
     // store
@@ -187,11 +185,9 @@ class SaleController extends Controller
                     // when product is not available as desired
                     if ($quantityLeft < $value['quantity']) {
                         return response()->json(['status' => false, 'message' => $product->product_name . " only " . $quantityLeft . " items left "], 400);
-
                     } else {
                         // decreasing items from stock
                         DB::table('products')->where('id', $value['id'])->update(['product_quantity' => $quantityLeft - $value['quantity']]);
-
                     }
                     // when product is not available
                     if ($product == null) {
@@ -214,11 +210,6 @@ class SaleController extends Controller
                     ];
 
                     DB::table('sale_items')->insert($item);
-
-
-
-
-
                 }
             } catch (Exception $e) {
                 // rolling back transaction if transaction failed
@@ -242,5 +233,98 @@ class SaleController extends Controller
                 ]
             ]);
         }
+    }
+
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'invoice_id' => 'required',
+            'paid_amount' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error!',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $invoice = Sale::find($request->invoice_id);
+        if ($invoice == null) {
+            return response()->json([
+                'status' => false,
+                'message' => "Invoice Not Found"
+            ], 404);
+        } else {
+            $oldPaidAmount = $invoice->paid_amount;
+            $oldDueAmount = $invoice->due_amount;
+            $newPaidAmount = $request->paid_amount;
+
+            if ($newPaidAmount > $oldDueAmount) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Can't pay more than due",
+                ], 400);
+            } else {
+
+                DB::beginTransaction();
+                try {
+                    // updating paid amount and due amount
+                    DB::table('sales')->where('id', $invoice->id)->update([
+                        'paid_amount' => $oldPaidAmount + $newPaidAmount,
+                        'due_amount' => $oldDueAmount - $newPaidAmount
+                    ]);
+
+                    $newInvoice = Sale::find($request->invoice_id);
+                    // Updating status when due is empty
+                    if ($newInvoice->due_amount == 0) {
+                        DB::table('sales')->where('id', $newInvoice->id)->update([
+                            'status' => 1,
+
+                        ]);
+                    }
+                    DB::commit();
+                    return response()->json([
+                        'status' => true,
+                        'message' => "Payment Paid Successfully",
+                    ], 200);
+                } catch (\Exception $e) {
+                    DB::rollback();
+
+                    return response()->json([
+                        'status' => false,
+                        'message' => $e->getMessage(),
+                    ], 500);
+                }
+            }
+        }
+    }
+    public function destroy($id)
+    {
+        if ($id != null) {
+            $invoice = Sale::where('id', $id)->first();
+
+            if ($invoice != null) {
+                // deleting invoice
+                $invoice->delete();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Invoice delete successfully',
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invoice not found',
+                ], 404);
+            }
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'Provided Invoice',
+        ], 400);
     }
 }

@@ -33,18 +33,14 @@ const TotalCalculations = () => {
       
       
     },
+
     {
       img: <VscGraph className="text-white" size={30}></VscGraph>,
       count: summary?.totalSales,
       text: "Total Sales",
       
     },
-    {
-      img: <BsFillCartFill className="text-white" size={30}></BsFillCartFill>,
-      count: summary?.totalProducts,
-      text: "Total Products",
-      
-    },
+    
     {
       img: <BiUserCircle className="text-white" size={30}></BiUserCircle>,
       count: summary?.totalUsers,
@@ -56,6 +52,12 @@ const TotalCalculations = () => {
       count: summary?.totalCustomers,
       text: "Total Customers",
      
+    },
+    {
+      img: <BsFillCartFill className="text-white" size={30}></BsFillCartFill>,
+      count: summary?.totalProducts,
+      text: "Total Products",
+      
     },
     {
       img: <BiCategory className="text-white" size={30}></BiCategory>,

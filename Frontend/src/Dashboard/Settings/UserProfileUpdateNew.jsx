@@ -15,29 +15,39 @@ const UserProfileUpdateNew = () => {
 
   const handleSubmitUserProfile = (data) => {
     const formData = new FormData();
+    formData.append("_method", "PUT");
+
+    // Append other form fields
     formData.append("name", data?.name);
     formData.append("phone", data?.phone);
     formData.append("email", data?.email);
     formData.append("address", data?.address);
     formData.append("city", data?.city);
     formData.append("country", data?.country);
+
     if (data?.zip_code) {
       formData.append("zip_code", data?.zip_code);
     }
+
     if (data?.state) {
       formData.append("state", data?.state);
     }
-    if (data?.img) {
-      formData.append("img", data?.img[0]);
-    }
+
     if (data?.password) {
       formData.append("password", data?.password);
     }
+
     if (data?.password_confirmation) {
       formData.append("password_confirmation", data?.password_confirmation);
     }
 
-    updateProfile(data);
+    // Append the user_Photo if it exists
+    if (data?.user_Photo?.length > 0) {
+      formData.append("user_Photo", data?.user_Photo[0]);
+    }
+
+    // Make sure your `updateProfile` function handles PUT requests
+    updateProfile(formData);
   };
 
   const errorMessages = UseErrorMessages(error);
@@ -69,7 +79,11 @@ const UserProfileUpdateNew = () => {
             <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
               <img
                 className="w-full h-auto"
-                src={user?.img ? user?.img : `https://cdn-icons-png.flaticon.com/512/149/149071.png`}
+                src={
+                  user?.img
+                    ? user?.img
+                    : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+                }
               />
             </div>
 

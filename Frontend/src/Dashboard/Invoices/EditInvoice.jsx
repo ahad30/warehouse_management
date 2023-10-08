@@ -20,14 +20,12 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (invoice) {
-      setValue("total", invoice?.total || "");
-      setValue("paid_amount", invoice?.paid_amount || "");
-      setValue("due_amount", invoice?.due_amount || "");
+      setValue("paid_amount", invoice?.due_amount || "");
     }
   }, [invoice, setValue]);
 
   const onSubmit = (data) => {
-    updateInvoice({ ...data, id: invoice?.id });
+    updateInvoice({ ...data, invoice_id: invoice?.id });
   };
 
   useEffect(() => {
@@ -68,39 +66,13 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="grid gap-5 w-full">
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Total<span className="text-red-500 p-0">*</span>
-                      </span>
+                    <label htmlFor="">
+                      Current Due Amount
                       <input
-                        type="number"
-                        placeholder="Total"
-                        className="input input-bordered w-full"
-                        {...register("total")}
-                        readOnly
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Paid<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="number"
-                        placeholder="Paid Amount"
+                        type="text"
+                        placeholder="New Paid Amount"
                         className="input input-bordered w-full"
                         {...register("paid_amount")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Due<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="number"
-                        placeholder="Due"
-                        className="input input-bordered w-full"
-                        {...register("due_amount")}
-                        readOnly
                       />
                     </label>
                   </div>
