@@ -120,7 +120,7 @@ class SaleController extends Controller
             return response()->json([
                 'status' => false,
                 'errors' => $codeValidation->errors()
-            ], 500);
+            ], 400);
         } else {
             $customerInfo = (object) $request->customer;
             $customer = Customer::where('phone', $customerInfo->phone)->orWhere('email', $customerInfo->email)->first();
