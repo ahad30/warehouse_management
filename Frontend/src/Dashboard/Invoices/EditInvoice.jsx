@@ -2,13 +2,12 @@ import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-import { useUpdateCustomerMutation } from "../../features/Customer/customerApi";
+import { useUpdateInvoiceMutation } from "../../features/Invoice/InvoiceApi";
 
-const EditInvoice = ({ modalIsOpen, setModalIsOpen, customer }) => {
+const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
   const { register, handleSubmit, setValue } = useForm();
-
   const [
-    updateCustomer,
+    updateInvoice,
     {
       isLoading: updateIsLoading,
       isError: updateIsError,
@@ -16,20 +15,19 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, customer }) => {
       isSuccess: updateIsSuccess,
       data: updateData,
     },
-  ] = useUpdateCustomerMutation();
+  ] = useUpdateInvoiceMutation();
+
+  // Set default values using setValue from react-hook-form
+  useEffect(() => {
+    if (invoice) {
+      setValue("total", invoice?.total || "");
+      setValue("paid_amount", invoice?.paid_amount || "");
+      setValue("due_amount", invoice?.due_amount || "");
+    }
+  }, [invoice, setValue]);
 
   const onSubmit = (data) => {
-    if (
-      !customer.name ||
-      !customer.email ||
-      !customer.phone ||
-      !customer.address
-    ) {
-      toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
-    }
-
-    updateCustomer({ ...data, id: customer?.id });
+    updateInvoice({ ...data, id: invoice?.id });
   };
 
   useEffect(() => {
@@ -54,17 +52,6 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, customer }) => {
     setModalIsOpen,
   ]);
 
-  // Set default values using setValue from react-hook-form
-  useEffect(() => {
-    if (customer) {
-      setValue("name", customer.name || "");
-      setValue("email", customer.email || "");
-      setValue("phone", customer.phone || "");
-      setValue("address", customer.address || "");
-      setValue("notes", customer.notes || "");
-    }
-  }, [customer, setValue]);
-
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div
@@ -76,62 +63,44 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, customer }) => {
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
-                Update Product
+                Update Invoice
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="grid gap-5 w-full">
                     <label className="input-group">
                       <span className="font-semibold">
-                        Name<span className="text-red-500 p-0">*</span>
+                        Total<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="text"
-                        placeholder="Product Name"
+                        type="number"
+                        placeholder="Total"
                         className="input input-bordered w-full"
-                        {...register("name")}
+                        {...register("total")}
+                        readOnly
                       />
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">
-                        Email<span className="text-red-500 p-0">*</span>
+                        Paid<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="text"
-                        placeholder="Email"
+                        type="number"
+                        placeholder="Paid Amount"
                         className="input input-bordered w-full"
-                        {...register("email")}
+                        {...register("paid_amount")}
                       />
                     </label>
                     <label className="input-group">
                       <span className="font-semibold">
-                        Phone<span className="text-red-500 p-0">*</span>
+                        Due<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="text"
-                        placeholder="Phone"
+                        type="number"
+                        placeholder="Due"
                         className="input input-bordered w-full"
-                        {...register("phone")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Address<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Address"
-                        className="input input-bordered w-full"
-                        {...register("address")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">Notes</span>
-                      <input
-                        type="text"
-                        placeholder="Notes"
-                        className="input input-bordered w-full"
-                        {...register("notes")}
+                        {...register("due_amount")}
+                        readOnly
                       />
                     </label>
                   </div>
@@ -165,7 +134,7 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, customer }) => {
 EditInvoice.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
-  customer: object,
+  invoice: object,
 };
 
 export default EditInvoice;

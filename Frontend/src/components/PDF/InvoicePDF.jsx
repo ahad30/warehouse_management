@@ -1,11 +1,16 @@
 // Invoice.js
-import { Page, Text, View, Document, StyleSheet, Image } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 import { object, string } from "prop-types";
 
-import { QRCodeCanvas } from 'qrcode.react';
-import QRCode from 'qrcode.react'; // Import QRCode component
-
-
+import { QRCodeCanvas } from "qrcode.react";
+import QRCode from "qrcode.react"; // Import QRCode component
 
 const styles = StyleSheet.create({
   page: {
@@ -50,8 +55,8 @@ const InvoicePDF = ({ invoiceData }) => (
           {/* head information right */}
 
           <View style={{ width: "25%", textAlign: "right" }}>
-          {/* <Image src={`data:image/svg+xml;utf8,${encodeURIComponent(<QRCode value={invoiceData} size={100} />)}`} /> */}
-          {/* <QRCodeCanvas value="hello" size={100}></QRCodeCanvas> */}
+            {/* <Image src={`data:image/svg+xml;utf8,${encodeURIComponent(<QRCode value={invoiceData} size={100} />)}`} /> */}
+            {/* <QRCodeCanvas value="hello" size={100}></QRCodeCanvas> */}
           </View>
 
           {/* head information right */}

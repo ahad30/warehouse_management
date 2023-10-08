@@ -34,8 +34,6 @@ const InvoicesList = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  console.log(startDate, endDate);
-
   const {
     data: invoicesData,
     isLoading: invoicesIsLoading,
@@ -145,13 +143,13 @@ const InvoicesList = () => {
             size={20}
           />
 
-          <PDFDownloadLink document={<InvoicePDF />}>
+          <PDFDownloadLink document={<InvoicePDF invoiceData={invoice} />}>
             <FaDownload className="cursor-pointer" size={20} />
           </PDFDownloadLink>
 
           <FiEdit
             onClick={() => {
-              handleModalEditInfo(1);
+              handleModalEditInfo(row);
             }}
             className="cursor-pointer"
             size={20}
