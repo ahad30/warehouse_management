@@ -2,7 +2,7 @@ import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitl
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
   useDeleteInvoiceMutation,
@@ -23,6 +23,7 @@ import InvoiceAsCSV from "./InvoiceAsCSV";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
+  const pdfDownloadLinkRef = useRef(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
@@ -88,8 +89,15 @@ const InvoicesList = () => {
     setInvoice(invoice);
     setModalIsOpen(true);
   };
+
+  const handlePdf = (row) => {
+    // Assuming `row` is the data you want to pass to InvoicePDF
+    setInvoice(row);
+
+    // Attempt to trigger a click on the PDFDownloadLink
+  };
   // EDIT ENDS
-console.log(invoice)
+  console.log(invoice);
   // SEARCH FILTERING STARTS
   const columns = [
     {
@@ -145,8 +153,14 @@ console.log(invoice)
             size={20}
           />
 
-          <PDFDownloadLink document={<InvoicePDF invoiceData={invoice} />}>
-            <FaDownload className="cursor-pointer" size={20} />
+          <PDFDownloadLink
+            document={<InvoicePDF invoice={invoice && invoice} />}
+          >
+            <FaDownload
+              onMouseOver={() => setInvoice(row)}
+              className="cursor-pointer"
+              size={20}
+            />
           </PDFDownloadLink>
 
           <FiEdit

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoicePDF = ({ invoiceData }) => (
+const InvoicePDF = ({ invoice }) => (
   // console.log(invoiceData)
   <Document>
     <Page size="A4" style={styles.page}>
@@ -106,14 +106,18 @@ const InvoicePDF = ({ invoiceData }) => (
           {/* head information left */}
           <View style={styles.headLeft}>
             <Text>Invoice</Text>
-            <Text>Date: 14/4/2003</Text>
-            <Text>Invoice #00003</Text>
+            <Text>{invoice?.issue_date}</Text>
+            <Text>{invoice?.invoice_no}</Text>
           </View>
 
           {/* head information right */}
 
           <View style={styles?.headRight}>
-            <Image src={`data:image/svg+xml;utf8,${encodeURIComponent(<QRCode value={"sdf"} size={100} />)}`} />
+            <Image
+              src={`data:image/svg+xml;utf8,${encodeURIComponent(
+                <QRCode value={"sdf"} size={100} />
+              )}`}
+            />
             {/* <QRCodeCanvas value="hello" size={100}></QRCodeCanvas> */}
             {/* <QRCodeCanvas
               size={70}
@@ -132,24 +136,20 @@ const InvoicePDF = ({ invoiceData }) => (
           </View>
         </View>
 
-        {/* bill and pay address view layout */}
+       
         <View style={styles?.billAndPay}>
           {/* bill Address  */}
           <View style={styles?.bill}>
-            <Text>Bill Two</Text>
-            <Text>Ontik Technology</Text>
-            <Text>
-              House No. 6B, Road No. 32, 1st Floor, Gulshan Ave, Dhaka 1212
-            </Text>
+            <Text>Bill From</Text>
+            <Text>Z-Eight-Tech</Text>
+            <Text>Buhaddarhat , Chittagong</Text>
           </View>
 
           {/* pay Address  */}
           <View style={styles?.bill}>
-            <Text>Pay To</Text>
-            <Text>Team HashCode</Text>
-            <Text>
-              House No. 6B, Road No. 32, 1st Floor, Gulshan Ave, Dhaka 1212
-            </Text>
+            <Text>Bill To</Text>
+            <Text>{invoice?.customer?.name}</Text>
+            <Text>{invoice?.customer?.address}</Text>
           </View>
         </View>
 
@@ -164,24 +164,15 @@ const InvoicePDF = ({ invoiceData }) => (
           </View>
 
           {/* table row View layout-------you can call map function here */}
-          <View style={styles.tableRow}>
-            <Text style={styles.rowOne}>MackBook pro 14</Text>
-            <Text style={styles.rowTwo}>1000</Text>
-            <Text style={styles.rowTwo}>25</Text>
-            <Text style={styles.rowTwo}>25000</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.rowOne}>MackBook pro 14</Text>
-            <Text style={styles.rowTwo}>1000</Text>
-            <Text style={styles.rowTwo}>25</Text>
-            <Text style={styles.rowTwo}>25000</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.rowOne}>MackBook pro 14</Text>
-            <Text style={styles.rowTwo}>1000</Text>
-            <Text style={styles.rowTwo}>25</Text>
-            <Text style={styles.rowTwo}>25000</Text>
-          </View>
+          {invoice?.saleitems &&
+            invoice?.saleitems?.map((item) => (
+              <View key={item?.id} style={styles.tableRow}>
+                <Text style={styles.rowOne}>{item?.name}</Text>
+                <Text style={styles.rowTwo}>{item?.rate}</Text>
+                <Text style={styles.rowTwo}>{item?.quantity}</Text>
+                <Text style={styles.rowTwo}>{item.rate * parseInt(item?.quantity)}</Text>
+              </View>
+            ))}
         </View>
 
         {/* total ,subtotal , tax view layout */}
@@ -208,7 +199,7 @@ const InvoicePDF = ({ invoiceData }) => (
 );
 
 InvoicePDF.propTypes = {
-  invoiceData: object,
+  invoice: object,
 };
 
 export default InvoicePDF;
