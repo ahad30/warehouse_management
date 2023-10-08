@@ -31,6 +31,7 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
       return;
     }
 
+
     if (data?.brand_img.length > 0) {
       formData.append("brand_img", file);
     }

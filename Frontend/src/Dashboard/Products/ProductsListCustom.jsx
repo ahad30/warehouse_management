@@ -115,7 +115,7 @@ const ProductsListCustom = () => {
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt="User"
-          className=" w-12 h-12 rounded-full"
+          className=" w-10 h-auto rounded-lg"
         />
       ),
     },
@@ -240,7 +240,7 @@ const ProductsListCustom = () => {
         />
 
         {/* filler by category , store brand */}
-        <div className="flex gap-x-7">
+        <div className="flex gap-x-3">
           {/* category */}
           <div className="form-control my-5 w-1/6 ">
             <label className="label">
@@ -249,7 +249,7 @@ const ProductsListCustom = () => {
 
             <select
               onChange={(e) => filterCategory(e?.target?.value)}
-              className=" px-4 py-2  border-2"
+              className="select select-bordered"
             >
               <option value={""}>Select category</option>
               {categoryData?.categories &&
@@ -269,7 +269,7 @@ const ProductsListCustom = () => {
 
             <select
               onChange={(e) => filterStore(e?.target?.value)}
-              className=" px-4 py-2  border-2"
+              className="select select-bordered"
             >
               <option value={""}>Select store</option>
               {storesData?.stores &&
@@ -289,7 +289,7 @@ const ProductsListCustom = () => {
 
             <select
               onChange={(e) => filterBrand(e?.target?.value)}
-              className=" px-4 py-2  border-2"
+              className="select select-bordered"
             >
               <option value={""}>Select brand</option>
               {brandsData?.brands &&
