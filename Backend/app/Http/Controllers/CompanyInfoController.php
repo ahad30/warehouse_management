@@ -55,6 +55,7 @@ class CompanyInfoController extends Controller
                 'company_email' => 'required|email',
                 'company_phone' => 'required',
                 'company_address' => 'required',
+                'company_logo' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
             ]);
 
             if ($codeValidation->fails()) {
@@ -64,12 +65,19 @@ class CompanyInfoController extends Controller
                     'errors' => $codeValidation->errors(),
                 ], 500);
             }
-
+            $imageData = null;
+            if ($request->hasFile('company_logo')) {
+                $file = $request->file('company_logo');
+                $filename = $file->getClientOriginalName();
+                $imageData = $request->brand_name . "-" . time() . '-' . $filename;
+                $file->move('uploads/companyInfo/', $imageData);
+            }
             $company_info->update([
                 'company_name' => $request->company_name,
                 'company_email' => $request->company_email,
                 'company_phone' => $request->company_phone,
                 'company_address' => $request->company_address,
+                'imageData' => $imageData
             ]);
 
             return response()->json([

@@ -39,7 +39,7 @@ class StoreController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
-            'store_email' => 'email|max:100',
+            'store_email' => 'nullable|email|max:100',
             'store_web' => 'max:100',
             'store_address' => 'required',
             'store_phone' => 'required|max:20|unique:stores,store_phone',
@@ -75,7 +75,7 @@ class StoreController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
-            'store_email' => 'email|max:100',
+            'store_email' => 'nullable|email|max:100',
             'store_web' => 'max:100',
             'store_address' => 'required',
             'id' => 'required',
