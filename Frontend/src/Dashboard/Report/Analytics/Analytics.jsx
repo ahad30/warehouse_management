@@ -2,6 +2,8 @@ import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import TotalSalesBar from "./Bars/TotalSalesBar";
 import TotalProductsChart from "./Charts/TotalProductsChart";
+import ProductSaleBarChart from "./ProductSaleBarChart/ProductSaleBarChart";
+import RevenueSaleBar from "./RevenueSaleBar/RevenueSaleBar";
 import TotalCalculations from "./TotalCalculations/TotalCalculations";
 
 const Analytics = () => {
@@ -9,9 +11,12 @@ const Analytics = () => {
   return (
     <DashboardBackground>
       <TotalCalculations />
-      <div className="grid lg:grid-cols-2 gap-5">
-        <TotalProductsChart />
-        <TotalSalesBar />
+      <div className="grid mt-20 lg:grid-cols-1 gap-8">
+        {/* <TotalProductsChart /> */}
+        {/* <TotalSalesBar /> */}
+        <div className="bg-[#f0f9ff] p-12 rounded-lg"><RevenueSaleBar></RevenueSaleBar></div>
+        <div className=" bg-[#FFFBEB] p-12 rounded-lg"><ProductSaleBarChart></ProductSaleBarChart></div>
+
       </div>
     </DashboardBackground>
   );
