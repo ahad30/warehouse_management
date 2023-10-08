@@ -142,6 +142,12 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     </span>
                     <span className=" text-lg">{invoice?.total}</span>
                   </p>
+                  <p className="flex justify-between items-center text-[#383FE1] font-bold">
+                    <span className="text-bold text-xl text-right">
+                      Due:
+                    </span>
+                    <span className=" text-lg">{invoice?.due}</span>
+                  </p>
                 </div>
               </div>
             </div>
