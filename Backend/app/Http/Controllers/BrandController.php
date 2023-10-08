@@ -42,6 +42,7 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'brand_name' => 'required|max:100|unique:' . Brand::class,
             'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
@@ -81,7 +82,9 @@ class BrandController extends Controller
      */
     public function update(Request $request)
     {
-        // return response()->json($request->all(), 400);
+        return response()->json([
+            'error' => $request->hasFile('brand_img'),
+        ], 500);
         $validator = Validator::make($request->all(), [
             'brand_name' => 'required|max:100|unique:brands,brand_name,' . $request->id,
             'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'

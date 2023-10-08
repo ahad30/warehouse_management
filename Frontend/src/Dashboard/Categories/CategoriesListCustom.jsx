@@ -9,26 +9,18 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditCategory from "./EditCategory";
-import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-import InvoicePDF from "../../components/PDF/InvoicePDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
 
 const CategoriesListCustom = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [category, setCategory] = useState({});
-
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
-
-
 
   const {
     data: categoriesData,
@@ -49,10 +41,9 @@ const CategoriesListCustom = () => {
     },
   ] = useDeleteCategoryMutation();
 
-
   useEffect(() => {
     setFilterData(categoriesData?.categories);
-  }, [categoriesData?.categories ,categoriesData]);
+  }, [categoriesData?.categories, categoriesData]);
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -107,17 +98,15 @@ const CategoriesListCustom = () => {
   const setFiltering = (search) => {
     const filteredData = categoriesData?.categories?.filter((item) =>
       item?.category_name?.toLowerCase().includes(search.toLowerCase())
-      );
-      if(filteredData){
-        setFilterData(filteredData);
-      }
-      
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
- 
   const columns = [
     {
       name: "Serial",
@@ -129,7 +118,6 @@ const CategoriesListCustom = () => {
       },
     },
 
-   
     {
       name: "Name",
       selector: "category_name",
@@ -138,8 +126,6 @@ const CategoriesListCustom = () => {
       name: "Description",
       selector: "description",
     },
-   
-    
 
     {
       name: "Actions",
@@ -156,8 +142,6 @@ const CategoriesListCustom = () => {
     },
   ];
 
-
-
   // SEARCH FILTERING ENDS
 
   // ALL CATEGORIES
@@ -172,8 +156,6 @@ const CategoriesListCustom = () => {
   return (
     <>
       <DashboardBackground>
-        
-
         <TableHeadingTitle>
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}
@@ -187,16 +169,18 @@ const CategoriesListCustom = () => {
         />
         {/* Categories Table */}
         {filterData?.length > 0 && (
-            <DataTable
-              columns={columns}
-              data={filterData}
-              pagination
-              paginationPerPage={itemsPerPage}
-              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-              paginationTotalRows={filterData?.length}
-              onChangePage={(page) => setCurrentPage(page)}
-            /> )}
-       
+          <DataTable
+            columns={columns}
+            data={filterData}
+            pagination
+            responsive
+            paginationPerPage={itemsPerPage}
+            paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+            paginationTotalRows={filterData?.length}
+            onChangePage={(page) => setCurrentPage(page)}
+          />
+        )}
+
         <EditCategory
           category={category}
           modalIsOpen={modalIsOpen}

@@ -61,15 +61,9 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   }, [user, setValue]);
 
   const onSubmit = (data) => {
-    if (
-      !data.name ||
-      !data.email ||
-      !data.phone ||
-      !data.role_id ||
-      !data.status
-    ) {
+    if (!data.role_id || !data.status) {
       toast.error("Please fill in all required fields.", { id: 1 });
-      return; // Exit early if any required field is missing
+      return;
     }
 
     updateUser({ ...data, id: user?.id });
@@ -187,14 +181,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         readOnly
                       />
                     </label>
-                    <div className="form-control w-full">
-                      <input
-                        type="file"
-                        className="file-input file-input-bordered w-full"
-                        {...register("img")}
-                        readOnly
-                      />
-                    </div>
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">

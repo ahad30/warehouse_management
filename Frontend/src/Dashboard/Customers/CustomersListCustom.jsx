@@ -91,23 +91,6 @@ const CustomersListCustom = () => {
         return <span>{serialNumber}</span>;
       },
     },
-
-    {
-      name: "Image",
-      cell: (row) => (
-        <img
-          src={
-            row.profile_image
-              ? `${
-                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                }/uploads/customer/${row?.profile_image}`
-              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
-          }
-          alt="User"
-          className=" w-12 h-12 rounded-full"
-        />
-      ),
-    },
     {
       name: "Name",
       selector: "name",
@@ -188,6 +171,7 @@ const CustomersListCustom = () => {
               columns={columns}
               data={filterData}
               pagination
+              responsive
               paginationPerPage={itemsPerPage}
               paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
               paginationTotalRows={filterData?.length}

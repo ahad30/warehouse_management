@@ -132,7 +132,7 @@ const DashboardSidebar = () => {
         </ul>
 
         <div>
-          <div>
+          <div className="mt-10">
             <Link
               className={`flex gap-x-2 ${isActive("/dashboard/setting")}`}
               to="/dashboard/setting"

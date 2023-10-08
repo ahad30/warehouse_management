@@ -15,17 +15,15 @@ import {
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
-import { FaCheckCircle, FaEdit, FaStore, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
 
 const UsersList = () => {
   UseTitle("Users");
   const [modalIsOpen, setModalIsOpen] = useState(null);
   const [user, setUser] = useState({});
-  const [allUserData, setAllUserData] = useState([]);
-  const { data: rolesData } = useGetUserRolesQuery();
-  // const [reload, setReload] = useState(false);
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const { data: rolesData } = useGetUserRolesQuery();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
@@ -110,10 +108,10 @@ const UsersList = () => {
               ? `${
                   import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
                 }/uploads/users/${row?.img}`
-              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+              : "https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
           }
           alt="User"
-          className=" w-12 h-12 rounded-full"
+          className=" w-10 h-10 rounded-full"
         />
       ),
     },
@@ -197,19 +195,15 @@ const UsersList = () => {
     console.error(usersError);
   }
 
-  // console.log(usersData?.users);
-  // console.log(rolesData.roles)
-
   const handleFilter = (data) => {
-    if(usersData?.users && data){
-      const filter = usersData?.users.filter((user)=> user?.get_role?.role === data)
-      setFilterData(filter)
-      
+    if (usersData?.users && data) {
+      const filter = usersData?.users.filter(
+        (user) => user?.get_role?.role === data
+      );
+      setFilterData(filter);
+    } else {
+      setFilterData(usersData?.users);
     }
-    else {
-      setFilterData(usersData?.users)
-    }
-   
   };
   // console.log(usersData?.users)
   return (
@@ -234,7 +228,7 @@ const UsersList = () => {
 
           <select
             onChange={(e) => handleFilter(e?.target?.value)}
-            className=" px-4 py-2  border-2"
+            className="select select-bordered"
           >
             <option value={""}>Select Role</option>
             {rolesData?.roles?.map((userRole) => (
@@ -257,6 +251,7 @@ const UsersList = () => {
               columns={columns}
               data={filterData}
               pagination
+              responsive
               paginationPerPage={itemsPerPage}
               paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
               paginationTotalRows={filterData?.length}
@@ -276,83 +271,3 @@ const UsersList = () => {
 };
 
 export default UsersList;
-
-// {!usersIsSuccess && usersData?.status ? (
-//   <p className="text-center text-2xl mt-10">{usersData?.message}</p>
-// ) : (
-//   <div className="overflow-x-scroll">
-//     <table className="table table-sm table-pin-rows table-pin-cols">
-//       {/* Table header */}
-//       <thead>
-//         <tr>
-//           <th>ID</th>
-//           <th>Image</th>
-//           <th>Name</th>
-//           <th>Email</th>
-//           <th>Phone Number</th>
-//           <th>Role</th>
-//           <th>Status</th>
-//           <th>Address</th>
-//           <th>Notes</th>
-//           <th>Actions</th>
-//         </tr>
-//       </thead>
-
-//       <tbody>
-//         {allUserData &&
-//           allUserData?.map((user, idx) => (
-//             <tr key={user?.id}>
-//               <td>{idx + 1}</td>
-//               <td>
-//                 <img
-//                   className="w-8 h-auto rounded-full"
-//                   src={`${
-//                     import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-//                   }/uploads/users/${user?.img}`}
-//                   alt=""
-//                 />
-//               </td>
-//               <td>{user?.name}</td>
-//               <td>{user?.email}</td>
-//               <td>{user?.phone}</td>
-//               <td>{user?.get_role?.role}</td>
-//               <td>{user?.status}</td>
-//               <td>{user?.address}</td>
-//               <td>{user?.notes}</td>
-//               <td className="flex gap-x-2 items-center">
-//                 <FiEdit
-//                   onClick={() => {
-//                     handleModalEditInfo(user);
-//                   }}
-//                   className="cursor-pointer"
-//                   size={20}
-//                 />
-//                 <RiDeleteBin4Line
-//                   onClick={() => {
-//                     onDelete(user?.id);
-//                   }}
-//                   className="cursor-pointer"
-//                   size={20}
-//                 />
-//               </td>
-//             </tr>
-//           ))}
-//       </tbody>
-
-//       <tfoot>
-//         <tr>
-//           <th>ID</th>
-//           <th>Image</th>
-//           <th>Name</th>
-//           <th>Email</th>
-//           <th>Phone Number</th>
-//           <th>role</th>
-//           <th>status</th>
-//           <th>Address</th>
-//           <th>Notes</th>
-//           <th>Actions</th>
-//         </tr>
-//       </tfoot>
-//     </table>
-//   </div>
-// )}

@@ -15,12 +15,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { BsFiletypeCsv, BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
-import {
-  FaCheckCircle,
-  FaDownload,
-  FaEdit,
-  FaTimesCircle,
-} from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
 import { format } from "date-fns";
@@ -33,14 +28,9 @@ const InvoicesList = () => {
   const [invoice, setInvoice] = useState({});
   const toDay = format(new Date(), "yyyy-MM-dd");
 
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
-
-
-
-  
 
   const {
     data: invoicesData,
@@ -141,7 +131,7 @@ const InvoicesList = () => {
         <div className="flex gap-x-2 items-center">
           <BsFillEyeFill
             onClick={() => {
-              handleViewInvoice(1);
+              handleViewInvoice(row);
             }}
             className="cursor-pointer"
             size={20}
@@ -173,7 +163,7 @@ const InvoicesList = () => {
 
   //  search filtering
   const setFiltering = (search) => {
-    const filteredData = usersData?.users?.filter((item) =>
+    const filteredData = invoicesData?.invoices?.filter((item) =>
       item?.name?.toLowerCase().includes(search.toLowerCase())
     );
     if (filteredData) {
@@ -241,17 +231,16 @@ const InvoicesList = () => {
         </div>
 
         <div className="overflow-x-scroll">
-           
-            <DataTable
-              columns={columns}
-              data={filterData}
-              pagination
-              paginationPerPage={itemsPerPage}
-              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-              paginationTotalRows={filterData?.length}
-              onChangePage={(page) => setCurrentPage(page)}
-            />
-          
+          <DataTable
+            columns={columns}
+            data={filterData}
+            pagination
+            responsive
+            paginationPerPage={itemsPerPage}
+            paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+            paginationTotalRows={filterData?.length}
+            onChangePage={(page) => setCurrentPage(page)}
+          />
         </div>
         <EditInvoice
           invoice={invoice}
@@ -269,77 +258,3 @@ const InvoicesList = () => {
 };
 
 export default InvoicesList;
-
-// {/* <table className="table table-sm table-pin-rows table-pin-cols">
-//             {/* Table header */}
-//             <thead>
-//               <tr>
-//                 <th>Inv No</th>
-//                 <th>Inv Date</th>
-//                 <th>Customer</th>
-//                 <th>Total</th>
-//                 <th>Paid Amount</th>
-//                 <th>Due Amount</th>
-//                 <th>Status</th>
-//                 <th>Actions</th>
-//               </tr>
-//             </thead>
-//             {/* Table body */}
-//             <tbody>
-//               {[...Array(5)].map((invoice, idx) => (
-//                 <tr key={idx}>
-//                   <td>Inv No</td>
-//                   <td>04-Oct-23</td>
-//                   <td>John Doe</td>
-//                   <td>1000</td>
-//                   <td>800</td>
-//                   <td>200</td>
-//                   <td>Due</td>
-//                   <td>
-//                     <div className="flex items-center gap-x-3">
-//                       <BsFillEyeFill
-//                         onClick={() => {
-//                           handleViewInvoice(1);
-//                         }}
-//                         className="cursor-pointer"
-//                         size={20}
-//                       />
-
-//                       <PDFDownloadLink document={<InvoicePDF />}>
-//                         <FaDownload className="cursor-pointer" size={20} />
-//                       </PDFDownloadLink>
-
-//                       <FiEdit
-//                         onClick={() => {
-//                           handleModalEditInfo(1);
-//                         }}
-//                         className="cursor-pointer"
-//                         size={20}
-//                       />
-
-//                       <RiDeleteBin4Line
-//                         onClick={() => {
-//                           onDelete(1);
-//                         }}
-//                         className="cursor-pointer"
-//                         size={20}
-//                       />
-//                     </div>
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//             <tfoot>
-//               <tr>
-//                 <th>Inv No</th>
-//                 <th>Inv Date</th>
-//                 <th>Customer</th>
-//                 <th>Total</th>
-//                 <th>Paid Amount</th>
-//                 <th>Due Amount</th>
-//                 <th>Status</th>
-//                 <th>Actions</th>
-//               </tr>
-//             </tfoot>
-//           </table> */}
-

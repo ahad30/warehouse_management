@@ -19,6 +19,7 @@ class SaleController extends Controller
     // index
     public function index($from = null, $to = null)
     {
+
         $invoices = Sale::with('saleitems', 'customer')->latest()->get();
 
         if ($invoices->count() <= 0) {
@@ -27,27 +28,16 @@ class SaleController extends Controller
                 'message' => 'No Invoices found',
                 'invoices' => $invoices,
             ]);
-
-
         } else {
-            if ($from == null && $to == null) {
-                return response()->json([
-                    'status' => true,
-                    'invoices' => $invoices,
-                ]);
-            } else if ($from != null && $to == null) {
-                return response()->json([
-                    'status' => true,
-                    'invoices' => $invoices,
-                ]);
-
-            } else if ($from != null && $to != null) {
+            if ($from != null && $to != null) {
+                $beginningDate = date('Y-m-d', strtotime($from));
+                $endingDate = date('Y-m-d', strtotime($to));
+                $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
                 return response()->json([
                     'status' => true,
                     'invoices' => $invoices,
                 ]);
             } else {
-                $invoices = Sale::whereBetween('created_at', [$from, $to])->get();
                 return response()->json([
                     'status' => true,
                     'invoices' => $invoices,
@@ -121,6 +111,7 @@ class SaleController extends Controller
             'calculation.paidAmount' => 'required',
             'customer.name' => 'required|string',
             'customer.phone' => 'required|string',
+            'items' => 'required',
             'items.*.category_id' => 'required|numeric',
             'items.*.id' => 'required|numeric',
             'items.*.quantity' => 'required|numeric',
@@ -129,7 +120,7 @@ class SaleController extends Controller
             return response()->json([
                 'status' => false,
                 'errors' => $codeValidation->errors()
-            ], 500);
+            ], 400);
         } else {
             $customerInfo = (object) $request->customer;
             $customer = Customer::where('phone', $customerInfo->phone)->orWhere('email', $customerInfo->email)->first();
@@ -190,14 +181,17 @@ class SaleController extends Controller
                 $sale_id = $sale->id;
                 $input = $request->all();
                 foreach ($input['items'] as $key => $value) {
-                    $product = Product::find($value['id']);
+                    $product = DB::table('products')->where('id', $value['id'])->first();
+
                     $quantityLeft = $product->product_quantity;
                     // when product is not available as desired
                     if ($quantityLeft < $value['quantity']) {
-                        return response()->json(['error' => $product->product_name . " only " . $quantityLeft . " items left "], 203);
+                        return response()->json(['status' => false, 'message' => $product->product_name . " only " . $quantityLeft . " items left "], 400);
+
                     } else {
                         // decreasing items from stock
-                        $product->update(['product_quantity' => $quantityLeft - $value['quantity']]);
+                        DB::table('products')->where('id', $value['id'])->update(['product_quantity' => $quantityLeft - $value['quantity']]);
+
                     }
                     // when product is not available
                     if ($product == null) {
@@ -206,17 +200,21 @@ class SaleController extends Controller
                             'error' => "Product not found"
                         ], 404);
                     }
-                    $item['sale_id'] = $sale_id;
-                    $item['product_id'] = $value['id'];
-                    $item['name'] = $product['product_name'];
-                    $item['code'] = $product['product_code'];
-                    $item['quantity'] = $value['quantity'];
-                    $item['rate'] = $product['product_sale_price'];
-                    $item['product_retail_price'] = $product->product_retail_price;
-                    $item['unit'] = $product->product_unit;
 
-                    $item['description'] = $product['product_desc'];
-                    SaleItem::create($item);
+                    $item = [
+                        'sale_id' => $sale_id,
+                        'product_id' => $value['id'],
+                        'name' => $product->product_name,
+                        'code' => $product->product_code,
+                        'quantity' => $value['quantity'],
+                        'rate' => $product->product_sale_price,
+                        'product_retail_price' => $product->product_retail_price,
+                        'unit' => $product->product_unit,
+                        'description' => $product->product_desc,
+                    ];
+
+                    DB::table('sale_items')->insert($item);
+
 
 
 

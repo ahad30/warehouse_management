@@ -9,7 +9,6 @@ import {
   useDeleteBrandMutation,
   useGetBrandsQuery,
 } from "../../features/Brand/brandApi";
-import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { BiSolidDuplicate } from "react-icons/bi";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
@@ -20,8 +19,6 @@ const BrandListCustom = () => {
   UseTitle("Categories");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [brand, setBrand] = useState({});
-
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
@@ -36,7 +33,7 @@ const BrandListCustom = () => {
 
   useEffect(() => {
     setFilterData(brandsData?.brands);
-  }, [brandsData?.brands ,brandsData]);
+  }, [brandsData?.brands, brandsData]);
 
   const [
     deleteBrand,
@@ -82,7 +79,6 @@ const BrandListCustom = () => {
   };
   // EDIT ENDS
 
-
   const columns = [
     {
       name: "Serial",
@@ -95,7 +91,7 @@ const BrandListCustom = () => {
     },
 
     {
-      name: "Image",
+      name: "Logo",
       cell: (row) => (
         <img
           src={
@@ -106,7 +102,7 @@ const BrandListCustom = () => {
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt="User"
-          className=" w-12 h-12 rounded-full"
+          className=" w-10 h-auto rounded-full"
         />
       ),
     },
@@ -114,10 +110,6 @@ const BrandListCustom = () => {
       name: "Name",
       selector: "brand_name",
     },
-    
-    
-  
-   
 
     {
       name: "Actions",
@@ -138,11 +130,10 @@ const BrandListCustom = () => {
   const setFiltering = (search) => {
     const filteredData = brandsData?.brands?.filter((item) =>
       item?.brand_name?.toLowerCase().includes(search.toLowerCase())
-      );
-      if(filteredData){
-        setFilterData(filteredData);
-      }
-      
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -175,19 +166,18 @@ const BrandListCustom = () => {
         {!brandsIsSuccess && brandsData?.status ? (
           <p className="text-center text-2xl mt-10">{brandsData?.message}</p>
         ) : (
-          
-            filterData?.length > 0 && (
-              <DataTable
-                columns={columns}
-                data={filterData}
-                pagination
-                paginationPerPage={itemsPerPage}
-                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-                paginationTotalRows={filterData?.length}
-                onChangePage={(page) => setCurrentPage(page)}
-              />
-            )
-          
+          filterData?.length > 0 && (
+            <DataTable
+              columns={columns}
+              data={filterData}
+              pagination
+              responsive
+              paginationPerPage={itemsPerPage}
+              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+              paginationTotalRows={filterData?.length}
+              onChangePage={(page) => setCurrentPage(page)}
+            />
+          )
         )}
         <EditBrand
           brand={brand}
