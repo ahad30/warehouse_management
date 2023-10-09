@@ -54,7 +54,11 @@ Route::middleware(['verifyJwtToken'])->get('/user', function (Request $request) 
 
 Route::middleware(['verifyJwtToken'])->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
+        Route::get('/', 'index');
+        Route::get('/sell-graph', 'sellGraph');
+        Route::get('/revenue-graph', 'revenueGraph');
+    });
 
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
