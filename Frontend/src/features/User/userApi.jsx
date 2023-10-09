@@ -36,7 +36,7 @@ const userApi = apiSlice.injectEndpoints({
     }),
     updateUserProfile: builder.mutation({
       query: (data) => ({
-        method: "PUT",
+        method: "POST",
         url: `/profile/updateProfile`,
         body: data,
       }),

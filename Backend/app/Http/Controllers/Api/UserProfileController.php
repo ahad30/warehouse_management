@@ -54,6 +54,7 @@ class UserProfileController extends Controller
      */
     public function updateProfile(Request $request)
     {
+
         $loggedInUser = auth()->user();
         if ($loggedInUser != null && $loggedInUser->id != null) {
             $codeValidation = Validator::make($request->all(), [
@@ -94,11 +95,11 @@ class UserProfileController extends Controller
                 }
                 $file = $request->file('user_Photo');
                 $filename = $file->getClientOriginalName();
-                $imageData = $request->user_Photo . "-" . time() . '-' . $filename;
+                $imageData = $request->name . "-" . time() . '-' . $filename;
                 $file->move('uploads/users/', $imageData);
 
-                if ($loggedInUser->user_Photo != null) {
-                    $imagePath = public_path('uploads/users/' . $loggedInUser->user_Photo);
+                if ($loggedInUser->img != null) {
+                    $imagePath = public_path('uploads/users/' . $loggedInUser->img);
                     // Check if the file exists before attempting to delete it
                     if (File::exists($imagePath)) {
 
@@ -121,7 +122,7 @@ class UserProfileController extends Controller
                     'city' => $request->city,
                     'state' => $request->state,
                     'country' => $request->country,
-                    'img' => $imageData
+                    'img' => $imageData != null ? $imageData : $loggedInUser->img
                 ]);
             } else if ($request->role_id != null) {
                 $user = DB::table('users')->where('id', $loggedInUser->id)->update([
@@ -135,7 +136,7 @@ class UserProfileController extends Controller
                     'city' => $request->city,
                     'state' => $request->state,
                     'country' => $request->country,
-                    'img' => $imageData
+                    'img' => $imageData != null ? $imageData : $loggedInUser->img
                 ]);
             } else if ($request->password != null) {
                 $user = DB::table('users')->where('id', $loggedInUser->id)->update([
@@ -149,7 +150,7 @@ class UserProfileController extends Controller
                     'city' => $request->city,
                     'state' => $request->state,
                     'country' => $request->country,
-                    'img' => $imageData
+                    'img' => $imageData != null ? $imageData : $loggedInUser->img
                 ]);
             } else {
                 $user = DB::table('users')->where('id', $loggedInUser->id)->update([
@@ -162,7 +163,7 @@ class UserProfileController extends Controller
                     'city' => $request->city,
                     'state' => $request->state,
                     'country' => $request->country,
-                    'img' => $imageData
+                    'img' => $imageData != null ? $imageData : $loggedInUser->img
                 ]);
             }
 
