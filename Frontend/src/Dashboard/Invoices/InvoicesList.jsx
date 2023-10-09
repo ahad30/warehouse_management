@@ -20,6 +20,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
 import DataTable from "react-data-table-component";
 import InvoiceAsCSV from "./InvoiceAsCSV";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -60,7 +61,8 @@ const InvoicesList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteInvoice(id);
+    
+    DeleteConformation(id,()=> deleteInvoice(id))
   };
 
   useEffect(() => {

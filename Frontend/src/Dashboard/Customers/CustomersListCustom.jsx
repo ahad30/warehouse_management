@@ -14,6 +14,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { FaEdit } from "react-icons/fa";
 import DataTable from "react-data-table-component";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const CustomersListCustom = () => {
   UseTitle("Customers");
@@ -50,7 +51,8 @@ const CustomersListCustom = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteCustomer(id);
+    
+    DeleteConformation(id,()=> deleteCustomer(id))
   };
 
   useEffect(() => {

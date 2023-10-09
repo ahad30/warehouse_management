@@ -15,6 +15,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { BiSolidDuplicate } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import DataTable from "react-data-table-component";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const StoreListCustom = () => {
   UseTitle("Customers");
@@ -50,7 +51,8 @@ const StoreListCustom = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteCustomer(id);
+    
+    DeleteConformation(id,()=> deleteCustomer(id))
   };
 
   useEffect(() => {

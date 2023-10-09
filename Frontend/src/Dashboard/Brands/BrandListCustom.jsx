@@ -14,6 +14,7 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { FaEdit } from "react-icons/fa";
 import DataTable from "react-data-table-component";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const BrandListCustom = () => {
   UseTitle("Categories");
@@ -48,7 +49,8 @@ const BrandListCustom = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteBrand(id);
+    
+    DeleteConformation(id,()=> deleteBrand(id))
   };
 
   useEffect(() => {

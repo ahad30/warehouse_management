@@ -19,6 +19,7 @@ import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const ProductsListCustom = () => {
   UseTitle("Products");
@@ -59,7 +60,8 @@ const ProductsListCustom = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteProduct(id);
+    
+    DeleteConformation(id,()=> deleteProduct(id))
   };
 
   useEffect(() => {

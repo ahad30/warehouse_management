@@ -16,6 +16,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
 import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const UsersList = () => {
   UseTitle("Users");
@@ -53,8 +54,8 @@ const UsersList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    console.log(id);
-    deleteUser(id);
+    
+    DeleteConformation(id,()=> deleteUser(id))
   };
 
   useEffect(() => {

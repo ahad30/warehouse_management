@@ -14,6 +14,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const CategoriesListCustom = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -45,25 +46,15 @@ const CategoriesListCustom = () => {
     setFilterData(categoriesData?.categories);
   }, [categoriesData?.categories, categoriesData]);
 
+
   // DELETE STARTS
   const onDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteCategory(id);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
 
-    // Change the mutation name to useDeleteCategoryMutation
+   DeleteConformation(id,()=> deleteCategory(id))
+    
   };
+
+  
 
   useEffect(() => {
     if (deleteIsLoading) {
