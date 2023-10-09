@@ -13,41 +13,37 @@ const UserProfileUpdateNew = () => {
   const [updateProfile, { isLoading, isError, error, isSuccess, data }] =
     useUpdateUserProfileMutation();
 
-  const handleSubmitUserProfile = (data) => {
-    const formData = new FormData();
-    formData.append("_method", "PUT");
+  const handleSubmitUserProfile = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("_method", "PUT");
+      formData.append("name", data?.name);
+      formData.append("phone", data?.phone);
+      formData.append("email", data?.email);
+      formData.append("address", data?.address);
+      formData.append("city", data?.city);
+      formData.append("country", data?.country);
+      formData.append("zip_code", data?.zip_code); // Add zip_code
+      formData.append("state", data?.state); // Add state
+      formData.append("password", data?.password); // Add password
+      formData.append("password_confirmation", data?.password_confirmation); // Add password_confirmation
 
-    // Append other form fields
-    formData.append("name", data?.name);
-    formData.append("phone", data?.phone);
-    formData.append("email", data?.email);
-    formData.append("address", data?.address);
-    formData.append("city", data?.city);
-    formData.append("country", data?.country);
+      // Append the user_Photo if it exists
+      if (data?.user_Photo?.length > 0) {
+        formData.append("user_Photo", data?.user_Photo[0]);
+      }
 
-    if (data?.zip_code) {
-      formData.append("zip_code", data?.zip_code);
+      await updateProfile(formData); // Await the API call
+
+      // After the API call, you can check for success or error
+      if (isSuccess) {
+        toast.success(data?.message, { id: 1 });
+      } else if (isError) {
+        toast.error(error?.data?.message || error?.status, { id: 1 });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
     }
-
-    if (data?.state) {
-      formData.append("state", data?.state);
-    }
-
-    if (data?.password) {
-      formData.append("password", data?.password);
-    }
-
-    if (data?.password_confirmation) {
-      formData.append("password_confirmation", data?.password_confirmation);
-    }
-
-    // Append the user_Photo if it exists
-    if (data?.user_Photo?.length > 0) {
-      formData.append("user_Photo", data?.user_Photo[0]);
-    }
-
-    // Make sure your `updateProfile` function handles PUT requests
-    updateProfile(formData);
   };
 
   const errorMessages = UseErrorMessages(error);
@@ -81,7 +77,9 @@ const UserProfileUpdateNew = () => {
                 className="w-full h-auto"
                 src={
                   user?.img
-                    ? user?.img
+                    ? `${
+                        import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                      }/uploads/users/${user?.img}`
                     : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
                 }
               />
