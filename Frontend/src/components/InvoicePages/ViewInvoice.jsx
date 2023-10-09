@@ -15,13 +15,16 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
         <div className="relative max-w-7xl p-4 mx-auto bg-white rounded-md shadow-lg">
           {/* Invoice view section start */}
           <div>
-            <div className="max-w-full p-5">
+            <div className="md:min-w-[700px] max-w-full p-5">
               {/* Invoice from */}
               <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                 <div>
                   <h5 className="text-2xl font-bold">
-                    Invoice No
-                    <span className="text-gray-400">{invoice?.invoice_no}</span>
+                    Invoice:
+                    <span className="text-gray-400">
+                      {" "}
+                      {invoice?.invoice_no}
+                    </span>
                   </h5>
                   <p className="text-lg">Date: {invoice?.issue_date}</p>
                 </div>
@@ -52,7 +55,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
               {/* Invoice to */}
               <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                 <div>
-                  <h5 className="text-xl font-bold">Invoiced To</h5>
+                  <h5 className="text-xl font-bold">Invoiced From</h5>
                   <div className="text-[#84878B]">
                     <h5>{invoice?.customer?.name}</h5>
                     <p>{invoice?.customer?.phone}</p>
@@ -60,23 +63,15 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     <p>{invoice?.customer?.address} </p>
                   </div>
                 </div>
-                <div className="flex gap-10 w-20">
-                  <QRCodeCanvas
-                    size={70}
-                    imageSettings={{
-                      src: "https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png",
-                      width: 25,
-                      height: 25,
-                    }}
-                    value={invoice?.invoice_no}
-                  />
-                </div>
-                <div className="text-[#84878B] text-right">
-                  <address className="space-y-2">
-                    <h5>{invoice?.customer_name}</h5>
-                    <p>{invoice?.customer_phone}</p>
-                    <p>{invoice?.customer_address} </p>
-                  </address>
+
+                <div>
+                  <h5 className="text-xl font-bold text-right">Invoiced To</h5>
+                  <div className="text-[#84878B] text-right">
+                    <h5>{invoice?.customer?.name}</h5>
+                    <p>{invoice?.customer?.phone}</p>
+                    <p>{invoice?.customer?.email}</p>
+                    <p>{invoice?.customer?.address} </p>
+                  </div>
                 </div>
               </div>
 
@@ -110,7 +105,27 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                 </table>
               </div>
               {/* Calculation */}
-              <div className="flex justify-end">
+              <div className="flex justify-between">
+                <div className="flex items-center gap-5 w-20">
+                  <QRCodeCanvas
+                    size={70}
+                    // imageSettings={{
+                    //   src: "https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png",
+                    //   width: 25,
+                    //   height: 25,
+                    // }}
+                    value={`${invoice?.invoice_no} at ${invoice?.issue_date} for ${invoice?.customer?.name}`}
+                  />
+                  <p
+                    className={`font-semibold text-xl rounded-lg  px-3 py-1 ${
+                      invoice?.status === 0
+                        ? "text-[#DC2626]"
+                        : "text-[#16A34A]"
+                    }`}
+                  >
+                    {invoice?.status === 0 ? "Due" : "Paid"}
+                  </p>
+                </div>
                 <div className="border rounded-lg p-5 my-5 space-y-2 w-[300px]">
                   <p className="flex justify-between items-center">
                     <span className="text-bold text-xl text-right">
@@ -137,16 +152,16 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     </span>
                   </p>
                   <p className="flex justify-between items-center text-[#383FE1] font-bold">
-                    <span className="text-bold text-xl text-right">
-                      Grand Total:
-                    </span>
+                    <span className="text-bold text-xl text-right">Total:</span>
                     <span className=" text-lg">{invoice?.total}</span>
                   </p>
-                  <p className="flex justify-between items-center text-[#383FE1] font-bold">
-                    <span className="text-bold text-xl text-right">
-                      Due:
-                    </span>
-                    <span className=" text-lg">{invoice?.due}</span>
+                  <p className="flex justify-between items-center text-[green] font-bold">
+                    <span className="text-bold text-xl text-right">Paid:</span>
+                    <span className=" text-lg">{invoice?.paid_amount}</span>
+                  </p>
+                  <p className="flex justify-between items-center text-[red] font-bold">
+                    <span className="text-bold text-xl text-right">Due:</span>
+                    <span className=" text-lg">{invoice?.due_amount}</span>
                   </p>
                 </div>
               </div>

@@ -33,13 +33,12 @@ const invoiceApi = apiSlice.injectEndpoints({
       providesTags: ["Invoices"],
     }),
     updateInvoice: builder.mutation({
-      query: ({ id, invoiceData }) => ({
+      query: (invoiceData) => ({
         method: "PUT",
-        url: `/invoice/update/${id}`,
-        // url: `/posts/${id}`,
+        url: `/invoice/update`,
         body: invoiceData,
       }),
-      invalidatesTags: ["Invoices"],
+      invalidatesTags: ["Invoices", "Dashboard"],
     }),
     deleteInvoice: builder.mutation({
       query: (id) => ({
@@ -47,7 +46,7 @@ const invoiceApi = apiSlice.injectEndpoints({
         url: `/invoice/delete/${id}`,
         // url: `/posts/${id}`,
       }),
-      invalidatesTags: ["Invoices"],
+      invalidatesTags: ["Invoices", "Dashboard"],
     }),
   }),
 });

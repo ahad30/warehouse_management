@@ -2,6 +2,7 @@ import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitl
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
+import { AiOutlinePrinter } from "react-icons/ai";
 import { useEffect, useRef, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
@@ -19,14 +20,17 @@ import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
 import DataTable from "react-data-table-component";
-import InvoiceAsCSV from "./InvoiceAsCSV";
+import InvoicesAsCSV from "./InvoicesAsCSV";
+import InvoiceDateFiltering from "./InvoiceDateFiltering";
+import { useReactToPrint } from "react-to-print";
+import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
-  const pdfDownloadLinkRef = useRef(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
+  const allInvoicesRef = useRef();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
@@ -34,8 +38,6 @@ const InvoicesList = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
-  console.log(startDate, endDate);
 
   const {
     data: invoicesData,
@@ -58,6 +60,11 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
+  const handleAllInvoicesPrint = useReactToPrint({
+    content: () => allInvoicesRef.current,
+    documentTitle: "Invoices",
+    onAfterPrint: toast.success("Invoices Print Successfully", { id: 1 }),
+  });
   // DELETE STARTS
   const onDelete = (id) => {
     deleteInvoice(id);
@@ -89,15 +96,8 @@ const InvoicesList = () => {
     setInvoice(invoice);
     setModalIsOpen(true);
   };
-
-  const handlePdf = (row) => {
-    // Assuming `row` is the data you want to pass to InvoicePDF
-    setInvoice(row);
-
-    // Attempt to trigger a click on the PDFDownloadLink
-  };
   // EDIT ENDS
-  console.log(invoice);
+
   // SEARCH FILTERING STARTS
   const columns = [
     {
@@ -108,10 +108,11 @@ const InvoicesList = () => {
     {
       name: "Invoice Date",
       selector: "issue_date",
+      sortable: true,
     },
     {
       name: "Customer Name",
-      selector: "customer.name",
+      selector: (row) => <>{row?.customer?.name}</>,
     },
     {
       name: "Total",
@@ -153,6 +154,8 @@ const InvoicesList = () => {
             size={20}
           />
 
+          <AiOutlinePrinter size={20} className="cursor-pointer" />
+
           <PDFDownloadLink
             document={<InvoicePDF invoice={invoice && invoice} />}
           >
@@ -165,7 +168,7 @@ const InvoicesList = () => {
 
           <FiEdit
             onClick={() => {
-              handleModalEditInfo(1);
+              handleModalEditInfo(row);
             }}
             className="cursor-pointer"
             size={20}
@@ -173,7 +176,7 @@ const InvoicesList = () => {
 
           <RiDeleteBin4Line
             onClick={() => {
-              onDelete(1);
+              onDelete(row?.id);
             }}
             className="cursor-pointer"
             size={20}
@@ -221,40 +224,19 @@ const InvoicesList = () => {
         />
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
-          <div className="flex flex-col lg:flex-row gap-2">
-            <label htmlFor="from">
-              Start:
-              <input
-                className="input input-sm input-bordered"
-                type="date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-            </label>
-            <label htmlFor="to">
-              End:
-              <input
-                className="input input-sm input-bordered"
-                type="date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </label>
-            <button
-              onClick={() => refetch()}
-              className="bg-[#0369A1] text-white rounded-md px-3 py-1"
-            >
-              Go
-            </button>
-          </div>
+          <InvoiceDateFiltering
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            refetch={refetch}
+          />
 
           <div className="flex lg:flex-row justify-between gap-2">
-            <InvoiceAsCSV data={filterData} />
-            <button className="flex items-center gap-x-2 text-[white] bg-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
-              <BsFiletypePdf size={20} /> Download as PDF
-            </button>
+            <InvoicesAsCSV data={filterData} />
+            <InvoicesAsPDF data={filterData} />
           </div>
         </div>
 
-        <div className="overflow-x-scroll">
+        <div ref={allInvoicesRef} className="overflow-x-scroll">
           <DataTable
             columns={columns}
             data={filterData}
@@ -271,11 +253,13 @@ const InvoicesList = () => {
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
-        <ViewInvoice
-          invoice={invoice}
-          viewInvoiceOpen={viewInvoiceOpen}
-          setViewInvoiceOpen={setViewInvoiceOpen}
-        />
+        <div>
+          <ViewInvoice
+            invoice={invoice}
+            viewInvoiceOpen={viewInvoiceOpen}
+            setViewInvoiceOpen={setViewInvoiceOpen}
+          />
+        </div>
       </DashboardBackground>
     </>
   );
