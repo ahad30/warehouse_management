@@ -45,6 +45,7 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
 Route::controller(UserProfileController::class)->middleware('verifyJwtToken')->prefix('profile')->group(function () {
     Route::get('/findLoggedInUser', 'findLoggedInUser');
     Route::put('/updateProfile', 'updateProfile');
+
 });
 
 

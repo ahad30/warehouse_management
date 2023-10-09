@@ -143,7 +143,7 @@ class SaleController extends Controller
                 $customer_address = $newCustomer->address;
             }
 
-            $prefix = "#INV-";
+            $prefix = "INV-";
             $year = date("y");
             $latestSale = Sale::latest()->first();
             if ($latestSale != null) {
