@@ -112,7 +112,7 @@ const InvoicesList = () => {
     },
     {
       name: "Customer Name",
-      selector: (row) => <>{row?.customer?.name}</>,
+      selector: (row) => <td>{row?.customer?.name}</td>,
     },
     {
       name: "Total",
@@ -205,6 +205,8 @@ const InvoicesList = () => {
     setViewInvoiceOpen(true);
   };
 
+  console.log(filterData);
+
   // ALL INVOICES
   if (invoicesIsLoading) {
     return <UseLoading />;
@@ -232,7 +234,12 @@ const InvoicesList = () => {
 
           <div className="flex lg:flex-row justify-between gap-2">
             <InvoicesAsCSV data={filterData} />
-            <InvoicesAsPDF data={filterData} />
+            {/* <InvoicesAsPDF data={filterData} /> */}
+            <PDFDownloadLink document={<InvoicesAsPDF data={filterData} />}>
+              <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
+                <BsFiletypePdf size={20} /> Download as PDF
+              </button>
+            </PDFDownloadLink>
           </div>
         </div>
 

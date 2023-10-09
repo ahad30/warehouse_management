@@ -8,7 +8,7 @@ const InvoicesAsCSV = ({ data }) => {
     Issue_Date: item?.issue_date,
     Customer_Name: item?.customer?.name,
     Sub_Total: item?.sub_total,
-    Discount: item?.discount,
+    Discount: `${item?.discount}%`,
     Shipping: item?.shipping,
     Total: item?.total,
     Paid_Amount: item?.paid_amount,

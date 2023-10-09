@@ -8,6 +8,12 @@ const dashboardSummaryApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Dashboard"],
     }),
+    getRevenueByDate: builder.query({
+      query: () => ({
+        url: "/dashboard",
+      }),
+      providesTags: ["Dashboard"],
+    }),
   }),
 });
 
