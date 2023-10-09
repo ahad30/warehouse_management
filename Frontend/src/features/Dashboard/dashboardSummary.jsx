@@ -8,13 +8,14 @@ const dashboardSummaryApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Dashboard"],
     }),
-    getRevenueByDate: builder.query({
+    getRevenueAndSellByDate: builder.query({
       query: () => ({
-        url: "/dashboard",
+        url: "/dashboard/revenue-graph",
       }),
       providesTags: ["Dashboard"],
     }),
   }),
 });
 
-export const { useGetDashboardSummaryQuery } = dashboardSummaryApi;
+export const { useGetDashboardSummaryQuery, useGetRevenueAndSellByDateQuery } =
+  dashboardSummaryApi;

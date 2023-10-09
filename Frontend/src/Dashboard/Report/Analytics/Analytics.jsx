@@ -14,9 +14,12 @@ const Analytics = () => {
       <div className="grid mt-20 lg:grid-cols-1 gap-8">
         {/* <TotalProductsChart /> */}
         {/* <TotalSalesBar /> */}
-        <div className="bg-[#f0f9ff] p-12 rounded-lg"><RevenueSaleBar></RevenueSaleBar></div>
-        <div className=" bg-[#FFFBEB] p-12 rounded-lg"><ProductSaleBarChart></ProductSaleBarChart></div>
-
+        <div className="bg-[#f0f9ff] p-12 rounded-lg">
+          <RevenueSaleBar />
+        </div>
+        <div className=" bg-[#FFFBEB] p-12 rounded-lg">
+          <ProductSaleBarChart />
+        </div>
       </div>
     </DashboardBackground>
   );
