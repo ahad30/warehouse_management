@@ -25,6 +25,7 @@ import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import { useReactToPrint } from "react-to-print";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
+import QRCode from "qrcode.react"
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -61,11 +62,11 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
-  const handleAllInvoicesPrint = useReactToPrint({
-    content: () => allInvoicesRef.current,
-    documentTitle: "Invoices",
-    onAfterPrint: toast.success("Invoices Print Successfully", { id: 1 }),
-  });
+  // const handleAllInvoicesPrint = useReactToPrint({
+  //   content: () => allInvoicesRef.current,
+  //   documentTitle: "Invoices",
+  //   onAfterPrint: toast.success("Invoices Print Successfully", { id: 1 }),
+  // });
   // DELETE STARTS
   const onDelete = (id) => {
     
@@ -99,6 +100,10 @@ const InvoicesList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
+
+
+ 
+
 
   console.log(invoice)
   // SEARCH FILTERING STARTS
@@ -160,7 +165,7 @@ const InvoicesList = () => {
           <AiOutlinePrinter size={20} className="cursor-pointer" />
 
           <PDFDownloadLink
-            document={<InvoicePDF invoice={invoice && invoice} />}
+            document={<InvoicePDF  invoice={invoice && invoice} />}
           >
             <FaDownload
               onMouseOver={() => setInvoice(row)}
