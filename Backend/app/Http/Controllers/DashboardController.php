@@ -56,7 +56,7 @@ class DashboardController extends Controller
         $endingDate = Carbon::now();
         $dayWiseSales = DB::table('sales')
             ->whereBetween("issue_date", [$beginningDate, $endingDate])
-            ->selectRaw('COUNT(*) as count')
+            ->selectRaw('issue_date,COUNT(*) as count')
             ->groupBy('issue_date')
             ->get();
 
@@ -78,7 +78,7 @@ class DashboardController extends Controller
         $endingDate = Carbon::now();
         $dayWiseRevenue = DB::table('sales')
             ->whereBetween("issue_date", [$beginningDate, $endingDate])
-            ->selectRaw("SUM(paid_amount) as revenue,COUNT(*) as count")
+            ->selectRaw("issue_date,SUM(paid_amount) as revenue,COUNT(*) as count")
             ->groupBy('issue_date')
             ->get();
 
