@@ -35,8 +35,17 @@ const styles = StyleSheet.create({
 
   headLeft: {
     width: "50%",
-    fontSize: "20px",
-    fontWeight: "400",
+    fontSize: "15px",
+    fontWeight: "300",
+  },
+  headLeftInvoice: {
+    
+    fontSize: "25px",
+    fontWeight: "bold",
+    
+  },
+  date: {
+    marginVertical: "10px"
   },
   headRight: { width: "25%", textAlign: "right" },
 
@@ -49,6 +58,23 @@ const styles = StyleSheet.create({
   },
   bill: {
     width: "50%",
+  },
+
+  billFrom: {
+   color: "#5c5c5c",
+   fontWeight: "600",
+   fontSize: "15px"
+  },
+  billName: {
+    
+    fontWeight: "600",
+    fontSize: "25px",
+    marginVertical: "10px"
+  },
+  billAddress: {
+    color: "#5c5c5c",
+    fontWeight: "200",
+    fontSize: "25px"
   },
   tableHead: {
     display: "flex",
@@ -105,9 +131,9 @@ const InvoicePDF = ({ invoice }) => (
         <View style={styles.head}>
           {/* head information left */}
           <View style={styles.headLeft}>
-            <Text>Invoice</Text>
-            <Text>{invoice?.issue_date}</Text>
-            <Text>{invoice?.invoice_no}</Text>
+            <Text style={styles.headLeftInvoice}>Invoice</Text>
+            <Text style={styles?.date}>{`Date: ${invoice?.issue_date}`}</Text>
+            <Text>{`Invoice: ${invoice?.invoice_no}`}</Text>
           </View>
 
           {/* head information right */}
@@ -140,16 +166,16 @@ const InvoicePDF = ({ invoice }) => (
         <View style={styles?.billAndPay}>
           {/* bill Address  */}
           <View style={styles?.bill}>
-            <Text>Bill From</Text>
-            <Text>Z-Eight-Tech</Text>
-            <Text>Buhaddarhat , Chittagong</Text>
+            <Text style={styles.billFrom}>Bill From</Text>
+            <Text style={styles.billName}>Z-Eight-Tech</Text>
+            <Text style={styles.billAddress}>Buhaddarhat , Chittagong</Text>
           </View>
 
           {/* pay Address  */}
           <View style={styles?.bill}>
-            <Text>Bill To</Text>
-            <Text>{invoice?.customer?.name}</Text>
-            <Text>{invoice?.customer?.address}</Text>
+            <Text style={styles.billFrom}>Bill To</Text>
+            <Text style={styles.billName}>{invoice?.customer?.name}</Text>
+            <Text style={styles.billAddress}>{invoice?.customer?.address}</Text>
           </View>
         </View>
 
@@ -180,18 +206,37 @@ const InvoicePDF = ({ invoice }) => (
           {/* subtotal */}
           <View style={styles.subtotalAndTax}>
             <Text>SubTotal</Text>
-            <Text>25000</Text>
+            <Text>{invoice?.sub_total}</Text>
           </View>
           {/* tax */}
           <View style={styles.subtotalAndTax}>
-            <Text>Tax</Text>
-            <Text>20</Text>
+            <Text>Shipping</Text>
+            <Text>{invoice?.shipping ? parseInt(invoice?.shipping) : 0}</Text>
+          </View>
+
+          {/* discount */}
+          <View style={styles.subtotalAndTax}>
+            <Text>Shipping</Text>
+            <Text>{`${invoice?.discount}%`}</Text>
           </View>
           {/* total */}
-          <View style={styles.total}>
+          <View style={styles.subtotalAndTax}>
             <Text>Total</Text>
-            <Text>250100</Text>
+            <Text>{invoice?.total}</Text>
           </View>
+
+          {/* due */}
+          <View style={styles.subtotalAndTax}>
+            <Text>Due</Text>
+            <Text>{invoice?.due_amount}</Text>
+          </View>
+          {/* paid */}
+
+          <View style={styles.total}>
+            <Text>Paid</Text>
+            <Text>{invoice?.paid_amount}</Text>
+          </View>
+
         </View>
       </View>
     </Page>

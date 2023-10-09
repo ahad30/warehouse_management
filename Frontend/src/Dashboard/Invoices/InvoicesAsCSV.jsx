@@ -2,7 +2,7 @@ import { array } from "prop-types";
 import { BsFiletypeCsv } from "react-icons/bs";
 import { CSVLink } from "react-csv";
 
-const InvoiceAsCSV = ({ data }) => {
+const InvoicesAsCSV = ({ data }) => {
   const csvData = data?.map((item) => ({
     Invoice_No: item?.invoice_no,
     Issue_Date: item?.issue_date,
@@ -27,7 +27,7 @@ const InvoiceAsCSV = ({ data }) => {
       <CSVLink
         data={data ? csvData : []}
         filename="Invoices Report.csv"
-        className="flex items-center gap-x-2 bg-[#0369A1] text-white px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer"
+        className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer"
       >
         <BsFiletypeCsv size={20} /> Download as CSV
       </CSVLink>
@@ -35,8 +35,8 @@ const InvoiceAsCSV = ({ data }) => {
   );
 };
 
-InvoiceAsCSV.propTypes = {
+InvoicesAsCSV.propTypes = {
   data: array,
 };
 
-export default InvoiceAsCSV;
+export default InvoicesAsCSV;

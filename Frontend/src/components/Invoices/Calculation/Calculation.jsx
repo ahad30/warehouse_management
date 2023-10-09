@@ -21,7 +21,7 @@ const Calculation = () => {
   useEffect(() => {
     setSubTotal(totalItemsPrice?.reduce((prev, cur) => prev + cur, 0));
 
-    setTotal(subTotal - discount + shipping);
+    setTotal(subTotal - (subTotal * discount) / 100 + shipping);
     setDue(total - paidAmount);
   }, [
     totalItemsPrice,
@@ -77,7 +77,7 @@ const Calculation = () => {
           />
         </div>
         <div className="flex justify-end items-center ">
-          <span className="mr-2 text-xl">Discount:</span>
+          <span className="mr-2 text-xl">Discount (%):</span>
           <input
             onChange={handleDiscountPrice}
             value={discount}
@@ -100,7 +100,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Total:</span>
           <input
             type="number"
-            value={total}
+            value={total.toFixed(2)}
             placeholder="Total"
             className="input input-bordered w-full max-w-xs"
             disabled
@@ -120,7 +120,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Due:</span>
           <input
             type="number"
-            value={due}
+            value={due.toFixed(2)}
             placeholder="Paid"
             className="input input-bordered w-full max-w-xs"
             disabled
