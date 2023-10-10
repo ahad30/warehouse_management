@@ -248,7 +248,7 @@ const ProductsListCustom = () => {
         />
 
         {/* filler by category , store brand */}
-        <div className="flex flex-wrap gap-x-3">
+        <div className="flex flex-col lg:flex-row gap-x-3">
           {/* category */}
           <div className="form-control my-2 ">
             <label className="label">

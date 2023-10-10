@@ -226,7 +226,7 @@ const UsersList = () => {
           setFiltering={setFiltering}
         />
 
-        <div className="form-control my-5 w-1/6 ">
+        <div className="form-control my-5 w-full mb-3 lg:w-1/6 ">
           <label className="label">
             <span className="label-text font-bold">Filter by role</span>
           </label>

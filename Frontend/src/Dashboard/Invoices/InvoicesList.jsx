@@ -14,6 +14,7 @@ import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { AiOutlineEye,AiOutlineDownload } from "react-icons/ai";
 import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { FaDownload } from "react-icons/fa";
@@ -153,7 +154,7 @@ const InvoicesList = () => {
       name: "Actions",
       cell: (row) => (
         <div className="flex gap-x-2 items-center">
-          <BsFillEyeFill
+          <AiOutlineEye
             onClick={() => {
               handleViewInvoice(row);
             }}
@@ -166,7 +167,7 @@ const InvoicesList = () => {
           <PDFDownloadLink
             document={<InvoicePDF  invoice={invoice && invoice} />}
           >
-            <FaDownload
+            <AiOutlineDownload
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
               size={20}

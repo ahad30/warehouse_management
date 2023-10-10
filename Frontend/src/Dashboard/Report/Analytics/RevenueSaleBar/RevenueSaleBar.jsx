@@ -33,7 +33,7 @@ const RevenueSaleBar = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="revenue" barSize={20} fill="#165BAA" />
+          <Bar dataKey="revenue"  barSize={20} fill="#165BAA" />
           <Line type="monotone" dataKey="revenue" stroke="#E697FF" />
         </ComposedChart>
       </ResponsiveContainer>

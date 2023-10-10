@@ -75,10 +75,13 @@ const ItemsWithSelect = ({ products }) => {
   return (
     <div className="my-5">
       <div className="bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
+        <h1 className="text-2xl font-semibold mb-9">Select item</h1>
         {/* Select Category or Brand */}
         <div className="grid sm:grid-cols-2 gap-5 mb-5">
+          <label htmlFor="">
+            Select category
           <select
-            className="select select-bordered w-full"
+            className="select select-bordered my-3 w-full"
             onChange={(e) => setSelectedCategory(e?.target?.value)}
             value={selectedCategory}
           >
@@ -89,8 +92,12 @@ const ItemsWithSelect = ({ products }) => {
               </option>
             ))}
           </select>
+          </label>
+
+          <label>
+            Select brand
           <select
-            className="select select-bordered w-full"
+            className="select select-bordered w-full my-3"
             onChange={(e) => setSelectedBrand(e?.target?.value)}
             value={selectedBrand}
           >
@@ -101,6 +108,7 @@ const ItemsWithSelect = ({ products }) => {
               </option>
             ))}
           </select>
+          </label>
         </div>
         {/* Select Products */}
         <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 items-end">
@@ -111,7 +119,7 @@ const ItemsWithSelect = ({ products }) => {
                 type="text"
                 name="product_code"
                 placeholder="Code"
-                className="input input-bordered input-md w-full"
+                className="input input-bordered my-3 input-md w-full"
                 defaultValue={selectedItem?.product_code}
                 readOnly
               />
@@ -121,7 +129,7 @@ const ItemsWithSelect = ({ products }) => {
             <label htmlFor="Item Name">
               <p>Item Name:</p>
               <select
-                className="select select-bordered w-full"
+                className="select select-bordered  my-3 w-full"
                 onChange={(e) => handleSelectedItem(e.target.value)}
                 name="product_name"
               >
@@ -141,7 +149,7 @@ const ItemsWithSelect = ({ products }) => {
                 type="number"
                 name="product_sale_price"
                 placeholder="Price"
-                className="input input-bordered input-md w-full"
+                className="input input-bordered input-md  my-3 w-full"
                 value={Number(selectedItem?.product_sale_price)}
                 readOnly
               />
@@ -154,7 +162,7 @@ const ItemsWithSelect = ({ products }) => {
                 type="number"
                 name="quantity"
                 placeholder="Quantity"
-                className="input input-bordered input-md w-full"
+                className="input input-bordered input-md  my-3 w-full"
                 onChange={handleQuantity}
                 min={1}
                 max={selectedItem?.product_quantity}
@@ -170,7 +178,7 @@ const ItemsWithSelect = ({ products }) => {
                 type="text"
                 name="product_unit"
                 placeholder="Unit"
-                className="input input-bordered input-md w-full"
+                className="input input-bordered input-md  my-3 w-full"
                 defaultValue={selectedItem?.product_unit}
                 readOnly
               />

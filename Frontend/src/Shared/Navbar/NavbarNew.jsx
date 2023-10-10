@@ -28,8 +28,10 @@ const NavbarNew = () => {
             className="w-12 h-12 rounded-full"
             src={
               user?.img
-                ? user?.img
-                : `https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png`
+                ? `${
+                    import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                  }/uploads/users/${user?.img}`
+                : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
             }
             alt=""
           />
