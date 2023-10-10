@@ -23,7 +23,10 @@ const NavbarNew = () => {
           <Link to={"/dashboard/invoice/new"}>New Invoice</Link>
         </div>
 
-        <div className="p-4 flex items-center gap-x-2">
+        <Link
+          to={"/dashboard/profile"}
+          className="p-4 flex items-center gap-x-2"
+        >
           <img
             className="w-12 h-12 rounded-full"
             src={
@@ -41,7 +44,7 @@ const NavbarNew = () => {
             </span>
             <span>{user?.get_role?.role ? user?.get_role?.role : `Role`}</span>
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   );

@@ -10,12 +10,7 @@ const SettingsNew = () => {
       <div className="flex flex-col gap-y-7">
         <div className="bg-gray-100 p-5">
           {/* Company Info Update */}
-          <CompanyInfoUpdateNew/>
-        </div>
-
-        <div className="bg-gray-100 p-5">
-          {/* User profile */}
-          <UserProfileUpdateNew />
+          <CompanyInfoUpdateNew />
         </div>
       </div>
     </DashboardBackground>

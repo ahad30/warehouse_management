@@ -88,42 +88,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="grid gap-5 w-full">
                     <label className="input-group">
-                      <span className="font-semibold">
-                        Name<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="User Name"
-                        className="input input-bordered w-full"
-                        {...register("name")}
-                        readOnly
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Email<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Email"
-                        className="input input-bordered w-full"
-                        {...register("email")}
-                        readOnly
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Phone<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Phone"
-                        className="input input-bordered w-full"
-                        {...register("phone")}
-                        readOnly
-                      />
-                    </label>
-                    <label className="input-group">
                       <span className="font-semibold min-w-[100px]">
                         Role<span className="text-red-500 p-0">*</span>
                       </span>
@@ -151,35 +115,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         <option value={"active"}>Active</option>
                         <option value={"inactive"}>Inactive</option>
                       </select>
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">Address</span>
-                      <input
-                        type="text"
-                        placeholder="Address"
-                        className="input input-bordered w-full"
-                        {...register("address")}
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">City</span>
-                      <input
-                        type="text"
-                        placeholder="City"
-                        className="input input-bordered w-full"
-                        {...register("city")}
-                        readOnly
-                      />
-                    </label>
-                    <label className="input-group">
-                      <span className="font-semibold">Country</span>
-                      <input
-                        type="text"
-                        placeholder="Country"
-                        className="input input-bordered w-full"
-                        {...register("country")}
-                        readOnly
-                      />
                     </label>
                   </div>
 

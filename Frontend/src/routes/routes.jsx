@@ -31,6 +31,7 @@ import Test from "../components/PDF/Test";
 import TestTable from "../Dashboard/Stores/TestTable";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import UserProfileUpdateNew from "../Dashboard/Settings/UserProfileUpdateNew";
 
 const routes = createBrowserRouter([
   {
@@ -179,6 +180,11 @@ const routes = createBrowserRouter([
         path: "/dashboard/setting",
         // element: <Settings></Settings>,
         element: <SettingsNew></SettingsNew>,
+      },
+      // PROFILE
+      {
+        path: "/dashboard/profile",
+        element: <UserProfileUpdateNew />,
       },
       {
         path: "/dashboard/setting/pdf",

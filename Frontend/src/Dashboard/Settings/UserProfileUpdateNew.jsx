@@ -63,7 +63,7 @@ const UserProfileUpdateNew = () => {
   }, [isLoading, isError, error, isSuccess, data]);
 
   return (
-    <>
+    <div className="bg-gray-100 p-5 m-5">
       <h2 className="text-2xl font-semibold my-5">User Profile</h2>
       <div className="">
         <form
@@ -252,7 +252,7 @@ const UserProfileUpdateNew = () => {
           {errorMessage}
         </p>
       ))}
-    </>
+    </div>
   );
 };
 

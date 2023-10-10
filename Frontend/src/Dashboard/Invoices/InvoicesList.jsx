@@ -14,18 +14,15 @@ import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import { AiOutlineEye,AiOutlineDownload } from "react-icons/ai";
 import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
 import DataTable from "react-data-table-component";
-import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
-
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -62,10 +59,11 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
+  console.log(invoicesData);
+
   // DELETE STARTS
   const onDelete = (id) => {
-    
-    DeleteConformation(id,()=> deleteInvoice(id))
+    deleteInvoice(id);
   };
 
   useEffect(() => {
@@ -96,23 +94,16 @@ const InvoicesList = () => {
   };
   // EDIT ENDS
 
-
- 
-
-
-  console.log(invoice)
   // SEARCH FILTERING STARTS
   const columns = [
     {
       name: "Invoice no",
-      // selector: "invoice_no",
-      selector: (row)=> <>{row?.invoice_no}</>,
+      selector: "invoice_no",
       sortable: true,
     },
     {
       name: "Invoice Date",
-      // selector: "issue_date",
-      selector: (row)=> <>{row?.issue_date}</>,
+      selector: "issue_date",
       sortable: true,
     },
     {
@@ -121,19 +112,16 @@ const InvoicesList = () => {
     },
     {
       name: "Total",
-      // selector: "total",
-      selector: (row)=> <>{row?.total}</>,
+      selector: "total",
     },
 
     {
       name: "Paid",
-      // selector: "paid_amount",
-      selector: (row)=> <>{row?.paid_amount}</>,
+      selector: "paid_amount",
     },
     {
       name: "Due",
-      // selector: "due_amount",
-      selector: (row)=> <>{row?.due_amount}</>,
+      selector: "due_amount",
     },
     {
       name: "Status",
@@ -154,20 +142,17 @@ const InvoicesList = () => {
       name: "Actions",
       cell: (row) => (
         <div className="flex gap-x-2 items-center">
-          <AiOutlineEye
+          <BsFillEyeFill
             onClick={() => {
               handleViewInvoice(row);
             }}
             className="cursor-pointer"
             size={20}
           />
-
-          <AiOutlinePrinter size={20} className="cursor-pointer" />
-
           <PDFDownloadLink
-            document={<InvoicePDF  invoice={invoice && invoice} />}
+            document={<InvoicePDF invoice={invoice && invoice} />}
           >
-            <AiOutlineDownload
+            <FaDownload
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
               size={20}
@@ -213,6 +198,8 @@ const InvoicesList = () => {
     setViewInvoiceOpen(true);
   };
 
+  console.log(filterData);
+
   // ALL INVOICES
   if (invoicesIsLoading) {
     return <UseLoading />;
@@ -224,12 +211,14 @@ const InvoicesList = () => {
           Invoices {invoicesData?.invoices?.length}
         </TableHeadingTitle>
 
-        <SearchAndAddBtn
-          btnTitle={"Add Invoice"}
-          btnPath={"/dashboard/invoice/new"}
-          btnIcon={<BiCartAdd size={20} />}
-          setFiltering={setFiltering}
-        />
+        {
+          <SearchAndAddBtn
+            btnTitle={"Add Invoice"}
+            btnPath={"/dashboard/invoice/new"}
+            btnIcon={<BiCartAdd size={20} />}
+            setFiltering={setFiltering}
+          />
+        }user
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
           <InvoiceDateFiltering
@@ -258,7 +247,7 @@ const InvoicesList = () => {
           </div>
         </div>
 
-        <div ref={allInvoicesRef} className="overflow-x-scroll ">
+        <div ref={allInvoicesRef} className="overflow-x-scroll">
           <DataTable
             columns={columns}
             data={filterData}
