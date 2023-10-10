@@ -35,12 +35,12 @@ const CustomerInfo = ({ customers }) => {
 
   return (
     <div className="bg-[#F3F4F6] border border-[#D1D5DB] rounded-lg p-5">
-      <h2 className="text-2xl font-semibold mb-3">Billing To</h2>
+      <h2 className="text-2xl font-semibold mb-9">Billing To</h2>
       <form>
         <label htmlFor="">
           Select Customers <br />
           <select
-            className="select select-bordered w-full my-2"
+            className="select select-bordered w-full my-3"
             onChange={(e) => handleSelectedPhone(e.target.value)}
             name="name"
           >
@@ -60,7 +60,7 @@ const CustomerInfo = ({ customers }) => {
               name="name"
               type="text"
               placeholder="Customer Name"
-              className="input input-bordered input-md w-full my-2"
+              className="input input-bordered input-md w-full my-3"
               required
               defaultValue={customer?.name}
             />
@@ -72,7 +72,7 @@ const CustomerInfo = ({ customers }) => {
               name="phone"
               type="text"
               placeholder="Customer Phone"
-              className="input input-bordered input-md w-full my-2"
+              className="input input-bordered input-md w-full my-3"
               required
               defaultValue={customer?.phone}
             />
@@ -84,7 +84,7 @@ const CustomerInfo = ({ customers }) => {
               name="email"
               type="email"
               placeholder="Customer Email"
-              className="input input-bordered input-md w-full my-2"
+              className="input input-bordered input-md w-full my-3"
               defaultValue={customer?.email}
             />
           </label>
@@ -96,7 +96,7 @@ const CustomerInfo = ({ customers }) => {
               name="address"
               type="text"
               placeholder="Customer Address"
-              className="input input-bordered input-md w-full my-2"
+              className="input input-bordered input-md w-full my-3"
               defaultValue={customer?.address}
             />
           </label>

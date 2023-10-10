@@ -14,10 +14,12 @@ const Analytics = () => {
       <div className="grid mt-20 lg:grid-cols-1 gap-8">
         {/* <TotalProductsChart /> */}
         {/* <TotalSalesBar /> */}
-        <div className="bg-[#f0f9ff] p-12 rounded-lg">
+        <div className="bg-[#f0f9ff] border border-[#BAE6FD] flex flex-col gap-y-12 p-12 rounded-xl">
+          <h1 className="font-semibold  text-4xl">Revenue</h1>
           <RevenueSaleBar />
         </div>
-        <div className=" bg-[#FFFBEB] p-12 rounded-lg">
+        <div className=" bg-[#FFFBEB] flex flex-col gap-y-12 border border-[#FDE68A] p-12 rounded-xl">
+          <h1 className="font-semibold  text-4xl">Sales</h1>
           <ProductSaleBarChart />
         </div>
       </div>

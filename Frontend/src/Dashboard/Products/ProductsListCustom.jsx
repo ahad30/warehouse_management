@@ -19,6 +19,7 @@ import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const ProductsListCustom = () => {
   UseTitle("Products");
@@ -59,7 +60,8 @@ const ProductsListCustom = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteProduct(id);
+    
+    DeleteConformation(id,()=> deleteProduct(id))
   };
 
   useEffect(() => {
@@ -121,27 +123,33 @@ const ProductsListCustom = () => {
     },
     {
       name: "Name",
-      selector: "product_name",
+      // selector: "product_name",
+      selector: (row)=> <>{row?.product_name}</>,
     },
     {
       name: "Code",
-      selector: "product_code",
+      // selector: "product_code",
+      selector: (row)=> <>{row?.product_code}</>,
     },
     {
       name: "Retail price",
-      selector: "product_retail_price",
+      // selector: "product_retail_price",
+      selector: (row)=> <>{row?.product_retail_price}</>,
     },
     {
       name: "Sold price",
-      selector: "product_sale_price",
+      // selector: "product_sale_price",
+      selector: (row)=> <>{row?.product_sale_price}</>,
     },
     {
       name: "Quantity",
-      selector: "product_quantity",
+      // selector: "product_quantity",
+      selector: (row)=> <>{row?.product_quantity}</>,
     },
     {
       name: "Unit",
-      selector: "product_unit",
+      // selector: "product_unit",
+      selector: (row)=> <>{row?.product_unit}</>,
     },
     {
       name: "Category",
@@ -240,7 +248,7 @@ const ProductsListCustom = () => {
         />
 
         {/* filler by category , store brand */}
-        <div className="flex flex-wrap gap-x-3">
+        <div className="flex flex-col lg:flex-row gap-x-3">
           {/* category */}
           <div className="form-control my-2 ">
             <label className="label">

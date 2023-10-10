@@ -81,10 +81,10 @@ const CompanyInfoUpdateNew = () => {
       <h2 className="text-2xl font-semibold my-5">Company Info</h2>
       <form
         onSubmit={handleSubmit(handleSubmitCompanyInfo)}
-        className="grid grid-cols-5 gap-5 items-center justify-center"
+        className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-center justify-center"
       >
         {/* file upload  */}
-        <div className="w-full row-span-2 flex flex-col justify-center items-center">
+        <div className="w-full lg:row-span-2 flex flex-col lg:justify-center lg:items-center">
           <div className=" bg-white  p-5 w-40 h-40  flex justify-center items-center rounded-lg">
             <img
               className="w-full"
@@ -109,7 +109,7 @@ const CompanyInfoUpdateNew = () => {
         </div>
 
         {/* name field  */}
-        <div className="col-span-2">
+        <div className="lg:col-span-2">
           <label htmlFor="name" className="label">
             {" "}
             company Name
@@ -124,7 +124,7 @@ const CompanyInfoUpdateNew = () => {
         </div>
 
         {/* email field  */}
-        <div className="col-span-2">
+        <div className="lg:col-span-2">
           <label htmlFor="email" className="label">
             Company email
           </label>
@@ -139,7 +139,7 @@ const CompanyInfoUpdateNew = () => {
         </div>
 
         {/* phone field */}
-        <div className=" col-span-2">
+        <div className=" lg:col-span-2">
           <label htmlFor="phone"> Phone</label>
           <input
             name="phone"
@@ -152,7 +152,7 @@ const CompanyInfoUpdateNew = () => {
         </div>
 
         {/* address field */}
-        <div className="col-span-2">
+        <div className="lg:col-span-2">
           <label htmlFor="address">Address</label>
           <input
             name="address"
@@ -164,10 +164,10 @@ const CompanyInfoUpdateNew = () => {
           />
         </div>
 
-        <div className=" flex justify-end col-span-5">
+        <div className=" flex lg:justify-end lg:col-span-5">
           <input
             type="submit"
-            className="input input-bordered input-md my-2 btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white cursor-pointer"
+            className="input w-full input-bordered input-md my-2 lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white cursor-pointer"
             // className="btn bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
             defaultValue={"Update Info"}
             required

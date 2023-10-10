@@ -39,7 +39,7 @@ const InvoiceDate = () => {
             onChange={handleOnChange}
             name="issueDate"
             type="date"
-            className="input input-bordered w-full"
+            className="input my-3 input-bordered w-full"
             defaultValue={issueDate}
           />
         </label>
@@ -49,7 +49,7 @@ const InvoiceDate = () => {
             onChange={handleOnChange}
             name="dueDate"
             type="date"
-            className="input input-bordered w-full"
+            className="input my-3 input-bordered w-full"
             defaultValue={formattedDueDate}
           />
         </label>
