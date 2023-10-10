@@ -16,14 +16,14 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
     backgroundColor: "#E4E4E4",
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
   },
   section: {
     margin: 10,
     padding: 10,
     flexGrow: 1,
-  },
-  akibRex: {
-    fontSize: "70px",
   },
   main: { padding: "20px", position: "relative" },
   head: {
@@ -136,7 +136,6 @@ const InvoicePDF = ({ invoice }) => (
           </View>
         </View>
 
-       
         <View style={styles?.billAndPay}>
           {/* bill Address  */}
           <View style={styles?.bill}>
@@ -170,7 +169,9 @@ const InvoicePDF = ({ invoice }) => (
                 <Text style={styles.rowOne}>{item?.name}</Text>
                 <Text style={styles.rowTwo}>{item?.rate}</Text>
                 <Text style={styles.rowTwo}>{item?.quantity}</Text>
-                <Text style={styles.rowTwo}>{item.rate * parseInt(item?.quantity)}</Text>
+                <Text style={styles.rowTwo}>
+                  {item.rate * parseInt(item?.quantity)}
+                </Text>
               </View>
             ))}
         </View>
