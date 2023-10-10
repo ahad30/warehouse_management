@@ -8,7 +8,7 @@ const InvoicesAsCSV = ({ data }) => {
     Issue_Date: item?.issue_date,
     Customer_Name: item?.customer?.name,
     Sub_Total: item?.sub_total,
-    Discount: item?.discount,
+    Discount: `${item?.discount}%`,
     Shipping: item?.shipping,
     Total: item?.total,
     Paid_Amount: item?.paid_amount,
@@ -16,7 +16,7 @@ const InvoicesAsCSV = ({ data }) => {
     Due_Date: item?.due_date,
     Status: item?.status === 0 ? "Due" : "Paid",
     Sold_Items: item?.saleitems?.map(
-      (product) => `${product?.name} (${product?.quantity} ${product?.unit})`
+      (product) => `${product?.name} [${product?.quantity} ${product?.unit}] `
     ),
     Customer_Phone: item?.customer?.phone,
     Customer_Email: item?.customer?.email,

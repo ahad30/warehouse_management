@@ -23,9 +23,8 @@ import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
-import { useReactToPrint } from "react-to-print";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
-import QRCode from "qrcode.react"
+
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -62,11 +61,6 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
-  // const handleAllInvoicesPrint = useReactToPrint({
-  //   content: () => allInvoicesRef.current,
-  //   documentTitle: "Invoices",
-  //   onAfterPrint: toast.success("Invoices Print Successfully", { id: 1 }),
-  // });
   // DELETE STARTS
   const onDelete = (id) => {
     
@@ -122,7 +116,7 @@ const InvoicesList = () => {
     },
     {
       name: "Customer Name",
-      selector: (row) => <>{row?.customer?.name}</>,
+      selector: (row) => <td>{row?.customer?.name}</td>,
     },
     {
       name: "Total",
@@ -218,6 +212,8 @@ const InvoicesList = () => {
     setViewInvoiceOpen(true);
   };
 
+  console.log(filterData);
+
   // ALL INVOICES
   if (invoicesIsLoading) {
     return <UseLoading />;
@@ -245,11 +241,25 @@ const InvoicesList = () => {
 
           <div className="flex lg:flex-row justify-between gap-2">
             <InvoicesAsCSV data={filterData} />
-            <InvoicesAsPDF data={filterData} />
+            {/* <InvoicesAsPDF data={filterData} /> */}
+            <PDFDownloadLink
+              document={
+                <InvoicesAsPDF
+                  data={filterData}
+                  startDate={startDate}
+                  endDate={endDate}
+                />
+              }
+              fileName="Invoices Report"
+            >
+              <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
+                <BsFiletypePdf size={20} /> Download as PDF
+              </button>
+            </PDFDownloadLink>
           </div>
         </div>
 
-        <div ref={allInvoicesRef} className="overflow-x-scroll">
+        <div ref={allInvoicesRef} className="overflow-x-scroll ">
           <DataTable
             columns={columns}
             data={filterData}

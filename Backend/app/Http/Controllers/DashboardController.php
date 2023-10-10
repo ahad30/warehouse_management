@@ -52,11 +52,11 @@ class DashboardController extends Controller
     public function sellGraph()
     {
 
-        $beginningDate = Carbon::now()->subDays(30);
+        $beginningDate = Carbon::now()->subDays(31);
         $endingDate = Carbon::now();
         $dayWiseSales = DB::table('sales')
             ->whereBetween("issue_date", [$beginningDate, $endingDate])
-            ->selectRaw('issue_date,COUNT(*) as count')
+            ->selectRaw('issue_date,COUNT(*) as sells')
             ->groupBy('issue_date')
             ->get();
 
@@ -74,11 +74,11 @@ class DashboardController extends Controller
     public function revenueGraph()
     {
 
-        $beginningDate = Carbon::now()->subDays(30);
+        $beginningDate = Carbon::now()->subDays(31);
         $endingDate = Carbon::now();
         $dayWiseRevenue = DB::table('sales')
             ->whereBetween("issue_date", [$beginningDate, $endingDate])
-            ->selectRaw("issue_date,SUM(paid_amount) as revenue,COUNT(*) as count")
+            ->selectRaw("issue_date,SUM(paid_amount) as revenue,COUNT(*) as sells")
             ->groupBy('issue_date')
             ->get();
 

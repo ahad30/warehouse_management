@@ -19,16 +19,6 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
               {/* Invoice from */}
               <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                 <div>
-                  <h5 className="text-2xl font-bold">
-                    Invoice:
-                    <span className="text-gray-400">
-                      {" "}
-                      {invoice?.invoice_no}
-                    </span>
-                  </h5>
-                  <p className="text-lg">Date: {invoice?.issue_date}</p>
-                </div>
-                <div>
                   <img
                     className="w-28"
                     src={
@@ -43,29 +33,31 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     alt={companyInfo?.company_info?.company_img}
                   />
                 </div>
-                <div className="text-[#84878B] text-right">
-                  <address className="space-y-2">
-                    <p>{companyInfo?.company_info?.company_address}</p>
-                    <p>{companyInfo?.company_info?.company_phone}</p>
-                    <p>{companyInfo?.company_info?.company_email}</p>
-                  </address>
+                <div>
+                  <h5 className="text-2xl font-bold">
+                    Invoice:
+                    <span className="text-gray-400">
+                      {" "}
+                      {invoice?.invoice_no}
+                    </span>
+                  </h5>
+                  <p className="text-lg">Date: {invoice?.issue_date}</p>
                 </div>
               </div>
 
               {/* Invoice to */}
               <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                 <div>
-                  <h5 className="text-xl font-bold">Invoiced From</h5>
-                  <div className="text-[#84878B]">
-                    <h5>{invoice?.customer?.name}</h5>
-                    <p>{invoice?.customer?.phone}</p>
-                    <p>{invoice?.customer?.email}</p>
-                    <p>{invoice?.customer?.address} </p>
+                  <h5 className="text-xl font-bold ">Invoice From</h5>
+                  <div className="text-[#84878B] ">
+                    <p>{companyInfo?.company_info?.company_email}</p>
+                    <p>{companyInfo?.company_info?.company_phone}</p>
+                    <p>{companyInfo?.company_info?.company_address}</p>
                   </div>
                 </div>
 
                 <div>
-                  <h5 className="text-xl font-bold text-right">Invoiced To</h5>
+                  <h5 className="text-xl font-bold text-right">Invoice To</h5>
                   <div className="text-[#84878B] text-right">
                     <h5>{invoice?.customer?.name}</h5>
                     <p>{invoice?.customer?.phone}</p>
@@ -140,7 +132,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                       Discount:
                     </span>
                     <span className="text-gray-500 text-lg">
-                      {invoice?.discount}
+                      {invoice?.discount}%
                     </span>
                   </p>
                   <p className="flex justify-between items-center">

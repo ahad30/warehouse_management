@@ -26,9 +26,6 @@ const styles = StyleSheet.create({
     padding: 10,
     flexGrow: 1,
   },
-  akibRex: {
-    fontSize: "70px",
-  },
   main: { padding: "20px", position: "relative" },
   head: {
     display: "flex",
