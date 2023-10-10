@@ -20,7 +20,10 @@ const NavbarNew = () => {
       <div className="flex items-center gap-2">
         <div className="flex items-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 ">
           <AiOutlinePlusCircle size={25} />
-          <Link to={"/dashboard/invoice/new"}>New Invoice</Link>
+          <Link to={"/dashboard/invoice/new"}>
+            {" "}
+            <span className="hidden sm:block">New Invoice</span>{" "}
+          </Link>
         </div>
 
         <Link

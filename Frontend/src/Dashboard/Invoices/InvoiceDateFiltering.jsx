@@ -2,9 +2,8 @@ import { func } from "prop-types";
 
 const InvoiceDateFiltering = ({ setStartDate, setEndDate, refetch }) => {
   return (
-    <div className="flex flex-col lg:flex-row gap-2">
+    <div className="flex flex-col lg:flex-row gap-1">
       <label htmlFor="from">
-        Start:
         <input
           className="input mx-2 input-sm input-bordered"
           type="date"
@@ -12,19 +11,18 @@ const InvoiceDateFiltering = ({ setStartDate, setEndDate, refetch }) => {
         />
       </label>
       <label htmlFor="to">
-        End:
         <input
           className="input  mx-2 input-sm input-bordered"
           type="date"
           onChange={(e) => setEndDate(e.target.value)}
         />
       </label>
-      <button
+      {/* <button
         onClick={() => refetch()}
         className="bg-[#0369A1] text-white rounded-md px-3 py-1"
       >
         Go
-      </button>
+      </button> */}
     </div>
   );
 };

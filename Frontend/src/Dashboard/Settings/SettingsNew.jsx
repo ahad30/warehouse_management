@@ -1,7 +1,6 @@
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import CompanyInfoUpdateNew from "./CompanyInfoUpdateNew";
-import UserProfileUpdateNew from "./UserProfileUpdateNew";
 
 const SettingsNew = () => {
   UseTitle("Settings");

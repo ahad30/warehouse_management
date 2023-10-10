@@ -2,7 +2,6 @@ import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitl
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { AiOutlinePrinter } from "react-icons/ai";
 import { useEffect, useRef, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
@@ -59,8 +58,6 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
-  console.log(invoicesData);
-
   // DELETE STARTS
   const onDelete = (id) => {
     deleteInvoice(id);
@@ -98,30 +95,30 @@ const InvoicesList = () => {
   const columns = [
     {
       name: "Invoice no",
-      selector: "invoice_no",
+      selector: (row) => <>{row?.invoice_no}</>,
       sortable: true,
     },
     {
       name: "Invoice Date",
-      selector: "issue_date",
+      selector: (row) => <>{row?.issue_date}</>,
       sortable: true,
     },
     {
       name: "Customer Name",
-      selector: (row) => <td>{row?.customer?.name}</td>,
+      selector: (row) => <>{row?.customer?.name}</>,
     },
     {
       name: "Total",
-      selector: "total",
+      selector: (row) => <>{row?.total}</>,
     },
 
     {
       name: "Paid",
-      selector: "paid_amount",
+      selector: (row) => <>{row?.paid_amount}</>,
     },
     {
       name: "Due",
-      selector: "due_amount",
+      selector: (row) => <>{row?.due_amount}</>,
     },
     {
       name: "Status",
@@ -198,8 +195,6 @@ const InvoicesList = () => {
     setViewInvoiceOpen(true);
   };
 
-  console.log(filterData);
-
   // ALL INVOICES
   if (invoicesIsLoading) {
     return <UseLoading />;
@@ -211,14 +206,12 @@ const InvoicesList = () => {
           Invoices {invoicesData?.invoices?.length}
         </TableHeadingTitle>
 
-        {
-          <SearchAndAddBtn
-            btnTitle={"Add Invoice"}
-            btnPath={"/dashboard/invoice/new"}
-            btnIcon={<BiCartAdd size={20} />}
-            setFiltering={setFiltering}
-          />
-        }user
+        <SearchAndAddBtn
+          btnTitle={"Add Invoice"}
+          btnPath={"/dashboard/invoice/new"}
+          btnIcon={<BiCartAdd size={20} />}
+          setFiltering={setFiltering}
+        />
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
           <InvoiceDateFiltering
@@ -228,8 +221,9 @@ const InvoicesList = () => {
           />
 
           <div className="flex lg:flex-row justify-between gap-2">
+            {/* Invoices download as CSV file */}
             <InvoicesAsCSV data={filterData} />
-            {/* <InvoicesAsPDF data={filterData} /> */}
+            {/* Invoices download as PDF file */}
             <PDFDownloadLink
               document={
                 <InvoicesAsPDF

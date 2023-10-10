@@ -1,9 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSetting,AiOutlineShoppingCart } from "react-icons/ai";
-import { BiCategory, BiGrid, BiLogOut, BiUserCircle } from "react-icons/bi";
-import { FaFileInvoiceDollar, FaStore } from "react-icons/fa";
+import { BiCategory, BiLogOut, BiUserCircle } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
-import { BsFillCartFill } from "react-icons/bs";
 import { LiaStoreSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
