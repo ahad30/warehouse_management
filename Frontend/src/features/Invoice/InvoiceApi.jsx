@@ -24,7 +24,6 @@ const invoiceApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Invoices"],
     }),
-
     getInvoice: builder.query({
       query: (id) => ({
         url: `/invoice/edit/${id}`,

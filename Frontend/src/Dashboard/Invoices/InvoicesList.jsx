@@ -199,8 +199,6 @@ const InvoicesList = () => {
     setViewInvoiceOpen(true);
   };
 
-  console.log(filterData);
-
   // ALL INVOICES
   if (invoicesIsLoading) {
     return <UseLoading />;
