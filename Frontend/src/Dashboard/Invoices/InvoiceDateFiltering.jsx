@@ -6,7 +6,7 @@ const InvoiceDateFiltering = ({ setStartDate, setEndDate, refetch }) => {
       <label htmlFor="from">
         Start:
         <input
-          className="input input-sm input-bordered"
+          className="input mx-2 input-sm input-bordered"
           type="date"
           onChange={(e) => setStartDate(e.target.value)}
         />
@@ -14,7 +14,7 @@ const InvoiceDateFiltering = ({ setStartDate, setEndDate, refetch }) => {
       <label htmlFor="to">
         End:
         <input
-          className="input input-sm input-bordered"
+          className="input  mx-2 input-sm input-bordered"
           type="date"
           onChange={(e) => setEndDate(e.target.value)}
         />

@@ -15,6 +15,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { BiSolidDuplicate } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import DataTable from "react-data-table-component";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const StoreListCustom = () => {
   UseTitle("Customers");
@@ -50,7 +51,8 @@ const StoreListCustom = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteCustomer(id);
+    
+    DeleteConformation(id,()=> deleteCustomer(id))
   };
 
   useEffect(() => {
@@ -95,11 +97,15 @@ const StoreListCustom = () => {
 
     {
       name: "Name",
-      selector: "store_name",
+      // selector: "store_name",
+      selector: (row)=> <>{row?.store_name}</>,
+
     },
     {
       name: "email",
-      selector: "store_email",
+      // selector: "store_email",
+      selector: (row)=> <>{row?.store_email}</>,
+
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
       //     {row?.email}
@@ -108,16 +114,19 @@ const StoreListCustom = () => {
     },
     {
       name: "phone",
-      selector: "store_phone",
+      // selector: "store_phone",
+      selector: (row)=> <>{row?.store_phone}</>,
+
     },
     {
       name: "web",
-      selector: "store_web",
+      selector: (row)=> <>{row?.store_web}</>,
     },
 
     {
       name: "address",
-      selector: "store_address",
+      // selector: "store_address",
+      selector: (row)=> <>{row?.store_address}</>,
     },
 
     {

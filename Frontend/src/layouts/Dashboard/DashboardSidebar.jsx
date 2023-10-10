@@ -1,12 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineSetting,AiOutlineShoppingCart } from "react-icons/ai";
 import { BiCategory, BiGrid, BiLogOut, BiUserCircle } from "react-icons/bi";
 import { FaFileInvoiceDollar, FaStore } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { BsFillCartFill } from "react-icons/bs";
+import { LiaStoreSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
+import { TbFileInvoice} from "react-icons/tb";
+import { RxDashboard} from "react-icons/rx";
 import { toast } from "react-hot-toast";
 import { useUserLogOutMutation } from "../../features/User/userApi";
 import { logOut } from "../../features/Auth/authSlice";
@@ -53,7 +56,7 @@ const DashboardSidebar = () => {
   const [sideBarData, setSidebarData] = useState([
     {
       name: "Dashboard",
-      icon: <BiGrid size={25}></BiGrid>,
+      icon: <RxDashboard size={25}></RxDashboard>,
       path: "/dashboard",
     },
     {
@@ -78,18 +81,19 @@ const DashboardSidebar = () => {
     },
     {
       name: "Store",
-      icon: <FaStore size={25} />,
+      // icon: <FaStore size={25} />,
+      icon: <LiaStoreSolid size={25}></LiaStoreSolid>,
       path: "/dashboard/store",
     },
     {
       name: "Product",
-      icon: <BsFillCartFill size={25} />,
+      icon: <AiOutlineShoppingCart size={25}></AiOutlineShoppingCart>,
       path: "/dashboard/product",
     },
 
     {
       name: "Invoices",
-      icon: <FaFileInvoiceDollar size={25} />,
+      icon: <TbFileInvoice size={25}></TbFileInvoice>,
       path: "/dashboard/invoice",
     },
   ]);
@@ -108,6 +112,8 @@ const DashboardSidebar = () => {
     }
   }, [user]);
 
+  
+  
   const isActive = (path) => {
     return location.pathname === path ? "active-link" : "";
   };

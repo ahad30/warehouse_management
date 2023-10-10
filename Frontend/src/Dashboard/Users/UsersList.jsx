@@ -16,6 +16,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
 import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const UsersList = () => {
   UseTitle("Users");
@@ -53,8 +54,8 @@ const UsersList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    console.log(id);
-    deleteUser(id);
+    
+    DeleteConformation(id,()=> deleteUser(id))
   };
 
   useEffect(() => {
@@ -117,12 +118,14 @@ const UsersList = () => {
     },
     {
       name: "Name",
-      selector: "name",
+      // selector: "name",
+      selector: (row)=> <>{row?.name}</>,
       sortable: true,
     },
     {
       name: "email",
-      selector: "email",
+      // selector: "email",
+      selector: (row)=> <>{row?.email}</>,
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
       //     {row?.email}
@@ -131,7 +134,8 @@ const UsersList = () => {
     },
     {
       name: "phone",
-      selector: "phone",
+      // selector: "phone",
+      selector: (row)=> <>{row?.phone}</>,
     },
     {
       name: "role",
@@ -156,7 +160,8 @@ const UsersList = () => {
     },
     {
       name: "address",
-      selector: "address",
+      // selector: "address",
+      selector: (row)=> <>{row?.address}</>,
     },
 
     {
@@ -221,7 +226,7 @@ const UsersList = () => {
           setFiltering={setFiltering}
         />
 
-        <div className="form-control my-5 w-1/6 ">
+        <div className="form-control my-5 w-full mb-3 lg:w-1/6 ">
           <label className="label">
             <span className="label-text font-bold">Filter by role</span>
           </label>

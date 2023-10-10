@@ -6,19 +6,20 @@ import {
   Document,
   StyleSheet,
   Image,
+  Canvas,
+  Svg,
 } from "@react-pdf/renderer";
-import { object, string } from "prop-types";
+import { object } from "prop-types";
+import img from "../../../src/assets/tras_ZL-01-removebg-preview.png";
 
-import { QRCodeCanvas } from "qrcode.react";
-import QRCode from "qrcode.react"; // Import QRCode component
+
+import QRCode from "react-qr-code";
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
-    backgroundColor: "#E4E4E4",
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+    backgroundColor: "#FFFFFF",
+    padding: "20px",
   },
   section: {
     margin: 10,
@@ -35,14 +36,21 @@ const styles = StyleSheet.create({
 
   headLeft: {
     width: "50%",
-    fontSize: "20px",
-    fontWeight: "400",
+    fontSize: "15px",
+    fontWeight: "300",
+  },
+  headLeftInvoice: {
+    fontSize: "25px",
+    fontWeight: "bold",
+  },
+  date: {
+    marginVertical: "10px",
   },
   headRight: { width: "25%", textAlign: "right" },
 
   billAndPay: {
     display: "flex",
-    marginTop: "50px",
+    marginTop: "40px",
     flexDirection: "row",
     alignContent: "space-between",
     justifyContent: "space-between",
@@ -50,19 +58,42 @@ const styles = StyleSheet.create({
   bill: {
     width: "50%",
   },
+
+  billFrom: {
+    color: "#5c5c5c",
+    fontWeight: "600",
+    fontSize: "15px",
+  },
+  billName: {
+    fontWeight: "600",
+    fontSize: "18px",
+    marginVertical: "10px",
+  },
+  billAddress: {
+    color: "#5c5c5c",
+    fontWeight: "light",
+    fontSize: "15px",
+  },
   tableHead: {
     display: "flex",
-    marginTop: "50px",
-    borderTop: "1px solid black",
-    borderBottom: "1px solid black",
+    marginTop: "40px",
+    padding: "5px",
+    border: "2px solid #f3f4f6",
+
     flexDirection: "row",
     justifyContent: "flex-start",
+    fontSize: "15px",
+    fontWeight: "300",
   },
   rowOne: {
     width: "40%",
+    fontSize: "15px",
+    fontWeight: "300",
   },
   rowTwo: {
     width: "20%",
+    fontSize: "15px",
+    fontWeight: "300",
   },
 
   tableRow: {
@@ -72,27 +103,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
   },
+
   totalSubTotalTax: {
     width: "100%",
     paddingHorizontal: "20px",
     position: "absolute",
     bottom: "10px",
   },
+
   subtotalAndTax: {
     display: "flex",
-    borderBottom: "1px solid black",
+    borderBottom: "1px solid #f3f4f6",
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: "10px",
+    fontSize: "15px",
+    fontWeight: "light",
+    padding: "5px",
   },
 
-  total: {
-    display: "flex",
-    fontWeight: "bold",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: "10px",
-  },
+  // total: {
+  //   display: "flex",
+  //   fontWeight: "bold",
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   marginTop: "10px",
+  // },
 });
 
 const InvoicePDF = ({ invoice }) => (
@@ -105,50 +141,37 @@ const InvoicePDF = ({ invoice }) => (
         <View style={styles.head}>
           {/* head information left */}
           <View style={styles.headLeft}>
-            <Text>Invoice</Text>
-            <Text>{invoice?.issue_date}</Text>
-            <Text>{invoice?.invoice_no}</Text>
+            <Text style={styles.headLeftInvoice}>Invoice</Text>
+            <Text style={styles?.date}>{`Date: ${invoice?.issue_date}`}</Text>
+            <Text>{`Invoice: ${invoice?.invoice_no}`}</Text>
           </View>
 
           {/* head information right */}
-
-          <View style={styles?.headRight}>
-            <Image
-              src={`data:image/svg+xml;utf8,${encodeURIComponent(
-                <QRCode value={"sdf"} size={100} />
-              )}`}
-            />
-            {/* <QRCodeCanvas value="hello" size={100}></QRCodeCanvas> */}
-            {/* <QRCodeCanvas
-              size={70}
-              imageSettings={{
-                src: "https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png",
-                width: 25,
-                height: 25,
-              }}
-              value={"d"}
-            /> */}
+          
+          <View>
+           <Image source={`https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=issue_date:${invoice?.issue_date}:invoice:${invoice?.invoice_no }`}></Image>
           </View>
 
           {/* head information right */}
           <View style={styles?.headRight}>
-            <Text>Z-TECH</Text>
+            {/* <Text>Z-TECH</Text> */}
+            <Image source={img}></Image>
           </View>
         </View>
 
         <View style={styles?.billAndPay}>
           {/* bill Address  */}
           <View style={styles?.bill}>
-            <Text>Bill From</Text>
-            <Text>Z-Eight-Tech</Text>
-            <Text>Buhaddarhat , Chittagong</Text>
+            <Text style={styles.billFrom}>Bill From</Text>
+            <Text style={styles.billName}>Z-Eight-Tech</Text>
+            <Text style={styles.billAddress}>Buhaddarhat , Chittagong</Text>
           </View>
 
           {/* pay Address  */}
           <View style={styles?.bill}>
-            <Text>Bill To</Text>
-            <Text>{invoice?.customer?.name}</Text>
-            <Text>{invoice?.customer?.address}</Text>
+            <Text style={styles.billFrom}>Bill To</Text>
+            <Text style={styles.billName}>{invoice?.customer?.name}</Text>
+            <Text style={styles.billAddress}>{invoice?.customer?.address}</Text>
           </View>
         </View>
 
@@ -181,17 +204,35 @@ const InvoicePDF = ({ invoice }) => (
           {/* subtotal */}
           <View style={styles.subtotalAndTax}>
             <Text>SubTotal</Text>
-            <Text>25000</Text>
+            <Text>{invoice?.sub_total}</Text>
           </View>
           {/* tax */}
           <View style={styles.subtotalAndTax}>
-            <Text>Tax</Text>
-            <Text>20</Text>
+            <Text>Shipping</Text>
+            <Text>{invoice?.shipping ? parseInt(invoice?.shipping) : 0}</Text>
+          </View>
+
+          {/* discount */}
+          <View style={styles.subtotalAndTax}>
+            <Text>Shipping</Text>
+            <Text>{`${invoice?.discount}%`}</Text>
           </View>
           {/* total */}
-          <View style={styles.total}>
+          <View style={styles.subtotalAndTax}>
             <Text>Total</Text>
-            <Text>250100</Text>
+            <Text>{invoice?.total}</Text>
+          </View>
+
+          {/* due */}
+          <View style={styles.subtotalAndTax}>
+            <Text>Due</Text>
+            <Text>{invoice?.due_amount}</Text>
+          </View>
+          {/* paid */}
+
+          <View style={styles.subtotalAndTax}>
+            <Text>Paid</Text>
+            <Text>{invoice?.paid_amount}</Text>
           </View>
         </View>
       </View>

@@ -67,11 +67,11 @@ const UserProfileUpdateNew = () => {
       <h2 className="text-2xl font-semibold my-5">User Profile</h2>
       <div className="">
         <form
-          className="grid grid-cols-5 gap-5 justify-center items-start"
+          className="grid grid-cols-1 lg:grid-cols-5 gap-5 justify-center items-start"
           onSubmit={handleSubmit(handleSubmitUserProfile)}
         >
           {/* file upload  */}
-          <div className="w-full row-span-5 flex flex-col items-center ">
+          <div className="w-full lg:row-span-5 flex flex-col lg:items-center ">
             <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
               <img
                 className="w-full h-auto"
@@ -96,7 +96,7 @@ const UserProfileUpdateNew = () => {
           </div>
 
           {/* name field */}
-          <div className="col-span-4">
+          <div className="lg:col-span-4">
             <label htmlFor="name" className="label">
               Name
             </label>
@@ -112,7 +112,7 @@ const UserProfileUpdateNew = () => {
           </div>
 
           {/* email field */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <label htmlFor="email" className="label">
               Email
             </label>
@@ -127,7 +127,7 @@ const UserProfileUpdateNew = () => {
             />
           </div>
           {/* phone field */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <label htmlFor="phone" className="label">
               {" "}
               Phone
@@ -143,7 +143,7 @@ const UserProfileUpdateNew = () => {
           </div>
 
           {/* address field */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <label htmlFor="address" className="label">
               Address
             </label>
@@ -158,7 +158,7 @@ const UserProfileUpdateNew = () => {
           </div>
 
           {/* zip code field */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <label htmlFor="zip_code" className="label">
               Zip code
             </label>
@@ -172,7 +172,7 @@ const UserProfileUpdateNew = () => {
             />
           </div>
 
-          <div className="col-span-4 flex items-center justify-center gap-x-4">
+          <div className="lg:col-span-4 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-x-4">
             {/* country field */}
             <div className="w-full">
               <label htmlFor="country">Country</label>
@@ -210,7 +210,7 @@ const UserProfileUpdateNew = () => {
               />
             </div>
           </div>
-          <div className="col-span-4 flex items-center justify-between gap-x-4">
+          <div className="lg:col-span-4 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-x-4">
             <label htmlFor="" className="w-full ">
               New Password
               <input
@@ -233,11 +233,11 @@ const UserProfileUpdateNew = () => {
             </label>
           </div>
 
-          <div className="col-span-5 flex justify-end">
+          <div className="lg:col-span-5 flex flex-col lg:flex-row lg:items-center lg:justify-end gap-x-4">
             <input
               type="submit"
               // className="input input-bordered input-md my-2"
-              className="btn btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white"
+              className="btn w-full lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white"
               value={"Save"}
             />
           </div>

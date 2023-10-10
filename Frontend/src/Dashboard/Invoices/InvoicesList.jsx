@@ -14,15 +14,18 @@ import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { AiOutlineEye,AiOutlineDownload } from "react-icons/ai";
 import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "../../components/PDF/InvoicePDF";
 import DataTable from "react-data-table-component";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
+
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -61,7 +64,8 @@ const InvoicesList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteInvoice(id);
+    
+    DeleteConformation(id,()=> deleteInvoice(id))
   };
 
   useEffect(() => {
@@ -92,16 +96,23 @@ const InvoicesList = () => {
   };
   // EDIT ENDS
 
+
+ 
+
+
+  console.log(invoice)
   // SEARCH FILTERING STARTS
   const columns = [
     {
       name: "Invoice no",
-      selector: "invoice_no",
+      // selector: "invoice_no",
+      selector: (row)=> <>{row?.invoice_no}</>,
       sortable: true,
     },
     {
       name: "Invoice Date",
-      selector: "issue_date",
+      // selector: "issue_date",
+      selector: (row)=> <>{row?.issue_date}</>,
       sortable: true,
     },
     {
@@ -110,16 +121,19 @@ const InvoicesList = () => {
     },
     {
       name: "Total",
-      selector: "total",
+      // selector: "total",
+      selector: (row)=> <>{row?.total}</>,
     },
 
     {
       name: "Paid",
-      selector: "paid_amount",
+      // selector: "paid_amount",
+      selector: (row)=> <>{row?.paid_amount}</>,
     },
     {
       name: "Due",
-      selector: "due_amount",
+      // selector: "due_amount",
+      selector: (row)=> <>{row?.due_amount}</>,
     },
     {
       name: "Status",
@@ -140,7 +154,7 @@ const InvoicesList = () => {
       name: "Actions",
       cell: (row) => (
         <div className="flex gap-x-2 items-center">
-          <BsFillEyeFill
+          <AiOutlineEye
             onClick={() => {
               handleViewInvoice(row);
             }}
@@ -151,9 +165,9 @@ const InvoicesList = () => {
           <AiOutlinePrinter size={20} className="cursor-pointer" />
 
           <PDFDownloadLink
-            document={<InvoicePDF invoice={invoice && invoice} />}
+            document={<InvoicePDF  invoice={invoice && invoice} />}
           >
-            <FaDownload
+            <AiOutlineDownload
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
               size={20}
@@ -246,7 +260,7 @@ const InvoicesList = () => {
           </div>
         </div>
 
-        <div ref={allInvoicesRef} className="overflow-x-scroll">
+        <div ref={allInvoicesRef} className="overflow-x-scroll ">
           <DataTable
             columns={columns}
             data={filterData}

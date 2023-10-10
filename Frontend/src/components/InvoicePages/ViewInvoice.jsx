@@ -22,15 +22,15 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                   <img
                     className="w-28"
                     src={
-                      companyInfo?.company_info?.company_logo
+                      companyInfo?.company_info?.company_img
                         ? `${
                             import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
                           }/uploads/companyInfo/${
-                            companyInfo?.company_info?.company_logo
+                            companyInfo?.company_info?.company_img
                           }`
                         : "https://z8tech.dev/wp-content/uploads/2022/11/tras_ZL-01-removebg-preview.png"
                     }
-                    alt={companyInfo?.company_info?.company_logo}
+                    alt={companyInfo?.company_info?.company_img}
                   />
                 </div>
                 <div>
