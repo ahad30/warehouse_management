@@ -110,7 +110,9 @@ const BrandListCustom = () => {
     },
     {
       name: "Name",
-      selector: "brand_name",
+      // selector: "brand_name",
+      selector: (row)=> <>{row?.brand_name}</>,
+
     },
 
     {

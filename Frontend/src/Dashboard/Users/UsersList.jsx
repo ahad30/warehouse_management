@@ -118,12 +118,14 @@ const UsersList = () => {
     },
     {
       name: "Name",
-      selector: "name",
+      // selector: "name",
+      selector: (row)=> <>{row?.name}</>,
       sortable: true,
     },
     {
       name: "email",
-      selector: "email",
+      // selector: "email",
+      selector: (row)=> <>{row?.email}</>,
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
       //     {row?.email}
@@ -132,7 +134,8 @@ const UsersList = () => {
     },
     {
       name: "phone",
-      selector: "phone",
+      // selector: "phone",
+      selector: (row)=> <>{row?.phone}</>,
     },
     {
       name: "role",
@@ -157,7 +160,8 @@ const UsersList = () => {
     },
     {
       name: "address",
-      selector: "address",
+      // selector: "address",
+      selector: (row)=> <>{row?.address}</>,
     },
 
     {

@@ -110,12 +110,14 @@ const InvoicesList = () => {
   const columns = [
     {
       name: "Invoice no",
-      selector: "invoice_no",
+      // selector: "invoice_no",
+      selector: (row)=> <>{row?.invoice_no}</>,
       sortable: true,
     },
     {
       name: "Invoice Date",
-      selector: "issue_date",
+      // selector: "issue_date",
+      selector: (row)=> <>{row?.issue_date}</>,
       sortable: true,
     },
     {
@@ -124,16 +126,19 @@ const InvoicesList = () => {
     },
     {
       name: "Total",
-      selector: "total",
+      // selector: "total",
+      selector: (row)=> <>{row?.total}</>,
     },
 
     {
       name: "Paid",
-      selector: "paid_amount",
+      // selector: "paid_amount",
+      selector: (row)=> <>{row?.paid_amount}</>,
     },
     {
       name: "Due",
-      selector: "due_amount",
+      // selector: "due_amount",
+      selector: (row)=> <>{row?.due_amount}</>,
     },
     {
       name: "Status",

@@ -152,7 +152,7 @@ const InvoicePDF = ({ invoice }) => (
           {/* head information right */}
           
           <View>
-           <Image source={`https://api.qrserver.com/v1/create-qr-code/?size=50x50&data="${invoice?.invoice_no}"`}></Image>
+           <Image source={`https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=issue_date:${invoice?.issue_date}:invoice:${invoice?.invoice_no }`}></Image>
           </View>
 
           {/* head information right */}

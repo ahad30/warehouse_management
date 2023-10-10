@@ -111,11 +111,15 @@ const CategoriesListCustom = () => {
 
     {
       name: "Name",
-      selector: "category_name",
+      
+      selector: (row)=> <>{row?.category_name}</>,
     },
     {
       name: "Description",
-      selector: "description",
+      
+      selector: (row)=> <>{row?.description}</>,
+
+      
     },
 
     {

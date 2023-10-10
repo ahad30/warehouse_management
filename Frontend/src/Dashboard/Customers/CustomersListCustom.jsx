@@ -95,11 +95,13 @@ const CustomersListCustom = () => {
     },
     {
       name: "Name",
-      selector: "name",
+      
+      selector: (row)=> <>{row?.name}</>,
     },
     {
       name: "email",
-      selector: "email",
+      
+      selector: (row)=> <>{row?.email}</>,
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
       //     {row?.email}
@@ -108,12 +110,15 @@ const CustomersListCustom = () => {
     },
     {
       name: "phone",
-      selector: "phone",
+      
+      selector: (row)=> <>{row?.phone}</>,
+      
     },
 
     {
       name: "address",
-      selector: "address",
+      
+      selector: (row)=> <>{row?.address}</>,
     },
 
     {

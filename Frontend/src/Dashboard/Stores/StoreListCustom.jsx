@@ -97,11 +97,15 @@ const StoreListCustom = () => {
 
     {
       name: "Name",
-      selector: "store_name",
+      // selector: "store_name",
+      selector: (row)=> <>{row?.store_name}</>,
+
     },
     {
       name: "email",
-      selector: "store_email",
+      // selector: "store_email",
+      selector: (row)=> <>{row?.store_email}</>,
+
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
       //     {row?.email}
@@ -110,16 +114,19 @@ const StoreListCustom = () => {
     },
     {
       name: "phone",
-      selector: "store_phone",
+      // selector: "store_phone",
+      selector: (row)=> <>{row?.store_phone}</>,
+
     },
     {
       name: "web",
-      selector: "store_web",
+      selector: (row)=> <>{row?.store_web}</>,
     },
 
     {
       name: "address",
-      selector: "store_address",
+      // selector: "store_address",
+      selector: (row)=> <>{row?.store_address}</>,
     },
 
     {
