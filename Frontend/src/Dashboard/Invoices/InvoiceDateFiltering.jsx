@@ -1,45 +1,53 @@
 import { func } from "prop-types";
 
-const InvoiceDateFiltering = ({ setStartDate, setEndDate, refetch }) => {
+const InvoiceDateFiltering = ({
+  handleStartDate,
+  handleEndDate,
+  handleDate,
+  refetch,
+}) => {
   return (
     <div className="flex flex-col lg:flex-row gap-1">
-      <button className="px-2 py-1 bg-gray-600 text-white rounded-md">
+      <button
+        onClick={() => handleDate(1)}
+        className="px-2 py-1 bg-gray-600 text-white rounded-md text-sm"
+      >
         Today
       </button>
-      <button className="px-2 py-1 bg-gray-600 text-white rounded-md">
+      <button
+        onClick={() => handleDate(7)}
+        className="px-2 py-1 bg-gray-600 text-white rounded-md text-sm"
+      >
         Last 7 Days
       </button>
-      <button className="px-2 py-1 bg-gray-600 text-white rounded-md">
+      <button
+        onClick={() => handleDate(31)}
+        className="px-2 py-1 bg-gray-600 text-white rounded-md text-sm"
+      >
         This Month
       </button>
       <label htmlFor="from">
         <input
           className="input mx-2 input-sm input-bordered"
           type="date"
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={(e) => handleStartDate(e.target.value)}
         />
       </label>
       <label htmlFor="to">
         <input
           className="input  mx-2 input-sm input-bordered"
           type="date"
-          onChange={(e) => setEndDate(e.target.value)}
+          onChange={(e) => handleEndDate(e.target.value)}
         />
       </label>
-      {/* <button
-        onClick={() => refetch()}
-        className="bg-[#0369A1] text-white rounded-md px-3 py-1"
-      >
-        Go
-      </button> */}
     </div>
   );
 };
 
 InvoiceDateFiltering.propTypes = {
-  setStartDate: func,
-  setEndDate: func,
-  refetch: func,
+  handleStartDate: func,
+  handleEndDate: func,
+  handleDate: func,
 };
 
 export default InvoiceDateFiltering;

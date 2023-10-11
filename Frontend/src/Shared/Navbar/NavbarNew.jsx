@@ -26,28 +26,28 @@ const NavbarNew = () => {
           </Link>
         </div>
 
-        <Link
-          to={"/dashboard/profile"}
-          className="p-4 flex items-center gap-x-2"
-        >
-          <img
-            className="w-12 h-12 rounded-full"
-            src={
-              user?.img
-                ? `${
-                    import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                  }/uploads/users/${user?.img}`
-                : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
-            }
-            alt=""
-          />
+        <div className="p-4 flex items-center gap-x-2">
+          <Link to={"/dashboard/profile"}>
+            <img
+              className="w-12 h-12 rounded-full"
+              src={
+                user?.img
+                  ? `${
+                      import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                    }/uploads/users/${user?.img}`
+                  : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+              }
+              alt=""
+            />
+          </Link>
+
           <p className="flex flex-col gap-0">
             <span className="font-semibold">
               {user?.name ? `${user?.name.slice(0, 12)}...` : `John Doe`}
             </span>
             <span>{user?.get_role?.role ? user?.get_role?.role : `Role`}</span>
           </p>
-        </Link>
+        </div>
       </div>
     </div>
   );

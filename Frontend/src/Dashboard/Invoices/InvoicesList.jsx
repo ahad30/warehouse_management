@@ -42,7 +42,7 @@ const InvoicesList = () => {
     data: invoicesData,
     isLoading: invoicesIsLoading,
     refetch,
-  } = useGetInvoicesQuery({ startDate, endDate });
+  } = useGetInvoicesQuery({ startDate, endDate, date });
 
   useEffect(() => {
     setFilterData(invoicesData?.invoices);
@@ -58,6 +58,23 @@ const InvoicesList = () => {
       data: deleteData,
     },
   ] = useDeleteInvoiceMutation();
+
+  const handleStartDate = (date) => {
+    setStartDate(date);
+    setDate(null);
+  };
+  const handleEndDate = (date) => {
+    setEndDate(date);
+    setDate(null);
+  };
+  const handleDate = (date) => {
+    console.log(date);
+    setDate(date);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  console.log(startDate, endDate, date);
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -216,8 +233,9 @@ const InvoicesList = () => {
 
         <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
           <InvoiceDateFiltering
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
+            handleStartDate={handleStartDate}
+            handleEndDate={handleEndDate}
+            handleDate={handleDate}
             refetch={refetch}
           />
 
