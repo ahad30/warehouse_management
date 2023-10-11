@@ -1,139 +1,125 @@
 // Invoice.js
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-  Image,
-  Canvas,
-  Svg,
-} from "@react-pdf/renderer";
-import { object } from "prop-types";
+import {Page,Text,View,Document,StyleSheet,Image,Canvas,Svg} from "@react-pdf/renderer";
 import img from "../../../src/assets/tras_ZL-01-removebg-preview.png";
 
 
-import QRCode from "react-qr-code";
-
 const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    padding: "20px",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  main: { padding: "20px", position: "relative" },
-  head: {
-    display: "flex",
-    flexDirection: "row",
-    alignContent: "space-between",
-    justifyContent: "space-between",
-  },
-
-  headLeft: {
-    width: "50%",
-    fontSize: "15px",
-    fontWeight: "300",
-  },
-  headLeftInvoice: {
-    fontSize: "25px",
-    fontWeight: "bold",
-  },
-  date: {
-    marginVertical: "10px",
-  },
-  headRight: { width: "25%", textAlign: "right" },
-
-  billAndPay: {
-    display: "flex",
-    marginTop: "40px",
-    flexDirection: "row",
-    alignContent: "space-between",
-    justifyContent: "space-between",
-  },
-  bill: {
-    width: "50%",
-  },
-
-  billFrom: {
-    color: "#5c5c5c",
-    fontWeight: "600",
-    fontSize: "15px",
-  },
-  billName: {
-    fontWeight: "600",
-    fontSize: "18px",
-    marginVertical: "10px",
-  },
-  billAddress: {
-    color: "#5c5c5c",
-    fontWeight: "light",
-    fontSize: "15px",
-  },
-  tableHead: {
-    display: "flex",
-    marginTop: "40px",
-    padding: "5px",
-    border: "2px solid #f3f4f6",
-
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    fontSize: "15px",
-    fontWeight: "300",
-  },
-  rowOne: {
-    width: "40%",
-    fontSize: "15px",
-    fontWeight: "300",
-  },
-  rowTwo: {
-    width: "20%",
-    fontSize: "15px",
-    fontWeight: "300",
-  },
-
-  tableRow: {
-    display: "flex",
-    textAlign: "left",
-    marginTop: "10px",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-
-  totalSubTotalTax: {
-    width: "100%",
-    paddingHorizontal: "20px",
-    position: "absolute",
-    bottom: "10px",
-  },
-
-  subtotalAndTax: {
-    display: "flex",
-    borderBottom: "1px solid #f3f4f6",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: "10px",
-    fontSize: "15px",
-    fontWeight: "light",
-    padding: "5px",
-  },
-
-  // total: {
-  //   display: "flex",
-  //   fontWeight: "bold",
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   marginTop: "10px",
-  // },
-});
-
-const InvoicePDF = ({ invoice }) => (
-  // console.log(invoiceData)
-  <Document>
+    page: {
+      flexDirection: "row",
+      backgroundColor: "#FFFFFF",
+      padding: "20px",
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+    main: { padding: "20px", position: "relative" },
+    head: {
+      display: "flex",
+      flexDirection: "row",
+      alignContent: "space-between",
+      justifyContent: "space-between",
+    },
+  
+    headLeft: {
+      width: "50%",
+      fontSize: "15px",
+      fontWeight: "300",
+    },
+    headLeftInvoice: {
+      fontSize: "25px",
+      fontWeight: "bold",
+    },
+    date: {
+      marginVertical: "10px",
+    },
+    headRight: { width: "25%", textAlign: "right" },
+  
+    billAndPay: {
+      display: "flex",
+      marginTop: "40px",
+      flexDirection: "row",
+      alignContent: "space-between",
+      justifyContent: "space-between",
+    },
+    bill: {
+      width: "50%",
+    },
+  
+    billFrom: {
+      color: "#5c5c5c",
+      fontWeight: "600",
+      fontSize: "15px",
+    },
+    billName: {
+      fontWeight: "600",
+      fontSize: "18px",
+      marginVertical: "10px",
+    },
+    billAddress: {
+      color: "#5c5c5c",
+      fontWeight: "light",
+      fontSize: "15px",
+    },
+    tableHead: {
+      display: "flex",
+      marginTop: "40px",
+      padding: "5px",
+      border: "2px solid #f3f4f6",
+  
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      fontSize: "15px",
+      fontWeight: "300",
+    },
+    rowOne: {
+      width: "40%",
+      fontSize: "15px",
+      fontWeight: "300",
+    },
+    rowTwo: {
+      width: "20%",
+      fontSize: "15px",
+      fontWeight: "300",
+    },
+  
+    tableRow: {
+      display: "flex",
+      textAlign: "left",
+      marginTop: "10px",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+    },
+  
+    totalSubTotalTax: {
+      width: "100%",
+      paddingHorizontal: "20px",
+      position: "absolute",
+      bottom: "10px",
+    },
+  
+    subtotalAndTax: {
+      display: "flex",
+      borderBottom: "1px solid #f3f4f6",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: "10px",
+      fontSize: "15px",
+      fontWeight: "light",
+      padding: "5px",
+    },
+  
+    // total: {
+    //   display: "flex",
+    //   fontWeight: "bold",
+    //   flexDirection: "row",
+    //   justifyContent: "space-between",
+    //   marginTop: "10px",
+    // },
+  });
+const PosPdf = ({ invoice }) => {
+    <Document>
     <Page size="A7" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
@@ -238,10 +224,6 @@ const InvoicePDF = ({ invoice }) => (
       </View>
     </Page>
   </Document>
-);
-
-InvoicePDF.propTypes = {
-  invoice: object,
 };
 
-export default InvoicePDF;
+export default PosPdf;
