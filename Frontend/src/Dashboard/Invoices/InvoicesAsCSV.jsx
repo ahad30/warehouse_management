@@ -27,7 +27,7 @@ const InvoicesAsCSV = ({ data }) => {
       <CSVLink
         data={data ? csvData : []}
         filename="Invoices Report.csv"
-        className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer"
+        className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer"
       >
         <BsFiletypeCsv size={20} /> Download as CSV
       </CSVLink>

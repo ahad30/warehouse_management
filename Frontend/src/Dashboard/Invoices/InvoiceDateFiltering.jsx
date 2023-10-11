@@ -1,11 +1,11 @@
 import { func } from "prop-types";
+import { AiOutlineClear } from "react-icons/ai";
 
 const InvoiceDateFiltering = ({
   handleStartDate,
   handleEndDate,
   handleDate,
   handleDateClear,
-  refetch,
 }) => {
   return (
     <div className="flex flex-col lg:flex-row gap-1">
@@ -45,7 +45,7 @@ const InvoiceDateFiltering = ({
         onClick={() => handleDateClear(31)}
         className="px-2 py-1 text-red-600 bg-white rounded-md text-sm border border-red-600 font-bold"
       >
-        Clear
+        <AiOutlineClear size={18} />
       </button>
     </div>
   );

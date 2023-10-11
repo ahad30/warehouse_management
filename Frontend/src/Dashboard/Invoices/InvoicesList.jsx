@@ -34,15 +34,12 @@ const InvoicesList = () => {
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
 
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [date, setDate] = useState(null);
 
-  const {
-    data: invoicesData,
-    isLoading: invoicesIsLoading,
-    refetch,
-  } = useGetInvoicesQuery({ startDate, endDate, date });
+  const { data: invoicesData, isLoading: invoicesIsLoading } =
+    useGetInvoicesQuery({ startDate, endDate, date });
 
   useEffect(() => {
     setFilterData(invoicesData?.invoices);
@@ -74,10 +71,10 @@ const InvoicesList = () => {
     setEndDate(null);
   };
   const handleDateClear = () => {
-    setStartDate(null)
-    setEndDate(null)
-    setDate(null)
-  }
+    setStartDate(null);
+    setEndDate(null);
+    setDate(null);
+  };
 
   console.log(startDate, endDate, date);
 
@@ -145,6 +142,7 @@ const InvoicesList = () => {
     },
     {
       name: "Status",
+      sortable: true,
       selector: (row) => (
         <div>
           <button
@@ -226,7 +224,7 @@ const InvoicesList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Invoices {invoicesData?.invoices?.length}
+          Invoices Report {invoicesData?.invoices?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
@@ -242,7 +240,6 @@ const InvoicesList = () => {
             handleEndDate={handleEndDate}
             handleDate={handleDate}
             handleDateClear={handleDateClear}
-            refetch={refetch}
           />
 
           <div className="flex lg:flex-row justify-between gap-2">
@@ -259,7 +256,7 @@ const InvoicesList = () => {
               }
               fileName="Invoices Report"
             >
-              <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
+              <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
                 <BsFiletypePdf size={20} /> Download as PDF
               </button>
             </PDFDownloadLink>
