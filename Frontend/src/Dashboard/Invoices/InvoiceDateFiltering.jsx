@@ -4,6 +4,7 @@ const InvoiceDateFiltering = ({
   handleStartDate,
   handleEndDate,
   handleDate,
+  handleDateClear,
   refetch,
 }) => {
   return (
@@ -28,18 +29,24 @@ const InvoiceDateFiltering = ({
       </button>
       <label htmlFor="from">
         <input
-          className="input mx-2 input-sm input-bordered"
+          className="input input-sm input-bordered"
           type="date"
           onChange={(e) => handleStartDate(e.target.value)}
         />
       </label>
       <label htmlFor="to">
         <input
-          className="input  mx-2 input-sm input-bordered"
+          className="input input-sm input-bordered"
           type="date"
           onChange={(e) => handleEndDate(e.target.value)}
         />
       </label>
+      <button
+        onClick={() => handleDateClear(31)}
+        className="px-2 py-1 text-red-600 bg-white rounded-md text-sm border border-red-600 font-bold"
+      >
+        Clear
+      </button>
     </div>
   );
 };
@@ -48,6 +55,7 @@ InvoiceDateFiltering.propTypes = {
   handleStartDate: func,
   handleEndDate: func,
   handleDate: func,
+  handleDateClear: func,
 };
 
 export default InvoiceDateFiltering;

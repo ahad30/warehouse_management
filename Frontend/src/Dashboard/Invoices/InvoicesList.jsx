@@ -73,6 +73,11 @@ const InvoicesList = () => {
     setStartDate(null);
     setEndDate(null);
   };
+  const handleDateClear = () => {
+    setStartDate(null)
+    setEndDate(null)
+    setDate(null)
+  }
 
   console.log(startDate, endDate, date);
 
@@ -236,6 +241,7 @@ const InvoicesList = () => {
             handleStartDate={handleStartDate}
             handleEndDate={handleEndDate}
             handleDate={handleDate}
+            handleDateClear={handleDateClear}
             refetch={refetch}
           />
 
