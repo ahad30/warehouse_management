@@ -36,6 +36,7 @@ const InvoicesList = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [date, setDate] = useState("");
 
   const {
     data: invoicesData,

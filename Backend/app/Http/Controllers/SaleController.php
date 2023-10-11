@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 class SaleController extends Controller
 {
     // index
-    public function index($from = null, $to = null)
+    public function index($from = null, $to = null, $dayCount = null)
     {
 
         $invoices = Sale::with('saleitems', 'customer')->latest()->get();
@@ -31,13 +31,30 @@ class SaleController extends Controller
             ]);
         } else {
             if ($from != null && $to != null) {
-                $beginningDate = date('Y-m-d', strtotime($from));
-                $endingDate = date('Y-m-d', strtotime($to));
-                $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
+                /* -------------------- get invoice using date filtering -------------------- */
+                $invoices = $this->getInvoice($from, $to);
                 return response()->json([
                     'status' => true,
                     'invoices' => $invoices,
                 ]);
+            } else if ($from == null && $to == null && $dayCount != null) {
+                if ($dayCount == 1) {
+                    /* --------------------- today's invoices ----------------------*/
+                    $from = Carbon::today()->startOfDay();
+                    $to = Carbon::now()->endOfWeek();
+                    $invoices = $this->getInvoice($from, $to);
+                } else if ($dayCount == 7) {
+                    /* ------------------- last week's invoices ---------------*/
+                    $from = Carbon::now()->subDays(7);
+                    $to = Carbon::now();
+                    $invoices = $this->getInvoice($from, $to);
+                } else if ($dayCount == 31) {
+                    /* ------------------ this month's invoices --------------*/
+                    $from = Carbon::now()->startOfMonth();
+                    $from = Carbon::now()->addMonth();
+                    $invoices = $this->getInvoice($from, $to);
+                }
+
             } else {
                 return response()->json([
                     'status' => true,
@@ -46,8 +63,24 @@ class SaleController extends Controller
             }
         }
     }
+    /**
+     *
+     * @return invoices of particular times
+     *
+     */
+    protected function getInvoice($from, $to)
+    {
+        $beginningDate = Carbon::parse($from)->formate('Y-m-d');
+        $endingDate = Carbon::parse($to)->formate('Y-m-d');
+        $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
 
-    // create
+        return $invoices;
+    }
+
+    /**
+     *
+     * @create Request $request
+     */
     public function create($brand_id = null, $category_id = null)
     {
         $company_info = CompanyInfo::latest()->first();
