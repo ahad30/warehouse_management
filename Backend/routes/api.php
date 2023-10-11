@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,5 +138,13 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::post('/store', 'store');
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'delete');
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                             Settings controller                            */
+    /* -------------------------------------------------------------------------- */
+
+    Route::controller(SettingsController::class)->middleware('verifyAdmin')->prefix('/settings')->group(function () {
+        Route::put('/update', 'update');
     });
 });
