@@ -25,7 +25,11 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
   }, [invoice, setValue]);
 
   const onSubmit = (data) => {
-    updateInvoice({ ...data, invoice_id: invoice?.id });
+    if (!data?.paid_amount) {
+      toast.error("Please Add Due Amount", { id: 1 });
+    } else if (data?.paid_amount) {
+      updateInvoice({ ...data, invoice_id: invoice?.id });
+    }
   };
 
   useEffect(() => {
@@ -72,6 +76,7 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
                         type="text"
                         placeholder="New Paid Amount"
                         className="input input-bordered w-full"
+                        disabled={invoice?.due_amount <= 0}
                         {...register("paid_amount")}
                       />
                     </label>

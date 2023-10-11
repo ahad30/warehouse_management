@@ -224,7 +224,7 @@ const InvoicesList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Invoices Report {invoicesData?.invoices?.length}
+          Invoices {invoicesData?.invoices?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
@@ -234,7 +234,7 @@ const InvoicesList = () => {
           setFiltering={setFiltering}
         />
 
-        <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
+        <div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center gap-y-3">
           <InvoiceDateFiltering
             handleStartDate={handleStartDate}
             handleEndDate={handleEndDate}
@@ -246,20 +246,22 @@ const InvoicesList = () => {
             {/* Invoices download as CSV file */}
             <InvoicesAsCSV data={filterData} />
             {/* Invoices download as PDF file */}
-            <PDFDownloadLink
-              document={
-                <InvoicesAsPDF
-                  data={filterData}
-                  startDate={startDate}
-                  endDate={endDate}
-                />
-              }
-              fileName="Invoices Report"
-            >
-              <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
-                <BsFiletypePdf size={20} /> Download as PDF
-              </button>
-            </PDFDownloadLink>
+            <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
+              <PDFDownloadLink
+                document={
+                  <InvoicesAsPDF
+                    data={filterData}
+                    startDate={startDate}
+                    endDate={endDate}
+                  />
+                }
+                fileName="Invoices Report"
+              >
+                <span className="flex justify-center items-center gap-x-2">
+                  <BsFiletypePdf size={20} /> Download as PDF
+                </span>
+              </PDFDownloadLink>
+            </button>
           </div>
         </div>
 
