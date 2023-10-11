@@ -30,30 +30,45 @@ class SaleController extends Controller
                 'invoices' => $invoices,
             ]);
         } else {
-            if ($from != null && $to != null) {
+
+            if ($from != null && $from != "null" && $to != null && $to != "null") {
                 /* -------------------- get invoice using date filtering -------------------- */
                 $invoices = $this->getInvoice($from, $to);
                 return response()->json([
                     'status' => true,
                     'invoices' => $invoices,
                 ]);
-            } else if ($from == null && $to == null && $dayCount != null) {
+            } else if ($from == "null" && $dayCount != null && $dayCount != "null") {
                 if ($dayCount == 1) {
+
                     /* --------------------- today's invoices ----------------------*/
                     $from = Carbon::today()->startOfDay();
                     $to = Carbon::now()->endOfWeek();
                     $invoices = $this->getInvoice($from, $to);
+                    return response()->json([
+                        'status' => true,
+                        'invoices' => $invoices,
+                    ]);
                 } else if ($dayCount == 7) {
                     /* ------------------- last week's invoices ---------------*/
                     $from = Carbon::now()->subDays(7);
                     $to = Carbon::now();
                     $invoices = $this->getInvoice($from, $to);
+                    return response()->json([
+                        'status' => true,
+                        'invoices' => $invoices,
+                    ]);
                 } else if ($dayCount == 31) {
                     /* ------------------ this month's invoices --------------*/
                     $from = Carbon::now()->startOfMonth();
-                    $from = Carbon::now()->addMonth();
+                    $to = Carbon::now()->addMonth();
                     $invoices = $this->getInvoice($from, $to);
+                    return response()->json([
+                        'status' => true,
+                        'invoices' => $invoices,
+                    ]);
                 }
+
 
             } else {
                 return response()->json([
@@ -70,8 +85,8 @@ class SaleController extends Controller
      */
     protected function getInvoice($from, $to)
     {
-        $beginningDate = Carbon::parse($from)->formate('Y-m-d');
-        $endingDate = Carbon::parse($to)->formate('Y-m-d');
+        $beginningDate = Carbon::parse($from)->format('Y-m-d');
+        $endingDate = Carbon::parse($to)->format('Y-m-d');
         $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
 
         return $invoices;

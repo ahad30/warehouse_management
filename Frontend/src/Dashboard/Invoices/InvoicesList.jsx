@@ -218,6 +218,7 @@ const InvoicesList = () => {
           <InvoiceDateFiltering
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            setDate={setDate}
             refetch={refetch}
           />
 
