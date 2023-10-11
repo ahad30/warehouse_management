@@ -9,10 +9,8 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\SaleItem;
 use App\Models\CompanyInfo;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
@@ -54,7 +52,7 @@ class SaleController extends Controller
                 } else if ($dayCount == 7) {
                     /* ------------------- last week's invoices ---------------*/
                     $from = Carbon::now()->subDays(7);
-                    $to = Carbon::now()->endOfWeek();
+                    $to = Carbon::now();
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
