@@ -10,7 +10,6 @@ import UsersList from "../Dashboard/Users/UsersList";
 import InvoicesList from "../Dashboard/Invoices/InvoicesList";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import PdfSettings from "../Dashboard/Settings/PdfSettings";
-import ReportList from "../Dashboard/Report/Reports/ReportList";
 import Analytics from "../Dashboard/Report/Analytics/Analytics";
 import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
@@ -32,6 +31,7 @@ import TestTable from "../Dashboard/Stores/TestTable";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import UserProfileUpdateNew from "../Dashboard/Settings/UserProfileUpdateNew";
+import ReportLayout from "../layouts/Dashboard/ReportLayout";
 
 const routes = createBrowserRouter([
   {
@@ -160,7 +160,7 @@ const routes = createBrowserRouter([
       // REPORT
       {
         path: "/dashboard/report",
-        element: <ReportList />,
+        element: <ReportLayout />,
       },
       {
         path: "/dashboard/analytics",

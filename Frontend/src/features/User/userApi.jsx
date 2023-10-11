@@ -32,7 +32,7 @@ const userApi = apiSlice.injectEndpoints({
         // url: `/posts/${id}`,
         body: userData,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ["Users", "Profile"],
     }),
     updateUserProfile: builder.mutation({
       query: (data) => ({

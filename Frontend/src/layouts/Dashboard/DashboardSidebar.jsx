@@ -94,6 +94,11 @@ const DashboardSidebar = () => {
       icon: <TbFileInvoice size={25}></TbFileInvoice>,
       path: "/dashboard/invoice",
     },
+    {
+      name: "Reports",
+      icon: <TbFileInvoice size={25}></TbFileInvoice>,
+      path: "/dashboard/report",
+    },
   ]);
 
   useEffect(() => {
