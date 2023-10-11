@@ -36,6 +36,7 @@ class SaleController extends Controller
                 $invoices = $this->getInvoice($from, $to);
                 return response()->json([
                     'status' => true,
+                    'count' => $invoices->count(),
                     'invoices' => $invoices,
                 ]);
             } else if ($from == "null" && $dayCount != null && $dayCount != "null") {
@@ -47,6 +48,7 @@ class SaleController extends Controller
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
+                        'count' => $invoices->count(),
                         'invoices' => $invoices,
                     ]);
                 } else if ($dayCount == 7) {
@@ -56,6 +58,7 @@ class SaleController extends Controller
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
+                        'count' => $invoices->count(),
                         'invoices' => $invoices,
                     ]);
                 } else if ($dayCount == 31) {
@@ -65,6 +68,7 @@ class SaleController extends Controller
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
+                        'count' => $invoices->count(),
                         'invoices' => $invoices,
                     ]);
                 }
@@ -73,6 +77,7 @@ class SaleController extends Controller
             } else {
                 return response()->json([
                     'status' => true,
+                    'count' => $invoices->count(),
                     'invoices' => $invoices,
                 ]);
             }
