@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->integer('product_quantity')->default(0);
             $table->text('product_desc')->nullable();
             $table->float('product_retail_price');
-            $table->float('product_sale_price', 10, 2);
+            $table->float('product_sale_price');
             $table->unsignedBigInteger('store_id')->default(1)->nullable();
             $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
             $table->unsignedBigInteger('category_id')->default(1)->nullable();
