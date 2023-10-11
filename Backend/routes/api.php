@@ -99,7 +99,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     });
 
     Route::controller(SaleController::class)->prefix('invoice')->group(function () {
-        Route::get('list/{from?}/{to?}', 'index');
+        Route::get('list/{from?}/{to?}/{dayCount?}', 'index');
         Route::get('/create/{brand_id?}/{category_id?}/', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
