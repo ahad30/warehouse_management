@@ -44,7 +44,7 @@ class SaleController extends Controller
 
                     /* --------------------- today's invoices ----------------------*/
                     $from = Carbon::today()->startOfDay();
-                    $to = Carbon::now()->endOfWeek();
+                    $to = Carbon::now()->endOfDay();
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
@@ -54,7 +54,7 @@ class SaleController extends Controller
                 } else if ($dayCount == 7) {
                     /* ------------------- last week's invoices ---------------*/
                     $from = Carbon::now()->subDays(7);
-                    $to = Carbon::now();
+                    $to = Carbon::now()->endOfWeek();
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
@@ -64,7 +64,7 @@ class SaleController extends Controller
                 } else if ($dayCount == 31) {
                     /* ------------------ this month's invoices --------------*/
                     $from = Carbon::now()->startOfMonth();
-                    $to = Carbon::now()->addMonth();
+                    $to = Carbon::now()->endOfMonth();
                     $invoices = $this->getInvoice($from, $to);
                     return response()->json([
                         'status' => true,
@@ -75,6 +75,7 @@ class SaleController extends Controller
 
 
             } else {
+                /* ------------ all invoices from database -----------*/
                 return response()->json([
                     'status' => true,
                     'count' => $invoices->count(),
