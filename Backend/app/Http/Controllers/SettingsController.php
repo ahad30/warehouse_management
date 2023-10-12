@@ -53,8 +53,13 @@ class SettingsController extends Controller
                 // change mailer
                 // mail option is on so we need to send email and sms notification
                 try {
+
                     SmtpCheckerJob::dispatch($request->all());
                     DB::commit();
+                    return response()->json([
+                        'status' => true,
+                        'message' => "Settings has been updated successfully and SMTP successfully configured"
+                    ], 200);
                 } catch (\Exception $e) {
 
                     DB::rollBack();
@@ -63,10 +68,7 @@ class SettingsController extends Controller
                         'message' => "Settings has been updated successfully, but SMTP failed to configured"
                     ], 200);
                 }
-                return response()->json([
-                    'status' => true,
-                    'message' => "Settings has been updated successfully and SMTP successfully configured"
-                ], 200);
+
             }
         }
     }
