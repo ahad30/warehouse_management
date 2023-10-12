@@ -1,17 +1,12 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUpdateBrandMutation } from "../../features/Brand/brandApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   const { register, handleSubmit, setValue } = useForm();
-  const [file, setFile] = useState(null);
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    // console.log(file);
-  };
 
   const [
     updateBrand,
@@ -104,7 +99,6 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
                         type="file"
                         className="file-input file-input-bordered w-full"
                         {...register("brand_img")}
-                        onChange={handleFileChange}
                       />
                     </div>
                   </div>

@@ -8,21 +8,23 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
-import UseTable from "../../components/Reusable/useTable/UseTable";
 import EditCategory from "./EditCategory";
-import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { RiDeleteBin4Line } from "react-icons/ri";
+import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
+import DataTable from "react-data-table-component";
+import { FaEdit } from "react-icons/fa";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const CategoriesList = () => {
-  UseTitle("Categories");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [category, setCategory] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
+  const itemsPerPage = 10;
 
   const {
     data: categoriesData,
     isLoading: categoriesIsLoading,
-    isError: categoriesIsError,
-    error: categoriesError,
-    isSuccess: categoriesIsSuccess,
   } = useGetCategoriesQuery();
 
   const [
@@ -36,9 +38,13 @@ const CategoriesList = () => {
     },
   ] = useDeleteCategoryMutation();
 
+  useEffect(() => {
+    setFilterData(categoriesData?.categories);
+  }, [categoriesData?.categories, categoriesData]);
+
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteCategory(id); // Change the mutation name to useDeleteCategoryMutation
+    DeleteConformation(id, () => deleteCategory(id));
   };
 
   useEffect(() => {
@@ -71,53 +77,62 @@ const CategoriesList = () => {
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS
-  const setFiltering = (data) => {
-    console.log(data);
+  const setFiltering = (search) => {
+    const filteredData = categoriesData?.categories?.filter((item) =>
+      item?.category_name?.toLowerCase().includes(search.toLowerCase())
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
   };
-  // SEARCH FILTERING ENDS
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const columns = [
-    { key: "id", header: "ID" },
-    { key: "category_name", header: "Name" },
-    { key: "description", header: "Description" },
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber =
+          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
+
+    {
+      name: "Name",
+
+      selector: (row) => <>{row?.category_name}</>,
+    },
+    {
+      name: "Description",
+
+      selector: (row) => <>{row?.description}</>,
+    },
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button onClick={() => handleModalEditInfo(row)}>
+            <FaEdit size={20}></FaEdit>
+          </button>
+          <button onClick={() => onDelete(row?.id)}>
+            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+        </div>
+      ),
+    },
   ];
 
-  // CATEGORIES CONTENT
-  let content;
+  // SEARCH FILTERING ENDS
 
   // ALL CATEGORIES
   if (categoriesIsLoading) {
-    return (content = <UseLoading />);
+    return <UseLoading />;
   }
 
-  if (categoriesIsError) {
-    console.error(categoriesError);
-  }
-
-  if (!categoriesData?.status) {
-    return (content = (
-      <>
-        <p className="text-center text-2xl mt-10">{categoriesData?.message}</p>
-      </>
-    ));
-  }
-
-  if (categoriesIsSuccess && categoriesData?.status) {
-    content = (
-      <>
-        <UseTable
-          data={categoriesData?.categories}
-          columns={columns}
-          handleModalEditInfo={handleModalEditInfo}
-          onDelete={onDelete}
-          btnTitle={"Add Category"}
-          btnPath={"/dashboard/category/add"}
-          btnIcon={<BiSolidDuplicate size={20} />}
-          setFiltering={setFiltering}
-        />
-      </>
-    );
-  }
   return (
     <>
       <DashboardBackground>
@@ -125,8 +140,27 @@ const CategoriesList = () => {
           Categories {categoriesData?.categories?.length}{" "}
           {/* Change the table title */}
         </TableHeadingTitle>
+        {/* SEARCH AND BTN */}
+        <SearchAndAddBtn
+          btnTitle={"Add Category"}
+          btnPath={"/dashboard/category/add"}
+          btnIcon={<BiSolidDuplicate size={20} />}
+          setFiltering={setFiltering}
+        />
         {/* Categories Table */}
-        {content}
+        {filterData?.length > 0 && (
+          <DataTable
+            columns={columns}
+            data={filterData}
+            pagination
+            responsive
+            paginationPerPage={itemsPerPage}
+            paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+            paginationTotalRows={filterData?.length}
+            onChangePage={(page) => setCurrentPage(page)}
+          />
+        )}
+
         <EditCategory
           category={category}
           modalIsOpen={modalIsOpen}

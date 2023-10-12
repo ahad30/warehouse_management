@@ -9,7 +9,7 @@ import {
   useGetInvoicesQuery,
 } from "../../features/Invoice/InvoiceApi";
 import EditInvoice from "./EditInvoice";
-import ViewInvoice from "../../components/InvoicePages/ViewInvoice";
+import ViewInvoice from "./ViewInvoice/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
@@ -17,13 +17,12 @@ import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { FaDownload } from "react-icons/fa";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import InvoicePDF from "../../components/PDF/InvoicePDF";
+import InvoicePDF from "./InvoicePDF/InvoicePDF";
 import DataTable from "react-data-table-component";
 import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
-import RecieptPDF from "../../components/PDF/RecieptPDF";
-
+import RecieptPDF from "./InvoicePDF/RecieptPdf";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -67,7 +66,6 @@ const InvoicesList = () => {
     setDate(null);
   };
   const handleDate = (date) => {
-    console.log(date);
     setDate(date);
     setStartDate(null);
     setEndDate(null);
@@ -77,8 +75,6 @@ const InvoicesList = () => {
     setEndDate(null);
     setDate(null);
   };
-
-  console.log(startDate, endDate, date);
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -179,9 +175,7 @@ const InvoicesList = () => {
             />
           </PDFDownloadLink>
 
-          <PDFDownloadLink
-            document={<RecieptPDF invoice={invoice} />}
-          >
+          <PDFDownloadLink document={<RecieptPDF invoice={invoice} />}>
             <FaDownload
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
@@ -201,7 +195,6 @@ const InvoicesList = () => {
             onClick={() => {
               onDelete(row?.id);
             }}
-
             className="cursor-pointer"
             size={20}
           />

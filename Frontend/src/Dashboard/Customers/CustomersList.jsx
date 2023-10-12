@@ -1,30 +1,40 @@
 import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-
-import UseTable from "../../components/Reusable/useTable/UseTable";
-import { BiCartAdd } from "react-icons/bi";
+import { RiDeleteBin4Line } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditCustomer from "./EditCustomer";
+import { BiSolidDuplicate } from "react-icons/bi";
 import {
   useDeleteCustomerMutation,
   useGetCustomersQuery,
 } from "../../features/Customer/customerApi";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
+import { FaEdit } from "react-icons/fa";
+import DataTable from "react-data-table-component";
+import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const CustomersList = () => {
   UseTitle("Customers");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const [customer, setCustomer] = useState({});
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
+  const itemsPerPage = 10;
 
   const {
     data: customersData,
     isLoading: customersIsLoading,
-    isError: customersIsError,
-    error: customersError,
     isSuccess: customersIsSuccess,
   } = useGetCustomersQuery();
+
+  useEffect(() => {
+    setFilterData(customersData?.customers);
+  }, [customersData, customersData?.customers]);
 
   const [
     deleteCustomer,
@@ -39,7 +49,7 @@ const CustomersList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    deleteCustomer(id);
+    DeleteConformation(id, () => deleteCustomer(id));
   };
 
   useEffect(() => {
@@ -64,62 +74,69 @@ const CustomersList = () => {
   // DELETE ENDS
 
   // EDIT STARTS
-  const handleModalEditInfo = (customer) => {
-    setCustomer(customer);
+  const handleModalEditInfo = (row) => {
+    setCustomer(row);
     setModalIsOpen(true);
   };
   // EDIT ENDS
 
-  // SEARCH FILTERING STARTS
-  const setFiltering = (data) => {
-    console.log(data);
-  };
-  // SEARCH FILTERING ENDS
-
   const columns = [
-    { key: "id", header: "ID" },
-    { key: "name", header: "Name" },
-    { key: "email", header: "Email" },
-    { key: "phone", header: "Phone" },
-    { key: "address", header: "Address" },
-    { key: "notes", header: "Notes" },
-  ];
+    {
+      name: "Serial",
+      cell: (row) => {
+        // Calculate the serial number based on the current page and items per page
+        const serialNumber =
+          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+        return <span>{serialNumber}</span>;
+      },
+    },
+    {
+      name: "Name",
+      selector: (row) => <>{row?.name}</>,
+    },
+    {
+      name: "email",
+      selector: (row) => <>{row?.email}</>,
+    },
+    {
+      name: "phone",
+      selector: (row) => <>{row?.phone}</>,
+    },
 
-  // CUSTOMERS CONTENT
-  let content;
+    {
+      name: "address",
+      selector: (row) => <>{row?.address}</>,
+    },
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button onClick={() => handleModalEditInfo(row)}>
+            <FaEdit size={20}></FaEdit>
+          </button>
+          <button onClick={() => onDelete(row?.id)}>
+            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+        </div>
+      ),
+    },
+  ];
+  // SEARCH FILTERING STARTS
+  const setFiltering = (search) => {
+    const filteredData = customersData?.customers?.filter((item) =>
+      item?.name?.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilterData(filteredData);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // SEARCH FILTERING ENDS
 
   // ALL CUSTOMERS
   if (customersIsLoading) {
-    return (content = <UseLoading />);
-  }
-
-  if (customersIsError) {
-    console.error(customersError);
-  }
-
-  if (!customersData?.status) {
-    return (content = (
-      <>
-        <p className="text-center text-2xl mt-10">{customersData?.message}</p>
-      </>
-    ));
-  }
-
-  if (customersIsSuccess && customersData?.status) {
-    content = (
-      <>
-        <UseTable
-          data={customersData?.customers}
-          columns={columns}
-          handleModalEditInfo={handleModalEditInfo}
-          onDelete={onDelete}
-          btnTitle={"Add Customer"}
-          btnPath={"/dashboard/customer/add"}
-          btnIcon={<BiCartAdd size={20} />}
-          setFiltering={setFiltering}
-        />
-      </>
-    );
+    return <UseLoading />;
   }
 
   return (
@@ -128,8 +145,31 @@ const CustomersList = () => {
         <TableHeadingTitle>
           Customers {customersData?.customers?.length}
         </TableHeadingTitle>
+        <SearchAndAddBtn
+          btnTitle={"Add customer"}
+          btnPath={"/dashboard/customer/add"}
+          btnIcon={<BiSolidDuplicate size={20}></BiSolidDuplicate>}
+          setFiltering={setFiltering}
+        />
         {/* Customers Table */}
-        {content}
+
+        {!customersIsSuccess && customersData?.status ? (
+          <p className="text-center text-2xl mt-10">{customersData?.message}</p>
+        ) : (
+          filterData?.length > 0 && (
+            <DataTable
+              columns={columns}
+              data={filterData}
+              pagination
+              responsive
+              paginationPerPage={itemsPerPage}
+              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+              paginationTotalRows={filterData?.length}
+              onChangePage={(page) => setCurrentPage(page)}
+            />
+          )
+        )}
+
         <EditCustomer
           customer={customer}
           modalIsOpen={modalIsOpen}
