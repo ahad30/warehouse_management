@@ -90,9 +90,9 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <div className="bg-gray-100 lg:w-2/12 fixed -mt-2">
-      <div className="join join-vertical w-full px-4 rounded-none border-r border-gray-300 min-h-screen text-base-content">
-        <ul className="sideBar">
+    <div className="h-screen bg-gray-100 pb-12   text lg:w-2/12  overflow-y-scroll   fixed -mt-2">
+      <div className="join join-vertical flex flex-col     w-full px-4 rounded-none border-r border-gray-300 -base-content">
+        <ul className="sideBar  ">
           {sideBarData &&
             sideBarData?.map((item) => (
               <li
@@ -106,27 +106,16 @@ const DashboardSidebar = () => {
                 </Link>
               </li>
             ))}
+
+          <li onClick={() => handleLogOut()} className=" mb-12 cursor-pointer flex text-[#EF4444] font-bold items-center gap-x-2 hover:bg-sky-50 p-3">Logout</li>
         </ul>
 
         <div>
-          {/* <div className="mt-10">
-            <Link
-              className={`flex gap-x-2 ${isActive("/dashboard/setting")}`}
-              to="/dashboard/setting"
-            >
-              <AiOutlineSetting size={25}></AiOutlineSetting>
-              <p>Settings</p>
-            </Link>
-          </div> */}
-          <div className="pt-5 ml-2">
-            <button
-              className="flex gap-x-2 text-[#EF4444] font-bold"
-              onClick={() => handleLogOut()}
-            >
-              <BiLogOut size={25} />
-              Logout
-            </button>
-          </div>
+         
+          
+
+
+          
         </div>
       </div>
     </div>

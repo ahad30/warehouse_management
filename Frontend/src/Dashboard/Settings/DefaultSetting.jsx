@@ -22,7 +22,7 @@ const DefaultSetting = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    
+    console.log(data);
     if (isToggle) console.log("on")
     else console.log("off")
   };
@@ -105,9 +105,9 @@ const DefaultSetting = () => {
               placeholder=" taxation price"
               name=""
               id=""
-              {...register("taxation_rate", { required: true })}
+              {...register("tax_value", { required: true })}
             />
-            {errors.shipping && <span>This field is required</span>}
+            {errors.tax_value && <span>This field is required</span>}
           </div>
 
           {/* currency */}
@@ -169,9 +169,9 @@ const DefaultSetting = () => {
                     defaultValue={"smtp"}
                     name=""
                     id=""
-                    {...register("mail_mailer", { required: true })}
+                    {...register("mailer", { required: true })}
                   />
-                  {errors.mail_mailer && <span>This field is required</span>}
+                  {errors.mailer && <span>This field is required</span>}
                 </div>
 
                 {/* mail host */}
@@ -273,9 +273,9 @@ const DefaultSetting = () => {
                     placeholder="MAIL FROM ADDRESS"
                     name=""
                     id=""
-                    {...register("mail_from_address", { required: true })}
+                    {...register("mail_address", { required: true })}
                   />
-                  {errors.mail_from_address && (
+                  {errors.mail_address && (
                     <span>This field is required</span>
                   )}
                 </div>
