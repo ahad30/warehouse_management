@@ -13,6 +13,25 @@ use Illuminate\Support\Facades\Validator;
 
 class SettingsController extends Controller
 {
+    public function index()
+    {
+        $settings = Settings::find(1);
+        $mailCredential = [
+            'mailer' => env('MAIL_MAILER'),
+            'mailer_host' => env('MAIL_HOST'),
+            'mailer_port' => env('MAIL_PORT'),
+            'mailer_username' => env('MAIL_USERNAME'),
+            'mailer_password' => env('MAIL_PASSWORD'),
+            'mailer_encryption' => env('MAIL_ENCRYPTION'),
+            'mailer_from_address' => env('MAIL_FROM_ADDRESS'),
+            'mail_from' => env('APP_NAME'),
+        ];
+        return response()->json([
+            'status' => true,
+            'settings' => $settings,
+            'mailCredentials' => $mailCredential
+        ], 200);
+    }
     public function update(Request $request)
     {
         /* ---------------------- getting settings from seeder ---------------------- */
