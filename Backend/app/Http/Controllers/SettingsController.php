@@ -69,7 +69,7 @@ class SettingsController extends Controller
                 ], 200);
             } else {
 
-                // change mailer
+
                 // mail option is on so we need to send email and sms notification
                 try {
 
