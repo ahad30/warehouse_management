@@ -145,6 +145,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::controller(SettingsController::class)->middleware('verifyAdmin')->prefix('/settings')->group(function () {
+        Route::get('/', 'index');
         Route::put('/update', 'update');
     });
 });
