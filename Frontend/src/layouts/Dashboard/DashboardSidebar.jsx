@@ -1,55 +1,20 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineSetting,AiOutlineShoppingCart } from "react-icons/ai";
+import { Link, useLocation } from "react-router-dom";
+import { AiOutlineSetting, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiCategory, BiLogOut, BiUserCircle } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
-import { LiaStoreSolid } from "react-icons/lia";
+import { LiaFileInvoiceDollarSolid, LiaStoreSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SiBrandfolder } from "react-icons/si";
-import { TbFileInvoice} from "react-icons/tb";
-import { RxDashboard} from "react-icons/rx";
-import { toast } from "react-hot-toast";
-import { useUserLogOutMutation } from "../../features/User/userApi";
-import { logOut } from "../../features/Auth/authSlice";
+import { TbFileInvoice } from "react-icons/tb";
+import { RxDashboard } from "react-icons/rx";
+import UserLogout from "../../components/Reusable/UserLogout/UserLogout";
 
 const DashboardSidebar = () => {
   const location = useLocation();
   const { user } = useSelector((state) => state.auth);
 
-  // LOGOUT STARTS
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [userLogOut, { isLoading, isError, error, isSuccess, data }] =
-    useUserLogOutMutation();
-
-  const handleLogOut = () => {
-    userLogOut();
-  };
-
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
-    if (isError && !data?.status) {
-      toast.error(error?.data?.message);
-    }
-
-    if (isSuccess && data?.status) {
-      dispatch(logOut());
-      navigate("/login");
-      toast.success(data?.message, { id: 1 });
-    }
-  }, [
-    data?.message,
-    data?.status,
-    dispatch,
-    error?.data?.message,
-    isError,
-    isLoading,
-    isSuccess,
-    navigate,
-  ]);
-  // LOGOUT ENDS
+  const handleLogOut = UserLogout();
 
   const [sideBarData, setSidebarData] = useState([
     {
@@ -91,13 +56,18 @@ const DashboardSidebar = () => {
 
     {
       name: "Invoices",
-      icon: <TbFileInvoice size={25}></TbFileInvoice>,
+      icon: <LiaFileInvoiceDollarSolid size={25}/>,
       path: "/dashboard/invoice",
     },
     {
       name: "Reports",
       icon: <TbFileInvoice size={25}></TbFileInvoice>,
       path: "/dashboard/report",
+    },
+    {
+      name: "Settings",
+      icon: <AiOutlineSetting size={25} />,
+      path: "/dashboard/setting",
     },
   ]);
 
@@ -106,7 +76,7 @@ const DashboardSidebar = () => {
       setSidebarData((prev) =>
         prev.filter((section) => section?.name !== "Users")
       );
-    } else if (user?.get_role?.role === "manager") {
+    } else if (user?.get_role?.role !== ("admin" || "manager")) {
       setSidebarData((prev) =>
         prev.filter(
           (section) => section?.name !== "Users" && section?.name !== "Settings"
@@ -115,8 +85,6 @@ const DashboardSidebar = () => {
     }
   }, [user]);
 
-  
-  
   const isActive = (path) => {
     return location.pathname === path ? "active-link" : "";
   };
@@ -141,7 +109,7 @@ const DashboardSidebar = () => {
         </ul>
 
         <div>
-          <div className="mt-10">
+          {/* <div className="mt-10">
             <Link
               className={`flex gap-x-2 ${isActive("/dashboard/setting")}`}
               to="/dashboard/setting"
@@ -149,8 +117,8 @@ const DashboardSidebar = () => {
               <AiOutlineSetting size={25}></AiOutlineSetting>
               <p>Settings</p>
             </Link>
-          </div>
-          <div className="pt-5">
+          </div> */}
+          <div className="pt-5 ml-2">
             <button
               className="flex gap-x-2 text-[#EF4444] font-bold"
               onClick={() => handleLogOut()}

@@ -1,9 +1,13 @@
 import { AiOutlinePlusCircle, AiOutlineMenu } from "react-icons/ai";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import UserLogout from "../../components/Reusable/UserLogout/UserLogout";
 
 const NavbarNew = () => {
   const { user } = useSelector((state) => state.auth);
+
+  const handleLogOut = UserLogout();
 
   return (
     <div className="bg-gray-100 flex justify-between border-b border-gray-300">
@@ -22,7 +26,7 @@ const NavbarNew = () => {
           <AiOutlinePlusCircle size={25} />
           <Link to={"/dashboard/invoice/new"}>
             {" "}
-            <span className="hidden sm:block">New Invoice</span>{" "}
+            <span className="hidden sm:block">New Invoice</span>
           </Link>
         </div>
 
@@ -45,7 +49,19 @@ const NavbarNew = () => {
             <span className="font-semibold">
               {user?.name ? `${user?.name.slice(0, 12)}...` : `John Doe`}
             </span>
-            <span>{user?.get_role?.role ? user?.get_role?.role : `Role`}</span>
+            <span className="flex items-center gap-x-2">
+              <span>
+                {user?.get_role?.role ? user?.get_role?.role : `Role`}
+              </span>
+              <span className="cursor-pointer">
+                <RiLogoutCircleRLine
+                  title="Log Out"
+                  color="red"
+                  onClick={() => handleLogOut()}
+                  size={20}
+                />
+              </span>
+            </span>
           </p>
         </div>
       </div>
