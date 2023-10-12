@@ -1,126 +1,138 @@
-// Invoice.js
-import {Page,Text,View,Document,StyleSheet,Image,Canvas,Svg} from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+  Canvas,
+  Svg,
+} from "@react-pdf/renderer";
+import { object } from "prop-types";
 import img from "../../../src/assets/tras_ZL-01-removebg-preview.png";
-
-
 const styles = StyleSheet.create({
-    page: {
-      flexDirection: "row",
-      backgroundColor: "#FFFFFF",
-      padding: "20px",
-    },
-    section: {
-      margin: 10,
-      padding: 10,
-      flexGrow: 1,
-    },
-    main: { padding: "20px", position: "relative" },
-    head: {
-      display: "flex",
-      flexDirection: "row",
-      alignContent: "space-between",
-      justifyContent: "space-between",
-    },
-  
-    headLeft: {
-      width: "50%",
-      fontSize: "15px",
-      fontWeight: "300",
-    },
-    headLeftInvoice: {
-      fontSize: "25px",
-      fontWeight: "bold",
-    },
-    date: {
-      marginVertical: "10px",
-    },
-    headRight: { width: "25%", textAlign: "right" },
-  
-    billAndPay: {
-      display: "flex",
-      marginTop: "40px",
-      flexDirection: "row",
-      alignContent: "space-between",
-      justifyContent: "space-between",
-    },
-    bill: {
-      width: "50%",
-    },
-  
-    billFrom: {
-      color: "#5c5c5c",
-      fontWeight: "600",
-      fontSize: "15px",
-    },
-    billName: {
-      fontWeight: "600",
-      fontSize: "18px",
-      marginVertical: "10px",
-    },
-    billAddress: {
-      color: "#5c5c5c",
-      fontWeight: "light",
-      fontSize: "15px",
-    },
-    tableHead: {
-      display: "flex",
-      marginTop: "40px",
-      padding: "5px",
-      border: "2px solid #f3f4f6",
-  
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      fontSize: "15px",
-      fontWeight: "300",
-    },
-    rowOne: {
-      width: "40%",
-      fontSize: "15px",
-      fontWeight: "300",
-    },
-    rowTwo: {
-      width: "20%",
-      fontSize: "15px",
-      fontWeight: "300",
-    },
-  
-    tableRow: {
-      display: "flex",
-      textAlign: "left",
-      marginTop: "10px",
-      flexDirection: "row",
-      justifyContent: "flex-start",
-    },
-  
-    totalSubTotalTax: {
-      width: "100%",
-      paddingHorizontal: "20px",
-      position: "absolute",
-      bottom: "10px",
-    },
-  
-    subtotalAndTax: {
-      display: "flex",
-      borderBottom: "1px solid #f3f4f6",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: "10px",
-      fontSize: "15px",
-      fontWeight: "light",
-      padding: "5px",
-    },
-  
-    // total: {
-    //   display: "flex",
-    //   fontWeight: "bold",
-    //   flexDirection: "row",
-    //   justifyContent: "space-between",
-    //   marginTop: "10px",
-    // },
-  });
-const PosPdf = ({ invoice }) => {
-    <Document>
-    <Page size="A7" style={styles.page}>
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF",
+    padding: "2px",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  main: { padding: "2px", position: "relative" },
+  head: {
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "space-between",
+    justifyContent: "space-between",
+  },
+
+  headLeft: {
+    width: "50%",
+    fontSize: "4px",
+    fontWeight: "300",
+  },
+  headLeftInvoice: {
+    fontSize: "4px",
+    fontWeight: "bold",
+  },
+  date: {
+    marginVertical: "5px",
+  },
+  headRight: { width: "25%", textAlign: "right" },
+
+  billAndPay: {
+    display: "flex",
+    marginTop: "10px",
+    flexDirection: "row",
+    alignContent: "space-between",
+    justifyContent: "space-between",
+  },
+  bill: {
+    width: "50%",
+  },
+
+  billFrom: {
+    color: "#5c5c5c",
+    fontWeight: "600",
+    fontSize: "4px",
+  },
+  billName: {
+    fontWeight: "600",
+    fontSize: "4px",
+    marginVertical: "5px",
+  },
+  billAddress: {
+    color: "#5c5c5c",
+    fontWeight: "light",
+    fontSize: "4px",
+  },
+  tableHead: {
+    display: "flex",
+    marginTop: "10px",
+    padding: "2px",
+    border: "1px solid #f3f4f6",
+
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    fontSize: "4px",
+    fontWeight: "300",
+  },
+  rowOne: {
+    width: "40%",
+    fontSize: "4px",
+    fontWeight: "300",
+  },
+  rowTwo: {
+    width: "20%",
+    fontSize: "4px",
+    fontWeight: "300",
+  },
+
+  tableRow: {
+    display: "flex",
+    textAlign: "left",
+    marginTop: "5px",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+
+  totalSubTotalTax: {
+    width: "100%",
+    paddingHorizontal: "5px",
+    position: "absolute",
+    bottom: "5px",
+  },
+
+  subtotalAndTax: {
+    display: "flex",
+    borderBottom: "1px solid #f3f4f6",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: "5px",
+    fontSize: "4px",
+    fontWeight: "light",
+    padding: "2px",
+  },
+
+  brCode: {
+    width : "50px",
+    height : "50px"
+  }
+
+  // total: {
+  //   display: "flex",
+  //   fontWeight: "bold",
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   marginTop: "10px",
+  // },
+});
+const RecieptPDF = ({ invoice }) => (
+  <Document>
+    <Page size="A8" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
         {/* head information */}
@@ -133,9 +145,11 @@ const PosPdf = ({ invoice }) => {
           </View>
 
           {/* head information right */}
-          
+
           <View>
-           <Image source={`https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=issue_date:${invoice?.issue_date}:invoice:${invoice?.invoice_no }`}></Image>
+            <Image style={styles.brCode}
+              src={`https://barcodeapi.org/api/auto/${invoice?.invoice_no}`}
+            ></Image>
           </View>
 
           {/* head information right */}
@@ -224,6 +238,9 @@ const PosPdf = ({ invoice }) => {
       </View>
     </Page>
   </Document>
-};
+);
 
-export default PosPdf;
+RecieptPDF.propTypes = {
+  invoice: object,
+};
+export default RecieptPDF;

@@ -6,8 +6,8 @@ import {
   Document,
   StyleSheet,
   Image,
-  Canvas,
-  Svg,
+  
+  
 } from "@react-pdf/renderer";
 import { object } from "prop-types";
 import img from "../../../src/assets/tras_ZL-01-removebg-preview.png";
@@ -30,14 +30,25 @@ const styles = StyleSheet.create({
   head: {
     display: "flex",
     flexDirection: "row",
-    alignContent: "space-between",
+    alignContent: "center",
     justifyContent: "space-between",
+  
   },
-
+   brImage: {
+    width: "70px",
+    height: "70px",
+   
+    display: "flex",
+    justifyContent: "center",
+    alignContent:"center",
+    
+    
+   },
   headLeft: {
-    width: "50%",
+    width: "30%",
     fontSize: "15px",
     fontWeight: "300",
+   
   },
   headLeftInvoice: {
     fontSize: "25px",
@@ -46,7 +57,10 @@ const styles = StyleSheet.create({
   date: {
     marginVertical: "10px",
   },
-  headRight: { width: "25%", textAlign: "right" },
+  headRight: { width: "30%", textAlign: "right", },
+  headMiddle:
+   { width: "40%", display: "flex",  justifyContent: "center", alignContent:"center", padding: "5px", textAlign: "center" 
+  },
 
   billAndPay: {
     display: "flex",
@@ -134,7 +148,7 @@ const styles = StyleSheet.create({
 const InvoicePDF = ({ invoice }) => (
   // console.log(invoiceData)
   <Document>
-    <Page size="A7" style={styles.page}>
+    <Page size="A4" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
         {/* head information */}
@@ -148,8 +162,9 @@ const InvoicePDF = ({ invoice }) => (
 
           {/* head information right */}
           
-          <View>
-           <Image source={`https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=issue_date:${invoice?.issue_date}:invoice:${invoice?.invoice_no }`}></Image>
+          <View style={styles.headMiddle}>
+
+           <Image style={styles.brImage} source={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${invoice?.issue_date} at ${invoice?.invoice_no } for ${invoice?.customer?.name}`}></Image>
           </View>
 
           {/* head information right */}
