@@ -22,8 +22,7 @@ import DataTable from "react-data-table-component";
 import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
-import RecieptPDF from "../../components/PDF/RecieptPDF";
-
+import RecieptPDF from "./InvoicePDF/RecieptPdf";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -176,9 +175,7 @@ const InvoicesList = () => {
             />
           </PDFDownloadLink>
 
-          <PDFDownloadLink
-            document={<RecieptPDF invoice={invoice} />}
-          >
+          <PDFDownloadLink document={<RecieptPDF invoice={invoice} />}>
             <FaDownload
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
@@ -198,7 +195,6 @@ const InvoicesList = () => {
             onClick={() => {
               onDelete(row?.id);
             }}
-
             className="cursor-pointer"
             size={20}
           />

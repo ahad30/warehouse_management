@@ -5,11 +5,8 @@ import {
   Document,
   StyleSheet,
   Image,
-  Canvas,
-  Svg,
 } from "@react-pdf/renderer";
 import { object } from "prop-types";
-import img from "../../../src/assets/tras_ZL-01-removebg-preview.png";
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
@@ -118,9 +115,9 @@ const styles = StyleSheet.create({
   },
 
   brCode: {
-    width : "50px",
-    height : "50px"
-  }
+    width: "50px",
+    height: "50px",
+  },
 
   // total: {
   //   display: "flex",
@@ -147,7 +144,8 @@ const RecieptPDF = ({ invoice }) => (
           {/* head information right */}
 
           <View>
-            <Image style={styles.brCode}
+            <Image
+              style={styles.brCode}
               src={`https://barcodeapi.org/api/auto/${invoice?.invoice_no}`}
             ></Image>
           </View>
@@ -155,7 +153,9 @@ const RecieptPDF = ({ invoice }) => (
           {/* head information right */}
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
-            <Image source={img}></Image>
+            <Image
+              source={`https://cdn-icons-png.flaticon.com/512/5149/5149174.png`}
+            ></Image>
           </View>
         </View>
 
