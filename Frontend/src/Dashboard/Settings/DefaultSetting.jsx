@@ -2,15 +2,23 @@ import { useEffect, useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { TbChessKing } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import {
+  useGetDefaultSettingsQuery,
+  useUpdateDefaultSettingsMutation,
+} from "../../features/Settings/settingsApi";
 
 const DefaultSetting = () => {
   const { user } = useSelector((state) => state.auth);
   const [allcurency, setAllcurency] = useState([]);
-
+  const { data: settingsData } = useGetDefaultSettingsQuery();
+  const [updateDefaultSetting, { data: updateSettingData }] =
+    useUpdateDefaultSettingsMutation();
   useEffect(() => {
     fetch("/currency.json")
       .then((res) => res.json())
-      .then((data) => setAllcurency(data?.sort((a, b) => a.name.localeCompare(b.name))));
+      .then((data) =>
+        setAllcurency(data?.sort((a, b) => a.name.localeCompare(b.name)))
+      );
   }, []);
 
   const [taxName, setTaxName] = useState("VAT");
@@ -21,10 +29,20 @@ const DefaultSetting = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const token = JSON.parse(localStorage.getItem("access_token"));
   const onSubmit = (data) => {
-    console.log(data);
-    if (isToggle) console.log("on")
-    else console.log("off")
+    updateDefaultSetting({...data, mail_option: isToggle ? 'on': 'off'});
+    // console.log(data);
+    // fetch(`${import.meta.env.VITE_REACT_APP_PORT}/settings/update`, {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
   };
 
   //   console.log(watch("taxation"))
@@ -118,12 +136,11 @@ const DefaultSetting = () => {
             <select
               {...register("currency", { required: true })}
               className="input input-bordered"
-              
             >
               <option value="">Select Currency</option>
               {allcurency &&
                 allcurency?.map((item, index) => (
-                  <option key={index}  value={item?.symbol}>
+                  <option key={index} value={item?.symbol}>
                     {item?.name}
                   </option>
                 ))}
@@ -134,8 +151,6 @@ const DefaultSetting = () => {
               </span>
             )}
           </div>
-
-          
         </div>
 
         {/* email */}
@@ -275,15 +290,19 @@ const DefaultSetting = () => {
                     id=""
                     {...register("mail_address", { required: true })}
                   />
-                  {errors.mail_address && (
-                    <span>This field is required</span>
-                  )}
+                  {errors.mail_address && <span>This field is required</span>}
                 </div>
               </div>
             )}
           </div>
         )}
-        <div className="flex mt-3 justify-end"><input className="btn bg-[#0369a1] text-white btn-wide" type="submit" value="submit" /></div>
+        <div className="flex mt-3 justify-end">
+          <input
+            className="btn bg-[#0369a1] text-white btn-wide"
+            type="submit"
+            value="submit"
+          />
+        </div>
       </form>
     </div>
   );

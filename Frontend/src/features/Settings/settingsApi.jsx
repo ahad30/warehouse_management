@@ -16,8 +16,26 @@ const settingsApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Company"],
     }),
+    getDefaultSettings: builder.query({
+      query: () => ({
+        url: `/settings`,
+      }),
+      providesTags: ["Settings"],
+    }),
+    updateDefaultSettings: builder.mutation({
+      query: (data) => ({
+        method: "PUT",
+        url: `/settings/update`,
+        body: data,
+      }),
+      invalidatesTags: ["Settings"],
+    }),
   }),
 });
 
-export const { useGetCompanyInfoQuery, useUpdateCompanyInfoMutation } =
-  settingsApi;
+export const {
+  useGetCompanyInfoQuery,
+  useUpdateCompanyInfoMutation,
+  useGetDefaultSettingsQuery,
+  useUpdateDefaultSettingsMutation,
+} = settingsApi;

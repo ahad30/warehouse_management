@@ -30,7 +30,7 @@ const Login = () => {
         <div className="w-full lg:w-[800px] flex flex-col items-center justify-center border border-[#e2e8f0] lg:rounded-lg lg:bg-[#f8fafc] lg:h-[600px]">
           <h2 className="text-center text-3xl mb-5">User Login</h2>
           <form
-            className="border w-full border-blue-500"
+            className=" w-full"
             onSubmit={handleSubmit(handleOnSubmit)}
           >
             <div className="form-control w-full max-w-md mx-auto">

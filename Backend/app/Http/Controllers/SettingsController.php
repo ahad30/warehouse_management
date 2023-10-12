@@ -34,6 +34,7 @@ class SettingsController extends Controller
     }
     public function update(Request $request)
     {
+    
         /* ---------------------- getting settings from seeder ---------------------- */
 
         $settings = Settings::find(1);

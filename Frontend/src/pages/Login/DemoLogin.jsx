@@ -19,7 +19,7 @@ const DemoLogin = () => {
         <p className="border-t border-gray-400 flex-grow"></p>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 my-5 gap-2">
         {/* individual button */}
         <div
           onMouseOver={() =>
