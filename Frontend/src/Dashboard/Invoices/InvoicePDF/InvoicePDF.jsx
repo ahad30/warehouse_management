@@ -6,11 +6,6 @@ import {
   Document,
   StyleSheet,
   Image,
-<<<<<<< HEAD:Frontend/src/Dashboard/Invoices/InvoicePDF/InvoicePDF.jsx
-=======
-  
-  
->>>>>>> master:Frontend/src/components/PDF/InvoicePDF.jsx
 } from "@react-pdf/renderer";
 import { object } from "prop-types";
 
@@ -31,23 +26,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "space-between",
-  
   },
-   brImage: {
+  brImage: {
     width: "70px",
     height: "70px",
-   
+
     display: "flex",
     justifyContent: "center",
-    alignContent:"center",
-    
-    
-   },
+    alignContent: "center",
+  },
   headLeft: {
     width: "30%",
     fontSize: "15px",
     fontWeight: "300",
-   
   },
   headLeftInvoice: {
     fontSize: "25px",
@@ -56,9 +47,14 @@ const styles = StyleSheet.create({
   date: {
     marginVertical: "10px",
   },
-  headRight: { width: "30%", textAlign: "right", },
-  headMiddle:
-   { width: "40%", display: "flex",  justifyContent: "center", alignContent:"center", padding: "5px", textAlign: "center" 
+  headRight: { width: "30%", textAlign: "right" },
+  headMiddle: {
+    width: "40%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    padding: "5px",
+    textAlign: "center",
   },
 
   billAndPay: {
@@ -160,18 +156,12 @@ const InvoicePDF = ({ invoice }) => (
           </View>
 
           {/* head information right */}
-<<<<<<< HEAD:Frontend/src/Dashboard/Invoices/InvoicePDF/InvoicePDF.jsx
 
-          <View>
-            <Image
-              source={`https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=issue_date:${invoice?.issue_date}:invoice:${invoice?.invoice_no}`}
-            ></Image>
-=======
-          
           <View style={styles.headMiddle}>
-
-           <Image style={styles.brImage} source={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${invoice?.issue_date} at ${invoice?.invoice_no } for ${invoice?.customer?.name}`}></Image>
->>>>>>> master:Frontend/src/components/PDF/InvoicePDF.jsx
+            <Image
+              style={styles.brImage}
+              source={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${invoice?.issue_date} at ${invoice?.invoice_no} for ${invoice?.customer?.name}`}
+            ></Image>
           </View>
 
           {/* head information right */}
