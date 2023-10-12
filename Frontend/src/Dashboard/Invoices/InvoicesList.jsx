@@ -36,14 +36,12 @@ const InvoicesList = () => {
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 10;
 
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [date, setDate] = useState(null);
 
-  const {
-    data: invoicesData,
-    isLoading: invoicesIsLoading,
-    refetch,
-  } = useGetInvoicesQuery({ startDate, endDate });
+  const { data: invoicesData, isLoading: invoicesIsLoading } =
+    useGetInvoicesQuery({ startDate, endDate, date });
 
   useEffect(() => {
     setFilterData(invoicesData?.invoices);
@@ -59,6 +57,28 @@ const InvoicesList = () => {
       data: deleteData,
     },
   ] = useDeleteInvoiceMutation();
+
+  const handleStartDate = (date) => {
+    setStartDate(date);
+    setDate(null);
+  };
+  const handleEndDate = (date) => {
+    setEndDate(date);
+    setDate(null);
+  };
+  const handleDate = (date) => {
+    console.log(date);
+    setDate(date);
+    setStartDate(null);
+    setEndDate(null);
+  };
+  const handleDateClear = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setDate(null);
+  };
+
+  console.log(startDate, endDate, date);
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -124,6 +144,7 @@ const InvoicesList = () => {
     },
     {
       name: "Status",
+      sortable: true,
       selector: (row) => (
         <div>
           <button
@@ -228,31 +249,34 @@ const InvoicesList = () => {
           setFiltering={setFiltering}
         />
 
-        <div className="my-5 flex flex-col lg:flex-row justify-start lg:justify-between lg:items-center gap-y-3">
+        <div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center gap-y-3">
           <InvoiceDateFiltering
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-            refetch={refetch}
+            handleStartDate={handleStartDate}
+            handleEndDate={handleEndDate}
+            handleDate={handleDate}
+            handleDateClear={handleDateClear}
           />
 
           <div className="flex lg:flex-row justify-between gap-2">
             {/* Invoices download as CSV file */}
             <InvoicesAsCSV data={filterData} />
             {/* Invoices download as PDF file */}
-            <PDFDownloadLink
-              document={
-                <InvoicesAsPDF
-                  data={filterData}
-                  startDate={startDate}
-                  endDate={endDate}
-                />
-              }
-              fileName="Invoices Report"
-            >
-              <button className="flex items-center gap-x-2 border border-[#0369A1] text-[#0369A1] px-3 py-2 rounded-md w-full sm:w-fit cursor-pointer">
-                <BsFiletypePdf size={20} /> Download as PDF
-              </button>
-            </PDFDownloadLink>
+            <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
+              <PDFDownloadLink
+                document={
+                  <InvoicesAsPDF
+                    data={filterData}
+                    startDate={startDate}
+                    endDate={endDate}
+                  />
+                }
+                fileName="Invoices Report"
+              >
+                <span className="flex justify-center items-center gap-x-2">
+                  <BsFiletypePdf size={20} /> Download as PDF
+                </span>
+              </PDFDownloadLink>
+            </button>
           </div>
         </div>
 

@@ -18,9 +18,8 @@ const invoiceApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Invoices", "Dashboard"],
     }),
     getInvoices: builder.query({
-      query: ({ startDate, endDate }) => ({
-        url: `/invoice/list/${startDate}/${endDate}`,
-        // url: "/posts",
+      query: ({ startDate, endDate, date }) => ({
+        url: `/invoice/list/${startDate}/${endDate}/${date}`,
       }),
       providesTags: ["Invoices"],
     }),

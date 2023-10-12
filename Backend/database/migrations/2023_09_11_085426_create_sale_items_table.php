@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->string('description');
             $table->string('unit');
             $table->string('quantity');
-            $table->float('rate', 10, 2);
-            $table->float('product_retail_price', 10, 2);
+            $table->float('rate');
+            $table->float('product_retail_price');
             $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
             $table->unsignedBigInteger('sale_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

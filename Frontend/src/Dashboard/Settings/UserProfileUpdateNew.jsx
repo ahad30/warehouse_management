@@ -85,8 +85,6 @@ const UserProfileUpdateNew = () => {
               />
             </div>
 
-            {/* <label htmlFor="" id="customFileInput" className="custom-file-input text-black opacity-70">choose file</label> */}
-
             <input
               type="file"
               className="file-input file-input-ghost w-full max-w-xs custom-file-input"

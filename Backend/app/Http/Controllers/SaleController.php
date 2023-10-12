@@ -9,16 +9,14 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\SaleItem;
 use App\Models\CompanyInfo;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
 {
     // index
-    public function index($from = null, $to = null)
+    public function index($from = null, $to = null, $dayCount = null)
     {
 
         $invoices = Sale::with('saleitems', 'customer')->latest()->get();
@@ -30,24 +28,78 @@ class SaleController extends Controller
                 'invoices' => $invoices,
             ]);
         } else {
-            if ($from != null && $to != null) {
-                $beginningDate = date('Y-m-d', strtotime($from));
-                $endingDate = date('Y-m-d', strtotime($to));
-                $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
+
+            if ($from != null && $from != "null" && $to != null && $to != "null") {
+                /* -------------------- get invoice using date filtering -------------------- */
+                $invoices = $this->getInvoice($from, $to);
                 return response()->json([
                     'status' => true,
+                    'count' => $invoices->count(),
                     'invoices' => $invoices,
                 ]);
+            } else if ($from == "null" && $dayCount != null && $dayCount != "null") {
+                if ($dayCount == 1) {
+
+                    /* --------------------- today's invoices ----------------------*/
+                    $from = Carbon::today()->startOfDay();
+                    $to = Carbon::now()->endOfDay();
+                    $invoices = $this->getInvoice($from, $to);
+                    return response()->json([
+                        'status' => true,
+                        'count' => $invoices->count(),
+                        'invoices' => $invoices,
+                    ]);
+                } else if ($dayCount == 7) {
+                    /* ------------------- last week's invoices ---------------*/
+                    $from = Carbon::now()->subDays(7);
+                    $to = Carbon::now();
+                    $invoices = $this->getInvoice($from, $to);
+                    return response()->json([
+                        'status' => true,
+                        'count' => $invoices->count(),
+                        'invoices' => $invoices,
+                    ]);
+                } else if ($dayCount == 31) {
+                    /* ------------------ this month's invoices --------------*/
+                    $from = Carbon::now()->startOfMonth();
+                    $to = Carbon::now()->endOfMonth();
+                    $invoices = $this->getInvoice($from, $to);
+                    return response()->json([
+                        'status' => true,
+                        'count' => $invoices->count(),
+                        'invoices' => $invoices,
+                    ]);
+                }
+
+
             } else {
+                /* ------------ all invoices from database -----------*/
                 return response()->json([
                     'status' => true,
+                    'count' => $invoices->count(),
                     'invoices' => $invoices,
                 ]);
             }
         }
     }
+    /**
+     *
+     * @return invoices of particular times
+     *
+     */
+    protected function getInvoice($from, $to)
+    {
+        $beginningDate = Carbon::parse($from)->format('Y-m-d');
+        $endingDate = Carbon::parse($to)->format('Y-m-d');
+        $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
 
-    // create
+        return $invoices;
+    }
+
+    /**
+     *
+     * @create Request $request
+     */
     public function create($brand_id = null, $category_id = null)
     {
         $company_info = CompanyInfo::latest()->first();

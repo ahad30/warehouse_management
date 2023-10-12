@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->float('sub_total');
             $table->float('total');
             $table->float('paid_amount');
-            $table->float('due_amount')->nullable();
+            $table->string('due_amount')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->date('issue_date');
