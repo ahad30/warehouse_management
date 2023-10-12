@@ -34,7 +34,19 @@ const CompanyInfoUpdate = () => {
 
   const handleSubmitCompanyInfo = (data) => {
     console.log({ ...data, id: companyInfo?.id });
-    updateCompanyInfo({ ...data, id: companyInfo?.id });
+
+    const formData = new FormData();
+    formData.append("_method", "PUT");
+    formData.append("company_name", data?.company_name);
+    formData.append("company_email", data?.company_email);
+    formData.append("company_phone", data?.company_phone);
+    formData.append("company_address", data?.company_address);
+    formData.append("id", companyInfo?.id);
+    if (data?.company_img.length > 0) {
+      formData.append("company_img", data?.company_img[0]);
+    }
+
+    updateCompanyInfo(formData);
   };
 
   useEffect(() => {
@@ -69,46 +81,98 @@ const CompanyInfoUpdate = () => {
       <h2 className="text-2xl font-semibold my-5">Company Info</h2>
       <form
         onSubmit={handleSubmit(handleSubmitCompanyInfo)}
-        className="grid md:grid-cols-[2fr_2fr_2fr_2fr_1fr] gap-2"
+        className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-center justify-center"
       >
-        <input
-          name="name"
-          type="text"
-          className="input input-bordered input-md my-2"
-          required
-          {...register("company_name")}
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="input input-bordered input-md my-2"
-          required
-          {...register("company_email")}
-        />
-        <input
-          name="phone"
-          type="text"
-          placeholder="Phone"
-          className="input input-bordered input-md my-2"
-          required
-          {...register("company_phone")}
-        />
-        <input
-          name="address"
-          type="text"
-          placeholder="Address"
-          className="input input-bordered input-md my-2"
-          required
-          {...register("company_address")}
-        />
-        <input
-          type="submit"
-          className="input input-bordered input-md my-2 bg-gray-600 text-white hover:bg-gray-600 hover:text-white cursor-pointer"
-          // className="btn bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
-          defaultValue={"Update Info"}
-          required
-        />
+        {/* file upload  */}
+        <div className="w-full lg:row-span-2 flex flex-col lg:justify-center lg:items-center">
+          <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
+            <img
+              className="w-full"
+              src={
+                companyInfo?.company_img
+                  ? `${
+                      import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                    }/uploads/companyInfo/${companyInfo?.company_img}`
+                  : `https://cdn-icons-png.flaticon.com/512/5149/5149174.png`
+              }
+            />
+          </div>
+
+          {/* <label htmlFor="" id="customFileInput" className="custom-file-input text-black opacity-70">choose file</label> */}
+
+          <div className="form-control w-full mt-5">
+            <input
+              type="file"
+              className="file-input file-input-bordered"
+              id="customFileInput"
+              {...register("company_img")}
+            />
+          </div>
+        </div>
+
+        {/* name field  */}
+        <div className="lg:col-span-2">
+          <label htmlFor="name" className="label">
+            Company Name
+          </label>
+          <input
+            name="name"
+            type="text"
+            className="input input-bordered input-md my-2 w-full"
+            required
+            {...register("company_name")}
+          />
+        </div>
+
+        {/* email field  */}
+        <div className="lg:col-span-2">
+          <label htmlFor="email" className="label">
+            Company email
+          </label>
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            className="input input-bordered input-md my-2 w-full"
+            required
+            {...register("company_email")}
+          />
+        </div>
+
+        {/* phone field */}
+        <div className=" lg:col-span-2">
+          <label htmlFor="phone"> Phone</label>
+          <input
+            name="phone"
+            type="text"
+            placeholder="Phone"
+            className="input input-bordered input-md my-2 w-full"
+            required
+            {...register("company_phone")}
+          />
+        </div>
+
+        {/* address field */}
+        <div className="lg:col-span-2">
+          <label htmlFor="address">Address</label>
+          <input
+            name="address"
+            type="text"
+            placeholder="Address"
+            className="input input-bordered input-md my-2 w-full"
+            required
+            {...register("company_address")}
+          />
+        </div>
+
+        <div className=" flex lg:justify-end lg:col-span-5">
+          <input
+            type="submit"
+            className="input w-full input-bordered input-md my-2 lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white cursor-pointer"
+            defaultValue={"Update Info"}
+            required
+          />
+        </div>
       </form>
     </div>
   );
