@@ -1,4 +1,3 @@
-// Invoice.js
 import {
   Page,
   Text,
@@ -6,65 +5,47 @@ import {
   Document,
   StyleSheet,
   Image,
-  
-  
+  Canvas,
+  Svg,
 } from "@react-pdf/renderer";
 import { object } from "prop-types";
 import img from "../../../src/assets/tras_ZL-01-removebg-preview.png";
-
-
-import QRCode from "react-qr-code";
-
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
-    padding: "20px",
+    padding: "2px",
   },
   section: {
     margin: 10,
     padding: 10,
     flexGrow: 1,
   },
-  main: { padding: "20px", position: "relative" },
+  main: { padding: "2px", position: "relative" },
   head: {
     display: "flex",
     flexDirection: "row",
-    alignContent: "center",
+    alignContent: "space-between",
     justifyContent: "space-between",
-  
   },
-   brImage: {
-    width: "70px",
-    height: "70px",
-   
-    display: "flex",
-    justifyContent: "center",
-    alignContent:"center",
-    
-    
-   },
+
   headLeft: {
-    width: "30%",
-    fontSize: "15px",
+    width: "50%",
+    fontSize: "4px",
     fontWeight: "300",
-   
   },
   headLeftInvoice: {
-    fontSize: "25px",
+    fontSize: "4px",
     fontWeight: "bold",
   },
   date: {
-    marginVertical: "10px",
+    marginVertical: "5px",
   },
-  headRight: { width: "30%", textAlign: "right", },
-  headMiddle:
-   { width: "40%", display: "flex",  justifyContent: "center", alignContent:"center", padding: "5px", textAlign: "center" 
-  },
+  headRight: { width: "25%", textAlign: "right" },
 
   billAndPay: {
     display: "flex",
-    marginTop: "40px",
+    marginTop: "10px",
     flexDirection: "row",
     alignContent: "space-between",
     justifyContent: "space-between",
@@ -76,53 +57,53 @@ const styles = StyleSheet.create({
   billFrom: {
     color: "#5c5c5c",
     fontWeight: "600",
-    fontSize: "15px",
+    fontSize: "4px",
   },
   billName: {
     fontWeight: "600",
-    fontSize: "18px",
-    marginVertical: "10px",
+    fontSize: "4px",
+    marginVertical: "5px",
   },
   billAddress: {
     color: "#5c5c5c",
     fontWeight: "light",
-    fontSize: "15px",
+    fontSize: "4px",
   },
   tableHead: {
     display: "flex",
-    marginTop: "40px",
-    padding: "5px",
-    border: "2px solid #f3f4f6",
+    marginTop: "10px",
+    padding: "2px",
+    border: "1px solid #f3f4f6",
 
     flexDirection: "row",
     justifyContent: "flex-start",
-    fontSize: "15px",
+    fontSize: "4px",
     fontWeight: "300",
   },
   rowOne: {
     width: "40%",
-    fontSize: "15px",
+    fontSize: "4px",
     fontWeight: "300",
   },
   rowTwo: {
     width: "20%",
-    fontSize: "15px",
+    fontSize: "4px",
     fontWeight: "300",
   },
 
   tableRow: {
     display: "flex",
     textAlign: "left",
-    marginTop: "10px",
+    marginTop: "5px",
     flexDirection: "row",
     justifyContent: "flex-start",
   },
 
   totalSubTotalTax: {
     width: "100%",
-    paddingHorizontal: "20px",
+    paddingHorizontal: "5px",
     position: "absolute",
-    bottom: "10px",
+    bottom: "5px",
   },
 
   subtotalAndTax: {
@@ -130,11 +111,16 @@ const styles = StyleSheet.create({
     borderBottom: "1px solid #f3f4f6",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: "10px",
-    fontSize: "15px",
+    marginTop: "5px",
+    fontSize: "4px",
     fontWeight: "light",
-    padding: "5px",
+    padding: "2px",
   },
+
+  brCode: {
+    width : "50px",
+    height : "50px"
+  }
 
   // total: {
   //   display: "flex",
@@ -144,11 +130,9 @@ const styles = StyleSheet.create({
   //   marginTop: "10px",
   // },
 });
-
-const InvoicePDF = ({ invoice }) => (
-  // console.log(invoiceData)
+const RecieptPDF = ({ invoice }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="A8" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
         {/* head information */}
@@ -161,10 +145,11 @@ const InvoicePDF = ({ invoice }) => (
           </View>
 
           {/* head information right */}
-          
-          <View style={styles.headMiddle}>
 
-           <Image style={styles.brImage} source={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${invoice?.issue_date} at ${invoice?.invoice_no } for ${invoice?.customer?.name}`}></Image>
+          <View>
+            <Image style={styles.brCode}
+              src={`https://barcodeapi.org/api/auto/${invoice?.invoice_no}`}
+            ></Image>
           </View>
 
           {/* head information right */}
@@ -255,8 +240,7 @@ const InvoicePDF = ({ invoice }) => (
   </Document>
 );
 
-InvoicePDF.propTypes = {
+RecieptPDF.propTypes = {
   invoice: object,
 };
-
-export default InvoicePDF;
+export default RecieptPDF;
