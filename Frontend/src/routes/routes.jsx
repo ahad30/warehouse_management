@@ -9,29 +9,22 @@ import AddCustomer from "../Dashboard/Customers/AddCustomer";
 import UsersList from "../Dashboard/Users/UsersList";
 import InvoicesList from "../Dashboard/Invoices/InvoicesList";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
-import PdfSettings from "../Dashboard/Settings/PdfSettings";
-import Analytics from "../Dashboard/Report/Analytics/Analytics";
 import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-import InvoiceA4 from "../components/InvoicePages/InvoiceA4";
-import AdminList from "../Dashboard/Users/AdminList";
-import ManagerList from "../Dashboard/Users/ManagerList";
-import SalesManList from "../Dashboard/Users/SalesManList";
-import CategoriesListCustom from "../Dashboard/Categories/CategoriesListCustom";
-import CustomersListCustom from "../Dashboard/Customers/CustomersListCustom";
+import CategoriesList from "../Dashboard/Categories/CategoriesList";
+import CustomersList from "../Dashboard/Customers/CustomersList";
 import AddBrand from "../Dashboard/Brands/AddBrand";
 import AddStore from "../Dashboard/Stores/AddStore";
-import ProductsListCustom from "../Dashboard/Products/ProductsListCustom";
-import BrandListCustom from "../Dashboard/Brands/BrandListCustom";
-import SettingsNew from "../Dashboard/Settings/SettingsNew";
-import StoreListCustom from "../Dashboard/Stores/StoreListCustom";
-import Test from "../components/PDF/Test";
-import TestTable from "../Dashboard/Stores/TestTable";
+import ProductsList from "../Dashboard/Products/ProductsList";
+import BrandsList from "../Dashboard/Brands/BrandsList";
+import StoresList from "../Dashboard/Stores/StoresList";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
-import UserProfileUpdateNew from "../Dashboard/Settings/UserProfileUpdateNew";
 import ReportLayout from "../layouts/Dashboard/ReportLayout";
+import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics/DashboardAnalytics";
+import Settings from "../Dashboard/Settings/Settings";
+import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
 
 const routes = createBrowserRouter([
   {
@@ -57,15 +50,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/forget-password",
-        element: <ForgetPassword></ForgetPassword>,
+        element: <ForgetPassword />,
       },
       {
         path: "/password-reset/:token",
-        element: <ResetPassword></ResetPassword>,
-      },
-      {
-        path: "/print/a4",
-        element: <InvoiceA4 />,
+        element: <ResetPassword />,
       },
     ],
   },
@@ -80,28 +69,14 @@ const routes = createBrowserRouter([
     children: [
       {
         path: "/dashboard/",
-        element: <Analytics />,
+        element: <DashboardAnalytics />,
       },
       // USERS
       {
         path: "/dashboard/user",
         element: <UsersList />,
       },
-      // Admins
-      {
-        path: "/dashboard/user/admins",
-        element: <AdminList />,
-      },
-      // Managers
-      {
-        path: "/dashboard/user/managers",
-        element: <ManagerList />,
-      },
-      // Managers
-      {
-        path: "/dashboard/user/sales-man",
-        element: <SalesManList />,
-      },
+
       {
         path: "/dashboard/user/add",
         element: <AddUser />,
@@ -109,8 +84,7 @@ const routes = createBrowserRouter([
       // CUSTOMERS
       {
         path: "/dashboard/customer",
-        // element: <CustomersList />,
-        element: <CustomersListCustom></CustomersListCustom>,
+        element: <CustomersList />,
       },
       {
         path: "/dashboard/customer/add",
@@ -119,9 +93,7 @@ const routes = createBrowserRouter([
       // CATEGORIES
       {
         path: "/dashboard/category",
-        // element: <CategoriesList />,
-        element: <CategoriesListCustom />,
-        // element: <CatgorisListCustomAgain></CatgorisListCustomAgain>,
+        element: <CategoriesList />,
       },
       {
         path: "/dashboard/category/add",
@@ -131,7 +103,7 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/brand",
         // element: <BrandsList />,
-        element: <BrandListCustom></BrandListCustom>,
+        element: <BrandsList />,
       },
       {
         path: "/dashboard/brand/add",
@@ -140,8 +112,7 @@ const routes = createBrowserRouter([
       // STORE
       {
         path: "/dashboard/store",
-        // element: <StoresList />,
-        element: <StoreListCustom></StoreListCustom>,
+        element: <StoresList />,
       },
       {
         path: "/dashboard/store/add",
@@ -150,8 +121,7 @@ const routes = createBrowserRouter([
       // PRODUCTS
       {
         path: "/dashboard/product",
-        // element: <ProductsList />,
-        element: <ProductsListCustom></ProductsListCustom>,
+        element: <ProductsList />,
       },
       {
         path: "/dashboard/product/add",
@@ -164,7 +134,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/dashboard/analytics",
-        element: <Analytics />,
+        element: <DashboardAnalytics />,
       },
       // INVOICE
       {
@@ -178,25 +148,12 @@ const routes = createBrowserRouter([
       // SETTING
       {
         path: "/dashboard/setting",
-        // element: <Settings></Settings>,
-        element: <SettingsNew></SettingsNew>,
+        element: <Settings />,
       },
       // PROFILE
       {
         path: "/dashboard/profile",
-        element: <UserProfileUpdateNew />,
-      },
-      {
-        path: "/dashboard/setting/pdf",
-        element: <PdfSettings />,
-      },
-      {
-        path: "/dashboard/test",
-        element: <Test></Test>,
-      },
-      {
-        path: "/dashboard/table",
-        element: <TestTable></TestTable>,
+        element: <UserProfileUpdate />,
       },
     ],
   },

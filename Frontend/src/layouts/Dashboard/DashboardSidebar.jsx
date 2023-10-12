@@ -56,7 +56,7 @@ const DashboardSidebar = () => {
 
     {
       name: "Invoices",
-      icon: <LiaFileInvoiceDollarSolid size={25}/>,
+      icon: <LiaFileInvoiceDollarSolid size={25} />,
       path: "/dashboard/invoice",
     },
     {

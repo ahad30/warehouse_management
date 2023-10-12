@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditUser from "./EditUser";
-import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import {
   useDeleteUserMutation,
@@ -32,8 +31,6 @@ const UsersList = () => {
   const {
     data: usersData,
     isLoading: usersIsLoading,
-    isError: usersIsError,
-    error: usersError,
     isSuccess: usersIsSuccess,
   } = useGetUsersQuery();
 
@@ -54,8 +51,7 @@ const UsersList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    
-    DeleteConformation(id,()=> deleteUser(id))
+    DeleteConformation(id, () => deleteUser(id));
   };
 
   useEffect(() => {
@@ -77,8 +73,6 @@ const UsersList = () => {
     deleteIsSuccess,
     deleteData,
   ]);
-
-  // console.log(allUserData)
 
   // EDIT STARTS
   const handleModalEditInfo = (row) => {
@@ -119,13 +113,13 @@ const UsersList = () => {
     {
       name: "Name",
       // selector: "name",
-      selector: (row)=> <>{row?.name}</>,
+      selector: (row) => <>{row?.name}</>,
       sortable: true,
     },
     {
       name: "email",
       // selector: "email",
-      selector: (row)=> <>{row?.email}</>,
+      selector: (row) => <>{row?.email}</>,
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
       //     {row?.email}
@@ -135,7 +129,7 @@ const UsersList = () => {
     {
       name: "phone",
       // selector: "phone",
-      selector: (row)=> <>{row?.phone}</>,
+      selector: (row) => <>{row?.phone}</>,
     },
     {
       name: "role",
@@ -161,7 +155,7 @@ const UsersList = () => {
     {
       name: "address",
       // selector: "address",
-      selector: (row)=> <>{row?.address}</>,
+      selector: (row) => <>{row?.address}</>,
     },
 
     {
@@ -196,10 +190,6 @@ const UsersList = () => {
     return <UseLoading />;
   }
 
-  if (usersIsError) {
-    console.error(usersError);
-  }
-
   const handleFilter = (data) => {
     if (usersData?.users && data) {
       const filter = usersData?.users.filter(
@@ -210,7 +200,7 @@ const UsersList = () => {
       setFilterData(usersData?.users);
     }
   };
-  // console.log(usersData?.users)
+
   return (
     <>
       <DashboardBackground>

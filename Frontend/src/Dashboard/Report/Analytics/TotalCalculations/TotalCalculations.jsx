@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useGetDashboardSummaryQuery } from "../../../../features/Dashboard/dashboardSummary";
-import { AiOutlineSetting,AiOutlineDollarCircle } from "react-icons/ai";
-import { BiCategory, BiGrid, BiLogOut, BiUserCircle } from "react-icons/bi";
-import { FaFileInvoiceDollar, FaStore } from "react-icons/fa";
+import { AiOutlineDollarCircle } from "react-icons/ai";
+import { BiCategory, BiUserCircle } from "react-icons/bi";
+import { FaStore } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { BsFillCartFill } from "react-icons/bs";
-import { VscGraph} from "react-icons/vsc";
+import { VscGraph } from "react-icons/vsc";
 import { SiBrandfolder } from "react-icons/si";
 
 const TotalCalculations = () => {
   const { data } = useGetDashboardSummaryQuery();
-
 
   const [summary, setSummary] = useState({
     totalRevenue: 0,
@@ -23,69 +22,60 @@ const TotalCalculations = () => {
     if (data?.status) setSummary(data?.data);
   }, [data?.status, data?.data]);
 
- if(data?.data) console.log(data?.data)
+  if (data?.data) console.log(data?.data);
 
   const items = [
     {
-      img: <AiOutlineDollarCircle className="text-white" size={30}></AiOutlineDollarCircle>,
+      img: (
+        <AiOutlineDollarCircle
+          className="text-white"
+          size={30}
+        ></AiOutlineDollarCircle>
+      ),
       count: `$${summary?.totalRevenue}`,
       text: "Total Revenue",
-      
-      
     },
 
     {
       img: <VscGraph className="text-white" size={30}></VscGraph>,
       count: summary?.totalSales,
       text: "Total Sales",
-      
     },
-    
+
     {
       img: <BiUserCircle className="text-white" size={30}></BiUserCircle>,
       count: summary?.totalUsers,
       text: "Total Users",
-      
     },
     {
       img: <FiUsers className="text-white" size={30}></FiUsers>,
       count: summary?.totalCustomers,
       text: "Total Customers",
-     
     },
     {
       img: <BsFillCartFill className="text-white" size={30}></BsFillCartFill>,
       count: summary?.totalProducts,
       text: "Total Products",
-      
     },
     {
       img: <BiCategory className="text-white" size={30}></BiCategory>,
       count: summary?.totalCategory,
       text: "Total Category",
-      
     },
     {
       img: <SiBrandfolder className="text-white" size={30}></SiBrandfolder>,
       count: summary?.totalBrand,
       text: "Total Brand",
-     
     },
     {
       img: <FaStore className="text-white" size={30}></FaStore>,
       count: summary?.totalStore,
       text: "Total Store",
-      
     },
-   
-   
-
-   
   ];
 
-  
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-10 my-2 p-2">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 my-2 p-2">
       {items?.map((item, i) => (
         <div
           key={i}
