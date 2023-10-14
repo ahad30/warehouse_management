@@ -182,7 +182,7 @@ class ProductController extends Controller
         }
 
         // image upload
-        $imageData = null;
+        $imageData = null; //new image name
         if ($request->hasFile('product_img')) {
             // using validator product img
             $validateInput = Validator::make($request->all(), [
@@ -246,7 +246,7 @@ class ProductController extends Controller
     }
 
     // destroy
-    public function distroy($id)
+    public function destroy($id)
     {
         $product = Product::find($id);
 

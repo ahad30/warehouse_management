@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\SettingsController;
 
 /*
@@ -68,7 +69,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'distroy');
+        Route::delete('/delete/{id}', 'destroy');
     });
 
     Route::controller(ProductController::class)->prefix('/products')->group(function () {
@@ -77,7 +78,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'distroy');
+        Route::delete('/delete/{id}', 'destroy');
     });
 
     Route::controller(CompanyInfoController::class)->prefix('company')->group(function () {
@@ -91,24 +92,14 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'distroy');
+        Route::delete('/delete/{id}', 'destroy');
     });
 
     Route::middleware('verifyAdmin')->controller(UserController::class)->prefix('users')->group(function () {
         Route::get('/', 'index');
         Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'distroy');
+        Route::delete('/delete/{id}', 'destroy');
     });
-
-    Route::controller(SaleController::class)->prefix('invoice')->group(function () {
-        Route::get('list/{from?}/{to?}/{dayCount?}', 'index');
-        Route::get('/create/{brand_id?}/{category_id?}/', 'create');
-        Route::post('/store', 'store');
-        Route::get('/edit/{id}', 'edit');
-        Route::put('/update', 'update');
-        Route::middleware('verifyAdmin')->delete('/delete/{id}', 'destroy');
-    });
-
 
 
     /* -------------------------------------------------------------------------- */
@@ -148,4 +139,22 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/', 'index');
         Route::put('/update', 'update');
     });
+    /* -------------------------------------------------------------------------- */
+    /*                               Sale controller                              */
+    /* -------------------------------------------------------------------------- */
+    Route::controller(SaleController::class)->prefix('invoice')->group(function () {
+        /* ------------------------------- sale report ------------------------------ */
+        Route::get('list/{from?}/{to?}/{dayCount?}', 'index');
+        Route::get('/create/{brand_id?}/{category_id?}/', 'create');
+        Route::post('/store', 'store');
+        Route::get('/edit/{id}', 'edit');
+        Route::put('/update', 'update');
+        Route::middleware('verifyAdmin')->delete('/delete/{id}', 'destroy');
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                               Product Report                               */
+    /* -------------------------------------------------------------------------- */
+
+    Route::get('/product-report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
 });
