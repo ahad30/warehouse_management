@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchAndAddBtn from "../../../components/Reusable/Inputs/SearchAndAddBtn";
 import TableHeadingTitle from "../../../components/Reusable/Titles/TableHeadingTitle";
-import { useGetProductsReportQuery } from "../../../features/ProductReport/ProductReport";
+import { useGetProductsReportQuery } from "../../../features/ProductReport/productReport";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 
 const ProductReport = () => {
