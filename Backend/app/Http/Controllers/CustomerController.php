@@ -13,17 +13,17 @@ class CustomerController extends Controller
     {
         $customers = Customer::orderBy('id', 'DESC')->get();
 
-        if ($customers->count() > 0) {
+        if ($customers != null) {
             return response()->json([
                 'status' => true,
                 'customers' => $customers,
             ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Item Found',
-            ]);
         }
+        return response()->json([
+            'status' => false,
+            'message' => 'No Item Found',
+        ]);
+
     }
 
     // store
@@ -54,8 +54,8 @@ class CustomerController extends Controller
             $file->move('uploads/customers/', $imageData);
         }
 
-        $customerexist = Customer::where('phone', $request->phone)->first();
-        if ($customerexist) {
+        $customerExist = Customer::where('phone', $request->phone)->first();
+        if ($customerExist) {
             return response()->json([
                 'status' => false,
                 'message' => 'Customer Already Exist',
@@ -102,7 +102,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($request->id);
 
-        if ($customer) {
+        if ($customer != null) {
             $validateInput = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'nullable|email|max:255',
@@ -141,8 +141,8 @@ class CustomerController extends Controller
     }
 
 
-    // distroy
-    public function distroy($id)
+    // destroy
+    public function destroy($id)
     {
         $customer = Customer::find($id);
 

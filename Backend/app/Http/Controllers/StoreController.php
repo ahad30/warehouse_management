@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends Controller
 {
@@ -13,7 +14,7 @@ class StoreController extends Controller
      * return all Stores
      *
      */
-    public function index()
+    public function index(): Response
     {
         $stores = Store::all();
         if ($stores->count() > 0) {
@@ -35,7 +36,7 @@ class StoreController extends Controller
      * store Store
      *
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
@@ -71,7 +72,7 @@ class StoreController extends Controller
      * update Stores
      *
      */
-    public function update(Request $request)
+    public function update(Request $request): Response
     {
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|max:100',
@@ -114,7 +115,7 @@ class StoreController extends Controller
             'Store' => $store,
         ], 200);
     }
-    public function delete($id)
+    public function delete($id): Response
     {
         if ($id != null) {
             $store = Store::find($id);

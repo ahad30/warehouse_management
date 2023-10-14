@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
     // index
-    public function index()
+    public function index(): Response
     {
         $users = User::latest()->select('id', 'name', 'email', 'phone', 'status', 'address', 'city', 'state', 'country', 'img', 'email_verified_at', 'role_id')->with('getRole')->get();
 
@@ -31,7 +32,7 @@ class UserController extends Controller
      *  Edit user
      */
 
-    public function update(Request $request)
+    public function update(Request $request): Response
     {
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',
@@ -67,23 +68,22 @@ class UserController extends Controller
             'brand' => $user,
         ], 200);
     }
-    // distroy
-    public function distroy($id)
+    // destroy
+    public function destroy($id): Response
     {
         $user = User::find($id);
 
         if ($user != null) {
             $user->delete();
-
             return response()->json([
                 'status' => true,
                 'message' => "User successfully deleted",
             ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => "User Not Found",
-            ], 500);
         }
+        return response()->json([
+            'status' => false,
+            'message' => "User Not Found",
+        ], 500);
+
     }
 }

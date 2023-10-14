@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+
 use App\Models\Settings;
-use Illuminate\Support\Env;
 use App\Jobs\SmtpCheckerJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Notifications\SmtpCheckerMail;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class SettingsController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         $settings = Settings::find(1);
         $mailCredential = [
@@ -32,11 +31,17 @@ class SettingsController extends Controller
             'mailCredentials' => $mailCredential
         ], 200);
     }
-    public function update(Request $request)
+    public function update(Request $request): Response
     {
-        /* ---------------------- getting settings from seeder ---------------------- */
 
-        $settings = Settings::find(1);
+
+        $settings = Settings::find(1); //getting settings from database
+        if ($settings == null) {
+            return response()->json([
+                'status' => false,
+                'message' => "Settings not found"
+            ], 404);
+        }
 
         $validateInput = Validator::make($request->all(), [
             'discount' => ['string', 'max:10'],

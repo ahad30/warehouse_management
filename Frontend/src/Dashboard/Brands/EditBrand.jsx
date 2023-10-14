@@ -33,6 +33,7 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
     formData.append("_method", "PUT");
     formData.append("brand_name", data?.brand_name);
     formData.append("id", brand.id);
+    console.log(data);
     if (data?.brand_img.length > 0) {
       formData.append("brand_img", data?.brand_img[0]);
     }
@@ -68,7 +69,7 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   useEffect(() => {
     if (brand) {
       setValue("brand_name", brand?.brand_name || "");
-      setValue("brand_img", brand?.brand_img || "");
+      // setValue("brand_img", brand?.brand_img || "");
     }
   }, [brand, setValue]);
 
