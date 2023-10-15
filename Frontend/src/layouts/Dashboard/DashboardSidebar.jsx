@@ -53,7 +53,6 @@ const DashboardSidebar = () => {
       icon: <AiOutlineShoppingCart size={25}></AiOutlineShoppingCart>,
       path: "/dashboard/product",
     },
-
     {
       name: "Invoices",
       icon: <LiaFileInvoiceDollarSolid size={25} />,
