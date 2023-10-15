@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import {
   useGetDefaultSettingsQuery,
   useUpdateDefaultSettingsMutation,
@@ -10,7 +10,7 @@ import {
 
 const DefaultSetting = () => {
   const { user } = useSelector((state) => state.auth);
-  const [allcurency, setAllcurency] = useState([]);
+  const [allCurrency, setAllCurrency] = useState([]);
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [
     updateDefaultSetting,
@@ -20,22 +20,22 @@ const DefaultSetting = () => {
     fetch("/currency.json")
       .then((res) => res.json())
       .then((data) =>
-        setAllcurency(data?.sort((a, b) => a.name.localeCompare(b.name)))
+        setAllCurrency(data?.sort((a, b) => a.name.localeCompare(b.name)))
       );
   }, []);
 
-  const settings = settingsData?.settings;
-  const mailCredentials = settingsData?.mailCredentials;
-  // console.log(mailCredentials)
-  console.log(settingsData)
-  const [taxName, setTaxName] = useState("VAT");
   const [isToggle, setIsToggle] = useState(false);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
+  const onSubmit = (data) => {
+    updateDefaultSetting({ ...data, mail_option: isToggle ? "on" : "off" });
+  };
 
   useEffect(() => {
     if (isLoading) {
@@ -51,20 +51,8 @@ const DefaultSetting = () => {
     }
   });
 
-  useEffect(() => {
-       
-    // if(settingsData?.settings?.mail_credential_status == "inactive"){
-    //   Swal.fire('SweetAlert2 is working!')
-    // }
-    
-  }, [settingsData?.mailCredentials , settingsData?.settings, settingsData]);
-
-
-
-  const token = JSON.parse(localStorage.getItem("access_token"));
-  const onSubmit = (data) => {
-    updateDefaultSetting({ ...data, mail_option: isToggle ? "on" : "off" });
-  };
+  const settings = settingsData?.settings;
+  const mailCredentials = settingsData?.mailCredentials;
 
   return (
     <div>
@@ -77,16 +65,16 @@ const DefaultSetting = () => {
           {/* discount field */}
           <div className="">
             <label className="label" htmlFor="">
-              Discount
+              Discount (%)
             </label>
             <input
               className="input input-bordered w-full my-2"
               type="number"
               min={0}
-              placeholder="discount price"
+              placeholder="Discount"
               name=""
               id=""
-              defaultValue={settings?.discount ? settings?.discount : ""}
+              defaultValue={settings?.discount ? settings.discount : ""}
               {...register("discount")}
             />
             {errors.discount && <span>This field is required</span>}
@@ -101,8 +89,8 @@ const DefaultSetting = () => {
               className="input input-bordered w-full my-2"
               type="number"
               min={0}
-              defaultValue={settings?.shipping ? settings?.shipping : ""}
-              placeholder="discount price"
+              defaultValue={settings?.shipping ? settings.shipping : ""}
+              placeholder="Shipping charge"
               name=""
               id=""
               {...register("shipping")}
@@ -120,8 +108,7 @@ const DefaultSetting = () => {
               name="taxation"
               id="taxation"
               {...register("taxation")}
-              className="w-full input input-bordered"
-              defaultValue={settings?.taxation ? settings?.taxation : ""}
+              className="w-full select select-bordered"
             >
               <option value={"VAT"}>VAT</option>
               <option value={"TAX"}>TAX</option>
@@ -140,11 +127,10 @@ const DefaultSetting = () => {
               {watch("taxation") ? watch("taxation") : "VAT"}
             </label>
             <input
-              className="input input-bordered w-full my-2"
+              className="input input-bordered w-full"
               type="number"
               min={0}
-              placeholder=" taxation price"
-              defaultValue={settings?.tax_value ? settings?.tax_value : ""}
+              placeholder="Taxation"
               name=""
               id=""
               {...register("tax_value")}
@@ -159,12 +145,11 @@ const DefaultSetting = () => {
             </label>
             <select
               {...register("currency")}
-              className="input input-bordered"
-              defaultValue={settings?.currency ? settings?.currency : ""}
+              className="select select-bordered w-full"
             >
               <option value="">Select Currency</option>
-              {allcurency &&
-                allcurency?.map((item, index) => (
+              {allCurrency &&
+                allCurrency?.map((item, index) => (
                   <option key={index} value={item?.symbol}>
                     {item?.name}
                   </option>
@@ -176,6 +161,21 @@ const DefaultSetting = () => {
               </span>
             )}
           </div>
+
+          <div className="">
+            <label className="label" htmlFor="">
+              Footer Note
+            </label>
+            <textarea
+              name="footer_note"
+              id=""
+              className="input input-bordered w-full py-2"
+              placeholder="Write Your Footer Note"
+              defaultValue={settings?.footer_note ? settings?.footer_note : ""}
+              {...register("footer_note")}
+            ></textarea>
+            {errors?.footer_note && <span>This field is required</span>}
+          </div>
         </div>
 
         {/* email */}
@@ -183,7 +183,7 @@ const DefaultSetting = () => {
           <div>
             {/* toggle implement */}
             <div className="flex m-5 gap-x-3">
-              <label htmlFor="">Email setting</label>
+              <label htmlFor="">Email Sending Setting</label>
               <input
                 type="checkbox"
                 className="toggle"

@@ -22,8 +22,6 @@ const TotalCalculations = () => {
     if (data?.status) setSummary(data?.data);
   }, [data?.status, data?.data]);
 
-  if (data?.data) console.log(data?.data);
-
   const items = [
     {
       img: (
