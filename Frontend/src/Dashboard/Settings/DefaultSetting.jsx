@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { set, useForm } from "react-hook-form";
-import { TbChessKing } from "react-icons/tb";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import {
@@ -137,7 +136,7 @@ const DefaultSetting = () => {
           </div>
 
           {/* currency */}
-          <div className="">
+          <div>
             <label className="label" htmlFor="currency">
               Currency
             </label>

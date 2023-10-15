@@ -43,6 +43,7 @@ const ForgetPassword = () => {
               type="email"
               name="email"
               id="email"
+              placeholder="Enter Your Email"
             />
           </div>
 
