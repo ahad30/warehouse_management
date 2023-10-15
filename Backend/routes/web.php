@@ -18,5 +18,7 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-
+Route::get('/test',function(){
+    return view('MailTemplates.InvoiceMail.html.invoice');
+});
 require __DIR__ . '/auth.php';
