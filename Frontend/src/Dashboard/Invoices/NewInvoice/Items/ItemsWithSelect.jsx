@@ -184,12 +184,12 @@ const ItemsWithSelect = ({ products }) => {
             </label>
           </div>
 
-          <div className=" border border-red-300  rounded-md  text-sm">
+          <div className="">
             <p>Add item</p>
-            <div className=" flex my-3 bg-[#0369A1] text-white rounded-lg justify-between">
-              <AiOutlinePlusCircle size={20} />
+            <div className=" input input-bordered rounded-lg flex  bg-[#0369A1]  my-3 justify-center items-center">
+              <AiOutlinePlusCircle className="text-white" size={20} />
               <button
-                className={`w-full btn  bg-[#0369A1] text-white ${
+                className={`  bg-[#0369A1] text-white ${
                   selectedItem?.product_name && "cursor-pointer"
                 }`}
                 disabled={!selectedItem?.product_name}
@@ -197,7 +197,10 @@ const ItemsWithSelect = ({ products }) => {
               >
                 Add item
               </button>
+
             </div>
+
+
           </div>
         </div>
       </div>

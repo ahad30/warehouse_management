@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
+use Illuminate\Support\Facades\DB;
 class SmtpCheckerJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -28,7 +28,7 @@ class SmtpCheckerJob implements ShouldQueue
     {
 
 
-
+        DB::table('settings')->where('id', 1)->update(['mail_option' => "on"]);
         // change mailer
 
         $this->changeEnvValue("MAIL_MAILER", env('MAIL_MAILER'), $this->request['mailer']);

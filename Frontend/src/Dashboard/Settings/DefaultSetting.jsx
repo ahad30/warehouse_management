@@ -24,6 +24,7 @@ const DefaultSetting = () => {
   }, []);
 
   const [isToggle, setIsToggle] = useState(false);
+  const [mailWarning, setMailWarning] = useState(null);
 
   const {
     register,
@@ -48,10 +49,29 @@ const DefaultSetting = () => {
     if (isSuccess) {
       toast.success(updateSettingData?.message, { id: 1 });
     }
-  });
+    if (settingsData?.settings?.mail_credential_status === "inactive") {
+      setMailWarning(true);
+    }
+    
+  },[settingsData,
+    settingsData?.settings,updateSettingData,
+    error, isError,
+     isLoading, isSuccess]);
 
   const settings = settingsData?.settings;
   const mailCredentials = settingsData?.mailCredentials;
+// console.log(settings)
+useEffect(()=> {
+  if(settingsData?.settings?.mail_option === "on"){
+    setIsToggle(true);
+  }
+  else {
+    setIsToggle(false);
+  }
+},[settingsData,
+  settingsData?.settings,updateSettingData,
+  error, isError,
+   isLoading, isSuccess])
 
   return (
     <div>
@@ -191,7 +211,15 @@ const DefaultSetting = () => {
                 // {...register("mail_option", )}
               />
             </div>
-
+            {mailWarning && (
+              <div
+                className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+                role="alert"
+              >
+                <p className="font-bold">Be Warned</p>
+                <p>Smtp credentials is wrong</p>
+              </div>
+            )}
             {/* mail item */}
             {isToggle && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
