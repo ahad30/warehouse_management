@@ -19,8 +19,8 @@ const InvoiceDateFiltering = ({
             handleDate(1); // Trigger date filtering for today
             setActiveButton(1); // Set "Today" button as active
           }}
-          className={`px-2 py-1 ${
-            activeButton === 1 ? "border border-blue-700 rounded-lg" : ""
+          className={`px-2 border py-1 ${
+            activeButton === 1 ? " border-blue-700 rounded-lg" : "border-transparent"
           } text-[#334155] rounded-md text-sm`}
         >
           Today
@@ -30,8 +30,8 @@ const InvoiceDateFiltering = ({
             handleDate(7); // Trigger date filtering for the last 7 days
             setActiveButton(7); // Set "Last 7 Days" button as active
           }}
-          className={`px-2 py-1 ${
-            activeButton === 7 ? "border border-blue-700 rounded-lg" : ""
+          className={`px-2 border  py-1 ${
+            activeButton === 7 ? " border-blue-700 rounded-lg" : "border-transparent"
           } text-[#334155] rounded-md text-sm`}
         >
           Last 7 Days
@@ -41,8 +41,8 @@ const InvoiceDateFiltering = ({
             handleDate(31); // Trigger date filtering for this month
             setActiveButton(31); // Set "This Month" button as active
           }}
-          className={`px-2 py-1 ${
-            activeButton === 31 ? "border border-blue-700 rounded-lg" : ""
+          className={`px-2  border  py-1 ${
+            activeButton === 31 ? " border-blue-700 rounded-lg" : "border-transparent"
           } text-[#334155] rounded-md text-sm`}
         >
           This Month
@@ -70,7 +70,7 @@ const InvoiceDateFiltering = ({
             handleDateClear(31); // Clear date filtering and set it to default (This Month)
             setActiveButton(null); // Clear the active button
           }}
-          className="flex justify-center items-center px-2 py-1 text-red-600 bg-white rounded-md text-sm border border-red-600 font-bold"
+          className="flex btn-sm justify-center items-center  text-red-600 bg-white rounded-md text-sm border border-red-600 font-bold"
         >
           Reset all
         </button>
