@@ -130,6 +130,7 @@ const DefaultSetting = () => {
               type="number"
               min={0}
               placeholder="Taxation"
+              defaultValue={settings?.tax_value ? settings?.tax_value : ""}
               name=""
               id=""
               {...register("tax_value")}
