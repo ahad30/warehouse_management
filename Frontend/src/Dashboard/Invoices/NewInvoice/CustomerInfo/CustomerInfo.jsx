@@ -14,21 +14,28 @@ const CustomerInfo = ({ customers }) => {
     address: "",
   });
 
+  // Function to handle changes in the input fields
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
+    // Update the customer state with the new values
     setCustomer((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  // Function to handle selecting a customer by phone number
   const handleSelectedPhone = (phone) => {
+    // Find the customer in the list of customers with a matching phone number
     const matchedCustomer = customers?.find(
       (customer) => customer?.phone === phone
     );
+    // Set the selected customer in the state
     setCustomer(matchedCustomer);
   };
 
+  // UseEffect to dispatch the customer information to the Redux store
   useEffect(() => {
     dispatch(getCustomerInfo(customer));
   }, [dispatch, customer]);

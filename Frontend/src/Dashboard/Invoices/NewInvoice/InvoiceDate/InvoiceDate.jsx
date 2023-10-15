@@ -5,8 +5,10 @@ import { getInvoice } from "../../../../features/Invoice/invoiceSlice";
 
 const InvoiceDate = () => {
   const dispatch = useDispatch();
+  // Get the current issue date formatted as "yyyy-MM-dd"
   const issueDate = format(new Date(), "yyyy-MM-dd");
 
+  // Calculate the due date as 3 days from the current date and format it
   const dueDate = addDays(new Date(), 3);
   const formattedDueDate = format(dueDate, "yyyy-MM-dd");
 
@@ -15,17 +17,18 @@ const InvoiceDate = () => {
     dueDate: formattedDueDate || "",
   });
 
-  // GET INPUT VALUE FROM INPUT FIELD
+  // Function to handle changes in the input fields
   const handleOnChange = (event) => {
     const { name, value } = event.target;
 
+    // Update the invoiceInfo state with the new values
     setInvoiceInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  // INVOICE SEND TO REDUX STORE
+  // UseEffect to dispatch the invoiceInfo to the Redux store
   useEffect(() => {
     dispatch(getInvoice(invoiceInfo));
   }, [dispatch, invoiceInfo]);
