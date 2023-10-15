@@ -51,7 +51,7 @@ const DefaultSetting = () => {
    
   };
 
- 
+ const settings= settingsData?.settings
   return (
     <div>
       {/* discount Fie;d */}
@@ -72,6 +72,7 @@ const DefaultSetting = () => {
               placeholder="discount price"
               name=""
               id=""
+              defaultValue={settings?.discount ? settings.discount : ""}
               {...register("discount", )}
             />
             {errors.discount && <span>This field is required</span>}
@@ -86,6 +87,7 @@ const DefaultSetting = () => {
               className="input input-bordered w-full my-2"
               type="number"
               min={0}
+              defaultValue={settings?.shipping ? settings.shipping : ""}
               placeholder="discount price"
               name=""
               id=""
