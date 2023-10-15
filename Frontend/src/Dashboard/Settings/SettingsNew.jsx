@@ -1,6 +1,7 @@
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import CompanyInfoUpdateNew from "./CompanyInfoUpdateNew";
+import CompanyInfoUpdate from "./CompanyInfoUpdate";
+
 import DefaultSetting from "./DefaultSetting";
 
 const SettingsNew = () => {
@@ -10,7 +11,7 @@ const SettingsNew = () => {
       <div className="flex flex-col gap-y-7">
         <div className="bg-gray-100 p-5">
           {/* Company Info Update */}
-          <CompanyInfoUpdateNew />
+          <CompanyInfoUpdate />
         </div>
 
         <div className="bg-gray-100 p-5">
