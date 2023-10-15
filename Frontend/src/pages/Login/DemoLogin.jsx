@@ -37,7 +37,7 @@ const DemoLogin = () => {
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "admin@mail.com", password: "password" })
+            setEmailPassword({ email: "manager@mail.com", password: "password" })
           }
           className="w-full"
         >
@@ -45,13 +45,13 @@ const DemoLogin = () => {
             onClick={handleLogin}
             className="btn border w-full border-blue-700 bg-white text-blue-700"
           >
-            Admin
+            Manager
           </button>
         </div>
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "admin@mail.com", password: "password" })
+            setEmailPassword({ email: "manager@mail.com", password: "password" })
           }
           className="w-full"
         >

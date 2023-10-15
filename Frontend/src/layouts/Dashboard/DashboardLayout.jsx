@@ -23,7 +23,7 @@ const DashboardLayout = () => {
           </div>
         </div>
 
-        <div className="drawer-side  relative shadow-xl -z-0 top-auto ">
+        <div className="drawer-side  relative shadow-xl -z-0 top-auto">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <DashboardSidebar />
         </div>

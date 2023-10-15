@@ -56,6 +56,5 @@ class ProductReportController extends Controller
             'message' => "No product Found",
             'products' => $products
         ]);
-
     }
 }
