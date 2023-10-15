@@ -25,16 +25,16 @@ import ReportLayout from "../layouts/Dashboard/ReportLayout";
 import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics/DashboardAnalytics";
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
-import SettingsNew from "../Dashboard/Settings/SettingsNew";
 
+// Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
   {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
+    path: "/", // Root path
+    element: <MainLayout />, // Main layout component
+    errorElement: <ErrorPage />, // Error page component
     children: [
       {
-        path: "/",
+        path: "/", // Default dashboard path
         element: (
           <PrivateRoute>
             <DashboardLayout />
@@ -42,118 +42,116 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/login",
+        path: "/login", // Login page
         element: <Login />,
       },
       {
-        path: "/register",
+        path: "/register", // Registration page
         element: <Register />,
       },
       {
-        path: "/forget-password",
+        path: "/forget-password", // Password recovery page
         element: <ForgetPassword />,
       },
       {
-        path: "/password-reset/:token",
+        path: "/password-reset/:token", // Password reset page with token
         element: <ResetPassword />,
       },
     ],
   },
   {
-    path: "/dashboard",
+    path: "/dashboard", // Dashboard path
     element: (
       <PrivateRoute>
         <DashboardLayout />
       </PrivateRoute>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />, // Error page for the dashboard
     children: [
       {
-        path: "/dashboard/",
+        path: "/dashboard/", // Default dashboard analytics
         element: <DashboardAnalytics />,
       },
       // USERS
       {
-        path: "/dashboard/user",
+        path: "/dashboard/user", // Users list
         element: <UsersList />,
       },
-
       {
-        path: "/dashboard/user/add",
+        path: "/dashboard/user/add", // Add a new user
         element: <AddUser />,
       },
       // CUSTOMERS
       {
-        path: "/dashboard/customer",
+        path: "/dashboard/customer", // Customers list
         element: <CustomersList />,
       },
       {
-        path: "/dashboard/customer/add",
+        path: "/dashboard/customer/add", // Add a new customer
         element: <AddCustomer />,
       },
       // CATEGORIES
       {
-        path: "/dashboard/category",
+        path: "/dashboard/category", // Categories list
         element: <CategoriesList />,
       },
       {
-        path: "/dashboard/category/add",
+        path: "/dashboard/category/add", // Add a new category
         element: <AddCategory />,
       },
       // BRANDS
       {
-        path: "/dashboard/brand",
-        // element: <BrandsList />,
+        path: "/dashboard/brand", // Brands list
         element: <BrandsList />,
       },
       {
-        path: "/dashboard/brand/add",
+        path: "/dashboard/brand/add", // Add a new brand
         element: <AddBrand />,
       },
       // STORE
       {
-        path: "/dashboard/store",
+        path: "/dashboard/store", // Stores list
         element: <StoresList />,
       },
       {
-        path: "/dashboard/store/add",
+        path: "/dashboard/store/add", // Add a new store
         element: <AddStore />,
       },
       // PRODUCTS
       {
-        path: "/dashboard/product",
+        path: "/dashboard/product", // Products list
         element: <ProductsList />,
       },
       {
-        path: "/dashboard/product/add",
+        path: "/dashboard/product/add", // Add a new product
         element: <AddProduct />,
       },
       // REPORT
       {
-        path: "/dashboard/report",
+        path: "/dashboard/report", // Report layout
         element: <ReportLayout />,
       },
       {
-        path: "/dashboard/analytics",
+        path: "/dashboard/analytics", // Dashboard analytics
         element: <DashboardAnalytics />,
       },
       // INVOICE
       {
-        path: "/dashboard/invoice/new",
+        path: "/dashboard/invoice/new", // Create a new invoice
         element: <NewInvoice />,
       },
       {
-        path: "/dashboard/invoice",
+        path: "/dashboard/invoice", // Invoices list
         element: <InvoicesList />,
       },
       // SETTING
       {
-        path: "/dashboard/setting",
-        element: <SettingsNew></SettingsNew>,
+        path: "/dashboard/setting", // Settings
+        element: <Settings />,
       },
       // PROFILE
       {
-        path: "/dashboard/profile",
+        path: "/dashboard/profile", // User profile update
         element: <UserProfileUpdate />,
       },
     ],

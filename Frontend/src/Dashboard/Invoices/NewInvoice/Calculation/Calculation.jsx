@@ -9,11 +9,11 @@ const Calculation = () => {
   const { items } = useSelector((state) => state?.invoice);
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
-  console.log(defaultSettings);
+  const settings = defaultSettings?.settings;
 
   const [subTotal, setSubTotal] = useState(0);
-  const [discount, setDiscount] = useState(0);
-  const [shipping, setShipping] = useState(0);
+  const [discount, setDiscount] = useState(settings?.discount);
+  const [shipping, setShipping] = useState(settings?.shipping);
   const [total, setTotal] = useState(0);
   const [paidAmount, setPaidAmount] = useState(0);
   const [due, setDue] = useState(0);

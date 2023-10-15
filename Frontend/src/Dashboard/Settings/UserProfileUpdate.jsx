@@ -6,15 +6,20 @@ import { toast } from "react-hot-toast";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const UserProfileUpdate = () => {
+  // Access the user data from the Redux store
   const { user } = useSelector((state) => state?.auth);
 
+  // Initialize the form using react-hook-form
   const { handleSubmit, register } = useForm();
 
+  // Call the user profile update mutation from the API
   const [updateProfile, { isLoading, isError, error, isSuccess, data }] =
     useUpdateUserProfileMutation();
 
+  // Function to handle the user profile update
   const handleSubmitUserProfile = async (data) => {
     try {
+      // Create a FormData object to send form data as a multi-part request
       const formData = new FormData();
       formData.append("_method", "PUT");
       formData.append("name", data?.name);
@@ -23,10 +28,10 @@ const UserProfileUpdate = () => {
       formData.append("address", data?.address);
       formData.append("city", data?.city);
       formData.append("country", data?.country);
-      formData.append("zip_code", data?.zip_code); // Add zip_code
-      formData.append("state", data?.state); // Add state
-      formData.append("password", data?.password); // Add password
-      formData.append("password_confirmation", data?.password_confirmation); // Add password_confirmation
+      formData.append("zip_code", data?.zip_code);
+      formData.append("state", data?.state);
+      formData.append("password", data?.password);
+      formData.append("password_confirmation", data?.password_confirmation);
 
       // Append the user_Photo if it exists
       if (data?.user_Photo?.length > 0) {
@@ -46,17 +51,21 @@ const UserProfileUpdate = () => {
     }
   };
 
+  // Retrieve error messages using a reusable function
   const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
+    // Show loading toast while the update request is in progress
     if (isLoading) {
       toast.loading("Loading...", { id: 1 });
     }
 
+    // Show an error toast if there is an error during profile update
     if (isError) {
       toast.error(error?.data?.message || error?.status, { id: 1 });
     }
 
+    // Show a success toast if the update is successful
     if (isSuccess) {
       toast.success(data?.message, { id: 1 });
     }
@@ -70,8 +79,9 @@ const UserProfileUpdate = () => {
           className="grid grid-cols-1 lg:grid-cols-5 gap-5 justify-center items-start"
           onSubmit={handleSubmit(handleSubmitUserProfile)}
         >
-          {/* file upload  */}
-          <div className="w-full lg:row-span-5 flex flex-col lg:items-center ">
+          {/* File upload for user photo */}
+          <div className="w-full lg:row-span-5 flex flex-col lg:items-center">
+            {/* Display current user photo */}
             <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
               <img
                 className="w-full h-auto"
@@ -85,6 +95,7 @@ const UserProfileUpdate = () => {
               />
             </div>
 
+            {/* Input for selecting a new user photo */}
             <div className="form-control w-full mt-5">
               <input
                 type="file"
@@ -95,7 +106,7 @@ const UserProfileUpdate = () => {
             </div>
           </div>
 
-          {/* name field */}
+          {/* Name field */}
           <div className="lg:col-span-4">
             <label htmlFor="name" className="label">
               Name
@@ -105,13 +116,13 @@ const UserProfileUpdate = () => {
               name="name"
               type="text"
               placeholder="Name"
-              className="input input-bordered input-md w-1/2 my-2 "
+              className="input input-bordered input-md w-1/2 my-2"
               defaultValue={user?.name}
               {...register("name")}
             />
           </div>
 
-          {/* email field */}
+          {/* Email field */}
           <div className="lg:col-span-2">
             <label htmlFor="email" className="label">
               Email
@@ -126,10 +137,10 @@ const UserProfileUpdate = () => {
               readOnly
             />
           </div>
-          {/* phone field */}
+
+          {/* Phone field */}
           <div className="lg:col-span-2">
             <label htmlFor="phone" className="label">
-              {" "}
               Phone
             </label>
             <input
@@ -142,7 +153,7 @@ const UserProfileUpdate = () => {
             />
           </div>
 
-          {/* address field */}
+          {/* Address field */}
           <div className="lg:col-span-2">
             <label htmlFor="address" className="label">
               Address
@@ -157,7 +168,7 @@ const UserProfileUpdate = () => {
             />
           </div>
 
-          {/* zip code field */}
+          {/* Zip code field */}
           <div className="lg:col-span-2">
             <label htmlFor="zip_code" className="label">
               Zip code
@@ -173,7 +184,7 @@ const UserProfileUpdate = () => {
           </div>
 
           <div className="lg:col-span-4 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-x-4">
-            {/* country field */}
+            {/* Country field */}
             <div className="w-full">
               <label htmlFor="country">Country</label>
               <input
@@ -185,7 +196,7 @@ const UserProfileUpdate = () => {
                 {...register("country")}
               />
             </div>
-            {/* country field */}
+            {/* City field */}
             <div className="w-full">
               <label htmlFor="city">City</label>
               <input
@@ -197,7 +208,7 @@ const UserProfileUpdate = () => {
                 {...register("city")}
               />
             </div>
-            {/* country field */}
+            {/* State field */}
             <div className="w-full">
               <label htmlFor="state">State</label>
               <input
@@ -210,6 +221,7 @@ const UserProfileUpdate = () => {
               />
             </div>
           </div>
+
           <div className="lg:col-span-4 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-x-4">
             <label htmlFor="" className="w-full ">
               New Password
@@ -236,14 +248,13 @@ const UserProfileUpdate = () => {
           <div className="lg:col-span-5 flex flex-col lg:flex-row lg:items-center lg:justify-end gap-x-4">
             <input
               type="submit"
-              // className="input input-bordered input-md my-2"
               className="btn w-full lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white"
               value={"Save"}
             />
           </div>
         </form>
       </div>
-      {/* Display error messages */}
+      {/* Display error messages if any */}
       {errorMessages.map((errorMessage, index) => (
         <p
           key={index}
