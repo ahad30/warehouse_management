@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import Swal from 'sweetalert2'
 import {
   useGetDefaultSettingsQuery,
   useUpdateDefaultSettingsMutation,
@@ -11,8 +12,10 @@ const DefaultSetting = () => {
   const { user } = useSelector((state) => state.auth);
   const [allcurency, setAllcurency] = useState([]);
   const { data: settingsData } = useGetDefaultSettingsQuery();
-  const [updateDefaultSetting,  { data: updateSettingData, error, isError, isLoading, isSuccess}] =
-    useUpdateDefaultSettingsMutation();
+  const [
+    updateDefaultSetting,
+    { data: updateSettingData, error, isError, isLoading, isSuccess },
+  ] = useUpdateDefaultSettingsMutation();
   useEffect(() => {
     fetch("/currency.json")
       .then((res) => res.json())
@@ -21,6 +24,10 @@ const DefaultSetting = () => {
       );
   }, []);
 
+  const settings = settingsData?.settings;
+  const mailCredentials = settingsData?.mailCredentials;
+  // console.log(mailCredentials)
+  console.log(settingsData)
   const [taxName, setTaxName] = useState("VAT");
   const [isToggle, setIsToggle] = useState(false);
   const {
@@ -42,15 +49,23 @@ const DefaultSetting = () => {
     if (isSuccess) {
       toast.success(updateSettingData?.message, { id: 1 });
     }
-  })
+  });
+
+  useEffect(() => {
+       
+    // if(settingsData?.settings?.mail_credential_status == "inactive"){
+    //   Swal.fire('SweetAlert2 is working!')
+    // }
+    
+  }, [settingsData?.mailCredentials , settingsData?.settings, settingsData]);
+
+
 
   const token = JSON.parse(localStorage.getItem("access_token"));
   const onSubmit = (data) => {
-    updateDefaultSetting({...data, mail_option: isToggle ? 'on': 'off'});
-   
+    updateDefaultSetting({ ...data, mail_option: isToggle ? "on" : "off" });
   };
 
- const settings= settingsData?.settings
   return (
     <div>
       {/* discount Fie;d */}
@@ -71,8 +86,8 @@ const DefaultSetting = () => {
               placeholder="discount price"
               name=""
               id=""
-              defaultValue={settings?.discount ? settings.discount : ""}
-              {...register("discount", )}
+              defaultValue={settings?.discount ? settings?.discount : ""}
+              {...register("discount")}
             />
             {errors.discount && <span>This field is required</span>}
           </div>
@@ -86,11 +101,11 @@ const DefaultSetting = () => {
               className="input input-bordered w-full my-2"
               type="number"
               min={0}
-              defaultValue={settings?.shipping ? settings.shipping : ""}
+              defaultValue={settings?.shipping ? settings?.shipping : ""}
               placeholder="discount price"
               name=""
               id=""
-              {...register("shipping",  )}
+              {...register("shipping")}
             />
             {errors.shipping && <span>This field is required</span>}
           </div>
@@ -104,8 +119,9 @@ const DefaultSetting = () => {
             <select
               name="taxation"
               id="taxation"
-              {...register("taxation",  )}
+              {...register("taxation")}
               className="w-full input input-bordered"
+              defaultValue={settings?.taxation ? settings?.taxation : ""}
             >
               <option value={"VAT"}>VAT</option>
               <option value={"TAX"}>TAX</option>
@@ -128,9 +144,10 @@ const DefaultSetting = () => {
               type="number"
               min={0}
               placeholder=" taxation price"
+              defaultValue={settings?.tax_value ? settings?.tax_value : ""}
               name=""
               id=""
-              {...register("tax_value",  )}
+              {...register("tax_value")}
             />
             {errors.tax_value && <span>This field is required</span>}
           </div>
@@ -141,8 +158,9 @@ const DefaultSetting = () => {
               Currency
             </label>
             <select
-              {...register("currency",  )}
+              {...register("currency")}
               className="input input-bordered"
+              defaultValue={settings?.currency ? settings?.currency : ""}
             >
               <option value="">Select Currency</option>
               {allcurency &&
@@ -188,10 +206,12 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer"
-                    defaultValue={"smtp"}
+                    defaultValue={
+                      mailCredentials?.mailer ? mailCredentials?.mailer : ""
+                    }
                     name=""
                     id=""
-                    {...register("mailer",  )}
+                    {...register("mailer")}
                   />
                   {errors.mailer && <span>This field is required</span>}
                 </div>
@@ -206,9 +226,14 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer host"
+                    defaultValue={
+                      mailCredentials?.mail_host
+                        ? mailCredentials?.mail_host
+                        : ""
+                    }
                     name=""
                     id=""
-                    {...register("mail_host",  )}
+                    {...register("mail_host")}
                   />
                   {errors.mail_host && <span>This field is required</span>}
                 </div>
@@ -223,9 +248,14 @@ const DefaultSetting = () => {
                     type="number"
                     min={0}
                     placeholder="MAIL PORT"
+                    defaultValue={
+                      mailCredentials?.mail_port
+                        ? mailCredentials?.mail_port
+                        : ""
+                    }
                     name=""
                     id=""
-                    {...register("mail_port",  )}
+                    {...register("mail_port")}
                   />
                   {errors.mail_port && <span>This field is required</span>}
                 </div>
@@ -240,9 +270,14 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="MAIL USERNAME"
+                    defaultValue={
+                      mailCredentials?.mail_username
+                        ? mailCredentials?.mail_username
+                        : ""
+                    }
                     name=""
                     id=""
-                    {...register("mail_username",  )}
+                    {...register("mail_username")}
                   />
                   {errors.username && <span>This field is required</span>}
                 </div>
@@ -257,9 +292,14 @@ const DefaultSetting = () => {
                     type="password"
                     min={0}
                     placeholder="MAIL PASSWORD"
+                    defaultValue={
+                      mailCredentials?.mail_password
+                        ? mailCredentials?.mail_password
+                        : ""
+                    }
                     name=""
                     id=""
-                    {...register("mail_password",  )}
+                    {...register("mail_password")}
                   />
                   {errors.mail_password && <span>This field is required</span>}
                 </div>
@@ -274,9 +314,14 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="MAIL ENCRYPTION"
+                    defaultValue={
+                      mailCredentials?.mail_encryption
+                        ? mailCredentials?.mail_encryption
+                        : ""
+                    }
                     name=""
                     id=""
-                    {...register("mail_encryption",  )}
+                    {...register("mail_encryption")}
                   />
                   {errors.mail_encryption && (
                     <span>This field is required</span>
@@ -293,9 +338,14 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="MAIL FROM ADDRESS"
+                    defaultValue={
+                      mailCredentials?.mail_address
+                        ? mailCredentials?.mail_address
+                        : ""
+                    }
                     name=""
                     id=""
-                    {...register("mail_address",  )}
+                    {...register("mail_address")}
                   />
                   {errors.mail_address && <span>This field is required</span>}
                 </div>
