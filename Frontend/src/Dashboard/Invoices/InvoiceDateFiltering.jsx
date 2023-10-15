@@ -11,7 +11,7 @@ const InvoiceDateFiltering = ({
   const [activeButton, setActiveButton] = useState(null);
 
   return (
-    <div className="flex flex-col my-5 w-full lg:justify-between xl:flex-row gap-x-1">
+    <div className="flex items-center flex-col my-5 w-full lg:justify-between xl:flex-row gap-x-1">
       {/* Week, today, and month filtering */}
       <div className="grid border border-blue-700 rounded-lg p-1 grid-cols-3 gap-2">
         <button

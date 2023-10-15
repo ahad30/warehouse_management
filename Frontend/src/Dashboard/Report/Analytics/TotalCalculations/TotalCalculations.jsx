@@ -7,9 +7,11 @@ import { FiUsers } from "react-icons/fi";
 import { BsFillCartFill } from "react-icons/bs";
 import { VscGraph } from "react-icons/vsc";
 import { SiBrandfolder } from "react-icons/si";
+import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
 
 const TotalCalculations = () => {
   const { data } = useGetDashboardSummaryQuery();
+  const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
   const [summary, setSummary] = useState({
     totalRevenue: 0,
@@ -30,7 +32,9 @@ const TotalCalculations = () => {
           size={30}
         ></AiOutlineDollarCircle>
       ),
-      count: `$${summary?.totalRevenue}`,
+      count: `${defaultSettings?.settings?.currency || "$"}${
+        summary?.totalRevenue
+      }`,
       text: "Total Revenue",
     },
 
