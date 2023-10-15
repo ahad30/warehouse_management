@@ -241,16 +241,8 @@ const InvoicesList = () => {
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
         />
-
-        <div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center gap-y-3">
-          <InvoiceDateFiltering
-            handleStartDate={handleStartDate}
-            handleEndDate={handleEndDate}
-            handleDate={handleDate}
-            handleDateClear={handleDateClear}
-          />
-
-          <div className="flex lg:flex-row justify-between gap-2">
+         
+         <div className="flex lg:flex-row justify-end gap-2">
             {/* Invoices download as CSV file */}
             <InvoicesAsCSV data={filterData} />
             {/* Invoices download as PDF file */}
@@ -271,8 +263,23 @@ const InvoicesList = () => {
               </PDFDownloadLink>
             </button>
           </div>
+
+
+
+         {/* filetering */}
+        <div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center gap-y-3">
+          <InvoiceDateFiltering
+            handleStartDate={handleStartDate}
+            handleEndDate={handleEndDate}
+            handleDate={handleDate}
+            handleDateClear={handleDateClear}
+          />
+
         </div>
 
+
+
+        {/* data table */}
         <div ref={allInvoicesRef} className="overflow-x-scroll">
           <DataTable
             columns={columns}
@@ -285,6 +292,9 @@ const InvoicesList = () => {
             onChangePage={(page) => setCurrentPage(page)}
           />
         </div>
+
+
+
         <EditInvoice
           invoice={invoice}
           modalIsOpen={modalIsOpen}
