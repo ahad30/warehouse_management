@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { TbChessKing } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 import {
   useGetDefaultSettingsQuery,
   useUpdateDefaultSettingsMutation,
@@ -11,7 +12,7 @@ const DefaultSetting = () => {
   const { user } = useSelector((state) => state.auth);
   const [allcurency, setAllcurency] = useState([]);
   const { data: settingsData } = useGetDefaultSettingsQuery();
-  const [updateDefaultSetting, { data: updateSettingData }] =
+  const [updateDefaultSetting,  { data: updateSettingData, error, isError, isLoading, isSuccess}] =
     useUpdateDefaultSettingsMutation();
   useEffect(() => {
     fetch("/currency.json")
@@ -30,22 +31,27 @@ const DefaultSetting = () => {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading("Loading...", { id: 1 });
+    }
+
+    if (isError) {
+      toast.error(error?.data?.message || error?.status, { id: 1 });
+    }
+
+    if (isSuccess) {
+      toast.success(updateSettingData?.message, { id: 1 });
+    }
+  })
+
   const token = JSON.parse(localStorage.getItem("access_token"));
   const onSubmit = (data) => {
     updateDefaultSetting({...data, mail_option: isToggle ? 'on': 'off'});
-    // console.log(data);
-    // fetch(`${import.meta.env.VITE_REACT_APP_PORT}/settings/update`, {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
+   
   };
 
-  //   console.log(watch("taxation"))
+ 
   return (
     <div>
       {/* discount Fie;d */}
@@ -66,7 +72,7 @@ const DefaultSetting = () => {
               placeholder="discount price"
               name=""
               id=""
-              {...register("discount", { required: true })}
+              {...register("discount", )}
             />
             {errors.discount && <span>This field is required</span>}
           </div>
@@ -83,7 +89,7 @@ const DefaultSetting = () => {
               placeholder="discount price"
               name=""
               id=""
-              {...register("shipping", { required: true })}
+              {...register("shipping",  )}
             />
             {errors.shipping && <span>This field is required</span>}
           </div>
@@ -97,7 +103,7 @@ const DefaultSetting = () => {
             <select
               name="taxation"
               id="taxation"
-              {...register("taxation", { required: true })}
+              {...register("taxation",  )}
               className="w-full input input-bordered"
             >
               <option value={"VAT"}>VAT</option>
@@ -123,7 +129,7 @@ const DefaultSetting = () => {
               placeholder=" taxation price"
               name=""
               id=""
-              {...register("tax_value", { required: true })}
+              {...register("tax_value",  )}
             />
             {errors.tax_value && <span>This field is required</span>}
           </div>
@@ -134,7 +140,7 @@ const DefaultSetting = () => {
               Currency
             </label>
             <select
-              {...register("currency", { required: true })}
+              {...register("currency",  )}
               className="input input-bordered"
             >
               <option value="">Select Currency</option>
@@ -184,7 +190,7 @@ const DefaultSetting = () => {
                     defaultValue={"smtp"}
                     name=""
                     id=""
-                    {...register("mailer", { required: true })}
+                    {...register("mailer",  )}
                   />
                   {errors.mailer && <span>This field is required</span>}
                 </div>
@@ -201,7 +207,7 @@ const DefaultSetting = () => {
                     placeholder="Mailer host"
                     name=""
                     id=""
-                    {...register("mail_host", { required: true })}
+                    {...register("mail_host",  )}
                   />
                   {errors.mail_host && <span>This field is required</span>}
                 </div>
@@ -218,7 +224,7 @@ const DefaultSetting = () => {
                     placeholder="MAIL PORT"
                     name=""
                     id=""
-                    {...register("mail_port", { required: true })}
+                    {...register("mail_port",  )}
                   />
                   {errors.mail_port && <span>This field is required</span>}
                 </div>
@@ -235,7 +241,7 @@ const DefaultSetting = () => {
                     placeholder="MAIL USERNAME"
                     name=""
                     id=""
-                    {...register("mail_username", { required: true })}
+                    {...register("mail_username",  )}
                   />
                   {errors.username && <span>This field is required</span>}
                 </div>
@@ -252,7 +258,7 @@ const DefaultSetting = () => {
                     placeholder="MAIL PASSWORD"
                     name=""
                     id=""
-                    {...register("mail_password", { required: true })}
+                    {...register("mail_password",  )}
                   />
                   {errors.mail_password && <span>This field is required</span>}
                 </div>
@@ -269,7 +275,7 @@ const DefaultSetting = () => {
                     placeholder="MAIL ENCRYPTION"
                     name=""
                     id=""
-                    {...register("mail_encryption", { required: true })}
+                    {...register("mail_encryption",  )}
                   />
                   {errors.mail_encryption && (
                     <span>This field is required</span>
@@ -288,7 +294,7 @@ const DefaultSetting = () => {
                     placeholder="MAIL FROM ADDRESS"
                     name=""
                     id=""
-                    {...register("mail_address", { required: true })}
+                    {...register("mail_address",  )}
                   />
                   {errors.mail_address && <span>This field is required</span>}
                 </div>
