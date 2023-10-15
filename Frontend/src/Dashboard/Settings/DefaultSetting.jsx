@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import {
   useGetDefaultSettingsQuery,
   useUpdateDefaultSettingsMutation,
@@ -27,9 +27,10 @@ const DefaultSetting = () => {
   const settings = settingsData?.settings;
   const mailCredentials = settingsData?.mailCredentials;
   // console.log(mailCredentials)
-  console.log(settingsData)
+  // console.log(settingsData)
   const [taxName, setTaxName] = useState("VAT");
   const [isToggle, setIsToggle] = useState(false);
+  const [mailWarning, setMailWarning] = useState(null);
   const {
     register,
     handleSubmit,
@@ -49,23 +50,24 @@ const DefaultSetting = () => {
     if (isSuccess) {
       toast.success(updateSettingData?.message, { id: 1 });
     }
+    if (settingsData?.settings?.mail_credential_status === "inactive") {
+      setMailWarning(true);
+    }
   });
 
   useEffect(() => {
-       
-    // if(settingsData?.settings?.mail_credential_status == "inactive"){
-    //   Swal.fire('SweetAlert2 is working!')
-    // }
-    
-  }, [settingsData?.mailCredentials , settingsData?.settings, settingsData]);
-
-
+    if (settingsData?.settings?.mail_option == "on") {
+      setIsToggle(true);
+    } else {
+      setIsToggle(false);
+    }
+  }, [settingsData?.mailCredentials, settingsData?.settings, settingsData]);
 
   const token = JSON.parse(localStorage.getItem("access_token"));
   const onSubmit = (data) => {
     updateDefaultSetting({ ...data, mail_option: isToggle ? "on" : "off" });
   };
-
+  // console.log(settingsData.settings);
   return (
     <div>
       {/* discount Fie;d */}
@@ -192,7 +194,15 @@ const DefaultSetting = () => {
                 // {...register("mail_option", )}
               />
             </div>
-
+            {mailWarning && (
+              <div
+                className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+                role="alert"
+              >
+                <p className="font-bold">Be Warned</p>
+                <p>Smtp credentials is wrong</p>
+              </div>
+            )}
             {/* mail item */}
             {isToggle && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

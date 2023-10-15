@@ -50,7 +50,7 @@ const SubmitInvoice = () => {
 
   return (
     <>
-      <div className="w-[300px] ml-auto flex justify-center bg-[#0369A1] text-white rounded-md px-3 py-2">
+      <div className={`w-[300px] ml-auto flex justify-center bg-[#0369A1] text-white rounded-md px-3 py-2 ${items?.length === 0 ? "bg-slate-400" : ""}`}>
         <button
           className=""
           onClick={handleNewInvoice}
