@@ -10,9 +10,13 @@ import { SiBrandfolder } from "react-icons/si";
 import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
 
 const TotalCalculations = () => {
+  // Fetch the dashboard summary data using a query
   const { data } = useGetDashboardSummaryQuery();
+
+  // Fetch default settings using a query
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
+  // Initialize a state variable to store summary data
   const [summary, setSummary] = useState({
     totalRevenue: 0,
     totalSales: 0,
@@ -20,10 +24,12 @@ const TotalCalculations = () => {
     totalCustomers: 0,
   });
 
+  // Update the summary state when data is available
   useEffect(() => {
     if (data?.status) setSummary(data?.data);
   }, [data?.status, data?.data]);
 
+  // Define an array of items to display in the summary
   const items = [
     {
       img: (
@@ -37,13 +43,11 @@ const TotalCalculations = () => {
       }`,
       text: "Total Revenue",
     },
-
     {
       img: <VscGraph className="text-white" size={30}></VscGraph>,
       count: summary?.totalSales,
       text: "Total Sales",
     },
-
     {
       img: <BiUserCircle className="text-white" size={30}></BiUserCircle>,
       count: summary?.totalUsers,
@@ -84,7 +88,6 @@ const TotalCalculations = () => {
           className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-[#f0f9ff] border border-[#BAE6FD]"
         >
           <div className="h-[60px] p-5 bg-[#0369A1] rounded-lg flex justify-center items-center w-[60px]">
-            {/* <img className="w-12 h-12" src={item?.img} alt="" /> */}
             {item?.img}
           </div>
           <div className="flex flex-col justify-center items-center text-center gap-y-2">

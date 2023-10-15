@@ -70,8 +70,6 @@ const DashboardSidebar = () => {
     },
   ]);
 
-  console.log(sideBarData);
-
   useEffect(() => {
     if (
       user?.get_role?.role !== "admin" &&

@@ -5,11 +5,18 @@ import {
 } from "../../features/Settings/settingsApi";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const CompanyInfoUpdate = () => {
+  UseTitle("Company Info Update");
+  
+  // Create form using react-hook-form
   const { handleSubmit, register, setValue } = useForm();
 
+  // Fetch company information using a query
   const { data: companyInfoData } = useGetCompanyInfoQuery();
+
+  // Use mutation for updating company information
   const [
     updateCompanyInfo,
     {
@@ -21,8 +28,10 @@ const CompanyInfoUpdate = () => {
     },
   ] = useUpdateCompanyInfoMutation();
 
+  // Extract company information from the query result
   const companyInfo = companyInfoData?.company_info;
 
+  // Set initial form values with company information
   useEffect(() => {
     if (companyInfo) {
       setValue("company_name", companyInfo?.company_name || "");
@@ -32,6 +41,7 @@ const CompanyInfoUpdate = () => {
     }
   }, [companyInfo, setValue]);
 
+  // Handle form submission
   const handleSubmitCompanyInfo = (data) => {
     const formData = new FormData();
     formData.append("_method", "PUT");
@@ -44,9 +54,11 @@ const CompanyInfoUpdate = () => {
       formData.append("company_img", data?.company_img[0]);
     }
 
+    // Call the updateCompanyInfo mutation
     updateCompanyInfo(formData);
   };
 
+  // Display loading, error, and success messages using react-hot-toast
   useEffect(() => {
     if (updateIsLoading) {
       toast.loading("Loading...", { id: 1 });
@@ -66,24 +78,18 @@ const CompanyInfoUpdate = () => {
     updateIsSuccess,
     updateData?.message,
   ]);
-  console.log(
-    updateIsLoading,
-    updateIsError,
-    updateError,
-    updateIsSuccess,
-    updateData
-  );
+
   return (
     <div>
-      {/* Company info */}
+      {/* Company info form */}
       <h2 className="text-2xl font-semibold my-5">Company Info</h2>
       <form
         onSubmit={handleSubmit(handleSubmitCompanyInfo)}
         className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-center justify-center"
       >
-        {/* file upload  */}
+        {/* Company image upload */}
         <div className="w-full lg:row-span-2 flex flex-col lg:justify-center lg:items-center">
-          <div className=" bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
+          <div className="bg-white p-5 w-40 h-40 flex justify-center items-center rounded-lg">
             <img
               className="w-full"
               src={
@@ -96,8 +102,6 @@ const CompanyInfoUpdate = () => {
             />
           </div>
 
-          {/* <label htmlFor="" id="customFileInput" className="custom-file-input text-black opacity-70">choose file</label> */}
-
           <div className="form-control w-full mt-5">
             <input
               type="file"
@@ -108,7 +112,7 @@ const CompanyInfoUpdate = () => {
           </div>
         </div>
 
-        {/* name field  */}
+        {/* Company name field */}
         <div className="lg:col-span-2">
           <label htmlFor="name" className="label">
             Company Name
@@ -122,7 +126,7 @@ const CompanyInfoUpdate = () => {
           />
         </div>
 
-        {/* email field  */}
+        {/* Company email field */}
         <div className="lg:col-span-2">
           <label htmlFor="email" className="label">
             Company email
@@ -137,8 +141,8 @@ const CompanyInfoUpdate = () => {
           />
         </div>
 
-        {/* phone field */}
-        <div className=" lg:col-span-2">
+        {/* Company phone field */}
+        <div className="lg:col-span-2">
           <label htmlFor="phone"> Phone</label>
           <input
             name="phone"
@@ -150,7 +154,7 @@ const CompanyInfoUpdate = () => {
           />
         </div>
 
-        {/* address field */}
+        {/* Company address field */}
         <div className="lg:col-span-2">
           <label htmlFor="address">Address</label>
           <input
@@ -163,7 +167,8 @@ const CompanyInfoUpdate = () => {
           />
         </div>
 
-        <div className=" flex lg:justify-end lg:col-span-5">
+        {/* Submit button */}
+        <div className="flex lg:justify-end lg:col-span-5">
           <input
             type="submit"
             className="input w-full input-bordered input-md my-2 lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white cursor-pointer"

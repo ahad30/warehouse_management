@@ -39,7 +39,7 @@ const ItemsWithSelect = ({ products }) => {
     setItem({ ...selectedItem, quantity, tax });
   }, [selectedItem, quantity, tax]);
 
-  //
+  // Filter products based on selected category and brand
   const filteredProducts = products
     ?.filter(
       (product) =>
@@ -63,6 +63,7 @@ const ItemsWithSelect = ({ products }) => {
     }
   };
 
+  // UseEffect to dispatch the item information to the Redux store
   useEffect(() => {
     dispatch(getItem(itemList));
   }, [dispatch, itemList]);
