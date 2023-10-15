@@ -8,8 +8,10 @@ use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\SaleItem;
+use App\Models\Settings;
 use App\Models\CompanyInfo;
 use Illuminate\Http\Request;
+use App\Jobs\InvoiceCreatedJob;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -208,9 +210,15 @@ class SaleController extends Controller
                 // Update product quantity in stock
                 $product->decrement('product_quantity', $item['quantity']);
             }
-
-            // Commit the transaction
             DB::commit();
+            // Commit the transaction
+
+
+
+            $settings = Settings::find(1); //getting settings
+            if ($settings->mail_option == 'on' && $customer->email != null) {
+                InvoiceCreatedJob::dispatch($customer->email, $sale);
+            }
 
             // Fetch sale items and customer for response
             $items = SaleItem::where('sale_id', $sale->id)->get();

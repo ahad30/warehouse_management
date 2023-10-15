@@ -19,6 +19,7 @@ class SettingsTableSeeder extends Seeder
             'taxation' => "VAT",
             'tax_value' => 0,
             'currency' => "$",
+            'mail_option' => "off",
             'mail_credential_status' => 'inactive',
         ]);
     }

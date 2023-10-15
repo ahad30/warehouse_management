@@ -68,6 +68,7 @@ class SettingsController extends Controller
             ]);
 
             if ($request->mail_option == null || $request->mail_option == "off") {
+                DB::table('settings')->where('id', 1)->update(['mail_option' => "off"]);
                 return response()->json([
                     'status' => true,
                     'message' => "Settings has been updated successfully"
@@ -79,6 +80,7 @@ class SettingsController extends Controller
                 try {
 
                     SmtpCheckerJob::dispatch($request->all());
+                    DB::table('settings')->where('id', 1)->update(['mail_option' => "on"]);
                     DB::commit();
                     return response()->json([
                         'status' => true,
