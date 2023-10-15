@@ -33,8 +33,6 @@ const CompanyInfoUpdate = () => {
   }, [companyInfo, setValue]);
 
   const handleSubmitCompanyInfo = (data) => {
-    console.log({ ...data, id: companyInfo?.id });
-
     const formData = new FormData();
     formData.append("_method", "PUT");
     formData.append("company_name", data?.company_name);
