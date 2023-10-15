@@ -7,15 +7,19 @@ const DemoLogin = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    dispatch(loginUser({email: emailPassword?.email, password:emailPassword?.password}));
+    dispatch(
+      loginUser({
+        email: emailPassword?.email,
+        password: emailPassword?.password,
+      })
+    );
   };
 
-  console.log(emailPassword)
   return (
     <div>
       <div className="flex items-center gap-x-2">
         <p className="border-t border-gray-400 flex-grow"></p>
-        <p className="text-gray-500">Or , Sing as</p>
+        <p className="text-gray-500">Or , Sign as</p>
         <p className="border-t border-gray-400 flex-grow"></p>
       </div>
 
@@ -37,7 +41,10 @@ const DemoLogin = () => {
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "manager@mail.com", password: "password" })
+            setEmailPassword({
+              email: "manager@mail.com",
+              password: "password",
+            })
           }
           className="w-full"
         >
@@ -51,7 +58,10 @@ const DemoLogin = () => {
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "manager@mail.com", password: "password" })
+            setEmailPassword({
+              email: "sales_representative@mail.com",
+              password: "password",
+            })
           }
           className="w-full"
         >
@@ -59,13 +69,13 @@ const DemoLogin = () => {
             onClick={handleLogin}
             className="btn border w-full border-blue-700 bg-white text-blue-700"
           >
-            Admin
+            Sales Representative
           </button>
         </div>
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "admin@mail.com", password: "password" })
+            setEmailPassword({ email: "accountant@mail.com", password: "password" })
           }
           className="w-full"
         >
@@ -73,13 +83,13 @@ const DemoLogin = () => {
             onClick={handleLogin}
             className="btn border w-full border-blue-700 bg-white text-blue-700"
           >
-            Admin
+            Accountant
           </button>
         </div>
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "admin@mail.com", password: "password" })
+            setEmailPassword({ email: "cashier@mail.com", password: "password" })
           }
           className="w-full"
         >
@@ -87,13 +97,13 @@ const DemoLogin = () => {
             onClick={handleLogin}
             className="btn border w-full border-blue-700 bg-white text-blue-700"
           >
-            Admin
+            Cashier
           </button>
         </div>
         {/* individual button */}
         <div
           onMouseOver={() =>
-            setEmailPassword({ email: "admin@mail.com", password: "password" })
+            setEmailPassword({ email: "inventory_manager@mail.com", password: "password" })
           }
           className="w-full"
         >
@@ -101,11 +111,9 @@ const DemoLogin = () => {
             onClick={handleLogin}
             className="btn border w-full border-blue-700 bg-white text-blue-700"
           >
-            Admin
+            Inventory Manager
           </button>
         </div>
-
-
       </div>
     </div>
   );

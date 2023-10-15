@@ -2,10 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import SubmitInvoice from "../SubmitInvoice/SubmitInvoice";
 import { getTotalPrice } from "../../../../features/Invoice/invoiceSlice";
+import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
 
 const Calculation = () => {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state?.invoice);
+  const { data: defaultSettings } = useGetDefaultSettingsQuery();
+
+  console.log(defaultSettings);
 
   const [subTotal, setSubTotal] = useState(0);
   const [discount, setDiscount] = useState(0);

@@ -60,14 +60,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     }
   }, [category, setValue]);
 
-  console.log(
-    updateIsLoading,
-    updateIsError,
-    updateError,
-    updateIsSuccess,
-    updateData
-  );
-
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div
