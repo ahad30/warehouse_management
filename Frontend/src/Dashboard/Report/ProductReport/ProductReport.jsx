@@ -5,6 +5,13 @@ import { useGetProductsReportQuery } from "../../../features/ProductReport/produ
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import DataTable from "react-data-table-component";
 import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
+import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
+import { BiCartAdd } from "react-icons/bi";
+import InvoiceDateFiltering from "../../Invoices/InvoiceDateFiltering";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { BsFiletypePdf } from "react-icons/bs";
+import ProductsReportAsPDF from "./ProductsReportAsPDF";
+import ProductsReportAsCSV from "./ProductsReportAsCSV";
 
 const ProductReport = () => {
   UseTitle("Products Report");
@@ -13,7 +20,7 @@ const ProductReport = () => {
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
 
-  const { data: productsReport, refetch } = useGetProductsReportQuery({
+  const { data: productsReport, isLoading } = useGetProductsReportQuery({
     date,
     startDate,
     endDate,
@@ -52,7 +59,7 @@ const ProductReport = () => {
   //  search filtering
   const setFiltering = (search) => {
     const filteredData = productsReport?.products?.filter((item) =>
-      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
+      item?.product_name?.toLowerCase()?.includes(search?.toLowerCase())
     );
     if (filteredData) {
       setFilterData(filteredData);
@@ -69,7 +76,7 @@ const ProductReport = () => {
       sortable: true,
     },
     {
-      name: "Price",
+      name: "Sold Price",
       selector: (row) => <>{row?.price}</>,
     },
     {
@@ -82,21 +89,57 @@ const ProductReport = () => {
       selector: (row) => <>{row?.total_sold_price}</>,
     },
     {
-      name: "Last Sale",
+      name: "Last Sale Date",
       selector: (row) => <>{row?.last_sale_date}</>,
     },
   ];
 
+  // ALL INVOICES Loading
+  if (isLoading) {
+    return <UseLoading />;
+  }
+
   return (
     <DashboardBackground>
       <TableHeadingTitle>
-        Product {productsReport?.products?.length}
+        Products {productsReport?.products?.length}
       </TableHeadingTitle>
 
       <SearchAndAddBtn
-        btnTitle={"Add Invoice"}
-        btnPath={"/dashboard/invoice/new"}
+        btnTitle={"Add Product"}
+        btnPath={"/dashboard/product/add"}
+        btnIcon={<BiCartAdd size={20} />}
         setFiltering={setFiltering}
+      />
+
+      {/* Download PDF and CSV */}
+      <div className="flex lg:flex-row justify-end gap-2">
+        {/* Invoices download as CSV file */}
+        <ProductsReportAsCSV data={filterData} />
+        {/* Invoices download as PDF file */}
+        <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
+          <PDFDownloadLink
+            document={
+              <ProductsReportAsPDF
+                data={filterData}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            }
+            fileName="Products Report"
+          >
+            <span className="flex justify-center items-center gap-x-2">
+              <BsFiletypePdf size={20} /> Download as PDF
+            </span>
+          </PDFDownloadLink>
+        </button>
+      </div>
+
+      <InvoiceDateFiltering
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
+        handleDate={handleDate}
+        handleDateClear={handleDateClear}
       />
 
       <div className="overflow-x-scroll">

@@ -3,19 +3,24 @@ import Navbar from "../Navbar/Navbar";
 
 const ErrorPage = () => {
   const error = useRouteError();
-  console.log("Error Message", error?.message);
-  console.log("Error Code", error?.code);
-  console.log("Error Status", error?.status);
 
   return (
     <>
       <Navbar />
       <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
-          <p className="text-base font-semibold text-indigo-600">{404}</p>
+          <p className="text-base font-semibold text-indigo-600">
+            {error?.code || 404}
+          </p>
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-            {"Page not found"}
+            {error?.message || "Page not found"}
           </h1>
+          {error?.code ||
+            (error?.status && (
+              <p className="mt-6 text-base leading-7 text-gray-600">
+                {error?.code} {error?.status}
+              </p>
+            ))}
           <p className="mt-6 text-base leading-7 text-gray-600">
             Sorry, we couldn’t find the page you’re looking for.
           </p>

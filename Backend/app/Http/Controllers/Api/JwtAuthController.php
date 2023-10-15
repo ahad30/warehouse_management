@@ -167,6 +167,7 @@ class JwtAuthController extends Controller
      */
     public function logout()
     {
+
         if (auth()->user() == null) {
             return response()->json([
                 'status' => false,
