@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/Auth/authSlice";
 
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import DemoLogin from "./DemoLogin";
 
 const Login = () => {
   UseTitle("Login");
@@ -24,11 +25,14 @@ const Login = () => {
   }
 
   return (
-    <div className="p-10  bg-gray-100">
+    <div className="p-10  bg-white">
       <div className="flex justify-center items-center max-w-[1440px] h-screen mx-auto rounded-md ">
-        <div className="w-full">
+        <div className="w-full lg:w-[800px] flex flex-col items-center justify-center border border-[#e2e8f0] lg:rounded-lg lg:bg-[#f8fafc] lg:h-[600px]">
           <h2 className="text-center text-3xl mb-5">User Login</h2>
-          <form onSubmit={handleSubmit(handleOnSubmit)}>
+          <form
+            className=" w-full"
+            onSubmit={handleSubmit(handleOnSubmit)}
+          >
             <div className="form-control w-full max-w-md mx-auto">
               <label className="label">
                 <span className="label-text">Email or Username</span>
@@ -51,18 +55,30 @@ const Login = () => {
                 {...register("password")}
               />
             </div>
+
+            <div className="w-full max-w-md mx-auto" >
+             
+              {/* forget Password */}
+              <p className="text-end my-3">
+                <Link
+                  to="/forget-password"
+                  className="text-blue-700 font-semibold"
+                >
+                  Forgot password?
+                </Link>
+              </p>
+            </div>
+
             <div className="flex justify-center my-5">
-              <button className="bg-gray-600 hover:bg-gray-400 text-white p-2 rounded-md btn btn-block max-w-md">
+              <button className="bg-[#0369a1] hover:bg-gray-400 text-white p-2 rounded-md btn btn-block max-w-md">
                 {isLoading ? "Logging..." : "Log In"}
               </button>
             </div>
           </form>
           {error && <p className="text-center">{error}</p>}
-          <p className="text-center">
-            <Link to="/forget-password" className="text-blue-700 font-semibold">
-              Forgot password?
-            </Link>
-          </p>
+          <div className="w-full my-5 max-w-md mx-auto">
+             <DemoLogin></DemoLogin>
+          </div>
         </div>
       </div>
     </div>

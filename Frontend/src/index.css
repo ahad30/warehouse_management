@@ -28,6 +28,10 @@ body {
   width: calc(100% - 250px);
 }
 
+.bg-gray-100::-webkit-scrollbar {
+  width: 1px; /* Adjust as needed */
+}
+
 
 
 
