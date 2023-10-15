@@ -29,7 +29,6 @@ const InvoicesList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
-  const allInvoicesRef = useRef();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
@@ -61,15 +60,18 @@ const InvoicesList = () => {
     setStartDate(date);
     setDate(null);
   };
+
   const handleEndDate = (date) => {
     setEndDate(date);
     setDate(null);
   };
+
   const handleDate = (date) => {
     setDate(date);
     setStartDate(null);
     setEndDate(null);
   };
+
   const handleDateClear = () => {
     setStartDate(null);
     setEndDate(null);
@@ -108,6 +110,25 @@ const InvoicesList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
+
+  // HANDLE INVOICE VIEW WITH MODAL
+  const handleViewInvoice = (data) => {
+    setInvoice(data);
+    setViewInvoiceOpen(true);
+  };
+
+  //  search filtering
+  const setFiltering = (search) => {
+    const filteredData = invoicesData?.invoices?.filter((item) =>
+      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   // SEARCH FILTERING STARTS
   const columns = [
@@ -203,31 +224,11 @@ const InvoicesList = () => {
     },
   ];
 
-  //  search filtering
-  const setFiltering = (search) => {
-    const filteredData = invoicesData?.invoices?.filter((item) =>
-      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
-    );
-    if (filteredData) {
-      setFilterData(filteredData);
-    }
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  // HANDLE INVOICE VIEW WITH MODAL
-  const handleViewInvoice = (data) => {
-    setInvoice(data);
-    setViewInvoiceOpen(true);
-  };
-
   // ALL INVOICES
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
 
-  // console.log(invoice)
   return (
     <>
       <DashboardBackground>
@@ -273,7 +274,7 @@ const InvoicesList = () => {
           </div>
         </div>
 
-        <div ref={allInvoicesRef} className="overflow-x-scroll">
+        <div className="overflow-x-scroll">
           <DataTable
             columns={columns}
             data={filterData}

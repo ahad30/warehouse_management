@@ -22,6 +22,7 @@ const apiSlice = createApi({
     "Stores",
     "Products",
     "Invoices",
+    "Products Report",
     "Company",
     "Settings",
     "Profile",

@@ -4,9 +4,9 @@ const productReport = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProductsReport: builder.query({
       query: ({ startDate, endDate, date }) => ({
-        url: `/product-report/${startDate}/${endDate}/${date}`,
+        url: `/product-report/${date}/${startDate}/${endDate}`,
       }),
-      providesTags: ["Invoices"],
+      providesTags: ["Products Report"],
     }),
   }),
 });

@@ -6,18 +6,18 @@ import ProductReport from "../../Dashboard/Report/ProductReport/ProductReport";
 const ReportLayout = () => {
   return (
     <div>
-        <h2 className="text-2xl mt-5 text-center font-semibold">Reports</h2>
+      <h2 className="text-2xl mt-5 text-center font-semibold">Reports</h2>
       <Tabs>
         <TabList className={`px-5`}>
-          <Tab>Invoice Report</Tab>
-          <Tab>Product Report</Tab>
+          <Tab>Product</Tab>
+          <Tab>Invoice</Tab>
         </TabList>
 
         <TabPanel>
-          <InvoicesList />
+          <ProductReport />
         </TabPanel>
         <TabPanel>
-          <ProductReport />
+          <InvoicesList />
         </TabPanel>
       </Tabs>
     </div>

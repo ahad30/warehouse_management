@@ -23,7 +23,7 @@ class ProductReportController extends Controller
         $query = DB::table('sale_items')
             ->join('products', 'products.id', '=', 'sale_items.product_id')
             ->join('sales', 'sales.id', '=', 'sale_items.sale_id')
-            ->selectRaw('products.product_name, SUM(quantity) as quantity, AVG(rate) as price, SUM(quantity * rate) as total_sold_price, MAX(sales.issue_date) as max_issue_date')
+            ->selectRaw('products.product_name, SUM(quantity) as quantity, AVG(rate) as price, SUM(quantity * rate) as total_sold_price, MAX(sales.issue_date) as last_sale_date')
             ->groupBy('products.product_name');
         // Apply date filters based on the time range
         if ($timeRange == 1) {
@@ -31,8 +31,7 @@ class ProductReportController extends Controller
         } elseif ($timeRange == 7) {
             $query->whereBetween('sales.issue_date', [now()->subDays(7), now()]);
         } elseif ($timeRange == 31) {
-            $query->whereBetween('sales.issue_date', [now()->startOfMonth(),now()->endOfMonth()]);
-           
+            $query->whereBetween('sales.issue_date', [now()->startOfMonth(), now()->endOfMonth()]);
         } elseif ($timeRange === 'custom') {
             // Get the time range parameters from the request
             $startDate = Carbon::parse($start_date)->format("Y-m-d");
