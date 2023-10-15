@@ -8,7 +8,7 @@ import { useGetCompanyInfoQuery } from "../../features/Settings/settingsApi";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { data } = useGetCompanyInfoQuery();
-  console.log(data);
+  
   const handleLogOut = UserLogout();
 
   return (

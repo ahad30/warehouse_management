@@ -29,7 +29,6 @@ const InvoicesList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
-  const allInvoicesRef = useRef();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
@@ -61,15 +60,18 @@ const InvoicesList = () => {
     setStartDate(date);
     setDate(null);
   };
+
   const handleEndDate = (date) => {
     setEndDate(date);
     setDate(null);
   };
+
   const handleDate = (date) => {
     setDate(date);
     setStartDate(null);
     setEndDate(null);
   };
+
   const handleDateClear = () => {
     setStartDate(null);
     setEndDate(null);
@@ -108,6 +110,25 @@ const InvoicesList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
+
+  // HANDLE INVOICE VIEW WITH MODAL
+  const handleViewInvoice = (data) => {
+    setInvoice(data);
+    setViewInvoiceOpen(true);
+  };
+
+  //  search filtering
+  const setFiltering = (search) => {
+    const filteredData = invoicesData?.invoices?.filter((item) =>
+      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
+    );
+    if (filteredData) {
+      setFilterData(filteredData);
+    }
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   // SEARCH FILTERING STARTS
   const columns = [
@@ -203,31 +224,11 @@ const InvoicesList = () => {
     },
   ];
 
-  //  search filtering
-  const setFiltering = (search) => {
-    const filteredData = invoicesData?.invoices?.filter((item) =>
-      item?.invoice_no?.toLowerCase()?.includes(search?.toLowerCase())
-    );
-    if (filteredData) {
-      setFilterData(filteredData);
-    }
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  // HANDLE INVOICE VIEW WITH MODAL
-  const handleViewInvoice = (data) => {
-    setInvoice(data);
-    setViewInvoiceOpen(true);
-  };
-
-  // ALL INVOICES
+  // ALL INVOICES Loading
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
 
-  // console.log(invoice)
   return (
     <>
       <DashboardBackground>
@@ -241,32 +242,30 @@ const InvoicesList = () => {
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
         />
-         
-         <div className="flex lg:flex-row justify-end gap-2">
-            {/* Invoices download as CSV file */}
-            <InvoicesAsCSV data={filterData} />
-            {/* Invoices download as PDF file */}
-            <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
-              <PDFDownloadLink
-                document={
-                  <InvoicesAsPDF
-                    data={filterData}
-                    startDate={startDate}
-                    endDate={endDate}
-                  />
-                }
-                fileName="Invoices Report"
-              >
-                <span className="flex justify-center items-center gap-x-2">
-                  <BsFiletypePdf size={20} /> Download as PDF
-                </span>
-              </PDFDownloadLink>
-            </button>
-          </div>
 
+        <div className="flex lg:flex-row justify-end gap-2">
+          {/* Invoices download as CSV file */}
+          <InvoicesAsCSV data={filterData} />
+          {/* Invoices download as PDF file */}
+          <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
+            <PDFDownloadLink
+              document={
+                <InvoicesAsPDF
+                  data={filterData}
+                  startDate={startDate}
+                  endDate={endDate}
+                />
+              }
+              fileName="Invoices Report"
+            >
+              <span className="flex justify-center items-center gap-x-2">
+                <BsFiletypePdf size={20} /> Download as PDF
+              </span>
+            </PDFDownloadLink>
+          </button>
+        </div>
 
-
-         {/* filetering */}
+        {/* filtering */}
         <div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center gap-y-3">
           <InvoiceDateFiltering
             handleStartDate={handleStartDate}
@@ -274,13 +273,9 @@ const InvoicesList = () => {
             handleDate={handleDate}
             handleDateClear={handleDateClear}
           />
-
         </div>
 
-
-
-        {/* data table */}
-        <div ref={allInvoicesRef} className="overflow-x-scroll">
+        <div className="overflow-x-scroll">
           <DataTable
             columns={columns}
             data={filterData}
@@ -292,8 +287,6 @@ const InvoicesList = () => {
             onChangePage={(page) => setCurrentPage(page)}
           />
         </div>
-
-
 
         <EditInvoice
           invoice={invoice}
