@@ -1,9 +1,13 @@
 import { bool, func, object } from "prop-types";
 import { QRCodeCanvas } from "qrcode.react";
-import { useGetCompanyInfoQuery } from "../../../features/Settings/settingsApi";
+import {
+  useGetCompanyInfoQuery,
+  useGetDefaultSettingsQuery,
+} from "../../../features/Settings/settingsApi";
 
 const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
   const { data: companyInfo } = useGetCompanyInfoQuery();
+  const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
   return viewInvoiceOpen ? (
     <div className="fixed inset-0 z-50 overflow-y-auto">
@@ -101,11 +105,6 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                 <div className="flex items-center gap-5 w-20">
                   <QRCodeCanvas
                     size={70}
-                    // imageSettings={{
-                    //   src: "https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png",
-                    //   width: 25,
-                    //   height: 25,
-                    // }}
                     value={`${invoice?.invoice_no} at ${invoice?.issue_date} for ${invoice?.customer?.name}`}
                   />
                   <p
@@ -157,6 +156,11 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                   </p>
                 </div>
               </div>
+              {defaultSettings?.settings?.footer_note && (
+                <p className="text-center italic">
+                  {defaultSettings?.settings?.footer_note}
+                </p>
+              )}
             </div>
           </div>
         </div>
