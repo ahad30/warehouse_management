@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\Mail\SendInvoiceMail;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,16 +18,26 @@ class InvoiceCreatedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $mail; // target user to send invoice through mail
+    public $customerMail; // target user to send invoice through mail
     public $invoice; // invoice data
+    public $settings; // settings data
+    public $companyInfo; // companyInfo data
+
 
     /**
      * Create a new job instance.
      */
-    public function __construct($customer, $invoice)
+
+    public function __construct($customer,$sale, $items,$settings,$companyInfo)
     {
-        $this->mail = $customer;
-        $this->invoice = $invoice;
+        $this->invoice = [
+            'sale' => $sale,
+            'items' => $items,
+            'customer' => $customer,
+            'settings' => $settings,
+            'companyInfo' => $companyInfo,
+        ];
+        $this->customerMail = $customer->email;
     }
 
     /**
@@ -33,9 +45,22 @@ class InvoiceCreatedJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // $this->customer->notify(new SendInvoiceNotification());
-        Mail::to($this->mail)->send(
-            (new SendInvoiceMail($this->invoice))->afterCommit()
-        );
+        info(json_encode($this->invoice));
+        DB::beginTransaction();
+        try{
+            Mail::to($this->customerMail)->send(
+                (new SendInvoiceMail(json_encode($this->invoice)))->afterCommit()
+            );
+            DB::table('settings')->where('id',1)->update([
+                'mail_credential_status' => 'active'
+            ]) ;
+            DB::commit();
+        }catch(Exception $e){
+            info($e->getMessage());
+            DB::rollBack();
+            DB::table('settings')->where('id', 1)->update([
+                'mail_credential_status' => 'inactive'
+            ]);
+        }
     }
 }
