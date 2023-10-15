@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { set, useForm } from "react-hook-form";
-import { TbChessKing } from "react-icons/tb";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import {
   useGetDefaultSettingsQuery,
@@ -32,20 +31,9 @@ const DefaultSetting = () => {
 
   const token = JSON.parse(localStorage.getItem("access_token"));
   const onSubmit = (data) => {
-    updateDefaultSetting({...data, mail_option: isToggle ? 'on': 'off'});
-    // console.log(data);
-    // fetch(`${import.meta.env.VITE_REACT_APP_PORT}/settings/update`, {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
+    updateDefaultSetting({ ...data, mail_option: isToggle ? "on" : "off" });
   };
 
-  //   console.log(watch("taxation"))
   return (
     <div>
       {/* discount Fie;d */}
@@ -129,7 +117,7 @@ const DefaultSetting = () => {
           </div>
 
           {/* currency */}
-          <div className="">
+          <div>
             <label className="label" htmlFor="currency">
               Currency
             </label>
