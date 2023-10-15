@@ -24,11 +24,11 @@ class ProductReportController extends Controller
             ->join('products', 'products.id', '=', 'sale_items.product_id')
             ->join('sales', 'sales.id', '=', 'sale_items.sale_id')
             ->selectRaw('products.product_name, SUM(quantity) as quantity, AVG(rate) as price, SUM(quantity * rate) as total_sold_price, MAX(sales.issue_date) as max_issue_date')
-            ->groupBy('product_id');
-
-        // Apply date filters based on the time range
-        if ($timeRange == 1) {
-            $query->whereDate('sales.issue_date', '=', now()->toDateString());
+            ->groupBy('products.product_name');
+            // Apply date filters based on the time range
+            if ($timeRange == 1) {
+                $query->whereDate('sales.issue_date', '=', now()->toDateString());
+            
         } elseif ($timeRange == 7) {
             $query->whereBetween('sales.issue_date', [now(), now()->subDays(7)]);
         } elseif ($timeRange == 31) {

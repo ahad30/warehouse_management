@@ -25,6 +25,7 @@ import ReportLayout from "../layouts/Dashboard/ReportLayout";
 import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics/DashboardAnalytics";
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
+import SettingsNew from "../Dashboard/Settings/SettingsNew";
 
 const routes = createBrowserRouter([
   {
@@ -148,7 +149,7 @@ const routes = createBrowserRouter([
       // SETTING
       {
         path: "/dashboard/setting",
-        element: <Settings />,
+        element: <SettingsNew></SettingsNew>,
       },
       // PROFILE
       {
