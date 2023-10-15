@@ -15,6 +15,8 @@ class Settings extends Model
         'tax_value',
         'currency',
         'footer_note',
+        'mail_option',
+        'mail_credential_status',
 
     ];
 }
