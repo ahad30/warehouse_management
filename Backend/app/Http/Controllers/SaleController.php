@@ -12,13 +12,14 @@ use App\Models\CompanyInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class SaleController extends Controller
 {
     // index
-    public function index($from = null, $to = null, $dayCount = null)
+    // Index - Retrieve invoices with optional date filtering
+    public function index($from = null, $to = null, $dayCount = null): Response
     {
-
         $invoices = Sale::with('saleitems', 'customer')->latest()->get();
 
         if ($invoices->count() <= 0) {
@@ -28,9 +29,8 @@ class SaleController extends Controller
                 'invoices' => $invoices,
             ]);
         } else {
-
+            // Handle date filtering options
             if ($from != null && $from != "null" && $to != null && $to != "null") {
-                /* -------------------- get invoice using date filtering -------------------- */
                 $invoices = $this->getInvoice($from, $to);
                 return response()->json([
                     'status' => true,
@@ -38,42 +38,25 @@ class SaleController extends Controller
                     'invoices' => $invoices,
                 ]);
             } else if ($from == "null" && $dayCount != null && $dayCount != "null") {
+                // Handle different day count options
                 if ($dayCount == 1) {
-
-                    /* --------------------- today's invoices ----------------------*/
                     $from = Carbon::today()->startOfDay();
                     $to = Carbon::now()->endOfDay();
-                    $invoices = $this->getInvoice($from, $to);
-                    return response()->json([
-                        'status' => true,
-                        'count' => $invoices->count(),
-                        'invoices' => $invoices,
-                    ]);
                 } else if ($dayCount == 7) {
-                    /* ------------------- last week's invoices ---------------*/
                     $from = Carbon::now()->subDays(7);
                     $to = Carbon::now();
-                    $invoices = $this->getInvoice($from, $to);
-                    return response()->json([
-                        'status' => true,
-                        'count' => $invoices->count(),
-                        'invoices' => $invoices,
-                    ]);
                 } else if ($dayCount == 31) {
-                    /* ------------------ this month's invoices --------------*/
                     $from = Carbon::now()->startOfMonth();
                     $to = Carbon::now()->endOfMonth();
-                    $invoices = $this->getInvoice($from, $to);
-                    return response()->json([
-                        'status' => true,
-                        'count' => $invoices->count(),
-                        'invoices' => $invoices,
-                    ]);
                 }
-
-
+                $invoices = $this->getInvoice($from, $to);
+                return response()->json([
+                    'status' => true,
+                    'count' => $invoices->count(),
+                    'invoices' => $invoices,
+                ]);
             } else {
-                /* ------------ all invoices from database -----------*/
+                // Retrieve all invoices from the database
                 return response()->json([
                     'status' => true,
                     'count' => $invoices->count(),
@@ -82,16 +65,21 @@ class SaleController extends Controller
             }
         }
     }
+
     /**
      *
      * @return invoices of particular times
      *
      */
+    // Helper function to retrieve invoices based on date range
     protected function getInvoice($from, $to)
     {
         $beginningDate = Carbon::parse($from)->format('Y-m-d');
         $endingDate = Carbon::parse($to)->format('Y-m-d');
-        $invoices = Sale::with('saleitems', 'customer')->whereBetween('issue_date', [$beginningDate, $endingDate])->latest()->get();
+        $invoices = Sale::with('saleitems', 'customer')
+            ->whereBetween('issue_date', [$beginningDate, $endingDate])
+            ->latest()
+            ->get();
 
         return $invoices;
     }
@@ -99,59 +87,40 @@ class SaleController extends Controller
     /**
      *
      * @create Request $request
+     *
      */
-    public function create($brand_id = null, $category_id = null)
+    // Create - Generate and store invoices
+    public function create($brand_id = null, $category_id = null): Response
     {
+        // Retrieving product, customer, and company info
         $company_info = CompanyInfo::latest()->first();
         $customers = Customer::all();
-        $products = Product::where('product_quantity', '>', '0')->with('getCategory', 'getBrand', 'getStore')->get();
-        if ($brand_id == null && $category_id == null) {
-            return response()->json([
-                'status' => true,
-                'data' => [
-                    'company_info' => $company_info,
-                    'customers' => $customers,
-                    'products' => $products,
-                ],
-            ]);
-        } elseif ($brand_id != null && $category_id == null) {
-            $products = Product::where('product_quantity', '>', '0')->where('brand_id', $brand_id)->with('getCategory', 'getBrand', 'getStore')->get();
-            return response()->json([
-                'status' => true,
-                'data' => [
-                    'company_info' => $company_info,
-                    'customers' => $customers,
-                    'products' => $products,
-                ],
-            ]);
-        } elseif ($brand_id == null && $category_id != null) {
-            $products = Product::where('product_quantity', '>', '0')->where('category_id', $category_id)->with('getCategory', 'getBrand', 'getStore')->get();
-            return response()->json([
-                'status' => true,
-                'data' => [
-                    'company_info' => $company_info,
-                    'customers' => $customers,
-                    'products' => $products,
-                ],
-            ]);
-        } else {
-            $products = Product::where('product_quantity', '>', '0')->where('brand_id', $brand_id)->where('category_id', $category_id)->with('getCategory', 'getBrand', 'getStore')->get();
-            return response()->json([
-                'status' => true,
-                'data' => [
-                    'company_info' => $company_info,
-                    'customers' => $customers,
-                    'products' => $products,
-                ],
-            ]);
+        $productsQuery = Product::where('product_quantity', '>', '0');
+
+        // Filtering products based on brand and category
+        if ($brand_id != null) {
+            $productsQuery->where('brand_id', $brand_id);
         }
+        if ($category_id != null) {
+            $productsQuery->where('category_id', $category_id);
+        }
+
+        $products = $productsQuery->with('getCategory', 'getBrand', 'getStore')->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'company_info' => $company_info,
+                'customers' => $customers,
+                'products' => $products,
+            ],
+        ]);
     }
 
-    // store
-    public function store(Request $request)
+    // Store - Create and store a new invoice
+    public function store(Request $request): Response
     {
-
-        $codeValidation = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'invoiceInfo.issueDate' => 'required|date_format:Y-m-d',
             'invoiceInfo.dueDate' => 'date_format:Y-m-d',
             'calculation.discount' => 'required|numeric',
@@ -161,211 +130,194 @@ class SaleController extends Controller
             'calculation.paidAmount' => 'required',
             'customer.name' => 'required|string',
             'customer.phone' => 'required|string',
-            'items' => 'required',
+            'items' => 'required|array',
             'items.*.category_id' => 'required|numeric',
             'items.*.id' => 'required|numeric',
             'items.*.quantity' => 'required|numeric',
         ]);
-        if ($codeValidation->fails()) {
+
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'errors' => $codeValidation->errors()
+                'message' => 'Validation error!',
+                'errors' => $validator->errors(),
             ], 400);
-        } else {
-            $customerInfo = (object) $request->customer;
-            $customer = Customer::where('phone', $customerInfo->phone)->orWhere('email', $customerInfo->email)->first();
-            if ($customer != null) {
-                $customer_id = $customer->id;
-                $customer_name = $customer->name;
-                $customer_email = $customer->email;
-                $customer_phone = $customer->phone;
-                $customer_address = $customer->address;
-            } else {
-                $customer = Customer::create([
-                    'name' => $customerInfo->name,
-                    'email' => $customerInfo->email,
-                    'phone' => $customerInfo->phone,
-                    'address' => $customerInfo->address,
-                ]);
-                $newCustomer = Customer::find($customer->id);
-                $customer_id = $newCustomer->id;
-                $customer_name = $newCustomer->name;
-                $customer_email = $newCustomer->email;
-                $customer_phone = $newCustomer->phone;
-                $customer_address = $newCustomer->address;
-            }
+        }
 
-            $prefix = "INV-";
-            $year = date("y");
-            $latestSale = Sale::latest()->first();
-            if ($latestSale != null) {
-                $newSaleId = $latestSale->id + 1;
-            } else {
-                $newSaleId = 1;
-            }
-            $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
-            $invoiceInfo = (object) $request->invoiceInfo;
-            $calculation = (object) $request->calculation;
-            $formattedIssueDate = date('Y-m-d', strtotime($invoiceInfo->issueDate));
-            $formattedDueDate = null;
-            if ($calculation->due > 0) {
-                $formattedDueDate = date('Y-m-d', strtotime($invoiceInfo->dueDate));
-            }
-            DB::beginTransaction();
-            try {
-                $sale = Sale::create([
-                    'invoice_no' => $invoice_no,
-                    'customer_id' => $customer_id,
-                    'discount' => $calculation->discount,
-                    'shipping' => $calculation->shipping,
-                    'sub_total' => $calculation->subTotal,
-                    'total' => $calculation->total,
-                    'paid_amount' => $calculation->paidAmount,
-                    'due_amount' => $calculation->due,
-                    'issue_date' => $formattedIssueDate,
-                    'due_date' => $formattedDueDate,
-                    'status' => $formattedDueDate != null ? 0 : 1,
-                ]);
+        // Create or find the customer
+        $customerInfo = $request->input('customer');
+        $customer = Customer::firstOrNew(['phone' => $customerInfo['phone']]);
+        $customer->fill($customerInfo)->save();
 
-                $sale = Sale::find($sale->id);
-                $sale_id = $sale->id;
-                $input = $request->all();
-                foreach ($input['items'] as $key => $value) {
-                    $product = DB::table('products')->where('id', $value['id'])->first();
+        // Generate invoice number
+        $prefix = "INV-";
+        $year = date("y");
+        $newSaleId = Sale::max('id') + 1;
+        $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
 
-                    $quantityLeft = $product->product_quantity;
-                    // when product is not available as desired
-                    if ($quantityLeft < $value['quantity']) {
-                        return response()->json(['status' => false, 'message' => $product->product_name . " only " . $quantityLeft . " items left "], 400);
-                    } else {
-                        // decreasing items from stock
-                        DB::table('products')->where('id', $value['id'])->update(['product_quantity' => $quantityLeft - $value['quantity']]);
-                    }
-                    // when product is not available
-                    if ($product == null) {
-                        return response()->json([
-                            'status' => false,
-                            'error' => "Product not found"
-                        ], 404);
-                    }
+        // Prepare the data for the new sale
+        $invoiceInfo = $request->input('invoiceInfo');
+        $calculation = $request->input('calculation');
+        $formattedIssueDate = Carbon::parse($invoiceInfo['issueDate'])->format('Y-m-d');
+        $formattedDueDate = $invoiceInfo['dueDate'] ? Carbon::parse($invoiceInfo['dueDate'])->format('Y-m-d') : null;
 
-                    $item = [
-                        'sale_id' => $sale_id,
-                        'product_id' => $value['id'],
-                        'name' => $product->product_name,
-                        'code' => $product->product_code,
-                        'quantity' => $value['quantity'],
-                        'rate' => $product->product_sale_price,
-                        'product_retail_price' => $product->product_retail_price,
-                        'unit' => $product->product_unit,
-                        'description' => $product->product_desc,
-                    ];
+        // Start a database transaction
+        DB::beginTransaction();
 
-                    DB::table('sale_items')->insert($item);
+        try {
+            // Create the sale record
+            $sale = Sale::create([
+                'invoice_no' => $invoice_no,
+                'customer_id' => $customer->id,
+                'discount' => $calculation['discount'],
+                'shipping' => $calculation['shipping'],
+                'sub_total' => $calculation['subTotal'],
+                'total' => $calculation['total'],
+                'paid_amount' => $calculation['paidAmount'],
+                'due_amount' => $calculation['due'],
+                'issue_date' => $formattedIssueDate,
+                'due_date' => $formattedDueDate,
+                'status' => $formattedDueDate ? 0 : 1,
+            ]);
+
+            // Store sale items
+            $items = $request->input('items');
+            foreach ($items as $item) {
+                $product = Product::find($item['id']);
+
+                if (!$product || $product->product_quantity < $item['quantity']) {
+                    DB::rollBack();
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Product not found or insufficient quantity in stock',
+                    ], 400);
                 }
-            } catch (Exception $e) {
-                // rolling back transaction if transaction failed
-                DB::rollBack();
-                return response()->json([
-                    'status' => false,
-                    'message' => $e->getMessage()
-                ], 500);
+
+                SaleItem::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $product->id,
+                    'name' => $product->product_name,
+                    'code' => $product->product_code,
+                    'quantity' => $item['quantity'],
+                    'rate' => $product->product_sale_price,
+                    'product_retail_price' => $product->product_retail_price,
+                    'unit' => $product->product_unit,
+                    'description' => $product->product_desc,
+                ]);
+
+                // Update product quantity in stock
+                $product->decrement('product_quantity', $item['quantity']);
             }
-            // committing after transaction
+
+            // Commit the transaction
             DB::commit();
-            $items = SaleItem::where('sale_id', $sale_id)->get();
-            $customer = Customer::find($customer_id);
+
+            // Fetch sale items and customer for response
+            $items = SaleItem::where('sale_id', $sale->id)->get();
+            $customer = $sale->customer;
+
             return response()->json([
                 'status' => true,
                 'message' => 'Invoice successfully created',
                 'data' => [
                     'invoice' => $sale,
                     'items' => $items,
-                    'customer' => $customer
-                ]
+                    'customer' => $customer,
+                ],
             ]);
+        } catch (Exception $e) {
+            // Rollback the transaction and handle the exception
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
 
-    public function update(Request $request)
+
+    public function update(Request $request): Response
     {
         $validator = Validator::make($request->all(), [
             'invoice_id' => 'required',
             'paid_amount' => 'required',
         ]);
 
-
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Validation error!',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 400);
         }
 
+        // Find the invoice by ID
         $invoice = Sale::find($request->invoice_id);
-        if ($invoice == null) {
+
+        if (!$invoice) {
             return response()->json([
                 'status' => false,
-                'message' => "Invoice Not Found"
+                'message' => "Invoice Not Found",
             ], 404);
-        } else {
-            $oldPaidAmount = $invoice->paid_amount;
-            $oldDueAmount = $invoice->due_amount;
-            $newPaidAmount = $request->paid_amount;
+        }
 
-            if ($newPaidAmount > $oldDueAmount) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Can't pay more than due",
-                ], 400);
-            } else {
+        $oldPaidAmount = $invoice->paid_amount;
+        $oldDueAmount = $invoice->due_amount;
+        $newPaidAmount = $request->paid_amount;
 
-                DB::beginTransaction();
-                try {
-                    // updating paid amount and due amount
-                    DB::table('sales')->where('id', $invoice->id)->update([
-                        'paid_amount' => $oldPaidAmount + $newPaidAmount,
-                        'due_amount' => $oldDueAmount - $newPaidAmount
-                    ]);
+        if ($newPaidAmount > $oldDueAmount) {
+            return response()->json([
+                'status' => false,
+                'message' => "Can't pay more than due",
+            ], 400);
+        }
 
-                    $newInvoice = Sale::find($request->invoice_id);
-                    // Updating status when due is empty
-                    if ($newInvoice->due_amount == 0) {
-                        DB::table('sales')->where('id', $newInvoice->id)->update([
-                            'status' => 1,
+        // Start a database transaction
+        DB::beginTransaction();
 
-                        ]);
-                    }
-                    DB::commit();
-                    return response()->json([
-                        'status' => true,
-                        'message' => "Payment Paid Successfully",
-                    ], 200);
-                } catch (\Exception $e) {
-                    DB::rollback();
+        try {
+            // Update paid amount and due amount
+            $invoice->increment('paid_amount', $newPaidAmount);
+            $invoice->decrement('due_amount', $newPaidAmount);
 
-                    return response()->json([
-                        'status' => false,
-                        'message' => $e->getMessage(),
-                    ], 500);
-                }
+            // Update status when due is empty
+            if ($invoice->due_amount == 0) {
+                $invoice->update(['status' => 1]);
             }
+
+            // Commit the transaction
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => "Payment Paid Successfully",
+            ], 200);
+        } catch (Exception $e) {
+            // Rollback the transaction and handle the exception
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
-    public function destroy($id)
-    {
-        if ($id != null) {
-            $invoice = Sale::where('id', $id)->first();
 
-            if ($invoice != null) {
-                // deleting invoice
+    public function destroy($id): Response
+    {
+        if ($id) {
+            // Find the invoice by its ID
+            $invoice = Sale::find($id);
+
+            if ($invoice) {
+                // Deleting the invoice
                 $invoice->delete();
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Invoice delete successfully',
+                    'message' => 'Invoice deleted successfully',
                 ], 200);
             } else {
                 return response()->json([
@@ -374,9 +326,11 @@ class SaleController extends Controller
                 ], 404);
             }
         }
+
         return response()->json([
             'status' => false,
-            'message' => 'Provided Invoice',
+            'message' => 'Invalid Invoice ID provided',
         ], 400);
     }
+
 }

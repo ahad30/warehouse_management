@@ -43,8 +43,8 @@ class CategoryController extends Controller
             ], 401);
         }
 
-        $categoryexist = Category::where('slug', Str::slug($request->category_name))->first();
-        if ($categoryexist) {
+        $categoryExist = Category::where('slug', Str::slug($request->category_name))->first();
+        if ($categoryExist) {
             return response()->json([
                 'status' => false,
                 'message' => 'Category Already Exist',
@@ -126,8 +126,8 @@ class CategoryController extends Controller
         }
     }
 
-    // distroy
-    public function distroy($id)
+    // destroy
+    public function destroy($id)
     {
         $category = Category::find($id);
 

@@ -67,16 +67,16 @@ class CompanyInfoController extends Controller
                     'errors' => $codeValidation->errors(),
                 ], 500);
             }
-            $imageData = null;
+            $imageData = null; //new image name
             if ($request->hasFile('company_img')) {
                 $file = $request->file('company_img');
-                $filename = $file->getClientOriginalName();
+                $filename = $file->getClientOriginalName(); //input image name
                 $imageData = $request->company_name . "-" . time() . '-' . $filename;
                 $file->move('uploads/companyInfo/', $imageData);
 
+                // Check if the file exists before attempting to delete it
                 if ($company_info->company_img != null) {
                     $imagePath = public_path('uploads/companyInfo/' . $company_info->company_img);
-                    // Check if the file exists before attempting to delete it
                     if (File::exists($imagePath)) {
 
                         File::delete($imagePath);
