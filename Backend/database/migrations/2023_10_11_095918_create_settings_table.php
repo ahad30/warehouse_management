@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->float("tax_value", 10, 2)->nullable();
             $table->string('currency', 20)->nullable();
             $table->text('footer_note')->nullable();
+            $table->string('mail_option', 20)->nullable();
             $table->string('mail_credential_status', 20)->nullable();
             $table->timestamps();
         });

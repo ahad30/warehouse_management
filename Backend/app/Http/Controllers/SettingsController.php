@@ -44,10 +44,8 @@ class SettingsController extends Controller
         }
 
         $validateInput = Validator::make($request->all(), [
-            'discount' => ['string', 'max:10'],
-            'shipping' => ['max:10'],
+            'discount' => ['max:100'],
             'taxation' => ['string', 'max:20'],
-            'tax_value' => ['max:10'],
             'currency' => ['max:20'],
         ]);
         if ($validateInput->fails()) {
@@ -68,6 +66,7 @@ class SettingsController extends Controller
             ]);
 
             if ($request->mail_option == null || $request->mail_option == "off") {
+                DB::table('settings')->where('id', 1)->update(['mail_option' => "off"]);
                 return response()->json([
                     'status' => true,
                     'message' => "Settings has been updated successfully"
@@ -79,6 +78,7 @@ class SettingsController extends Controller
                 try {
 
                     SmtpCheckerJob::dispatch($request->all());
+                    DB::table('settings')->where('id', 1)->update(['mail_option' => "on"]);
                     DB::commit();
                     return response()->json([
                         'status' => true,

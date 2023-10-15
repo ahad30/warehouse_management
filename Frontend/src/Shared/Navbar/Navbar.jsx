@@ -28,16 +28,15 @@ const Navbar = () => {
           </Link>
         )}
         <label htmlFor="dashboard-drawer" className="drawer-button lg:hidden">
-          <AiOutlineMenu/>
+          <AiOutlineMenu />
         </label>
       </div>
 
       {/* right side */}
       <div className="flex items-center gap-2">
         <div className="flex items-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 ">
-          <AiOutlinePlusCircle size={25} />
-          <Link to={"/dashboard/invoice/new"}>
-            {" "}
+          <Link className="flex justify-center gap-2 items-center" to={"/dashboard/invoice/new"}>
+            <AiOutlinePlusCircle size={25} />{" "}
             <span className="hidden sm:block">New Invoice</span>
           </Link>
         </div>

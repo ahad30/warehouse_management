@@ -79,38 +79,38 @@ const ItemsWithSelect = ({ products }) => {
         <div className="grid sm:grid-cols-2 gap-5 mb-5">
           <label htmlFor="">
             Select category
-          <select
-            className="select select-bordered my-3 w-full"
-            onChange={(e) => setSelectedCategory(e?.target?.value)}
-            value={selectedCategory}
-          >
-            <option value={""}>Select Category</option>
-            {categoryData?.categories?.map((category, idx) => (
-              <option key={idx} value={category?.id}>
-                {category?.category_name}
-              </option>
-            ))}
-          </select>
+            <select
+              className="select select-bordered my-3 w-full"
+              onChange={(e) => setSelectedCategory(e?.target?.value)}
+              value={selectedCategory}
+            >
+              <option value={""}>Select Category</option>
+              {categoryData?.categories?.map((category, idx) => (
+                <option key={idx} value={category?.id}>
+                  {category?.category_name}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label>
             Select brand
-          <select
-            className="select select-bordered w-full my-3"
-            onChange={(e) => setSelectedBrand(e?.target?.value)}
-            value={selectedBrand}
-          >
-            <option value={""}>Select Brand</option>
-            {brandsData?.brands?.map((brand) => (
-              <option value={brand?.id} key={brand?.id}>
-                {brand?.brand_name}
-              </option>
-            ))}
-          </select>
+            <select
+              className="select select-bordered w-full my-3"
+              onChange={(e) => setSelectedBrand(e?.target?.value)}
+              value={selectedBrand}
+            >
+              <option value={""}>Select Brand</option>
+              {brandsData?.brands?.map((brand) => (
+                <option value={brand?.id} key={brand?.id}>
+                  {brand?.brand_name}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         {/* Select Products */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 items-end">
+        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 items-start">
           <div>
             <label htmlFor="description">
               <p>Code:</p>
@@ -183,17 +183,21 @@ const ItemsWithSelect = ({ products }) => {
               />
             </label>
           </div>
-          <div className="flex items-center justify-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 text-sm mb-1">
-            <AiOutlinePlusCircle size={25} />
-            <button
-              className={`w-full bg-[#0369A1] text-white ${
-                selectedItem?.product_name && "cursor-pointer"
-              }`}
-              disabled={!selectedItem?.product_name}
-              onClick={handleAddItem}
-            >
-              Add item
-            </button>
+
+          <div className=" border border-red-300  rounded-md  text-sm">
+            <p>Add item</p>
+            <div className=" flex my-3 bg-[#0369A1] text-white rounded-lg justify-between">
+              <AiOutlinePlusCircle size={20} />
+              <button
+                className={`w-full btn  bg-[#0369A1] text-white ${
+                  selectedItem?.product_name && "cursor-pointer"
+                }`}
+                disabled={!selectedItem?.product_name}
+                onClick={handleAddItem}
+              >
+                Add item
+              </button>
+            </div>
           </div>
         </div>
       </div>

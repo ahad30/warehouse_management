@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 import {
   useGetDefaultSettingsQuery,
   useUpdateDefaultSettingsMutation,
@@ -15,7 +16,6 @@ const DefaultSetting = () => {
     updateDefaultSetting,
     { data: updateSettingData, error, isError, isLoading, isSuccess },
   ] = useUpdateDefaultSettingsMutation();
-
   useEffect(() => {
     fetch("/currency.json")
       .then((res) => res.json())
@@ -52,6 +52,7 @@ const DefaultSetting = () => {
   });
 
   const settings = settingsData?.settings;
+  const mailCredentials = settingsData?.mailCredentials;
 
   return (
     <div>
@@ -205,7 +206,9 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer"
-                    defaultValue={"smtp"}
+                    defaultValue={
+                      mailCredentials?.mailer ? mailCredentials?.mailer : ""
+                    }
                     name=""
                     id=""
                     {...register("mailer")}
@@ -223,6 +226,11 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer host"
+                    defaultValue={
+                      mailCredentials?.mail_host
+                        ? mailCredentials?.mail_host
+                        : ""
+                    }
                     name=""
                     id=""
                     {...register("mail_host")}
@@ -240,6 +248,11 @@ const DefaultSetting = () => {
                     type="number"
                     min={0}
                     placeholder="MAIL PORT"
+                    defaultValue={
+                      mailCredentials?.mail_port
+                        ? mailCredentials?.mail_port
+                        : ""
+                    }
                     name=""
                     id=""
                     {...register("mail_port")}
@@ -257,6 +270,11 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="MAIL USERNAME"
+                    defaultValue={
+                      mailCredentials?.mail_username
+                        ? mailCredentials?.mail_username
+                        : ""
+                    }
                     name=""
                     id=""
                     {...register("mail_username")}
@@ -274,6 +292,11 @@ const DefaultSetting = () => {
                     type="password"
                     min={0}
                     placeholder="MAIL PASSWORD"
+                    defaultValue={
+                      mailCredentials?.mail_password
+                        ? mailCredentials?.mail_password
+                        : ""
+                    }
                     name=""
                     id=""
                     {...register("mail_password")}
@@ -291,6 +314,11 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="MAIL ENCRYPTION"
+                    defaultValue={
+                      mailCredentials?.mail_encryption
+                        ? mailCredentials?.mail_encryption
+                        : ""
+                    }
                     name=""
                     id=""
                     {...register("mail_encryption")}
@@ -310,6 +338,11 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="MAIL FROM ADDRESS"
+                    defaultValue={
+                      mailCredentials?.mail_address
+                        ? mailCredentials?.mail_address
+                        : ""
+                    }
                     name=""
                     id=""
                     {...register("mail_address")}

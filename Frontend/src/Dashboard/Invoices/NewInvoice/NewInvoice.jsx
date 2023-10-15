@@ -23,7 +23,7 @@ const NewInvoice = () => {
 
   if (!data?.status) {
     return (
-      <>
+      <> 
         <p className="text-center text-2xl mb-10">{data?.message}</p>
       </>
     );
