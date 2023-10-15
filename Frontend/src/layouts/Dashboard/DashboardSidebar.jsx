@@ -53,7 +53,6 @@ const DashboardSidebar = () => {
       icon: <AiOutlineShoppingCart size={25}></AiOutlineShoppingCart>,
       path: "/dashboard/product",
     },
-
     {
       name: "Invoices",
       icon: <LiaFileInvoiceDollarSolid size={25} />,
@@ -90,7 +89,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-100 pb-12   text lg:w-2/12  overflow-y-scroll   fixed -mt-2">
+    <div className="h-screen bg-gray-100 pb-12 text lg:w-2/12  overflow-y-scroll fixed -mt-2 py-3">
       <div className="join join-vertical flex flex-col     w-full px-4 rounded-none border-r border-gray-300 -base-content">
         <ul className="sideBar  ">
           {sideBarData &&
