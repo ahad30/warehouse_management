@@ -82,6 +82,9 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                       <th className="text-sm font-extrabold">Item Name</th>
                       <th className="text-sm font-extrabold">Price</th>
                       <th className="text-sm font-extrabold">Quantity</th>
+                      <th className="text-sm font-extrabold">
+                        {defaultSettings?.settings?.taxation || "Tax"}
+                      </th>
                       <th className="text-sm font-extrabold">Total Price</th>
                     </tr>
                   </thead>
@@ -94,7 +97,8 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                           <td>{item?.name}</td>
                           <td>{item?.rate}</td>
                           <td>{item?.quantity}</td>
-                          <td>{item?.rate * item?.quantity}</td>
+                          <td>{item?.tax}</td>
+                          <td>{item?.total_price_quantity_tax}</td>
                         </tr>
                       );
                     })}
