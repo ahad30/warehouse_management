@@ -24,43 +24,42 @@ const styles = StyleSheet.create({
   head: {
     display: "flex",
     flexDirection: "row",
-    
+
     alignItems: "center",
     justifyContent: "center",
   },
   brImage: {
-   
-
     border: "1px solid red",
     height: "80px",
-    width: "80px"
-
-    
+    width: "80px",
   },
   headLeft: {
     width: "30%",
     fontSize: "15px",
     fontWeight: "300",
-   
   },
 
   logoImage: {
     width: "100px",
     height: "auto",
   },
-  headRight: 
-  { width: "30%", textAlign: "right" , display:"flex", justifyContent: "flex-end" , alignItems: "center" },
+  headRight: {
+    width: "30%",
+    textAlign: "right",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
 
   headMiddle: {
     width: "40%",
     display: "flex",
     justifyContent: "center",
-    
+
     alignItems: "center",
     padding: "5px",
     textAlign: "center",
-    
-  }, 
+  },
   headLeftInvoice: {
     fontSize: "25px",
     fontWeight: "bold",
@@ -68,7 +67,6 @@ const styles = StyleSheet.create({
   date: {
     marginVertical: "10px",
   },
-  
 
   billAndPay: {
     display: "flex",
@@ -143,23 +141,21 @@ const styles = StyleSheet.create({
     fontWeight: "light",
     padding: "5px",
   },
-
-
 });
 
-const InvoicePDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
+const InvoicePDF = ({
+  invoice,
+  companyDetails,
+  defaultSettings,
+  companyImg,
+}) => (
   // console.log(invoiceData)
   <Document>
     <Page size="A4" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
-
-
-
         {/* head information */}
         <View style={styles.head}>
-
-
           {/* head information left */}
           <View style={styles.headLeft}>
             <Text style={styles.headLeftInvoice}>Invoice</Text>
@@ -179,14 +175,12 @@ const InvoicePDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           {/* head information right */}
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
-            <Image style={styles?.logoImage}
+            <Image
+              style={styles?.logoImage}
               source={`https://cdn-icons-png.flaticon.com/512/5149/5149174.png`}
             ></Image>
           </View>
         </View>
-
-
-
 
         {/* bill address and pay address */}
         <View style={styles?.billAndPay}>
@@ -194,9 +188,15 @@ const InvoicePDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           <View style={styles?.bill}>
             <Text style={styles.billFrom}>Bill From</Text>
             <Text style={styles.billName}>{companyDetails?.company_name}</Text>
-            <Text style={styles.billAddress}>{companyDetails?.company_email}</Text>
-            <Text style={styles.billAddress}>{companyDetails?.company_phone}</Text>
-            <Text style={styles.billAddress}>{companyDetails?.company_address}</Text>
+            <Text style={styles.billAddress}>
+              {companyDetails?.company_email}
+            </Text>
+            <Text style={styles.billAddress}>
+              {companyDetails?.company_phone}
+            </Text>
+            <Text style={styles.billAddress}>
+              {companyDetails?.company_address}
+            </Text>
           </View>
 
           {/* pay Address  */}
@@ -229,7 +229,7 @@ const InvoicePDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
                 <Text style={styles.rowTwo}>{item?.quantity}</Text>
                 <Text style={styles.rowTwo}>{item?.tax}</Text>
                 <Text style={styles.rowTwo}>
-                {item?.total_price_quantity_tax}
+                  {item?.total_price_quantity_tax}
                 </Text>
               </View>
             ))}
