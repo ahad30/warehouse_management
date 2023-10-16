@@ -20,7 +20,7 @@ const settingsApi = apiSlice.injectEndpoints({
       query: () => ({
         url: `/settings`,
       }),
-      providesTags: ["Settings"],
+      providesTags: ["Default"],
     }),
     updateDefaultSettings: builder.mutation({
       query: (data) => ({
@@ -28,7 +28,7 @@ const settingsApi = apiSlice.injectEndpoints({
         url: `/settings/update`,
         body: data,
       }),
-      invalidatesTags: ["Settings"],
+      invalidatesTags: ["Default"],
     }),
   }),
 });

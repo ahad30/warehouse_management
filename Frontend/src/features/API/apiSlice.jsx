@@ -25,6 +25,7 @@ const apiSlice = createApi({
     "Products Report",
     "Company",
     "Settings",
+    "Default",
     "Profile",
   ],
   endpoints: () => ({}),
