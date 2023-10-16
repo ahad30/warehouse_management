@@ -24,22 +24,43 @@ const styles = StyleSheet.create({
   head: {
     display: "flex",
     flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "space-between",
+    
+    alignItems: "center",
+    justifyContent: "center",
   },
   brImage: {
-    width: "70px",
-    height: "70px",
+   
 
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
+    border: "1px solid red",
+    height: "80px",
+    width: "80px"
+
+    
   },
   headLeft: {
     width: "30%",
     fontSize: "15px",
     fontWeight: "300",
+   
   },
+
+  logoImage: {
+    width: "100px",
+    height: "auto",
+  },
+  headRight: 
+  { width: "30%", textAlign: "right" , display:"flex", justifyContent: "flex-end" , alignItems: "center" },
+
+  headMiddle: {
+    width: "40%",
+    display: "flex",
+    justifyContent: "center",
+    
+    alignItems: "center",
+    padding: "5px",
+    textAlign: "center",
+    
+  }, 
   headLeftInvoice: {
     fontSize: "25px",
     fontWeight: "bold",
@@ -47,15 +68,7 @@ const styles = StyleSheet.create({
   date: {
     marginVertical: "10px",
   },
-  headRight: { width: "30%", textAlign: "right" },
-  headMiddle: {
-    width: "40%",
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-    padding: "5px",
-    textAlign: "center",
-  },
+  
 
   billAndPay: {
     display: "flex",
@@ -131,23 +144,22 @@ const styles = StyleSheet.create({
     padding: "5px",
   },
 
-  // total: {
-  //   display: "flex",
-  //   fontWeight: "bold",
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   marginTop: "10px",
-  // },
+
 });
 
-const InvoicePDF = ({ invoice }) => (
+const InvoicePDF = ({ invoice,companyDetails }) => (
   // console.log(invoiceData)
   <Document>
     <Page size="A4" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
+
+
+
         {/* head information */}
         <View style={styles.head}>
+
+
           {/* head information left */}
           <View style={styles.headLeft}>
             <Text style={styles.headLeftInvoice}>Invoice</Text>
@@ -167,24 +179,32 @@ const InvoicePDF = ({ invoice }) => (
           {/* head information right */}
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
-            <Image
+            <Image style={styles?.logoImage}
               source={`https://cdn-icons-png.flaticon.com/512/5149/5149174.png`}
             ></Image>
           </View>
         </View>
 
+
+
+
+        {/* bill address and pay address */}
         <View style={styles?.billAndPay}>
           {/* bill Address  */}
           <View style={styles?.bill}>
             <Text style={styles.billFrom}>Bill From</Text>
-            <Text style={styles.billName}>Z-Eight-Tech</Text>
-            <Text style={styles.billAddress}>Buhaddarhat , Chittagong</Text>
+            <Text style={styles.billName}>{companyDetails?.company_name}</Text>
+            <Text style={styles.billAddress}>{companyDetails?.company_email}</Text>
+            <Text style={styles.billAddress}>{companyDetails?.company_phone}</Text>
+            <Text style={styles.billAddress}>{companyDetails?.company_address}</Text>
           </View>
 
           {/* pay Address  */}
           <View style={styles?.bill}>
             <Text style={styles.billFrom}>Bill To</Text>
             <Text style={styles.billName}>{invoice?.customer?.name}</Text>
+            <Text style={styles.billAddress}>{invoice?.customer?.email}</Text>
+            <Text style={styles.billAddress}>{invoice?.customer?.phone}</Text>
             <Text style={styles.billAddress}>{invoice?.customer?.address}</Text>
           </View>
         </View>
@@ -228,8 +248,8 @@ const InvoicePDF = ({ invoice }) => (
 
           {/* discount */}
           <View style={styles.subtotalAndTax}>
-            <Text>Shipping</Text>
-            <Text>{`${invoice?.discount}%`}</Text>
+            <Text>discount</Text>
+            <Text>{`${invoice?.discount ? invoice?.discount : 0}%`}</Text>
           </View>
           {/* total */}
           <View style={styles.subtotalAndTax}>
@@ -256,6 +276,7 @@ const InvoicePDF = ({ invoice }) => (
 
 InvoicePDF.propTypes = {
   invoice: object,
+  companyDetails: object,
 };
 
 export default InvoicePDF;

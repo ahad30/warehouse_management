@@ -19,6 +19,9 @@ return new class extends Migration {
             $table->string('unit');
             $table->string('quantity');
             $table->float('rate');
+            $table->float('average_rate')->default(1);
+            $table->float('tax');
+            $table->float('total_price_quantity_tax');
             $table->float('product_retail_price');
             $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
             $table->unsignedBigInteger('sale_id');

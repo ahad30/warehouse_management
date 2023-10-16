@@ -120,8 +120,9 @@ class SaleController extends Controller
     }
 
     // Store - Create and store a new invoice
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
+        // return $request->all();
         $validator = Validator::make($request->all(), [
             'invoiceInfo.issueDate' => 'required|date_format:Y-m-d',
             'invoiceInfo.dueDate' => 'date_format:Y-m-d',
@@ -136,6 +137,7 @@ class SaleController extends Controller
             'items.*.category_id' => 'required|numeric',
             'items.*.id' => 'required|numeric',
             'items.*.quantity' => 'required|numeric',
+            'items.*.total_price_quantity_tax' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -167,6 +169,7 @@ class SaleController extends Controller
         DB::beginTransaction();
 
         try {
+
             // Create the sale record
             $sale = Sale::create([
                 'invoice_no' => $invoice_no,
@@ -195,18 +198,25 @@ class SaleController extends Controller
                     ], 400);
                 }
 
+                // storing items in different model
                 SaleItem::create([
                     'sale_id' => $sale->id,
                     'product_id' => $product->id,
                     'name' => $product->product_name,
                     'code' => $product->product_code,
                     'quantity' => $item['quantity'],
+                    'tax' => $item['tax'],
+                    'total_price_quantity_tax' => $item['total_price_quantity_tax'],
                     'rate' => $product->product_sale_price,
                     'product_retail_price' => $product->product_retail_price,
                     'unit' => $product->product_unit,
                     'description' => $product->product_desc,
                 ]);
-
+                $averagePriceOfProduct = SaleItem::avg('rate');
+                // return $averagePriceOfProduct; //average price of product
+                DB::table('sale_items')->update([
+                    'average_rate' => $averagePriceOfProduct
+                ]);
                 // Update product quantity in stock
                 $product->decrement('product_quantity', $item['quantity']);
             }
@@ -216,13 +226,14 @@ class SaleController extends Controller
 
 
             $settings = Settings::find(1); //getting settings
-            if ($settings->mail_option == 'on' && $customer->email != null) {
-                InvoiceCreatedJob::dispatch($customer->email, $sale);
-            }
 
+            $companyInfo = CompanyInfo::find(1);
             // Fetch sale items and customer for response
             $items = SaleItem::where('sale_id', $sale->id)->get();
             $customer = $sale->customer;
+            if ($settings->mail_option == 'on' && $customer->email != null) {
+                InvoiceCreatedJob::dispatch($customer, $sale, $items, $settings, $companyInfo);
+            }
 
             return response()->json([
                 'status' => true,
