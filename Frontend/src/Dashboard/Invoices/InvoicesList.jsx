@@ -276,7 +276,7 @@ const InvoicesList = () => {
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
-
+ console.log(invoice)
   return (
     <>
       <DashboardBackground>
