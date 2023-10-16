@@ -221,6 +221,7 @@ const InvoicesList = () => {
                 defaultSettings={defaultSettings}
                 companyDetails={companyDetails}
                 invoice={invoice}
+                companyImg={companyImg}
               ></InvoicePDF>
             }
           >
