@@ -23,8 +23,8 @@ class ProductReportController extends Controller
         $query = DB::table('products')
             ->join('sale_items', 'sale_items.product_id', '=', 'products.id')
             ->join('sales', 'sales.id', '=', 'sale_items.sale_id')
-
-            ->selectRaw('product_name, SUM(sale_items.quantity) as quantity, AVG(sale_items.rate) as price, SUM(sale_items.quantity * sale_items.rate) as total_sold_price, MAX(sales.issue_date) as last_sale_date')
+            ->selectRaw('product_name, SUM(sale_items.quantity) as quantity, AVG(sale_items.average_rate) as price,
+            AVG(sale_items.tax) as average_vat, SUM(sale_items.quantity * sale_items.average_rate)  as total_sold_price_without_vat, MAX(sales.issue_date) as last_sale_date')
             ->groupBy('product_name');
         // Apply date filters based on the time range
         if ($timeRange == 1) {

@@ -20,6 +20,9 @@ class SaleItem extends Model
         'quantity',
         'rate',
         'product_retail_price',
+        'tax',
+        'total_price_quantity_tax',
+        'average_rate',
     ];
 
     public function sales()
