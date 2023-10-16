@@ -82,6 +82,9 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                       <th className="text-sm font-extrabold">Item Name</th>
                       <th className="text-sm font-extrabold">Price</th>
                       <th className="text-sm font-extrabold">Quantity</th>
+                      <th className="text-sm font-extrabold">
+                        {defaultSettings?.settings?.taxation || "Tax"}%
+                      </th>
                       <th className="text-sm font-extrabold">Total Price</th>
                     </tr>
                   </thead>
@@ -94,7 +97,8 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                           <td>{item?.name}</td>
                           <td>{item?.rate}</td>
                           <td>{item?.quantity}</td>
-                          <td>{item?.rate * item?.quantity}</td>
+                          <td>{item?.tax}%</td>
+                          <td>{item?.total_price_quantity_tax}</td>
                         </tr>
                       );
                     })}
@@ -124,6 +128,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                       Subtotal:
                     </span>
                     <span className="text-gray-500 text-lg">
+                      {defaultSettings?.settings?.currency}
                       {invoice?.sub_total}
                     </span>
                   </p>
@@ -140,20 +145,30 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                       Shipping:
                     </span>
                     <span className="text-gray-500 text-lg">
+                      {defaultSettings?.settings?.currency}
+
                       {invoice?.shipping}
                     </span>
                   </p>
                   <p className="flex justify-between items-center text-[#383FE1] font-bold">
                     <span className="text-bold text-xl text-right">Total:</span>
-                    <span className=" text-lg">{invoice?.total}</span>
+                    <span className=" text-lg">
+                      {defaultSettings?.settings?.currency} {invoice?.total}
+                    </span>
                   </p>
                   <p className="flex justify-between items-center text-[green] font-bold">
                     <span className="text-bold text-xl text-right">Paid:</span>
-                    <span className=" text-lg">{invoice?.paid_amount}</span>
+                    <span className=" text-lg">
+                      {defaultSettings?.settings?.currency}{" "}
+                      {invoice?.paid_amount}
+                    </span>
                   </p>
                   <p className="flex justify-between items-center text-[red] font-bold">
                     <span className="text-bold text-xl text-right">Due:</span>
-                    <span className=" text-lg">{invoice?.due_amount}</span>
+                    <span className=" text-lg">
+                      {defaultSettings?.settings?.currency}
+                      {invoice?.due_amount}
+                    </span>
                   </p>
                 </div>
               </div>

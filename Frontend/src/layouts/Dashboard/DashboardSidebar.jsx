@@ -77,7 +77,20 @@ const DashboardSidebar = () => {
     ) {
       setSidebarData((prev) =>
         prev.filter((section) => {
-          return section?.name !== "Users" && section?.name !== "Settings";
+          return (
+            section?.name !== "Dashboard" &&
+            section?.name !== "Users" &&
+            section?.name !== "Settings"
+          );
+        })
+      );
+    } else if (
+      user?.get_role?.role !== "cashier" 
+      && user?.get_role?.role !== "admin"
+    ) {
+      setSidebarData((prev) =>
+        prev.filter((section) => {
+          return section?.name !== "Customers";
         })
       );
     }
