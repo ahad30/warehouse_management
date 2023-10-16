@@ -24,6 +24,10 @@ import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
 import RecieptPDF from "./InvoicePDF/RecieptPdf";
 import { AiOutlineFilePdf } from "react-icons/ai";
+import {
+  useGetCompanyInfoQuery,
+  useGetDefaultSettingsQuery,
+} from "../../features/Settings/settingsApi";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -38,9 +42,16 @@ const InvoicesList = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
+  const [companyDetails, setCompanyDetails] = useState({});
+  const [defaultSettings, setDefaultSetting] = useState({});
+  const [companyImg, setCompanyImg] = useState(null);
 
   const { data: invoicesData, isLoading: invoicesIsLoading } =
     useGetInvoicesQuery({ startDate, endDate, date });
+  const { data: settingsData } = useGetDefaultSettingsQuery();
+
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+  // const { data: } = useGetCompanyInfoQuery();
 
   useEffect(() => {
     setFilterData(invoicesData?.invoices);
@@ -96,13 +107,28 @@ const InvoicesList = () => {
     if (deleteIsSuccess) {
       toast.success(deleteData?.message, { id: 1 });
     }
+
+    if (companyInfo?.company_info) {
+      const path = `${
+        import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+      }/uploads/companyInfo/${companyInfo?.company_info?.company_img}`;
+      setCompanyImg(path);
+    }
+
+    setCompanyDetails(companyInfo?.company_info);
+    setDefaultSetting(settingsData?.settings);
   }, [
     deleteIsLoading,
     deleteIsError,
     deleteError,
     deleteIsSuccess,
     deleteData,
+    companyInfo?.company_info,
+    companyInfo,
+    settingsData,
+    settingsData?.settings,
   ]);
+
   // DELETE ENDS
 
   // EDIT STARTS
@@ -132,6 +158,7 @@ const InvoicesList = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   // SEARCH FILTERING STARTS
+  // console.log(companyImg)
   const columns = [
     {
       name: "Invoice no",
@@ -189,7 +216,13 @@ const InvoicesList = () => {
             size={20}
           />
           <PDFDownloadLink
-            document={<InvoicePDF invoice={invoice}></InvoicePDF>}
+            document={
+              <InvoicePDF
+                defaultSettings={defaultSettings}
+                companyDetails={companyDetails}
+                invoice={invoice}
+              ></InvoicePDF>
+            }
           >
             <AiOutlineFilePdf
               onMouseOver={() => setInvoice(row)}
@@ -199,7 +232,16 @@ const InvoicesList = () => {
             />
           </PDFDownloadLink>
 
-          <PDFDownloadLink document={<RecieptPDF invoice={invoice} />}>
+          <PDFDownloadLink
+            document={
+              <RecieptPDF
+                defaultSettings={defaultSettings}
+                companyDetails={companyDetails}
+                invoice={invoice}
+                companyImg={companyImg}
+              />
+            }
+          >
             <MdOutlineReceiptLong
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"

@@ -7,6 +7,9 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import { object } from "prop-types";
+
+
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
@@ -22,33 +25,51 @@ const styles = StyleSheet.create({
   head: {
     display: "flex",
     flexDirection: "row",
-    alignContent: "space-between",
+    alignItems: "center",
     justifyContent: "space-between",
+    width: "100%",
+    // border: "1px solid red",
   },
 
   headLeft: {
-    width: "50%",
+    
     fontSize: "4px",
     fontWeight: "300",
+    // border: "1px solid red",
   },
   headLeftInvoice: {
     fontSize: "4px",
     fontWeight: "bold",
   },
+  headMiddle: {
+    // border: "1px solid red",
+  },
+  brImage: {
+    width: "20px"
+  },
   date: {
     marginVertical: "5px",
   },
-  headRight: { width: "25%", textAlign: "right" },
+  headRight: {  textAlign: "right",  
+  // border: "1px solid red", 
+},
 
   billAndPay: {
     display: "flex",
     marginTop: "10px",
     flexDirection: "row",
-    alignContent: "space-between",
+    // alignContent: "space-between",
     justifyContent: "space-between",
+    
   },
   bill: {
     width: "50%",
+    
+  },
+  billRight: {
+    width: "50%",
+    
+    textAlign: "right",
   },
 
   billFrom: {
@@ -94,6 +115,7 @@ const styles = StyleSheet.create({
     marginTop: "5px",
     flexDirection: "row",
     justifyContent: "flex-start",
+    paddingLeft: "2px",
   },
 
   totalSubTotalTax: {
@@ -119,6 +141,11 @@ const styles = StyleSheet.create({
     height: "50px",
   },
 
+  logoImage: {
+    width: "20px",
+    height: "auto",
+  },
+
   // total: {
   //   display: "flex",
   //   fontWeight: "bold",
@@ -127,11 +154,13 @@ const styles = StyleSheet.create({
   //   marginTop: "10px",
   // },
 });
-const RecieptPDF = ({ invoice }) => (
+const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
   <Document>
     <Page size="A8" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
+
+
         {/* head information */}
         <View style={styles.head}>
           {/* head information left */}
@@ -143,18 +172,18 @@ const RecieptPDF = ({ invoice }) => (
 
           {/* head information right */}
 
-          <View>
+          <View style={styles.headMiddle}>
             <Image
-              style={styles.brCode}
-              src={`https://barcodeapi.org/api/auto/${invoice?.invoice_no}`}
+              style={styles.brImage}
+              source={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${invoice?.issue_date} at ${invoice?.invoice_no} for ${invoice?.customer?.name}`}
             ></Image>
           </View>
 
           {/* head information right */}
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
-            <Image
-              source={`https://cdn-icons-png.flaticon.com/512/5149/5149174.png`}
+            <Image style={styles.logoImage}
+              source={companyImg}
             ></Image>
           </View>
         </View>
@@ -163,14 +192,18 @@ const RecieptPDF = ({ invoice }) => (
           {/* bill Address  */}
           <View style={styles?.bill}>
             <Text style={styles.billFrom}>Bill From</Text>
-            <Text style={styles.billName}>Z-Eight-Tech</Text>
-            <Text style={styles.billAddress}>Buhaddarhat , Chittagong</Text>
+            <Text style={styles.billName}>{companyDetails?.company_name}</Text>
+            <Text style={styles.billAddress}>{companyDetails?.company_email}</Text>
+            <Text style={styles.billAddress}>{companyDetails?.company_phone}</Text>
+            <Text style={styles.billAddress}>{companyDetails?.company_address}</Text>
           </View>
 
           {/* pay Address  */}
-          <View style={styles?.bill}>
+          <View style={styles?.billRight}>
             <Text style={styles.billFrom}>Bill To</Text>
             <Text style={styles.billName}>{invoice?.customer?.name}</Text>
+            <Text style={styles.billAddress}>{invoice?.customer?.email}</Text>
+            <Text style={styles.billAddress}>{invoice?.customer?.phone}</Text>
             <Text style={styles.billAddress}>{invoice?.customer?.address}</Text>
           </View>
         </View>
@@ -182,6 +215,7 @@ const RecieptPDF = ({ invoice }) => (
             <Text style={styles?.rowOne}>Item name</Text>
             <Text style={styles?.rowTwo}>Price</Text>
             <Text style={styles?.rowTwo}>Qty</Text>
+            <Text style={styles?.rowTwo}>{defaultSettings?.taxation}</Text>
             <Text style={styles?.rowTwo}>Total Price</Text>
           </View>
 
@@ -192,8 +226,9 @@ const RecieptPDF = ({ invoice }) => (
                 <Text style={styles.rowOne}>{item?.name}</Text>
                 <Text style={styles.rowTwo}>{item?.rate}</Text>
                 <Text style={styles.rowTwo}>{item?.quantity}</Text>
+                <Text style={styles.rowTwo}>{item?.tax}</Text>
                 <Text style={styles.rowTwo}>
-                  {item.rate * parseInt(item?.quantity)}
+                  {item?.total_price_quantity_tax}
                 </Text>
               </View>
             ))}
@@ -214,7 +249,7 @@ const RecieptPDF = ({ invoice }) => (
 
           {/* discount */}
           <View style={styles.subtotalAndTax}>
-            <Text>Shipping</Text>
+            <Text>discount</Text>
             <Text>{`${invoice?.discount}%`}</Text>
           </View>
           {/* total */}
@@ -242,5 +277,7 @@ const RecieptPDF = ({ invoice }) => (
 
 RecieptPDF.propTypes = {
   invoice: object,
+  companyDetails: object,
+  defaultSettings: object,
 };
 export default RecieptPDF;
