@@ -214,7 +214,7 @@ class SaleController extends Controller
                 ]);
                 $averagePriceOfProduct = SaleItem::avg('rate');
                 // return $averagePriceOfProduct; //average price of product
-                DB::table('sale_items')->update([
+                DB::table('sale_items')->where('product_id', $product->id)->update([
                     'average_rate' => $averagePriceOfProduct
                 ]);
                 // Update product quantity in stock
@@ -351,5 +351,4 @@ class SaleController extends Controller
             'message' => 'Invalid Invoice ID provided',
         ], 400);
     }
-
 }

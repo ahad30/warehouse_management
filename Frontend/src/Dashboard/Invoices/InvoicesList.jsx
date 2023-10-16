@@ -68,6 +68,8 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
+  console.log(invoice);
+
   const handleStartDate = (date) => {
     setStartDate(date);
     setDate(null);
