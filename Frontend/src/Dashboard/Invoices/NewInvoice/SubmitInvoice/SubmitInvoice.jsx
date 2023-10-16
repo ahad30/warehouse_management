@@ -56,13 +56,13 @@ const SubmitInvoice = () => {
     <>
       <div
         className={`w-[300px] ml-auto flex justify-center bg-[#0369A1] text-white rounded-md px-3 py-2 ${
-          invoice?.items?.length === 0 ? "bg-slate-400" : ""
+          invoice?.items?.length === 0 || isLoading ? "bg-slate-400" : ""
         }`}
       >
         <button
           className=""
           onClick={handleNewInvoice}
-          disabled={invoice?.items?.length === 0}
+          disabled={invoice?.items?.length === 0 || isLoading}
         >
           {isLoading ? "Saving..." : "Save Invoice"}
         </button>
