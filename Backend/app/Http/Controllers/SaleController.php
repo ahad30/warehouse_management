@@ -216,13 +216,14 @@ class SaleController extends Controller
 
 
             $settings = Settings::find(1); //getting settings
-            if ($settings->mail_option == 'on' && $customer->email != null) {
-                InvoiceCreatedJob::dispatch($customer->email, $sale);
-            }
 
+            $companyInfo = CompanyInfo::find(1);
             // Fetch sale items and customer for response
             $items = SaleItem::where('sale_id', $sale->id)->get();
             $customer = $sale->customer;
+            if ($settings->mail_option == 'on' && $customer->email != null) {
+                InvoiceCreatedJob::dispatch($customer, $sale, $items, $settings,$companyInfo);
+            }
 
             return response()->json([
                 'status' => true,

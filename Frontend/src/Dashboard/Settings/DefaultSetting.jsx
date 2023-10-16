@@ -8,13 +8,18 @@ import {
 } from "../../features/Settings/settingsApi";
 
 const DefaultSetting = () => {
+  // Retrieve user information from Redux state
   const { user } = useSelector((state) => state.auth);
+
+  // Initialize state variables
   const [allCurrency, setAllCurrency] = useState([]);
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [
     updateDefaultSetting,
     { data: updateSettingData, error, isError, isLoading, isSuccess },
   ] = useUpdateDefaultSettingsMutation();
+
+  // Fetch currency data from an external JSON file
   useEffect(() => {
     fetch("/currency.json")
       .then((res) => res.json())
@@ -23,9 +28,11 @@ const DefaultSetting = () => {
       );
   }, []);
 
+  // Initialize state variables
   const [isToggle, setIsToggle] = useState(false);
   const [mailWarning, setMailWarning] = useState(null);
 
+  // Set up form handling with react-hook-form
   const {
     register,
     handleSubmit,
@@ -33,10 +40,12 @@ const DefaultSetting = () => {
     formState: { errors },
   } = useForm();
 
+  // Handle form submission
   const onSubmit = (data) => {
     updateDefaultSetting({ ...data, mail_option: isToggle ? "on" : "off" });
   };
 
+  // Display loading, error, and success messages using react-hot-toast
   useEffect(() => {
     if (isLoading) {
       toast.loading("Loading...", { id: 1 });
@@ -52,36 +61,45 @@ const DefaultSetting = () => {
     if (settingsData?.settings?.mail_credential_status === "inactive") {
       setMailWarning(true);
     }
-    
-  },[settingsData,
-    settingsData?.settings,updateSettingData,
-    error, isError,
-     isLoading, isSuccess]);
+  }, [
+    settingsData,
+    settingsData?.settings,
+    updateSettingData,
+    error,
+    isError,
+    isLoading,
+    isSuccess,
+  ]);
 
+  // Extract settings and mail credentials from the query results
   const settings = settingsData?.settings;
   const mailCredentials = settingsData?.mailCredentials;
-// console.log(settings)
-useEffect(()=> {
-  if(settingsData?.settings?.mail_option === "on"){
-    setIsToggle(true);
-  }
-  else {
-    setIsToggle(false);
-  }
-},[settingsData,
-  settingsData?.settings,updateSettingData,
-  error, isError,
-   isLoading, isSuccess])
+
+  // Set the email toggle state based on the query result
+  useEffect(() => {
+    if (settingsData?.settings?.mail_option === "on") {
+      setIsToggle(true);
+    } else {
+      setIsToggle(false);
+    }
+  }, [
+    settingsData,
+    settingsData?.settings,
+    updateSettingData,
+    error,
+    isError,
+    isLoading,
+    isSuccess,
+  ]);
 
   return (
     <div>
-      {/* discount Fie;d */}
+      {/* Form for default settings */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
-
+        {/* Default settings form fields */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* discount field */}
+          {/* Discount field */}
           <div className="">
             <label className="label" htmlFor="">
               Discount (%)
@@ -99,7 +117,7 @@ useEffect(()=> {
             {errors.discount && <span>This field is required</span>}
           </div>
 
-          {/* shipping field */}
+          {/* Shipping field */}
           <div className="">
             <label className="label" htmlFor="">
               Shipping
@@ -117,7 +135,7 @@ useEffect(()=> {
             {errors.shipping && <span>This field is required</span>}
           </div>
 
-          {/* tax field */}
+          {/* Taxation field */}
           <div className="">
             <label className="label" htmlFor="">
               Taxation
@@ -140,7 +158,7 @@ useEffect(()=> {
             {errors.taxation && <span>This field is required</span>}
           </div>
 
-          {/* taxation rate */}
+          {/* Taxation rate field */}
           <div className="">
             <label className="label" htmlFor="">
               {watch("taxation") ? watch("taxation") : "VAT"}
@@ -150,6 +168,7 @@ useEffect(()=> {
               type="number"
               min={0}
               placeholder="Taxation"
+              defaultValue={settings?.tax_value ? settings?.tax_value : ""}
               name=""
               id=""
               {...register("tax_value")}
@@ -157,7 +176,7 @@ useEffect(()=> {
             {errors.tax_value && <span>This field is required</span>}
           </div>
 
-          {/* currency */}
+          {/* Currency selection field */}
           <div>
             <label className="label" htmlFor="currency">
               Currency
@@ -181,6 +200,7 @@ useEffect(()=> {
             )}
           </div>
 
+          {/* Footer note field */}
           <div className="">
             <label className="label" htmlFor="">
               Footer Note
@@ -197,10 +217,10 @@ useEffect(()=> {
           </div>
         </div>
 
-        {/* email */}
+        {/* Email settings (only for admin users) */}
         {user?.get_role?.role === "admin" && (
           <div>
-            {/* toggle implement */}
+            {/* Toggle for email settings */}
             <div className="flex m-5 gap-x-3">
               <label htmlFor="">Email Sending Setting</label>
               <input
@@ -208,7 +228,6 @@ useEffect(()=> {
                 className="toggle"
                 checked={isToggle}
                 onChange={() => setIsToggle(!isToggle)}
-                // {...register("mail_option", )}
               />
             </div>
             {mailWarning && (
@@ -217,13 +236,12 @@ useEffect(()=> {
                 role="alert"
               >
                 <p className="font-bold">Be Warned</p>
-                <p>Smtp credentials is wrong</p>
+                <p>Smtp credentials are wrong</p>
               </div>
             )}
-            {/* mail item */}
+            {/* Email settings form fields */}
             {isToggle && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* mail */}
                 <div className="">
                   <label className="label" htmlFor="">
                     Mailer
@@ -243,7 +261,6 @@ useEffect(()=> {
                   {errors.mailer && <span>This field is required</span>}
                 </div>
 
-                {/* mail host */}
                 <div className="">
                   <label className="label" htmlFor="">
                     Mailer host
@@ -265,16 +282,15 @@ useEffect(()=> {
                   {errors.mail_host && <span>This field is required</span>}
                 </div>
 
-                {/* mail host */}
                 <div className="">
                   <label className="label" htmlFor="">
-                    Maile Port
+                    Mail Port
                   </label>
                   <input
                     className="input input-bordered w-full my-2"
                     type="number"
                     min={0}
-                    placeholder="MAIL PORT"
+                    placeholder="Mail Port"
                     defaultValue={
                       mailCredentials?.mail_port
                         ? mailCredentials?.mail_port
@@ -287,16 +303,15 @@ useEffect(()=> {
                   {errors.mail_port && <span>This field is required</span>}
                 </div>
 
-                {/* mail host */}
                 <div className="">
                   <label className="label" htmlFor="">
-                    MAIL USERNAME
+                    Mail Username
                   </label>
                   <input
                     className="input input-bordered w-full my-2"
                     type="text"
                     min={0}
-                    placeholder="MAIL USERNAME"
+                    placeholder="Mail Username"
                     defaultValue={
                       mailCredentials?.mail_username
                         ? mailCredentials?.mail_username
@@ -309,16 +324,15 @@ useEffect(()=> {
                   {errors.username && <span>This field is required</span>}
                 </div>
 
-                {/* mail host */}
                 <div className="">
                   <label className="label" htmlFor="">
-                    MAIL PASSWORD
+                    Mail Password
                   </label>
                   <input
                     className="input input-bordered w-full my-2"
                     type="password"
                     min={0}
-                    placeholder="MAIL PASSWORD"
+                    placeholder="Mail Password"
                     defaultValue={
                       mailCredentials?.mail_password
                         ? mailCredentials?.mail_password
@@ -331,16 +345,15 @@ useEffect(()=> {
                   {errors.mail_password && <span>This field is required</span>}
                 </div>
 
-                {/* mail host */}
                 <div className="">
                   <label className="label" htmlFor="">
-                    MAIL ENCRYPTION
+                    Mail Encryption
                   </label>
                   <input
                     className="input input-bordered w-full my-2"
                     type="text"
                     min={0}
-                    placeholder="MAIL ENCRYPTION"
+                    placeholder="Mail Encryption"
                     defaultValue={
                       mailCredentials?.mail_encryption
                         ? mailCredentials?.mail_encryption
@@ -355,16 +368,15 @@ useEffect(()=> {
                   )}
                 </div>
 
-                {/* mail host */}
                 <div className="">
                   <label className="label" htmlFor="">
-                    MAIL FROM ADDRESS
+                    Mail From Address
                   </label>
                   <input
                     className="input input-bordered w-full my-2"
                     type="text"
                     min={0}
-                    placeholder="MAIL FROM ADDRESS"
+                    placeholder="Mail From Address"
                     defaultValue={
                       mailCredentials?.mail_address
                         ? mailCredentials?.mail_address
@@ -384,7 +396,7 @@ useEffect(()=> {
           <input
             className="btn bg-[#0369a1] text-white btn-wide"
             type="submit"
-            value="submit"
+            value="Submit"
           />
         </div>
       </form>

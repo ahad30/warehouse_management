@@ -2,7 +2,7 @@ import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitl
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { BiCartAdd } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import {
   useDeleteInvoiceMutation,
@@ -13,9 +13,9 @@ import ViewInvoice from "./ViewInvoice/ViewInvoice";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import { BsFiletypePdf, BsFillEyeFill } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";
-import { FaDownload } from "react-icons/fa";
+import { BsFiletypePdf } from "react-icons/bs";
+import { FiEdit, FiEye } from "react-icons/fi";
+import { MdOutlineReceiptLong } from "react-icons/md";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "./InvoicePDF/InvoicePDF";
 import DataTable from "react-data-table-component";
@@ -23,6 +23,7 @@ import InvoicesAsCSV from "./InvoicesAsCSV";
 import InvoiceDateFiltering from "./InvoiceDateFiltering";
 import InvoicesAsPDF from "./InvoicesAsPDF.jsx";
 import RecieptPDF from "./InvoicePDF/RecieptPdf";
+import { AiOutlineFilePdf } from "react-icons/ai";
 
 const InvoicesList = () => {
   UseTitle("Invoices");
@@ -179,27 +180,30 @@ const InvoicesList = () => {
       name: "Actions",
       cell: (row) => (
         <div className="flex gap-x-2 items-center">
-          <BsFillEyeFill
+          <FiEye
             onClick={() => {
               handleViewInvoice(row);
             }}
             className="cursor-pointer"
+            title="View Invoice"
             size={20}
           />
           <PDFDownloadLink
             document={<InvoicePDF invoice={invoice}></InvoicePDF>}
           >
-            <FaDownload
+            <AiOutlineFilePdf
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
+              title="A4 PDF Download"
               size={20}
             />
           </PDFDownloadLink>
 
           <PDFDownloadLink document={<RecieptPDF invoice={invoice} />}>
-            <FaDownload
+            <MdOutlineReceiptLong
               onMouseOver={() => setInvoice(row)}
               className="cursor-pointer"
+              title="Receipt Download"
               size={20}
             />
           </PDFDownloadLink>
@@ -209,6 +213,7 @@ const InvoicesList = () => {
               handleModalEditInfo(row);
             }}
             className="cursor-pointer"
+            title="Edit Invoice"
             size={20}
           />
 
@@ -217,6 +222,7 @@ const InvoicesList = () => {
               onDelete(row?.id);
             }}
             className="cursor-pointer"
+            title="Delete Invoice"
             size={20}
           />
         </div>

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSetting, AiOutlineShoppingCart } from "react-icons/ai";
-import { BiCategory, BiLogOut, BiUserCircle } from "react-icons/bi";
+import { BiCategory, BiUserCircle } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
 import { LiaFileInvoiceDollarSolid, LiaStoreSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
@@ -9,10 +9,11 @@ import { SiBrandfolder } from "react-icons/si";
 import { TbFileInvoice } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
 import UserLogout from "../../components/Reusable/UserLogout/UserLogout";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const DashboardSidebar = () => {
   const location = useLocation();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state?.auth);
 
   const handleLogOut = UserLogout();
 
@@ -44,7 +45,6 @@ const DashboardSidebar = () => {
     },
     {
       name: "Store",
-      // icon: <FaStore size={25} />,
       icon: <LiaStoreSolid size={25}></LiaStoreSolid>,
       path: "/dashboard/store",
     },
@@ -71,15 +71,14 @@ const DashboardSidebar = () => {
   ]);
 
   useEffect(() => {
-    if (user?.get_role?.role !== "admin") {
+    if (
+      user?.get_role?.role !== "admin" &&
+      user?.get_role?.role !== "manager"
+    ) {
       setSidebarData((prev) =>
-        prev.filter((section) => section?.name !== "Users")
-      );
-    } else if (user?.get_role?.role !== ("admin" || "manager")) {
-      setSidebarData((prev) =>
-        prev.filter(
-          (section) => section?.name !== "Users" && section?.name !== "Settings"
-        )
+        prev.filter((section) => {
+          return section?.name !== "Users" && section?.name !== "Settings";
+        })
       );
     }
   }, [user]);
@@ -106,16 +105,13 @@ const DashboardSidebar = () => {
               </li>
             ))}
 
-          <li onClick={() => handleLogOut()} className=" mb-12 cursor-pointer flex text-[#EF4444] font-bold items-center gap-x-2 hover:bg-sky-50 p-3">Logout</li>
+          <li
+            onClick={() => handleLogOut()}
+            className=" mb-12 cursor-pointer flex text-[#EF4444] font-bold items-center gap-x-2 hover.bg-sky-50 p-3 mt-10"
+          >
+            <RiLogoutCircleRLine size={25} /> Logout
+          </li>
         </ul>
-
-        <div>
-         
-          
-
-
-          
-        </div>
       </div>
     </div>
   );

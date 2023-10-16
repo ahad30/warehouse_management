@@ -7,17 +7,20 @@ import { toast } from "react-hot-toast";
 import { deleteItem, getItem } from "../../../../features/Invoice/invoiceSlice";
 import { useGetCategoriesQuery } from "../../../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../../../features/Brand/brandApi";
+import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
 
 const ItemsWithSelect = ({ products }) => {
   const dispatch = useDispatch();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: brandsData } = useGetBrandsQuery();
+  const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
   const [selectedItem, setSelectedItem] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [item, setItem] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [tax, setTax] = useState(defaultSettings?.settings?.tax_value || 0);
   const [itemList, setItemList] = useState([]);
 
   // SELECT AN ITEM FROM DATA FOR ADD TO INVOICE LIST
@@ -33,10 +36,10 @@ const ItemsWithSelect = ({ products }) => {
 
   // SET ITEM AFTER GETTING QUANTITY
   useEffect(() => {
-    setItem({ ...selectedItem, quantity });
-  }, [selectedItem, quantity]);
+    setItem({ ...selectedItem, quantity, tax });
+  }, [selectedItem, quantity, tax]);
 
-  //
+  // Filter products based on selected category and brand
   const filteredProducts = products
     ?.filter(
       (product) =>
@@ -60,6 +63,7 @@ const ItemsWithSelect = ({ products }) => {
     }
   };
 
+  // UseEffect to dispatch the item information to the Redux store
   useEffect(() => {
     dispatch(getItem(itemList));
   }, [dispatch, itemList]);
@@ -110,7 +114,7 @@ const ItemsWithSelect = ({ products }) => {
           </label>
         </div>
         {/* Select Products */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] gap-2 items-start">
+        <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr_2fr] gap-2 items-start">
           <div>
             <label htmlFor="description">
               <p>Code:</p>
@@ -184,7 +188,22 @@ const ItemsWithSelect = ({ products }) => {
             </label>
           </div>
 
-          <div className="">
+          <div>
+            <label htmlFor="invoice">
+              <p>{defaultSettings?.settings?.taxation || "Tax"}:</p>
+              <input
+                type="number"
+                name="tax"
+                placeholder={defaultSettings?.settings?.taxation || "Tax"}
+                className="input input-bordered input-md  my-3 w-full"
+                onChange={(e) => setTax(parseInt(e.target.value))}
+                min={0}
+                value={tax}
+              />
+            </label>
+          </div>
+
+          <div>
             <p>Add item</p>
             <div className=" input input-bordered rounded-lg flex  bg-[#0369A1]  my-3 justify-center items-center">
               <AiOutlinePlusCircle className="text-white" size={20} />
@@ -197,10 +216,7 @@ const ItemsWithSelect = ({ products }) => {
               >
                 Add item
               </button>
-
             </div>
-
-
           </div>
         </div>
       </div>
@@ -217,6 +233,9 @@ const ItemsWithSelect = ({ products }) => {
                 <th className="text-sm">Item Name</th>
                 <th className="text-sm">Price</th>
                 <th className="text-sm">Quantity</th>
+                <th className="text-sm">
+                  {defaultSettings?.settings?.taxation || "VAT"}
+                </th>
                 <th className="text-sm">Total Price</th>
                 <th className="text-sm">
                   <GiCancel />
@@ -234,6 +253,7 @@ const ItemsWithSelect = ({ products }) => {
                       <td>{item?.product_name}</td>
                       <td>{item?.product_sale_price}</td>
                       <td>{item?.quantity}</td>
+                      <td>{item?.tax}</td>
                       <td>{item?.quantity * item?.product_sale_price}</td>
                       <td
                         onClick={() => handleDeleteItem(item?.id)}

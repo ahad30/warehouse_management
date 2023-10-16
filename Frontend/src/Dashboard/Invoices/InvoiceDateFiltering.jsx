@@ -11,16 +11,18 @@ const InvoiceDateFiltering = ({
   const [activeButton, setActiveButton] = useState(null);
 
   return (
-    <div className="flex flex-col my-5 w-full lg:justify-between xl:flex-row gap-x-1">
+    <div className="flex items-center flex-col my-5 w-full lg:justify-between xl:flex-row gap-x-1">
       {/* Week, today, and month filtering */}
-      <div className="grid border border-blue-700 rounded-lg p-2 grid-cols-3 gap-2">
+      <div className="grid border border-blue-700 rounded-lg p-1 grid-cols-3 gap-2">
         <button
           onClick={() => {
             handleDate(1); // Trigger date filtering for today
             setActiveButton(1); // Set "Today" button as active
           }}
           className={`px-2 border py-1 ${
-            activeButton === 1 ? " border-blue-700 rounded-lg" : "border-transparent"
+            activeButton === 1
+              ? " border-blue-700 rounded-lg"
+              : "border-transparent"
           } text-[#334155] rounded-md text-sm`}
         >
           Today
@@ -31,7 +33,9 @@ const InvoiceDateFiltering = ({
             setActiveButton(7); // Set "Last 7 Days" button as active
           }}
           className={`px-2 border  py-1 ${
-            activeButton === 7 ? " border-blue-700 rounded-lg" : "border-transparent"
+            activeButton === 7
+              ? " border-blue-700 rounded-lg"
+              : "border-transparent"
           } text-[#334155] rounded-md text-sm`}
         >
           Last 7 Days
@@ -42,7 +46,9 @@ const InvoiceDateFiltering = ({
             setActiveButton(31); // Set "This Month" button as active
           }}
           className={`px-2  border  py-1 ${
-            activeButton === 31 ? " border-blue-700 rounded-lg" : "border-transparent"
+            activeButton === 31
+              ? " border-blue-700 rounded-lg"
+              : "border-transparent"
           } text-[#334155] rounded-md text-sm`}
         >
           This Month

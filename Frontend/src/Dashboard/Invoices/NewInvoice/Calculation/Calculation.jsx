@@ -9,19 +9,21 @@ const Calculation = () => {
   const { items } = useSelector((state) => state?.invoice);
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
-  console.log(defaultSettings);
+  const settings = defaultSettings?.settings;
 
   const [subTotal, setSubTotal] = useState(0);
-  const [discount, setDiscount] = useState(0);
-  const [shipping, setShipping] = useState(0);
+  const [discount, setDiscount] = useState(settings?.discount);
+  const [shipping, setShipping] = useState(settings?.shipping);
   const [total, setTotal] = useState(0);
   const [paidAmount, setPaidAmount] = useState(0);
   const [due, setDue] = useState(0);
 
+  // Calculate the total price of individual items
   let totalItemsPrice = items?.map(
     (item) => parseInt(item?.product_sale_price) * item?.quantity
   );
 
+  // Calculate and update subTotal, total, and due when the item list, discount, shipping, or paid amount changes
   useEffect(() => {
     setSubTotal(totalItemsPrice?.reduce((prev, cur) => prev + cur, 0));
 
@@ -37,7 +39,7 @@ const Calculation = () => {
     paidAmount,
   ]);
 
-  // Total Price send to the Redux store
+  // Dispatch the total price information to the Redux store
   useEffect(() => {
     let calculation = {
       subTotal,
@@ -51,16 +53,19 @@ const Calculation = () => {
     dispatch(getTotalPrice(calculation));
   }, [subTotal, discount, shipping, total, paidAmount, due, dispatch]);
 
+  // Handle discount input change
   const handleDiscountPrice = (event) => {
     const { value } = event.target;
     setDiscount(Number(value));
   };
 
+  // Handle shipping cost input change
   const handleShippingCost = (event) => {
     const { value } = event.target;
     setShipping(Number(value));
   };
 
+  // Handle paid amount input change
   const handlePaidAmount = (event) => {
     const { value } = event.target;
     setPaidAmount(Number(value));
