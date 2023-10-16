@@ -26,7 +26,6 @@ import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
 import AdminRoute from "./AdminRoute";
-import AdminManagerRoute from "./AdminManagerRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -73,9 +72,9 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/", // Default dashboard analytics
         element: (
-          <AdminManagerRoute>
+          <AdminRoute>
             <DashboardAnalytics />
-          </AdminManagerRoute>
+          </AdminRoute>
         ),
       },
       // USERS
@@ -162,9 +161,9 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/setting", // Settings
         element: (
-          <AdminManagerRoute>
+          <AdminRoute>
             <Settings />
-          </AdminManagerRoute>
+          </AdminRoute>
         ),
       },
       // PROFILE

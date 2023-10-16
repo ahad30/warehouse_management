@@ -19,7 +19,7 @@ const Navbar = () => {
     <div className="bg-gray-100 flex justify-between border-b border-gray-300">
       <div className="border-r lg:w-2/12 p-4 border-gray-300 flex items-center justify-center">
         {/* Link to the dashboard and company logo or name */}
-        <Link to={"/dashboard"} className="font-bold hidden lg:block">
+        <Link to={"/"} className="font-bold hidden lg:block">
           {data?.company_info?.company_img ? (
             // Display company logo if available
             <img
@@ -44,15 +44,17 @@ const Navbar = () => {
       {/* Right side of the navigation bar */}
       <div className="flex items-center gap-2">
         {/* Button to create a new invoice */}
-        <div className="flex items-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 ">
-          <Link
-            className="flex justify-center gap-2 items-center"
-            to={"/dashboard/invoice/new"}
-          >
-            <AiOutlinePlusCircle size={25} />{" "}
-            <span className="hidden sm:block">New Invoice</span>
-          </Link>
-        </div>
+        {user?.get_role?.role !== "inventory_manager" && (
+          <div className="flex items-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 ">
+            <Link
+              className="flex justify-center gap-2 items-center"
+              to={"/dashboard/invoice/new"}
+            >
+              <AiOutlinePlusCircle size={25} />{" "}
+              <span className="hidden sm:block">New Invoice</span>
+            </Link>
+          </div>
+        )}
 
         {/* User profile information and logout option */}
         <div className="p-4 flex items-center gap-x-2">

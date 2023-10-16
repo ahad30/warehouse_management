@@ -257,7 +257,7 @@ class SaleController extends Controller
 
 
 
-    public function update(Request $request): Response
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'invoice_id' => 'required',
@@ -299,7 +299,8 @@ class SaleController extends Controller
         try {
             // Update paid amount and due amount
             $invoice->increment('paid_amount', $newPaidAmount);
-            $invoice->decrement('due_amount', $newPaidAmount);
+            $invoice->decrement('due_amount',  $newPaidAmount);
+
 
             // Update status when due is empty
             if ($invoice->due_amount == 0) {
