@@ -305,11 +305,16 @@
 
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+        body {
+            /* background-color: #E6E7E8; */
+        }
+
         .wrapper {
             background-color: #fffefe;
-            padding: 20px 40px;
-            /* width: 50%; */
+            /* padding: 20px 34px 20px 34px; */
+            min-width: 50%;
             margin: 0 auto;
+            word-wrap: break-word;
         }
 
         .invoice-header h4 {
@@ -339,7 +344,7 @@
 
         .wrapper header img {
             width: 119px;
-            height: 35px;
+            height: 119px;
             margin-top: 10px;
         }
 
@@ -401,15 +406,19 @@
             padding: 16px;
         }
 
-        .flex-row {
+        .mt-120 {
+
+            margin-top: 120px;
+        }
+
+        .subtotal {
             display: flex;
             justify-content: space-between;
             padding: 0 15px;
-            /* margin-top: 120px; */
             border-bottom: 1px solid #E6E7E8;
         }
 
-        .flex-row h3 {
+        .subtotal h3 {
             font-family: 'Inter', sans-serif;
             font-weight: 400;
             font-size: 16px;
@@ -428,19 +437,17 @@
             font-size: 16px;
         }
 
-        .flex-col {
+        .total {
             display: flex;
-            flex-direction: column;
-            /* justify-content: space-between; */
+            justify-content: space-between;
             padding: 0 15px;
             border-bottom: 1px solid #E6E7E8;
             margin-bottom: 30px;
-
         }
 
-        .flex-col h3 {
+        .total h3 {
             font-family: 'Inter', sans-serif;
-
+            font-weight: 600;
             font-size: 16px;
         }
     </style>
@@ -462,6 +469,9 @@
             }
         }
     </style>
+    {{-- /* ------------------------------ bootstrap cdn ----------------------------- */  --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
