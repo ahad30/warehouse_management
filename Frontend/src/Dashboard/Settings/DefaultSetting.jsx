@@ -74,7 +74,7 @@ const DefaultSetting = () => {
     isLoading,
     isSuccess,
   ]);
-// console.log(settingsData)
+  console.log(settingsData);
   // Extract settings and mail credentials from the query results
 
   // Set the email toggle state based on the query result
@@ -84,15 +84,12 @@ const DefaultSetting = () => {
     } else {
       setIsToggle(false);
     }
-   
-    
-   
+
     const settings = settingsData?.settings;
     const mailCredentials = settingsData?.mailCredentials;
-   
-    setSettings(settings)
-    setMailCredentials(mailCredentials)
 
+    setSettings(settings);
+    setMailCredentials(mailCredentials);
   }, [
     settingsData,
     settingsData?.settings,
@@ -104,31 +101,32 @@ const DefaultSetting = () => {
     isSuccess,
   ]);
 
-  useEffect(()=> {
-
-    if(settingsData?.settings){
-      setValue("discount", settingsData?.settings?.discount)
-    setValue("shipping", settingsData?.settings?.shipping)
-    setValue("taxation", settingsData?.settings?.taxation)
-    setValue("tax_value", settingsData?.settings?.tax_value)
-    setValue("currency", settingsData?.settings?.currency)
-    setValue("footer_note", settingsData?.settings?.footer_note)
-   
+  useEffect(() => {
+    if (settingsData?.settings) {
+      setValue("discount", settingsData?.settings?.discount);
+      setValue("shipping", settingsData?.settings?.shipping);
+      setValue("taxation", settingsData?.settings?.taxation);
+      setValue("tax_value", settingsData?.settings?.tax_value);
+      setValue("currency", settingsData?.settings?.currency);
+      setValue("footer_note", settingsData?.settings?.footer_note);
     }
-   
-    if(settingsData?.mailCredentials){
-    setValue("mailer", settingsData?.mailCredentials?.mailer)
-    setValue("mail_encryption", settingsData?.mailCredentials?.mailer_encryption)
-    setValue("mail_host", settingsData?.mailCredentials?.mailer_host)
-    setValue("mail_password", settingsData?.mailCredentials?.mailer_password)
-    setValue("mail_port", settingsData?.mailCredentials?.mailer_port)
-    setValue("mail_username", settingsData?.mailCredentials?.mailer_username)
-    setValue("mail_address", settingsData?.mailCredentials?.mailer_from_address)
-   }
-    
-   
-    
-  },[
+
+    if (settingsData?.mailCredentials) {
+      setValue("mailer", settingsData?.mailCredentials?.mailer);
+      setValue(
+        "mail_encryption",
+        settingsData?.mailCredentials?.mailer_encryption
+      );
+      setValue("mail_host", settingsData?.mailCredentials?.mailer_host);
+      setValue("mail_password", settingsData?.mailCredentials?.mailer_password);
+      setValue("mail_port", settingsData?.mailCredentials?.mailer_port);
+      setValue("mail_username", settingsData?.mailCredentials?.mailer_username);
+      setValue(
+        "mail_address",
+        settingsData?.mailCredentials?.mailer_from_address
+      );
+    }
+  }, [
     settingsData,
     settingsData?.settings,
     settingsData?.mailCredentials,
@@ -138,10 +136,10 @@ const DefaultSetting = () => {
     isLoading,
     isSuccess,
     setValue,
-  ])
-  console.log(settingsData)
+  ]);
+  console.log(settingsData);
   return (
-        <div>
+    <div>
       {/* Form for default settings */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -159,7 +157,6 @@ const DefaultSetting = () => {
               placeholder="Discount"
               name=""
               id=""
-           
               {...register("discount")}
             />
             {errors.discount && <span>This field is required</span>}
@@ -193,14 +190,13 @@ const DefaultSetting = () => {
               id="taxation"
               {...register("taxation")}
               className="w-full select select-bordered"
-              
             >
-              <option  value={"VAT"}>VAT</option>
-              <option  value={"TAX"}>TAX</option>
-              <option  value={"SST"}>SST</option>
-              <option  value={"GST"}>GST</option>
-              <option  value={"PPN"}>PPN</option>
-              <option  value={"HST"}>HST</option>
+              <option value={"VAT"}>VAT</option>
+              <option value={"TAX"}>TAX</option>
+              <option value={"SST"}>SST</option>
+              <option value={"GST"}>GST</option>
+              <option value={"PPN"}>PPN</option>
+              <option value={"HST"}>HST</option>
             </select>
 
             {errors.taxation && <span>This field is required</span>}
@@ -297,7 +293,6 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer"
-                   
                     name=""
                     id=""
                     {...register("mailer")}
@@ -314,7 +309,6 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer host"
-                  
                     name=""
                     id=""
                     {...register("mail_host")}
@@ -328,10 +322,9 @@ const DefaultSetting = () => {
                   </label>
                   <input
                     className="input input-bordered w-full my-2"
-                    type="number"
+                    type="text"
                     min={0}
                     placeholder="Mail Port"
-                  
                     name=""
                     id=""
                     {...register("mail_port")}
@@ -348,7 +341,6 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mail Username"
-                  
                     name=""
                     id=""
                     {...register("mail_username")}
@@ -365,7 +357,6 @@ const DefaultSetting = () => {
                     type="password"
                     min={0}
                     placeholder="Mail Password"
-                  
                     name=""
                     id=""
                     {...register("mail_password")}
@@ -382,7 +373,6 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mail Encryption"
-                    
                     name=""
                     id=""
                     {...register("mail_encryption")}
@@ -401,7 +391,6 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mail From Address"
-                   
                     name=""
                     id=""
                     {...register("mail_address")}
@@ -421,7 +410,6 @@ const DefaultSetting = () => {
         </div>
       </form>
     </div>
-
   );
 };
 

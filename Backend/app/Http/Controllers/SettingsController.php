@@ -34,7 +34,7 @@ class SettingsController extends Controller
     public function update(Request $request): Response
     {
 
-
+        // return response()->json($request->all(), 500);
         $settings = Settings::find(1); //getting settings from database
         if ($settings == null) {
             return response()->json([
@@ -77,12 +77,32 @@ class SettingsController extends Controller
                 // mail option is on so we need to send email and sms notification
                 try {
 
-                    SmtpCheckerJob::dispatch($request->all());
+                    // SmtpCheckerJob::dispatch($request->all());
+
+                    DB::table('settings')->where('id', 1)->update(['mail_option' => "on"]);
+                    /* -------------------------------------------------------------------------- */
+                    /*                              changing env value                             */
+                    /* -------------------------------------------------------------------------- */
+                    $this->changeEnvValue("MAIL_MAILER", env('MAIL_MAILER'), $request->mailer);
+                    // change mailer host
+                    $this->changeEnvValue("MAIL_HOST", env('MAIL_HOST'), $request->mail_host);
+                    // change mailer port
+                    $this->changeEnvValue("MAIL_PORT", env('MAIL_PORT'), $request->mail_port);
+                    // change mailer username
+                    $this->changeEnvValue("MAIL_USERNAME", env('MAIL_USERNAME'), $request->mail_username);
+                    // change mailer password
+                    $this->changeEnvValue("MAIL_PASSWORD", env('MAIL_PASSWORD'), $request->mail_password);
+                    // change mailer encryption
+                    $this->changeEnvValue("MAIL_ENCRYPTION", env('MAIL_ENCRYPTION'), $request->mail_encryption);
+                    // change mailer address
+                    $this->changeEnvValue("MAIL_FROM_ADDRESS", '"' . env('MAIL_FROM_ADDRESS') . '"', '"' . $request->mail_address . '"');
+
                     DB::table('settings')->where('id', 1)->update(['mail_option' => "on"]);
                     DB::commit();
+
                     return response()->json([
                         'status' => true,
-                        'message' => "Settings has been updated successfully and SMTP successfully configured"
+                        'message' => "Settings has been updated successfully and SMTP also configured soon"
                     ], 200);
                 } catch (\Exception $e) {
 
@@ -96,7 +116,20 @@ class SettingsController extends Controller
             }
         }
     }
+    protected function changeEnvValue($keyName, $oldValue, $newValue)
+    {
 
+        $value = $newValue == null || $newValue == '' || $newValue == "null" ? "null" : $newValue;
+        file_put_contents(
+            app()->environmentFilePath(),
+            str_replace(
+                $keyName . '=' . $oldValue,
+                $keyName . '=' . $value
+                ,
+                file_get_contents(app()->environmentFilePath())
+            )
+        );
+    }
 
 
 }
