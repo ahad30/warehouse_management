@@ -7,8 +7,10 @@ import {
   useUpdateUserMutation,
 } from "../../features/User/userApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import { useSelector } from "react-redux";
 
 const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
+  const { user: loggedInUser } = useSelector((state) => state?.auth);
   const { register, handleSubmit, setValue } = useForm();
   const { data: rolesData } = useGetUserRolesQuery();
 
@@ -61,7 +63,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   }, [user, setValue]);
 
   const onSubmit = (data) => {
-    if (!data.role_id || !data.status) {
+    if (!data?.role_id || !data?.status) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
@@ -94,6 +96,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       <select
                         className="select select-bordered w-full"
                         {...register("role_id")}
+                        disabled={user?.role_id === loggedInUser?.role_id}
                         required
                       >
                         <option value={""}>Select Role</option>
@@ -111,6 +114,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       <select
                         className="select select-bordered w-full"
                         {...register("status")}
+                        disabled={user?.role_id === loggedInUser?.role_id}
                       >
                         <option value={"active"}>Active</option>
                         <option value={"inactive"}>Inactive</option>

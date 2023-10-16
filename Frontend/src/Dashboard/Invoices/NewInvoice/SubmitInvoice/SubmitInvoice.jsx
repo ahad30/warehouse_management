@@ -9,7 +9,6 @@ const SubmitInvoice = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const invoice = useSelector((state) => state?.invoice); // Get invoice data from Redux store
-  console.log(invoice);
   const [
     newInvoice,
     { isLoading, isError, error, isSuccess, data: newInvoiceData },
@@ -25,6 +24,8 @@ const SubmitInvoice = () => {
       toast.error("Please Provide Customer Info", { id: 1 }); // Display an error toast message
     } else if (invoice?.items?.length === 0) {
       toast.error("Please select items", { id: 1 }); // Display an error toast message
+    } else if (invoice?.calculation?.paidAmount > invoice?.calculation?.total) {
+      toast.error("You Can't Pay over the Total Amount", { id: 1 }); // Display an error toast message
     } else if (invoice?.items?.length > 0) {
       newInvoice(invoice); // Submit the new invoice using the mutation
     }
