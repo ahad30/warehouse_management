@@ -39,15 +39,11 @@ const styles = StyleSheet.create({
     width: "30%",
     fontSize: "15px",
     fontWeight: "300",
+    border: "1px solid red"
   },
-  headLeftInvoice: {
-    fontSize: "25px",
-    fontWeight: "bold",
-  },
-  date: {
-    marginVertical: "10px",
-  },
-  headRight: { width: "30%", textAlign: "right" },
+
+
+  headRight: { width: "30%", textAlign: "right" , border: "1px solid red"},
   headMiddle: {
     width: "40%",
     display: "flex",
@@ -55,7 +51,16 @@ const styles = StyleSheet.create({
     alignContent: "center",
     padding: "5px",
     textAlign: "center",
+    border: "1px solid red"
+  }, 
+  headLeftInvoice: {
+    fontSize: "25px",
+    fontWeight: "bold",
   },
+  date: {
+    marginVertical: "10px",
+  },
+  
 
   billAndPay: {
     display: "flex",
@@ -131,13 +136,7 @@ const styles = StyleSheet.create({
     padding: "5px",
   },
 
-  // total: {
-  //   display: "flex",
-  //   fontWeight: "bold",
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   marginTop: "10px",
-  // },
+
 });
 
 const InvoicePDF = ({ invoice }) => (
@@ -146,6 +145,9 @@ const InvoicePDF = ({ invoice }) => (
     <Page size="A4" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
+
+
+
         {/* head information */}
         <View style={styles.head}>
           {/* head information left */}
@@ -172,6 +174,10 @@ const InvoicePDF = ({ invoice }) => (
             ></Image>
           </View>
         </View>
+
+
+
+
 
         <View style={styles?.billAndPay}>
           {/* bill Address  */}
