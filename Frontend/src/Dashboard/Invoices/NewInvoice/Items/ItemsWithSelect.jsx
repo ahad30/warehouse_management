@@ -37,13 +37,11 @@ const ItemsWithSelect = ({ products }) => {
   // SET ITEM AFTER GETTING QUANTITY
   useEffect(() => {
     const totalPriceQuantity = quantity * selectedItem.product_sale_price;
-    const totalPriceQuantityTax =
+    const total_price_quantity_tax =
       totalPriceQuantity + (totalPriceQuantity * tax) / 100;
 
-    setItem({ ...selectedItem, quantity, tax, totalPriceQuantityTax });
+    setItem({ ...selectedItem, quantity, tax, total_price_quantity_tax });
   }, [selectedItem, quantity, tax]);
-
-  console.log(item);
 
   // Filter products based on selected category and brand
   const filteredProducts = products
@@ -261,7 +259,7 @@ const ItemsWithSelect = ({ products }) => {
                       <td>{item?.quantity}</td>
                       <td>{item?.tax}%</td>
                       {/* <td>{item?.quantity * item?.product_sale_price}</td> */}
-                      <td>{item?.totalPriceQuantityTax}</td>
+                      <td>{item?.total_price_quantity_tax}</td>
                       <td
                         onClick={() => handleDeleteItem(item?.id)}
                         className="cursor-pointer"

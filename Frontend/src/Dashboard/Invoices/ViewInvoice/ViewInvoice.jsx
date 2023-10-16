@@ -54,6 +54,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                 <div>
                   <h5 className="text-xl font-bold ">Invoice From</h5>
                   <div className="text-[#84878B] ">
+                    <p>{companyInfo?.company_info?.company_name}</p>
                     <p>{companyInfo?.company_info?.company_email}</p>
                     <p>{companyInfo?.company_info?.company_phone}</p>
                     <p>{companyInfo?.company_info?.company_address}</p>
