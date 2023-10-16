@@ -36,7 +36,7 @@ const ItemsWithSelect = ({ products }) => {
 
   // SET ITEM AFTER GETTING QUANTITY
   useEffect(() => {
-    const totalPriceQuantity = quantity * selectedItem.product_sale_price;
+    const totalPriceQuantity = quantity * selectedItem?.product_sale_price;
     const total_price_quantity_tax =
       totalPriceQuantity + (totalPriceQuantity * tax) / 100;
 
