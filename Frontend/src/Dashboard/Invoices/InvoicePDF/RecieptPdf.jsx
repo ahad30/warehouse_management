@@ -183,7 +183,7 @@ const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
             <Image style={styles.logoImage}
-              source={companyImg}
+              source={`${companyImg}`}
             ></Image>
           </View>
         </View>

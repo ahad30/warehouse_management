@@ -223,6 +223,7 @@ const InvoicesList = () => {
                 defaultSettings={defaultSettings}
                 companyDetails={companyDetails}
                 invoice={invoice}
+                companyImg={companyImg}
               ></InvoicePDF>
             }
           >
@@ -278,7 +279,7 @@ const InvoicesList = () => {
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
-
+ console.log(invoice)
   return (
     <>
       <DashboardBackground>

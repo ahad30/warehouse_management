@@ -32,6 +32,9 @@ const DefaultSetting = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [mailWarning, setMailWarning] = useState(null);
 
+  const [settings, setSettings] = useState({});
+  const [mailCredentials, setMailCredentials] = useState({});
+
   // Set up form handling with react-hook-form
   const {
     register,
@@ -72,8 +75,6 @@ const DefaultSetting = () => {
   ]);
 
   // Extract settings and mail credentials from the query results
-  const settings = settingsData?.settings;
-  const mailCredentials = settingsData?.mailCredentials;
 
   // Set the email toggle state based on the query result
   useEffect(() => {
@@ -82,16 +83,24 @@ const DefaultSetting = () => {
     } else {
       setIsToggle(false);
     }
+
+    const settings = settingsData?.settings;
+    const mailCredentials = settingsData?.mailCredentials;
+   
+    setSettings(settings)
+    setMailCredentials(mailCredentials)
+
   }, [
     settingsData,
     settingsData?.settings,
+    settingsData?.mailCredentials,
     updateSettingData,
     error,
     isError,
     isLoading,
     isSuccess,
   ]);
-
+ console.log(settingsData)
   return (
     <div>
       {/* Form for default settings */}
@@ -146,13 +155,15 @@ const DefaultSetting = () => {
               id="taxation"
               {...register("taxation")}
               className="w-full select select-bordered"
+              defaultValue={settings?.taxation}
+              
             >
-              <option value={"VAT"}>VAT</option>
-              <option value={"TAX"}>TAX</option>
-              <option value={"SST"}>SST</option>
-              <option value={"GST"}>GST</option>
-              <option value={"PPN"}>PPN</option>
-              <option value={"HST"}>HST</option>
+              <option  value={"VAT"}>VAT</option>
+              <option  value={"TAX"}>TAX</option>
+              <option  value={"SST"}>SST</option>
+              <option  value={"GST"}>GST</option>
+              <option  value={"PPN"}>PPN</option>
+              <option  value={"HST"}>HST</option>
             </select>
 
             {errors.taxation && <span>This field is required</span>}

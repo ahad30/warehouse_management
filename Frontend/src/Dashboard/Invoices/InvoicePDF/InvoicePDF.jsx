@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 
 });
 
-const InvoicePDF = ({ invoice,companyDetails }) => (
+const InvoicePDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
   // console.log(invoiceData)
   <Document>
     <Page size="A4" style={styles.page}>
@@ -216,6 +216,7 @@ const InvoicePDF = ({ invoice,companyDetails }) => (
             <Text style={styles?.rowOne}>Item name</Text>
             <Text style={styles?.rowTwo}>Price</Text>
             <Text style={styles?.rowTwo}>Qty</Text>
+            <Text style={styles?.rowTwo}>{defaultSettings?.taxation}</Text>
             <Text style={styles?.rowTwo}>Total Price</Text>
           </View>
 
@@ -226,8 +227,9 @@ const InvoicePDF = ({ invoice,companyDetails }) => (
                 <Text style={styles.rowOne}>{item?.name}</Text>
                 <Text style={styles.rowTwo}>{item?.rate}</Text>
                 <Text style={styles.rowTwo}>{item?.quantity}</Text>
+                <Text style={styles.rowTwo}>{item?.tax}</Text>
                 <Text style={styles.rowTwo}>
-                  {item.rate * parseInt(item?.quantity)}
+                {item?.total_price_quantity_tax}
                 </Text>
               </View>
             ))}
@@ -277,6 +279,7 @@ const InvoicePDF = ({ invoice,companyDetails }) => (
 InvoicePDF.propTypes = {
   invoice: object,
   companyDetails: object,
+  defaultSettings: object,
 };
 
 export default InvoicePDF;
