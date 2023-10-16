@@ -40,6 +40,7 @@ const DefaultSetting = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -73,7 +74,7 @@ const DefaultSetting = () => {
     isLoading,
     isSuccess,
   ]);
-
+// console.log(settingsData)
   // Extract settings and mail credentials from the query results
 
   // Set the email toggle state based on the query result
@@ -83,7 +84,9 @@ const DefaultSetting = () => {
     } else {
       setIsToggle(false);
     }
-
+   
+    
+   
     const settings = settingsData?.settings;
     const mailCredentials = settingsData?.mailCredentials;
    
@@ -100,9 +103,45 @@ const DefaultSetting = () => {
     isLoading,
     isSuccess,
   ]);
- console.log(settingsData)
+
+  useEffect(()=> {
+
+    if(settingsData?.settings){
+      setValue("discount", settingsData?.settings?.discount)
+    setValue("shipping", settingsData?.settings?.shipping)
+    setValue("taxation", settingsData?.settings?.taxation)
+    setValue("tax_value", settingsData?.settings?.tax_value)
+    setValue("currency", settingsData?.settings?.currency)
+    setValue("footer_note", settingsData?.settings?.footer_note)
+   
+    }
+   
+    if(settingsData?.mailCredentials){
+    setValue("mailer", settingsData?.mailCredentials?.mailer)
+    setValue("mail_encryption", settingsData?.mailCredentials?.mailer_encryption)
+    setValue("mail_host", settingsData?.mailCredentials?.mailer_host)
+    setValue("mail_password", settingsData?.mailCredentials?.mailer_password)
+    setValue("mail_port", settingsData?.mailCredentials?.mailer_port)
+    setValue("mail_username", settingsData?.mailCredentials?.mailer_username)
+    setValue("mail_address", settingsData?.mailCredentials?.mailer_from_address)
+   }
+    
+   
+    
+  },[
+    settingsData,
+    settingsData?.settings,
+    settingsData?.mailCredentials,
+    updateSettingData,
+    error,
+    isError,
+    isLoading,
+    isSuccess,
+    setValue,
+  ])
+  console.log(settingsData)
   return (
-    <div>
+        <div>
       {/* Form for default settings */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -120,7 +159,7 @@ const DefaultSetting = () => {
               placeholder="Discount"
               name=""
               id=""
-              defaultValue={settings?.discount ? settings.discount : ""}
+           
               {...register("discount")}
             />
             {errors.discount && <span>This field is required</span>}
@@ -135,7 +174,6 @@ const DefaultSetting = () => {
               className="input input-bordered w-full my-2"
               type="number"
               min={0}
-              defaultValue={settings?.shipping ? settings.shipping : ""}
               placeholder="Shipping charge"
               name=""
               id=""
@@ -155,7 +193,6 @@ const DefaultSetting = () => {
               id="taxation"
               {...register("taxation")}
               className="w-full select select-bordered"
-              defaultValue={settings?.taxation}
               
             >
               <option  value={"VAT"}>VAT</option>
@@ -179,7 +216,6 @@ const DefaultSetting = () => {
               type="number"
               min={0}
               placeholder="Taxation"
-              defaultValue={settings?.tax_value ? settings?.tax_value : ""}
               name=""
               id=""
               {...register("tax_value")}
@@ -221,7 +257,6 @@ const DefaultSetting = () => {
               id=""
               className="input input-bordered w-full py-2"
               placeholder="Write Your Footer Note"
-              defaultValue={settings?.footer_note ? settings?.footer_note : ""}
               {...register("footer_note")}
             ></textarea>
             {errors?.footer_note && <span>This field is required</span>}
@@ -262,9 +297,7 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer"
-                    defaultValue={
-                      mailCredentials?.mailer ? mailCredentials?.mailer : ""
-                    }
+                   
                     name=""
                     id=""
                     {...register("mailer")}
@@ -281,11 +314,7 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mailer host"
-                    defaultValue={
-                      mailCredentials?.mail_host
-                        ? mailCredentials?.mail_host
-                        : ""
-                    }
+                  
                     name=""
                     id=""
                     {...register("mail_host")}
@@ -302,11 +331,7 @@ const DefaultSetting = () => {
                     type="number"
                     min={0}
                     placeholder="Mail Port"
-                    defaultValue={
-                      mailCredentials?.mail_port
-                        ? mailCredentials?.mail_port
-                        : ""
-                    }
+                  
                     name=""
                     id=""
                     {...register("mail_port")}
@@ -323,11 +348,7 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mail Username"
-                    defaultValue={
-                      mailCredentials?.mail_username
-                        ? mailCredentials?.mail_username
-                        : ""
-                    }
+                  
                     name=""
                     id=""
                     {...register("mail_username")}
@@ -344,11 +365,7 @@ const DefaultSetting = () => {
                     type="password"
                     min={0}
                     placeholder="Mail Password"
-                    defaultValue={
-                      mailCredentials?.mail_password
-                        ? mailCredentials?.mail_password
-                        : ""
-                    }
+                  
                     name=""
                     id=""
                     {...register("mail_password")}
@@ -365,11 +382,7 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mail Encryption"
-                    defaultValue={
-                      mailCredentials?.mail_encryption
-                        ? mailCredentials?.mail_encryption
-                        : ""
-                    }
+                    
                     name=""
                     id=""
                     {...register("mail_encryption")}
@@ -388,11 +401,7 @@ const DefaultSetting = () => {
                     type="text"
                     min={0}
                     placeholder="Mail From Address"
-                    defaultValue={
-                      mailCredentials?.mail_address
-                        ? mailCredentials?.mail_address
-                        : ""
-                    }
+                   
                     name=""
                     id=""
                     {...register("mail_address")}
@@ -412,6 +421,7 @@ const DefaultSetting = () => {
         </div>
       </form>
     </div>
+
   );
 };
 
