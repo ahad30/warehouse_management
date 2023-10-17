@@ -8,7 +8,7 @@ import { BsFillCartFill } from "react-icons/bs";
 import { VscGraph } from "react-icons/vsc";
 import { SiBrandfolder } from "react-icons/si";
 import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
-
+import { Link} from "react-router-dom";
 const TotalCalculations = () => {
   // Fetch the dashboard summary data using a query
   const { data } = useGetDashboardSummaryQuery();
@@ -42,52 +42,68 @@ const TotalCalculations = () => {
         summary?.totalRevenue
       }`,
       text: "Total Revenue",
+      iconBackgroundColor: "#EA580C"
     },
     {
       img: <VscGraph className="text-white" size={30}></VscGraph>,
       count: summary?.totalSales,
       text: "Total Sales",
+      iconBackgroundColor: "#EFBF02",
+      path: "/dashboard/invoice", 
     },
     {
       img: <BiUserCircle className="text-white" size={30}></BiUserCircle>,
       count: summary?.totalUsers,
       text: "Total Users",
+      iconBackgroundColor: "#8B5CF6",
+      path: "/dashboard/user",
     },
     {
       img: <FiUsers className="text-white" size={30}></FiUsers>,
       count: summary?.totalCustomers,
       text: "Total Customers",
+      iconBackgroundColor: "#16A34A",
+      path: "/dashboard/customer",
     },
     {
       img: <BsFillCartFill className="text-white" size={30}></BsFillCartFill>,
       count: summary?.totalProducts,
       text: "Total Products",
+      iconBackgroundColor: "#EA580C",
+      path: "/dashboard/product",
     },
     {
       img: <BiCategory className="text-white" size={30}></BiCategory>,
       count: summary?.totalCategory,
       text: "Total Category",
+      iconBackgroundColor: "#EFBF02" ,
+      path: "/dashboard/category",
     },
     {
       img: <SiBrandfolder className="text-white" size={30}></SiBrandfolder>,
       count: summary?.totalBrand,
       text: "Total Brand",
+      iconBackgroundColor: "#8B5CF6",
+      path: "/dashboard/brand",
     },
     {
       img: <FaStore className="text-white" size={30}></FaStore>,
       count: summary?.totalStore,
       text: "Total Store",
+      iconBackgroundColor: "#16A34A",
+      path: "/dashboard/store",
     },
   ];
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 my-2 p-2">
-      {items?.map((item, i) => (
-        <div
+      { items && items?.map((item, i) => (
+       <Link to={item?.path}>
+          <div
           key={i}
-          className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-[#f0f9ff] border border-[#BAE6FD]"
+          className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-gray-100 border border-gray-300"
         >
-          <div className="h-[60px] p-5 bg-[#0369A1] rounded-lg flex justify-center items-center w-[60px]">
+          <div className={`h-[60px] p-5 z-10 rounded-lg flex justify-center items-center w-[60px] bg-[${item?.iconBackgroundColor}]`}>
             {item?.img}
           </div>
           <div className="flex flex-col justify-center items-center text-center gap-y-2">
@@ -95,6 +111,7 @@ const TotalCalculations = () => {
             <span>{item?.text}</span>
           </div>
         </div>
+       </Link>
       ))}
     </div>
   );
