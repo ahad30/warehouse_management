@@ -28,14 +28,14 @@ class DashboardController extends Controller
         return response()->json([
             'status' => true,
             'data' => [
-                'totalSales' => $totalSales->count(),
-                'totalRevenue' => $totalRevenue,
-                'totalProducts' => $totalProducts->count(),
-                'totalCustomers' => $totalCustomers->count(),
-                'totalUsers' => $totalUsers->count(),
-                'totalStore' => $totalStore->count(),
-                'totalCategory' => $totalCategory->count(),
-                'totalBrand' => $totalBrand->count(),
+                'totalSales' =>formatLargeNumber( $totalSales->count()),
+                'totalRevenue' => formatLargeNumber($totalRevenue),
+                'totalProducts' => formatLargeNumber($totalProducts->count()),
+                'totalCustomers' => formatLargeNumber($totalCustomers->count()),
+                'totalUsers' => formatLargeNumber($totalUsers->count()),
+                'totalStore' =>formatLargeNumber( $totalStore->count()),
+                'totalCategory' => formatLargeNumber($totalCategory->count()),
+                'totalBrand' => formatLargeNumber($totalBrand->count()),
             ]
         ], 200);
     }
