@@ -143,13 +143,13 @@ const styles = StyleSheet.create({
   },
 });
 
+// console.log(invoiceData)
 const InvoicePDF = ({
   invoice,
   companyDetails,
   defaultSettings,
   companyImg,
 }) => (
-  // console.log(invoiceData)
   <Document>
     <Page size="A4" style={styles.page}>
       {/* main view layout  */}
@@ -176,8 +176,15 @@ const InvoicePDF = ({
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
             <Image
-              style={styles?.logoImage}
-              source={`https://cdn-icons-png.flaticon.com/512/5149/5149174.png`}
+              // style={styles?.logoImage}
+
+              source={
+                companyDetails?.company_img
+                  ? `${
+                      import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                    }/uploads/companyInfo/${companyDetails?.company_img}`
+                  : `https://cdn-icons-png.flaticon.com/512/5149/5149174.pngf`
+              }
             ></Image>
           </View>
         </View>

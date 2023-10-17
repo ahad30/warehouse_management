@@ -403,7 +403,7 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
             text-align: left;
-            padding: 16px;
+            padding: 16px 2px;
         }
 
         .mt-120 {
@@ -498,7 +498,7 @@
                         </td>
                     </tr>
 
-                    {{ $footer ?? '' }}
+                    <small> {{ $footer ?? '' }}</small>
                 </table>
             </td>
         </tr>

@@ -63,35 +63,39 @@
                     </tr> --}}
                 </tbody>
             </table>
-            <div class="d-flex justify-content-end  py-5 me-5">
+            <div class="row align-items-end  py-5 me-5">
+                <div class="col-sm-6">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${invoice?.issue_date} at ${invoice?.invoice_no} for ${invoice?.customer?.name}"
+                        alt="">
+                </div>
+                <div class="col-sm-6">
 
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${invoice?.issue_date} at ${invoice?.invoice_no} for ${invoice?.customer?.name}"
-                    alt="">
 
-            </div>
-            <div class="subtotal mt-5">
-                <h3>Subtotal</h3>
-                <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->sub_total ?? '' }}</h3>
-            </div>
-            <div class="subtotal">
-                <h3>Discount</h3>
-                <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->discount ?? '' }}</h3>
-            </div>
-            <div class="subtotal">
-                <h3>Shipping</h3>
-                <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->shipping ?? '' }}</h3>
-            </div>
-            <div class="subtotal" style="font-weight: bold;color:blue">
-                <h3>Total</h3>
-                <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->total ?? '' }}</h3>
-            </div>
-            <div class="subtotal" style="font-weight: bold;color:green">
-                <h3>Paid</h3>
-                <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->paid_amount ?? '' }}</h3>
-            </div>
-            <div class="subtotal" style="font-weight: bold;color:red ">
-                <h3>Due</h3>
-                <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->due_amount ?? '' }}</h3>
+                    <div class="subtotal mt-5">
+                        <h3>Subtotal</h3>
+                        <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->sub_total ?? '' }}</h3>
+                    </div>
+                    <div class="subtotal">
+                        <h3>Discount</h3>
+                        <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->discount ?? '' }}</h3>
+                    </div>
+                    <div class="subtotal">
+                        <h3>Shipping</h3>
+                        <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->shipping ?? '' }}</h3>
+                    </div>
+                    <div class="subtotal fw-bolder" style="font-weight: bold;color:blue">
+                        <h3>Total</h3>
+                        <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->total ?? '' }}</h3>
+                    </div>
+                    <div class="subtotal fw-bolder" style="font-weight: bold;color:green">
+                        <h3>Paid</h3>
+                        <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->paid_amount ?? '' }}</h3>
+                    </div>
+                    <div class="subtotal fw-bolder" style="font-weight: bold;color:red ">
+                        <h3>Due</h3>
+                        <h3>{{ $invoice->settings->currency ?? '' }} {{ ' ' . $invoice->sale->due_amount ?? '' }}</h3>
+                    </div>
+                </div>
             </div>
         </main>
         <div class="p-3 mt-4 text-center">

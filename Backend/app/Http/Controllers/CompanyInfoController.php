@@ -70,18 +70,18 @@ class CompanyInfoController extends Controller
             $imageData = null; //new image name
             if ($request->hasFile('company_img')) {
                 $file = $request->file('company_img');
-                $filename = $file->getClientOriginalName(); //input image name
-                $imageData = $request->company_name . "-" . time() . '-' . $filename;
+                $extension = $file->getClientOriginalExtension(); //input image name
+                $imageData = $request->company_name . '-' . time() . '.' . $extension;
                 $file->move('uploads/companyInfo/', $imageData);
 
                 // Check if the file exists before attempting to delete it
-                if ($company_info->company_img != null) {
-                    $imagePath = public_path('uploads/companyInfo/' . $company_info->company_img);
-                    if (File::exists($imagePath)) {
+                // if ($company_info->company_img != null) {
+                //     $imagePath = public_path('uploads/companyInfo/' . $company_info->company_img);
+                //     if (File::exists($imagePath)) {
 
-                        File::delete($imagePath);
-                    }
-                }
+                //         File::delete($imagePath);
+                //     }
+                // }
             }
             $company_info->update([
                 'company_name' => $request->company_name,
