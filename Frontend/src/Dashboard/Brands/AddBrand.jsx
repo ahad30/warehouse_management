@@ -84,6 +84,7 @@ const AddBrand = () => {
         <SubmitButton
           title={isLoading ? "Adding Brand..." : "Add Brand"}
           icon={<SiBrandfolder size={20} />}
+          isLoading={isLoading}
         />
       </form>
 

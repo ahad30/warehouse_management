@@ -22,7 +22,7 @@ const BrandsList = () => {
   const [brand, setBrand] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const itemsPerPage = 10;
+  const itemsPerPage = 11;
 
   const {
     data: brandsData,
@@ -138,7 +138,6 @@ const BrandsList = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  console.log(indexOfFirstItem);
 
   // SEARCH FILTERING ENDS
 

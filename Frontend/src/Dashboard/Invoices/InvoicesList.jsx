@@ -68,8 +68,6 @@ const InvoicesList = () => {
     },
   ] = useDeleteInvoiceMutation();
 
-  console.log(invoice);
-
   const handleStartDate = (date) => {
     setStartDate(date);
     setDate(null);
@@ -279,7 +277,7 @@ const InvoicesList = () => {
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
-  
+
   return (
     <>
       <DashboardBackground>
@@ -337,7 +335,6 @@ const InvoicesList = () => {
             paginationTotalRows={filterData?.length}
             onChangePage={(page) => setCurrentPage(page)}
             key="id"
-            
           />
         </div>
 

@@ -35,7 +35,7 @@ const ProductReport = () => {
 
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 11;
 
   const handleStartDate = (date) => {
     setStartDate(date);

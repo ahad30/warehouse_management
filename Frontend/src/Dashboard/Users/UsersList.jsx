@@ -26,7 +26,7 @@ const UsersList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const itemsPerPage = 10;
+  const itemsPerPage = 11;
 
   const {
     data: usersData,

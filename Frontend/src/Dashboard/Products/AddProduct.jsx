@@ -234,6 +234,7 @@ const AddProduct = () => {
         <SubmitButton
           title={isLoading ? "Saving Product..." : "Save Product"}
           icon={<BiCartAdd size={20} />}
+          isLoading={isLoading}
         />
       </form>
       {/* Display error messages */}

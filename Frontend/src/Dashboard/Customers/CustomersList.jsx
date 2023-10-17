@@ -79,7 +79,6 @@ const CustomersList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
-  console.log("console data" + JSON.stringify(filterData));
 
   const columns = [
     {
