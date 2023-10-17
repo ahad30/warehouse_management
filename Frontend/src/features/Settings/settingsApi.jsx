@@ -28,7 +28,7 @@ const settingsApi = apiSlice.injectEndpoints({
         url: `/settings/update`,
         body: data,
       }),
-      invalidatesTags: ["Default"],
+      invalidatesTags: ["Default", "Invoices"],
     }),
   }),
 });

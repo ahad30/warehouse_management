@@ -26,6 +26,10 @@ import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
 import AdminRoute from "./AdminRoute";
+import MSACIRoute from "./MSACIRoute";
+import MACRoute from "./MACRoute";
+import MIRoute from "./MIRoute";
+import ManagerRoute from "./ManagerRoute";
 import HomePage from "../pages/HomePage";
 
 // Create the routes for the application using react-router-dom
@@ -167,6 +171,177 @@ const routes = createBrowserRouter([
       {
         path: "/password-reset/:token", // Password reset page with token
         element: <ResetPassword />,
+      },
+    ],
+  },
+
+  // START DASHBOARD
+  {
+    path: "/dashboard", // Dashboard path
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage />, // Error page for the dashboard
+    children: [
+      {
+        path: "/dashboard", // Default dashboard analytics
+        element: (
+          <AdminRoute>
+            <DashboardAnalytics />
+          </AdminRoute>
+        ),
+      },
+      // USERS
+      {
+        path: "/dashboard/user", // Users list
+        element: (
+          <AdminRoute>
+            <UsersList />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/user/add", // Add a new user
+        element: (
+          <AdminRoute>
+            <AddUser />
+          </AdminRoute>
+        ),
+      },
+      // CUSTOMERS
+      {
+        path: "/dashboard/customer", // Customers list
+        element: (
+          <ManagerRoute>
+            <CustomersList />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/customer/add", // Add a new customer
+        element: (
+          <ManagerRoute>
+            <AddCustomer />
+          </ManagerRoute>
+        ),
+      },
+      // CATEGORIES
+      {
+        path: "/dashboard/category", // Categories list
+        element: (
+          <MIRoute>
+            <CategoriesList />
+          </MIRoute>
+        ),
+      },
+      {
+        path: "/dashboard/category/add", // Add a new category
+        element: (
+          <MIRoute>
+            <AddCategory />
+          </MIRoute>
+        ),
+      },
+      // BRANDS
+      {
+        path: "/dashboard/brand", // Brands list
+        element: (
+          <MIRoute>
+            <BrandsList />
+          </MIRoute>
+        ),
+      },
+      {
+        path: "/dashboard/brand/add", // Add a new brand
+        element: (
+          <MIRoute>
+            <AddBrand />
+          </MIRoute>
+        ),
+      },
+      // STORE
+      {
+        path: "/dashboard/store", // Stores list
+        element: (
+          <MIRoute>
+            <StoresList />
+          </MIRoute>
+        ),
+      },
+      {
+        path: "/dashboard/store/add", // Add a new store
+        element: (
+          <MIRoute>
+            <AddStore />
+          </MIRoute>
+        ),
+      },
+      // PRODUCTS
+      {
+        path: "/dashboard/product", // Products list
+        element: (
+          <MIRoute>
+            <ProductsList />
+          </MIRoute>
+        ),
+      },
+      {
+        path: "/dashboard/product/add", // Add a new product
+        element: (
+          <MIRoute>
+            <AddProduct />
+          </MIRoute>
+        ),
+      },
+      // REPORT
+      {
+        path: "/dashboard/report", // Report layout
+        element: (
+          <MACRoute>
+            <ReportLayout />
+          </MACRoute>
+        ),
+      },
+      {
+        path: "/dashboard/analytics", // Dashboard analytics
+        element: (
+          <AdminRoute>
+            <DashboardAnalytics />
+          </AdminRoute>
+        ),
+      },
+      // INVOICE
+      {
+        path: "/dashboard/invoice/new", // Create a new invoice
+        element: (
+          <MSACIRoute>
+            <NewInvoice />
+          </MSACIRoute>
+        ),
+      },
+      {
+        path: "/dashboard/invoice", // Invoices list
+        element: (
+          <MSACIRoute>
+            <InvoicesList />
+          </MSACIRoute>
+        ),
+      },
+      // SETTING
+      {
+        path: "/dashboard/setting", // Settings
+        element: (
+          <AdminRoute>
+            <Settings />
+          </AdminRoute>
+        ),
+      },
+      // PROFILE
+      {
+        path: "/dashboard/profile", // User profile update
+        element: <UserProfileUpdate />,
       },
     ],
   },

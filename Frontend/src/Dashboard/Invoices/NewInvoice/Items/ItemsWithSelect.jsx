@@ -207,7 +207,10 @@ const ItemsWithSelect = ({ products }) => {
             </label>
           </div>
 
-          <div>
+          <div
+            onClick={handleAddItem}
+            className={`${selectedItem?.product_name && "cursor-pointer"}`}
+          >
             <p>Add item</p>
             <div className=" input input-bordered rounded-lg flex  bg-[#0369A1]  my-3 justify-center items-center">
               <AiOutlinePlusCircle className="text-white" size={20} />
@@ -216,7 +219,6 @@ const ItemsWithSelect = ({ products }) => {
                   selectedItem?.product_name && "cursor-pointer"
                 }`}
                 disabled={!selectedItem?.product_name}
-                onClick={handleAddItem}
               >
                 Add item
               </button>
