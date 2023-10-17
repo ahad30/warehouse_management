@@ -133,6 +133,7 @@ const AddProduct = () => {
               placeholder="Quantity"
               className="input input-bordered w-full"
               required
+              min={1}
               {...register("product_quantity")}
             />
           </label>
@@ -145,6 +146,7 @@ const AddProduct = () => {
               placeholder="Retail Price"
               className="input input-bordered w-full"
               required
+              min={0}
               {...register("product_retail_price")}
             />
           </label>
@@ -157,6 +159,7 @@ const AddProduct = () => {
               placeholder="Sold Price"
               className="input input-bordered w-full"
               required
+              min={0}
               {...register("product_sale_price")}
             />
           </label>

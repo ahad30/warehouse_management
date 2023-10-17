@@ -166,6 +166,7 @@ const ProductReport = () => {
           paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
           paginationTotalRows={filterData?.length}
           onChangePage={(page) => setCurrentPage(page)}
+          keyField="id"
         />
       </div>
     </DashboardBackground>

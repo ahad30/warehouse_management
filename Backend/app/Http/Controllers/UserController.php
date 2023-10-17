@@ -46,7 +46,15 @@ class UserController extends Controller
                 'errors' => $validator->errors()
             ], 404);
         }
+
         $user = User::find($request->id);
+        $loggedInUser = auth()->user();
+        if ($user->id == $loggedInUser->id) {
+            return response()->json([
+                'status' => false,
+                'message' => "You can't update your role",
+            ], 401);
+        }
         if ($user == null) {
             return response()->json([
                 'status' => false,
@@ -84,6 +92,5 @@ class UserController extends Controller
             'status' => false,
             'message' => "User Not Found",
         ], 500);
-
     }
 }

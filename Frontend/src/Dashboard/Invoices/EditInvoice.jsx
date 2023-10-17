@@ -33,10 +33,6 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
   };
 
   useEffect(() => {
-    if (updateIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
     if (updateIsError) {
       toast.error(updateError?.data?.message || updateError?.status, { id: 1 });
     }
@@ -85,7 +81,8 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <input
                       type="submit"
-                      value={"Update"}
+                      value={updateIsLoading ? "Updating" : "Update"}
+                      disabled={updateIsLoading}
                       className="cursor-pointer w-full mt-2 p-2.5 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
                     />
 

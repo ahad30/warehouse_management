@@ -14,7 +14,7 @@ import {
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
-import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
+import {FaEdit } from "react-icons/fa";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const UsersList = () => {
@@ -135,23 +135,23 @@ const UsersList = () => {
       name: "role",
       selector: (row) => row?.get_role?.role,
     },
-    {
-      name: "Status",
-      cell: (row) => (
-        <div>
-          {row.status === "active" ? (
-            <p className="flex items-center gap-x-2">
-              {" "}
-              {row?.status} <FaCheckCircle style={{ color: "green" }} />
-            </p>
-          ) : (
-            <p className="flex items-center gap-x-2">
-              {row?.status} <FaTimesCircle style={{ color: "red" }} />
-            </p>
-          )}
-        </div>
-      ),
-    },
+    // {
+    //   name: "Status",
+    //   cell: (row) => (
+    //     <div>
+    //       {row.status === "active" ? (
+    //         <p className="flex items-center gap-x-2">
+    //           {" "}
+    //           {row?.status} <FaCheckCircle style={{ color: "green" }} />
+    //         </p>
+    //       ) : (
+    //         <p className="flex items-center gap-x-2">
+    //           {row?.status} <FaTimesCircle style={{ color: "red" }} />
+    //         </p>
+    //       )}
+    //     </div>
+    //   ),
+    // },
     {
       name: "address",
       // selector: "address",
@@ -251,6 +251,7 @@ const UsersList = () => {
               paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
               paginationTotalRows={filterData?.length}
               onChangePage={(page) => setCurrentPage(page)}
+              keyField="id"
             />
           )
         )}
