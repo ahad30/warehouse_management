@@ -26,6 +26,7 @@ import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
 import AdminRoute from "./AdminRoute";
+import HomePage from "../pages/HomePage";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -35,12 +36,121 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage />, // Error page component
     children: [
       {
-        path: "/", // Default dashboard path
+        path: "/", // Root path
+        element: <HomePage></HomePage>,
+      },
+      {
+        path: "/dashboard", // Dashboard path
         element: (
           <PrivateRoute>
             <DashboardLayout />
           </PrivateRoute>
         ),
+        errorElement: <ErrorPage />, // Error page for the dashboard
+        children: [
+          {
+            path: "/dashboard", // Default dashboard analytics
+            element: (
+              <AdminRoute>
+                <DashboardAnalytics />
+              </AdminRoute>
+            ),
+          },
+          // USERS
+          {
+            path: "/dashboard/user", // Users list
+            element: (
+              <AdminRoute>
+                <UsersList />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/user/add", // Add a new user
+            element: (
+              <AdminRoute>
+                <AddUser />
+              </AdminRoute>
+            ),
+          },
+          // CUSTOMERS
+          {
+            path: "/dashboard/customer", // Customers list
+            element: <CustomersList />,
+          },
+          {
+            path: "/dashboard/customer/add", // Add a new customer
+            element: <AddCustomer />,
+          },
+          // CATEGORIES
+          {
+            path: "/dashboard/category", // Categories list
+            element: <CategoriesList />,
+          },
+          {
+            path: "/dashboard/category/add", // Add a new category
+            element: <AddCategory />,
+          },
+          // BRANDS
+          {
+            path: "/dashboard/brand", // Brands list
+            element: <BrandsList />,
+          },
+          {
+            path: "/dashboard/brand/add", // Add a new brand
+            element: <AddBrand />,
+          },
+          // STORE
+          {
+            path: "/dashboard/store", // Stores list
+            element: <StoresList />,
+          },
+          {
+            path: "/dashboard/store/add", // Add a new store
+            element: <AddStore />,
+          },
+          // PRODUCTS
+          {
+            path: "/dashboard/product", // Products list
+            element: <ProductsList />,
+          },
+          {
+            path: "/dashboard/product/add", // Add a new product
+            element: <AddProduct />,
+          },
+          // REPORT
+          {
+            path: "/dashboard/report", // Report layout
+            element: <ReportLayout />,
+          },
+          {
+            path: "/dashboard/analytics", // Dashboard analytics
+            element: <DashboardAnalytics />,
+          },
+          // INVOICE
+          {
+            path: "/dashboard/invoice/new", // Create a new invoice
+            element: <NewInvoice />,
+          },
+          {
+            path: "/dashboard/invoice", // Invoices list
+            element: <InvoicesList />,
+          },
+          // SETTING
+          {
+            path: "/dashboard/setting", // Settings
+            element: (
+              <AdminRoute>
+                <Settings />
+              </AdminRoute>
+            ),
+          },
+          // PROFILE
+          {
+            path: "/dashboard/profile", // User profile update
+            element: <UserProfileUpdate />,
+          },
+        ],
       },
       {
         path: "/login", // Login page
@@ -57,119 +167,6 @@ const routes = createBrowserRouter([
       {
         path: "/password-reset/:token", // Password reset page with token
         element: <ResetPassword />,
-      },
-    ],
-  },
-  {
-    path: "/dashboard", // Dashboard path
-    element: (
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
-    ),
-    errorElement: <ErrorPage />, // Error page for the dashboard
-    children: [
-      {
-        path: "/dashboard/", // Default dashboard analytics
-        element: (
-          <AdminRoute>
-            <DashboardAnalytics />
-          </AdminRoute>
-        ),
-      },
-      // USERS
-      {
-        path: "/dashboard/user", // Users list
-        element: (
-          <AdminRoute>
-            <UsersList />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "/dashboard/user/add", // Add a new user
-        element: (
-          <AdminRoute>
-            <AddUser />
-          </AdminRoute>
-        ),
-      },
-      // CUSTOMERS
-      {
-        path: "/dashboard/customer", // Customers list
-        element: <CustomersList />,
-      },
-      {
-        path: "/dashboard/customer/add", // Add a new customer
-        element: <AddCustomer />,
-      },
-      // CATEGORIES
-      {
-        path: "/dashboard/category", // Categories list
-        element: <CategoriesList />,
-      },
-      {
-        path: "/dashboard/category/add", // Add a new category
-        element: <AddCategory />,
-      },
-      // BRANDS
-      {
-        path: "/dashboard/brand", // Brands list
-        element: <BrandsList />,
-      },
-      {
-        path: "/dashboard/brand/add", // Add a new brand
-        element: <AddBrand />,
-      },
-      // STORE
-      {
-        path: "/dashboard/store", // Stores list
-        element: <StoresList />,
-      },
-      {
-        path: "/dashboard/store/add", // Add a new store
-        element: <AddStore />,
-      },
-      // PRODUCTS
-      {
-        path: "/dashboard/product", // Products list
-        element: <ProductsList />,
-      },
-      {
-        path: "/dashboard/product/add", // Add a new product
-        element: <AddProduct />,
-      },
-      // REPORT
-      {
-        path: "/dashboard/report", // Report layout
-        element: <ReportLayout />,
-      },
-      {
-        path: "/dashboard/analytics", // Dashboard analytics
-        element: <DashboardAnalytics />,
-      },
-      // INVOICE
-      {
-        path: "/dashboard/invoice/new", // Create a new invoice
-        element: <NewInvoice />,
-      },
-      {
-        path: "/dashboard/invoice", // Invoices list
-        element: <InvoicesList />,
-      },
-      // SETTING
-      {
-        path: "/dashboard/setting", // Settings
-        element: (
-          <AdminRoute>
-            <Settings />
-          </AdminRoute>
-        ),
-      },
-      // PROFILE
-      {
-        path: "/dashboard/profile", // User profile update
-        element: <UserProfileUpdate />,
       },
     ],
   },

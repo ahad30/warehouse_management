@@ -8,7 +8,7 @@ import { BsFillCartFill } from "react-icons/bs";
 import { VscGraph } from "react-icons/vsc";
 import { SiBrandfolder } from "react-icons/si";
 import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
-import { Link,} from "react-router-dom";
+import { Link} from "react-router-dom";
 const TotalCalculations = () => {
   // Fetch the dashboard summary data using a query
   const { data } = useGetDashboardSummaryQuery();
