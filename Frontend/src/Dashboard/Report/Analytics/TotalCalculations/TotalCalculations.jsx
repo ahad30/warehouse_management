@@ -8,7 +8,7 @@ import { BsFillCartFill } from "react-icons/bs";
 import { VscGraph } from "react-icons/vsc";
 import { SiBrandfolder } from "react-icons/si";
 import { useGetDefaultSettingsQuery } from "../../../../features/Settings/settingsApi";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 const TotalCalculations = () => {
   // Fetch the dashboard summary data using a query
   const { data } = useGetDashboardSummaryQuery();
@@ -42,14 +42,14 @@ const TotalCalculations = () => {
         summary?.totalRevenue
       }`,
       text: "Total Revenue",
-      iconBackgroundColor: "#EA580C"
+      iconBackgroundColor: "#EA580C",
     },
     {
       img: <VscGraph className="text-white" size={30}></VscGraph>,
       count: summary?.totalSales,
       text: "Total Sales",
       iconBackgroundColor: "#EFBF02",
-      path: "/dashboard/invoice", 
+      path: "/dashboard/invoice",
     },
     {
       img: <BiUserCircle className="text-white" size={30}></BiUserCircle>,
@@ -76,7 +76,7 @@ const TotalCalculations = () => {
       img: <BiCategory className="text-white" size={30}></BiCategory>,
       count: summary?.totalCategory,
       text: "Total Category",
-      iconBackgroundColor: "#EFBF02" ,
+      iconBackgroundColor: "#EFBF02",
       path: "/dashboard/category",
     },
     {
@@ -97,22 +97,25 @@ const TotalCalculations = () => {
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 my-2 p-2">
-      { items && items?.map((item, i) => (
-       <Link to={item?.path}>
-          <div
-          key={i}
-          className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-gray-100 border border-gray-300"
-        >
-          <div className={`h-[60px] p-5 z-10 rounded-lg flex justify-center items-center w-[60px] bg-[${item?.iconBackgroundColor}]`}>
-            {item?.img}
-          </div>
-          <div className="flex flex-col justify-center items-center text-center gap-y-2">
-            <span className="font-bold text-3xl">{item?.count}</span>
-            <span>{item?.text}</span>
-          </div>
-        </div>
-       </Link>
-      ))}
+      {items &&
+        items?.map((item, i) => (
+          <Link key={i} to={item?.path}>
+            <div
+              key={i}
+              className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-gray-100 border border-gray-300"
+            >
+              <div
+                className={`h-[60px] p-5 z-10 rounded-lg flex justify-center items-center w-[60px] bg-[${item?.iconBackgroundColor}]`}
+              >
+                {item?.img}
+              </div>
+              <div className="flex flex-col justify-center items-center text-center gap-y-2">
+                <span className="font-bold text-3xl">{item?.count}</span>
+                <span>{item?.text}</span>
+              </div>
+            </div>
+          </Link>
+        ))}
     </div>
   );
 };
