@@ -23,7 +23,7 @@ const Navbar = () => {
           {data?.company_info?.company_img ? (
             // Display company logo if available
             <img
-              className="w-28 h-12 rounded-md"
+              className="w-28 h-12 rounded-md object-contain"
               src={`${
                 import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
               }/uploads/companyInfo/${data?.company_info?.company_img}`}
