@@ -14,7 +14,7 @@ import {
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
-import {FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const UsersList = () => {
@@ -112,13 +112,10 @@ const UsersList = () => {
     },
     {
       name: "Name",
-      // selector: "name",
       selector: (row) => <>{row?.name}</>,
-      sortable: true,
     },
     {
       name: "email",
-      // selector: "email",
       selector: (row) => <>{row?.email}</>,
       // cell: (row) => {
       // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
@@ -128,7 +125,6 @@ const UsersList = () => {
     },
     {
       name: "phone",
-      // selector: "phone",
       selector: (row) => <>{row?.phone}</>,
     },
     {

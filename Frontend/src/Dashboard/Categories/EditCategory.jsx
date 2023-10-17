@@ -20,7 +20,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   ] = useUpdateCategoryMutation();
 
   const onSubmit = (data) => {
-    if (!data.category_name || !data.description) {
+    if (!data.category_name) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
@@ -115,14 +115,15 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                 </form>
               </div>
               {/* Display error messages */}
-              {errorMessages.map((errorMessage, index) => (
-                <p
-                  key={index}
-                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                >
-                  {errorMessage}
-                </p>
-              ))}
+              {updateIsError &&
+                errorMessages?.map((errorMessage, index) => (
+                  <p
+                    key={index}
+                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                  >
+                    {errorMessage}
+                  </p>
+                ))}
             </div>
           </div>
         </div>

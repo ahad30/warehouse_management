@@ -372,7 +372,7 @@ const InvoicesList = () => {
               <div className="relative max-w-7xl p-4 mx-auto bg-white rounded-md shadow-lg">
                 {/* Invoice view section start */}
                 <div>
-                  <div className="md:min-w-[700px] h-[1100px] max-w-full p-5">
+                  <div className="md:min-w-[700px] max-w-full p-5">
                     {/* Invoice from */}
                     <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                       <div>

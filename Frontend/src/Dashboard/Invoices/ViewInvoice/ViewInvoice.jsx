@@ -5,20 +5,17 @@ import {
   useGetDefaultSettingsQuery,
 } from "../../../features/Settings/settingsApi";
 import { useRef } from "react";
-import { useReactToPrint } from 'react-to-print';
-import { FaDownload } from 'react-icons/fa';
-
-
-
+import { useReactToPrint } from "react-to-print";
+import { FaDownload } from "react-icons/fa";
 
 const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
   const { data: companyInfo } = useGetCompanyInfoQuery();
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
   const reference = useRef();
-  
-  const  handlePrint = useReactToPrint({
-    content: ()=> reference?.current
-  })
+
+  const handlePrint = useReactToPrint({
+    content: () => reference?.current,
+  });
 
   return viewInvoiceOpen ? (
     <div ref={reference} className="fixed inset-0 z-50 overflow-y-auto">
@@ -30,7 +27,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
         <div className="relative max-w-7xl p-4 mx-auto bg-white rounded-md shadow-lg">
           {/* Invoice view section start */}
           <div>
-            <div className="md:min-w-[700px] h-[1100px] max-w-full p-5">
+            <div className="md:min-w-[750px] max-w-full p-5">
               {/* Invoice from */}
               <div className="flex justify-between items-center border-b-2 pb-5 my-5">
                 <div>
@@ -117,7 +114,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                 </table>
               </div>
               {/* Calculation */}
-              <div className="flex justify-between">
+              <div className="flex justify-between mt-20">
                 <div className="flex items-center gap-5 w-20">
                   <QRCodeCanvas
                     size={70}
@@ -188,7 +185,14 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                   {defaultSettings?.settings?.footer_note}
                 </p>
               )}
-              <div className=""><button onClick={handlePrint} className="btn bg-green-500 text-white"><FaDownload></FaDownload> Download</button></div>
+              <div className="">
+                <button
+                  onClick={handlePrint}
+                  className="btn bg-green-500 text-white"
+                >
+                  <FaDownload></FaDownload> Print
+                </button>
+              </div>
             </div>
           </div>
         </div>
