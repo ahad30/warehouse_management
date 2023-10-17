@@ -1,10 +1,16 @@
+import { useRef } from "react";
 import Navbar from "../Shared/Navbar/Navbar";
 import DashboardSidebar from "../layouts/Dashboard/DashboardSidebar";
 import { useSelector } from "react-redux";
+import { useReactToPrint } from 'react-to-print';
 
 const HomePage = () => {
   const { user } = useSelector((state) => state?.auth);
-
+ 
+  
+    
+    
+  
   return (
     <div className="max-w-[1920px] mx-auto">
       <div className="sticky top-0 z-10">
@@ -34,6 +40,7 @@ const HomePage = () => {
                 />
               </div>
             </div>
+            
           </div>
         </div>
 
