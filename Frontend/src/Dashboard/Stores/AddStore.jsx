@@ -114,6 +114,7 @@ const AddStore = () => {
         <SubmitButton
           icon={<FaStore size={20} />}
           title={isLoading ? "Adding Store..." : "Add Store"}
+          isLoading={isLoading}
         />
       </form>
       {/* Display error messages */}

@@ -51,13 +51,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     updateData?.message,
     setModalIsOpen,
   ]);
-  console.log(
-    updateIsLoading,
-    updateIsError,
-    updateError,
-    updateIsSuccess,
-    updateData
-  );
+
   useEffect(() => {
     if (store) {
       setValue("store_name", store?.store_name || "");

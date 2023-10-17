@@ -74,7 +74,6 @@ const DefaultSetting = () => {
     isLoading,
     isSuccess,
   ]);
-  console.log(settingsData);
   // Extract settings and mail credentials from the query results
 
   // Set the email toggle state based on the query result
@@ -137,7 +136,7 @@ const DefaultSetting = () => {
     isSuccess,
     setValue,
   ]);
-  console.log(settingsData);
+
   return (
     <div>
       {/* Form for default settings */}
@@ -395,7 +394,7 @@ const DefaultSetting = () => {
                     id=""
                     {...register("mail_address")}
                   />
-                  {errors.mail_address && <span>This field is required</span>}
+                  {errors?.mail_address && <span>This field is required</span>}
                 </div>
               </div>
             )}
@@ -403,9 +402,11 @@ const DefaultSetting = () => {
         )}
         <div className="flex mt-3 justify-end">
           <input
-            className="btn bg-[#0369a1] text-white btn-wide"
             type="submit"
-            value="Submit"
+            className="input w-full input-bordered input-md my-2 lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white cursor-pointer"
+            value={isLoading ? "Saving..." : "Save"}
+            required
+            disabled={isLoading}
           />
         </div>
       </form>

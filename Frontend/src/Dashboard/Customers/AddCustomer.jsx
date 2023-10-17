@@ -119,6 +119,7 @@ const AddCustomer = () => {
         <SubmitButton
           icon={<AiOutlineUserAdd size={20} />}
           title={isLoading ? "Adding Customer..." : "Add Customer"}
+          isLoading={isLoading}
         />
       </form>
       {/* Display error messages */}

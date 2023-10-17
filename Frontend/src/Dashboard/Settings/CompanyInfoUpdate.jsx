@@ -9,7 +9,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const CompanyInfoUpdate = () => {
   UseTitle("Company Info Update");
-  
+
   // Create form using react-hook-form
   const { handleSubmit, register, setValue } = useForm();
 
@@ -172,8 +172,9 @@ const CompanyInfoUpdate = () => {
           <input
             type="submit"
             className="input w-full input-bordered input-md my-2 lg:btn-wide bg-[#0369a1] text-white hover:bg-gray-600 hover:text-white cursor-pointer"
-            defaultValue={"Update Info"}
+            value={updateIsLoading ? "Saving..." : "Save"}
             required
+            disabled={updateIsLoading}
           />
         </div>
       </form>

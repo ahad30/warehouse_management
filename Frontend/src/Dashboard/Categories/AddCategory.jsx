@@ -75,6 +75,7 @@ const AddCategory = () => {
         <SubmitButton
           title={isLoading ? "Adding Category..." : "Add Category"}
           icon={<BiSolidDuplicate size={20} />}
+          isLoading={isLoading}
         />
       </form>
     </DashboardBackground>
