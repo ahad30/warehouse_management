@@ -28,7 +28,7 @@ class InvoiceCreatedJob implements ShouldQueue
      * Create a new job instance.
      */
 
-    public function __construct($customer,$sale, $items,$settings,$companyInfo)
+    public function __construct($customer, $sale, $items, $settings, $companyInfo)
     {
         $this->invoice = [
             'sale' => $sale,
@@ -45,17 +45,17 @@ class InvoiceCreatedJob implements ShouldQueue
      */
     public function handle(): void
     {
-        info(json_encode($this->invoice));
+
         DB::beginTransaction();
-        try{
+        try {
             Mail::to($this->customerMail)->send(
                 (new SendInvoiceMail(json_encode($this->invoice)))->afterCommit()
             );
-            DB::table('settings')->where('id',1)->update([
+            DB::table('settings')->where('id', 1)->update([
                 'mail_credential_status' => 'active'
-            ]) ;
+            ]);
             DB::commit();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             info($e->getMessage());
             DB::rollBack();
             DB::table('settings')->where('id', 1)->update([

@@ -136,7 +136,7 @@ const InvoicesList = () => {
     settingsData,
     settingsData?.settings,
   ]);
-
+  console.log(companyDetails);
   // DELETE ENDS
 
   // EDIT STARTS
