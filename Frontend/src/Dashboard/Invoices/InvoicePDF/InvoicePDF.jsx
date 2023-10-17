@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     border: "1px solid red",
     height: "80px",
     width: "80px",
+    fontSize: "5px",
   },
   headLeft: {
     width: "30%",
@@ -176,16 +177,15 @@ const InvoicePDF = ({
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
             <Image
-              // style={styles?.logoImage}
-
+              style={styles?.logoImage}
+              // `https://nurulkomor.vercel.app/assets/role-permission-ebf60eeb.png`
               source={
-                companyDetails?.company_img
-                  ? `${
-                      import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                    }/uploads/companyInfo/${companyDetails?.company_img}`
+                companyImg
+                  ? `http://localhost:8000/uploads/companyInfo/Z8-Tech.png`
                   : `https://cdn-icons-png.flaticon.com/512/5149/5149174.pngf`
               }
             ></Image>
+            <Text>{companyImg}</Text>
           </View>
         </View>
 

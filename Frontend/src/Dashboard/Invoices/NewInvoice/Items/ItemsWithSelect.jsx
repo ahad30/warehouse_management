@@ -200,7 +200,9 @@ const ItemsWithSelect = ({ products }) => {
                 name="tax"
                 placeholder={defaultSettings?.settings?.taxation || "Tax"}
                 className="input input-bordered input-md  my-3 w-full"
-                onChange={(e) => setTax(parseInt(e.target.value))}
+                onChange={(e) =>
+                  setTax(e.target.value ? parseInt(e.target.value) : 0)
+                }
                 min={0}
                 value={tax}
               />

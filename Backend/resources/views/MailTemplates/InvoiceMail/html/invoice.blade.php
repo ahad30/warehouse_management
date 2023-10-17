@@ -65,7 +65,7 @@
             </table>
             <div class="row align-items-end  py-5 me-5">
                 <div class="col-sm-6">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${invoice?.issue_date} at ${invoice?.invoice_no} for ${invoice?.customer?.name}"
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{ $invoice->sale->invoice_no }} "
                         alt="">
                 </div>
                 <div class="col-sm-6">
