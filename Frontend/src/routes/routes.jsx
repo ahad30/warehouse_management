@@ -29,6 +29,7 @@ import AdminRoute from "./AdminRoute";
 import MSACIRoute from "./MSACIRoute";
 import MACRoute from "./MACRoute";
 import MIRoute from "./MIRoute";
+import ManagerRoute from "./ManagerRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -102,11 +103,19 @@ const routes = createBrowserRouter([
       // CUSTOMERS
       {
         path: "/dashboard/customer", // Customers list
-        element: <CustomersList />,
+        element: (
+          <ManagerRoute>
+            <CustomersList />
+          </ManagerRoute>
+        ),
       },
       {
         path: "/dashboard/customer/add", // Add a new customer
-        element: <AddCustomer />,
+        element: (
+          <ManagerRoute>
+            <AddCustomer />
+          </ManagerRoute>
+        ),
       },
       // CATEGORIES
       {
@@ -187,7 +196,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/dashboard/analytics", // Dashboard analytics
-        element: <DashboardAnalytics />,
+        element: (
+          <AdminRoute>
+            <DashboardAnalytics />
+          </AdminRoute>
+        ),
       },
       // INVOICE
       {
