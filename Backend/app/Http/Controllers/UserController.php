@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
             'id' => 'required'
         ]);
         if ($validator->fails()) {
