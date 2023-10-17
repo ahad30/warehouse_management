@@ -182,7 +182,7 @@ class SaleController extends Controller
                 'due_amount' => $calculation['due'],
                 'issue_date' => $formattedIssueDate,
                 'due_date' => $formattedDueDate,
-                'status' => $formattedDueDate ? 0 : 1,
+                'status' => $calculation['due'] > 0 ? 0 : 1,
             ]);
 
             // Store sale items
