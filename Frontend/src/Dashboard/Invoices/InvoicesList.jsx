@@ -130,7 +130,7 @@ const InvoicesList = () => {
     settingsData,
     settingsData?.settings,
   ]);
-
+  console.log(companyDetails);
   // DELETE ENDS
 
   // EDIT STARTS
@@ -279,7 +279,7 @@ const InvoicesList = () => {
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
- console.log(invoice)
+  console.log(invoice);
   return (
     <>
       <DashboardBackground>
