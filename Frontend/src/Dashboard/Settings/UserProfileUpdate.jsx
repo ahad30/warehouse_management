@@ -4,8 +4,10 @@ import { useUpdateUserProfileMutation } from "../../features/User/userApi";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const UserProfileUpdate = () => {
+  UseTitle("Profile");
   // Access the user data from the Redux store
   const { user } = useSelector((state) => state?.auth);
 

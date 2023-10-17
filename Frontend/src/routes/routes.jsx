@@ -26,6 +26,9 @@ import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
 import AdminRoute from "./AdminRoute";
+import MSACIRoute from "./MSACIRoute";
+import MACRoute from "./MACRoute";
+import MIRoute from "./MIRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -60,6 +63,8 @@ const routes = createBrowserRouter([
       },
     ],
   },
+
+  // START DASHBOARD
   {
     path: "/dashboard", // Dashboard path
     element: (
@@ -70,7 +75,7 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage />, // Error page for the dashboard
     children: [
       {
-        path: "/dashboard/", // Default dashboard analytics
+        path: "/dashboard", // Default dashboard analytics
         element: (
           <AdminRoute>
             <DashboardAnalytics />
@@ -106,43 +111,79 @@ const routes = createBrowserRouter([
       // CATEGORIES
       {
         path: "/dashboard/category", // Categories list
-        element: <CategoriesList />,
+        element: (
+          <MIRoute>
+            <CategoriesList />
+          </MIRoute>
+        ),
       },
       {
         path: "/dashboard/category/add", // Add a new category
-        element: <AddCategory />,
+        element: (
+          <MIRoute>
+            <AddCategory />
+          </MIRoute>
+        ),
       },
       // BRANDS
       {
         path: "/dashboard/brand", // Brands list
-        element: <BrandsList />,
+        element: (
+          <MIRoute>
+            <BrandsList />
+          </MIRoute>
+        ),
       },
       {
         path: "/dashboard/brand/add", // Add a new brand
-        element: <AddBrand />,
+        element: (
+          <MIRoute>
+            <AddBrand />
+          </MIRoute>
+        ),
       },
       // STORE
       {
         path: "/dashboard/store", // Stores list
-        element: <StoresList />,
+        element: (
+          <MIRoute>
+            <StoresList />
+          </MIRoute>
+        ),
       },
       {
         path: "/dashboard/store/add", // Add a new store
-        element: <AddStore />,
+        element: (
+          <MIRoute>
+            <AddStore />
+          </MIRoute>
+        ),
       },
       // PRODUCTS
       {
         path: "/dashboard/product", // Products list
-        element: <ProductsList />,
+        element: (
+          <MIRoute>
+            <ProductsList />
+          </MIRoute>
+        ),
       },
       {
         path: "/dashboard/product/add", // Add a new product
-        element: <AddProduct />,
+        element: (
+          <MIRoute>
+            <AddProduct />
+          </MIRoute>
+        ),
       },
       // REPORT
       {
         path: "/dashboard/report", // Report layout
-        element: <ReportLayout />,
+        element: (
+          <MACRoute>
+            <ReportLayout />
+          </MACRoute>
+        ),
       },
       {
         path: "/dashboard/analytics", // Dashboard analytics
@@ -151,11 +192,19 @@ const routes = createBrowserRouter([
       // INVOICE
       {
         path: "/dashboard/invoice/new", // Create a new invoice
-        element: <NewInvoice />,
+        element: (
+          <MSACIRoute>
+            <NewInvoice />
+          </MSACIRoute>
+        ),
       },
       {
         path: "/dashboard/invoice", // Invoices list
-        element: <InvoicesList />,
+        element: (
+          <MSACIRoute>
+            <InvoicesList />
+          </MSACIRoute>
+        ),
       },
       // SETTING
       {
