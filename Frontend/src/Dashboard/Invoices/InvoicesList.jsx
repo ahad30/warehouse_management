@@ -37,7 +37,7 @@ const InvoicesList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const itemsPerPage = 10;
+  const itemsPerPage = 11;
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -67,6 +67,8 @@ const InvoicesList = () => {
       data: deleteData,
     },
   ] = useDeleteInvoiceMutation();
+
+  console.log(invoice);
 
   const handleStartDate = (date) => {
     setStartDate(date);
@@ -163,12 +165,10 @@ const InvoicesList = () => {
     {
       name: "Invoice no",
       selector: (row) => <>{row?.invoice_no}</>,
-      sortable: true,
     },
     {
       name: "Invoice Date",
       selector: (row) => <>{row?.issue_date}</>,
-      sortable: true,
     },
     {
       name: "Customer Name",
@@ -189,7 +189,6 @@ const InvoicesList = () => {
     },
     {
       name: "Status",
-      sortable: true,
       selector: (row) => (
         <div>
           <button
@@ -206,7 +205,10 @@ const InvoicesList = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <div className="flex gap-x-2 items-center">
+        <div
+          onMouseOver={() => setInvoice(row)}
+          className="flex gap-x-2 items-center"
+        >
           <FiEye
             onClick={() => {
               handleViewInvoice(row);
@@ -277,7 +279,7 @@ const InvoicesList = () => {
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
- console.log(filterData)
+  
   return (
     <>
       <DashboardBackground>

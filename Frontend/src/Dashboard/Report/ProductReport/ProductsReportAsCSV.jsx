@@ -5,9 +5,13 @@ import { CSVLink } from "react-csv";
 const ProductsReportAsCSV = ({ data }) => {
   const csvData = data?.map((item) => ({
     "Product Name": item?.product_name,
-    "Sold Price": item?.price,
+    "Sold Price (Avg.)": item?.price.toFixed(2),
     Quantity: item?.quantity,
-    Total: item?.total_sold_price,
+    "VAT (Avg.)": item?.average_vat.toFixed(2),
+    Total: (
+      item?.total_sold_price_without_vat +
+      (item?.total_sold_price_without_vat * item?.average_vat) / 100
+    ).toFixed(2),
     "Last Sale Date": item?.last_sale_date,
   }));
 

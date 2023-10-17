@@ -182,7 +182,7 @@ class SaleController extends Controller
                 'due_amount' => $calculation['due'],
                 'issue_date' => $formattedIssueDate,
                 'due_date' => $formattedDueDate,
-                'status' => $formattedDueDate ? 0 : 1,
+                'status' => $calculation['due'] > 0 ? 0 : 1,
             ]);
 
             // Store sale items
@@ -214,7 +214,7 @@ class SaleController extends Controller
                 ]);
                 $averagePriceOfProduct = SaleItem::avg('rate');
                 // return $averagePriceOfProduct; //average price of product
-                DB::table('sale_items')->update([
+                DB::table('sale_items')->where('product_id', $product->id)->update([
                     'average_rate' => $averagePriceOfProduct
                 ]);
                 // Update product quantity in stock
@@ -257,7 +257,7 @@ class SaleController extends Controller
 
 
 
-    public function update(Request $request): Response
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'invoice_id' => 'required',
@@ -299,7 +299,8 @@ class SaleController extends Controller
         try {
             // Update paid amount and due amount
             $invoice->increment('paid_amount', $newPaidAmount);
-            $invoice->decrement('due_amount', $newPaidAmount);
+            $invoice->decrement('due_amount',  $newPaidAmount);
+
 
             // Update status when due is empty
             if ($invoice->due_amount == 0) {
@@ -351,5 +352,4 @@ class SaleController extends Controller
             'message' => 'Invalid Invoice ID provided',
         ], 400);
     }
-
 }

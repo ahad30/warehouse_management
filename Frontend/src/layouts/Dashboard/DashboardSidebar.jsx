@@ -71,13 +71,81 @@ const DashboardSidebar = () => {
   ]);
 
   useEffect(() => {
-    if (
-      user?.get_role?.role !== "admin" &&
-      user?.get_role?.role !== "manager"
-    ) {
+    if (user?.get_role?.role === "manager") {
       setSidebarData((prev) =>
         prev.filter((section) => {
-          return section?.name !== "Users" && section?.name !== "Settings";
+          return (
+            section?.name !== "Users" &&
+            section?.name !== "Dashboard" &&
+            section?.name !== "Settings"
+          );
+        })
+      );
+    }
+
+    if (user?.get_role?.role === "sales_representative") {
+      setSidebarData((prev) =>
+        prev.filter((section) => {
+          return (
+            section?.name !== "Dashboard" &&
+            section?.name !== "Users" &&
+            section?.name !== "Customers" &&
+            section?.name !== "Category" &&
+            section?.name !== "Brand" &&
+            section?.name !== "Store" &&
+            section?.name !== "Product" &&
+            section?.name !== "Reports" &&
+            section?.name !== "Settings"
+          );
+        })
+      );
+    }
+
+    if (user?.get_role?.role === "accountant") {
+      setSidebarData((prev) =>
+        prev.filter((section) => {
+          return (
+            section?.name !== "Dashboard" &&
+            section?.name !== "Users" &&
+            section?.name !== "Customers" &&
+            section?.name !== "Category" &&
+            section?.name !== "Brand" &&
+            section?.name !== "Store" &&
+            section?.name !== "Product" &&
+            section?.name !== "Settings"
+          );
+        })
+      );
+    }
+
+    if (user?.get_role?.role === "cashier") {
+      setSidebarData((prev) =>
+        prev.filter((section) => {
+          return (
+            section?.name !== "Dashboard" &&
+            section?.name !== "Users" &&
+            section?.name !== "Customers" &&
+            section?.name !== "Category" &&
+            section?.name !== "Brand" &&
+            section?.name !== "Store" &&
+            section?.name !== "Product" &&
+            section?.name !== "Settings"
+          );
+        })
+      );
+    }
+
+    if (user?.get_role?.role === "inventory_manager") {
+      setSidebarData((prev) =>
+        prev.filter((section) => {
+          return (
+            section?.name !== "Dashboard" &&
+            section?.name !== "Users" &&
+            section?.name !== "Customers" &&
+            section?.name !== "Invoices" &&
+            section?.name !== "Reports" &&
+            section?.name !== "Settings"
+          );
         })
       );
     }

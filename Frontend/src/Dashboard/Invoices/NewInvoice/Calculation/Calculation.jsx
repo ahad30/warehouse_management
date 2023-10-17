@@ -12,15 +12,16 @@ const Calculation = () => {
   const settings = defaultSettings?.settings;
 
   const [subTotal, setSubTotal] = useState(0);
-  const [discount, setDiscount] = useState(settings?.discount);
-  const [shipping, setShipping] = useState(settings?.shipping);
+  const [discount, setDiscount] = useState(settings?.discount || 0);
+  const [shipping, setShipping] = useState(settings?.shipping || 0);
   const [total, setTotal] = useState(0);
   const [paidAmount, setPaidAmount] = useState(0);
   const [due, setDue] = useState(0);
 
   // Calculate the total price of individual items
   let totalItemsPrice = items?.map(
-    (item) => parseInt(item?.product_sale_price) * item?.quantity
+    // (item) => parseInt(item?.product_sale_price) * item?.quantity
+    (item) => parseInt(item?.total_price_quantity_tax)
   );
 
   // Calculate and update subTotal, total, and due when the item list, discount, shipping, or paid amount changes

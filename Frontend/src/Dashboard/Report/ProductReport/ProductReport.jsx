@@ -12,6 +12,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { BsFiletypePdf } from "react-icons/bs";
 import ProductsReportAsPDF from "./ProductsReportAsPDF";
 import ProductsReportAsCSV from "./ProductsReportAsCSV";
+import { useGetDefaultSettingsQuery } from "../../../features/Settings/settingsApi";
 
 const ProductReport = () => {
   UseTitle("Products Report");
@@ -25,6 +26,8 @@ const ProductReport = () => {
     startDate,
     endDate,
   });
+
+  const { data: defaultSettings } = useGetDefaultSettingsQuery();
 
   useEffect(() => {
     setFilterData(productsReport?.products);
@@ -76,8 +79,8 @@ const ProductReport = () => {
       sortable: true,
     },
     {
-      name: "Sold Price",
-      selector: (row) => <>{row?.price}</>,
+      name: "Sold Price (Avg.)",
+      selector: (row) => <>{row?.price.toFixed(2)}</>,
     },
     {
       name: "Quantity",
@@ -85,8 +88,19 @@ const ProductReport = () => {
       sortable: true,
     },
     {
-      name: "Total Price",
-      selector: (row) => <>{row?.total_sold_price}</>,
+      name: `${defaultSettings?.settings?.taxation} (Avg.)`,
+      selector: (row) => <>{row?.average_vat.toFixed(2)}</>,
+    },
+    {
+      name: "Total",
+      selector: (row) => (
+        <>
+          {(
+            row?.total_sold_price_without_vat +
+            (row?.total_sold_price_without_vat * row?.average_vat) / 100
+          ).toFixed(2)}
+        </>
+      ),
     },
     {
       name: "Last Sale Date",

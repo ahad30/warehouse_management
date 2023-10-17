@@ -158,7 +158,7 @@ const AddUser = () => {
               />
             </label>
 
-            <label className="input-group">
+            {/* <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Status<span className="text-red-500 p-0">*</span>
               </span>
@@ -172,7 +172,8 @@ const AddUser = () => {
                 </option>
                 <option value={"inactive"}>Inactive</option>
               </select>
-            </label>
+            </label> */}
+
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Address<span className="text-red-500 p-0">*</span>

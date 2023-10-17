@@ -25,6 +25,7 @@ import ReportLayout from "../layouts/Dashboard/ReportLayout";
 import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics/DashboardAnalytics";
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
+import AdminRoute from "./AdminRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -70,16 +71,28 @@ const routes = createBrowserRouter([
     children: [
       {
         path: "/dashboard/", // Default dashboard analytics
-        element: <DashboardAnalytics />,
+        element: (
+          <AdminRoute>
+            <DashboardAnalytics />
+          </AdminRoute>
+        ),
       },
       // USERS
       {
         path: "/dashboard/user", // Users list
-        element: <UsersList />,
+        element: (
+          <AdminRoute>
+            <UsersList />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/user/add", // Add a new user
-        element: <AddUser />,
+        element: (
+          <AdminRoute>
+            <AddUser />
+          </AdminRoute>
+        ),
       },
       // CUSTOMERS
       {
@@ -147,7 +160,11 @@ const routes = createBrowserRouter([
       // SETTING
       {
         path: "/dashboard/setting", // Settings
-        element: <Settings />,
+        element: (
+          <AdminRoute>
+            <Settings />
+          </AdminRoute>
+        ),
       },
       // PROFILE
       {
