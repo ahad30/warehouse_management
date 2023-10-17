@@ -277,7 +277,7 @@ const InvoicesList = () => {
   if (invoicesIsLoading) {
     return <UseLoading />;
   }
- console.log(invoice)
+ console.log(filterData)
   return (
     <>
       <DashboardBackground>
@@ -334,6 +334,8 @@ const InvoicesList = () => {
             paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
             paginationTotalRows={filterData?.length}
             onChangePage={(page) => setCurrentPage(page)}
+            key="id"
+            
           />
         </div>
 

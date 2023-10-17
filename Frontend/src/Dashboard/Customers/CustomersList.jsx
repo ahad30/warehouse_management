@@ -24,7 +24,7 @@ const CustomersList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const itemsPerPage = 10;
+  const itemsPerPage = 11;
 
   const {
     data: customersData,
@@ -79,6 +79,7 @@ const CustomersList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
+  console.log("console data" + JSON.stringify(filterData));
 
   const columns = [
     {
@@ -156,8 +157,9 @@ const CustomersList = () => {
         {!customersIsSuccess && customersData?.status ? (
           <p className="text-center text-2xl mt-10">{customersData?.message}</p>
         ) : (
-          filterData?.length > 0 && (
+          (filterData?.length > 0 && filterData != "")  && (
             <DataTable
+           
               columns={columns}
               data={filterData}
               pagination
