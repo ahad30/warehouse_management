@@ -67,7 +67,7 @@ class UserController extends Controller
         // updating brand
         $user->update([
             'role_id' => $request->role_id,
-            'status' => $request->status,
+            'status' => $request->status == null ? $user->status : $request->status,
         ]);
 
         return response()->json([

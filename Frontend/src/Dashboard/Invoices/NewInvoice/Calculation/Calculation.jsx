@@ -91,6 +91,7 @@ const Calculation = () => {
           <input
             onChange={handleDiscountPrice}
             value={discount}
+            min={0}
             type="number"
             placeholder="Discount"
             className="input input-bordered w-full max-w-xs"
@@ -102,6 +103,7 @@ const Calculation = () => {
             onChange={handleShippingCost}
             value={shipping}
             type="number"
+            min={0}
             placeholder="Shipping"
             className="input input-bordered w-full max-w-xs"
           />
@@ -123,6 +125,7 @@ const Calculation = () => {
             onChange={handlePaidAmount}
             value={paidAmount}
             placeholder="Paid"
+            min={0}
             className="input input-bordered w-full max-w-xs"
           />
         </div>
