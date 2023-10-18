@@ -1,10 +1,5 @@
-
 const PreInstallation = () => {
-    return (
-        <div>
-            PreInstallation
-        </div>
-    );
+  return <div className="p-5">PreInstallation</div>;
 };
 
 export default PreInstallation;
