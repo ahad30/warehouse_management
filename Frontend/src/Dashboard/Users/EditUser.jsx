@@ -7,10 +7,8 @@ import {
   useUpdateUserMutation,
 } from "../../features/User/userApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-import { useSelector } from "react-redux";
 
 const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
-  const { user: loggedInUser } = useSelector((state) => state?.auth);
   const { register, handleSubmit, setValue } = useForm();
   const { data: rolesData } = useGetUserRolesQuery();
 
@@ -63,7 +61,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   }, [user, setValue]);
 
   const onSubmit = (data) => {
-    if (!data?.role_id || !data?.status) {
+    if (!data?.role_id) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
@@ -139,14 +137,15 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                 </form>
               </div>
               {/* Display error messages */}
-              {errorMessages.map((errorMessage, index) => (
-                <p
-                  key={index}
-                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                >
-                  {errorMessage}
-                </p>
-              ))}
+              {updateIsError &&
+                errorMessages?.map((errorMessage, index) => (
+                  <p
+                    key={index}
+                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                  >
+                    {errorMessage}
+                  </p>
+                ))}
             </div>
           </div>
         </div>

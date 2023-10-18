@@ -263,7 +263,7 @@ const ItemsWithSelect = ({ products }) => {
                       <td>{item?.quantity}</td>
                       <td>{item?.tax}%</td>
                       {/* <td>{item?.quantity * item?.product_sale_price}</td> */}
-                      <td>{item?.total_price_quantity_tax}</td>
+                      <td>{item?.total_price_quantity_tax?.toFixed(2)}</td>
                       <td
                         onClick={() => handleDeleteItem(item?.id)}
                         className="cursor-pointer"

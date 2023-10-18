@@ -127,9 +127,10 @@ const styles = StyleSheet.create({
 
   totalSubTotalTax: {
     width: "100%",
-    paddingHorizontal: "20px",
-    position: "absolute",
-    bottom: "10px",
+    // paddingHorizontal: "20px",
+    // position: "absolute",
+    // bottom: "10px",
+     marginTop: "100px",
   },
 
   subtotalAndTax: {
@@ -179,13 +180,8 @@ const InvoicePDF = ({
             <Image
               style={styles?.logoImage}
               // `https://nurulkomor.vercel.app/assets/role-permission-ebf60eeb.png`
-              source={
-                companyImg
-                  ? `http://localhost:8000/uploads/companyInfo/Z8-Tech.png`
-                  : `https://cdn-icons-png.flaticon.com/512/5149/5149174.pngf`
-              }
+              source={companyImg}
             ></Image>
-            <Text>{companyImg}</Text>
           </View>
         </View>
 

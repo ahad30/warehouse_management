@@ -31,6 +31,7 @@ import MACRoute from "./MACRoute";
 import MIRoute from "./MIRoute";
 import ManagerRoute from "./ManagerRoute";
 import HomePage from "../pages/HomePage";
+import Installation from "../pages/Installation/Installation";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -62,6 +63,10 @@ const routes = createBrowserRouter([
       {
         path: "/password-reset/:token", // Password reset page with token
         element: <ResetPassword />,
+      },
+      {
+        path: "/installation", // Password reset page with token
+        element: <Installation />,
       },
       {
         path: "/dashboard", // Dashboard path

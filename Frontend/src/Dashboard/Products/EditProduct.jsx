@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -47,6 +48,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     setModalIsOpen,
   ]);
 
+  const errorMessages = UseErrorMessages(updateError);
+
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (product) {
@@ -84,7 +87,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("id", product.id);
-    if (data?.product_img.length > 0) {
+    if (data?.product_img?.length > 0) {
       formData.append("product_img", data?.product_img[0]);
     }
 
@@ -138,6 +141,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         placeholder="Retail"
                         className="input input-bordered w-full"
                         {...register("product_retail_price")}
+                        min={1}
                       />
                     </label>
                     <label className="input-group">
@@ -149,6 +153,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         placeholder="Sold"
                         className="input input-bordered w-full"
                         {...register("product_sale_price")}
+                        min={1}
                       />
                     </label>
                     <label className="input-group">
@@ -160,6 +165,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         placeholder="Quantity"
                         className="input input-bordered w-full"
                         {...register("product_quantity")}
+                        min={1}
                       />
                     </label>
                     <label className="input-group">
@@ -261,6 +267,16 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                   </div>
                 </form>
               </div>
+              {/* Display error messages */}
+              {updateIsError &&
+                errorMessages?.map((errorMessage, index) => (
+                  <p
+                    key={index}
+                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                  >
+                    {errorMessage}
+                  </p>
+                ))}
             </div>
           </div>
         </div>
