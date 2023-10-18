@@ -185,14 +185,6 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                   {defaultSettings?.settings?.footer_note}
                 </p>
               )}
-              <div className="">
-                <button
-                  onClick={handlePrint}
-                  className="btn bg-green-500 text-white"
-                >
-                  <FaDownload></FaDownload> Print
-                </button>
-              </div>
             </div>
           </div>
         </div>

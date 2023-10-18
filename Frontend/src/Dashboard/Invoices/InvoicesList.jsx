@@ -51,8 +51,11 @@ const InvoicesList = () => {
   const [defaultSettings, setDefaultSetting] = useState({});
   const [companyImg, setCompanyImg] = useState(null);
   const reference = useRef();
+  const pageStyle = `{ size: 2.5in 4in }`;
+
   const handlePrint = useReactToPrint({
     content: () => reference.current,
+    pageStyle: pageStyle
   });
   const { data: invoicesData, isLoading: invoicesIsLoading } =
     useGetInvoicesQuery({ startDate, endDate, date });
@@ -366,13 +369,19 @@ const InvoicesList = () => {
         {/* hidden */}
         <div className="hidden">
           {/* start */}
-           <div ref={reference}>
+           <div className="" ref={reference}>
            <InvoicePrint
            invoice={invoice}
            companyInfo={companyInfo}
            defaultSettings={defaultSettings}
            ></InvoicePrint>
            </div>
+           {/* <div ref={reference} ><InvoicePDF
+            defaultSettings={defaultSettings}
+            companyDetails={companyDetails}
+            invoice={invoice}
+            companyImg={companyImg}
+           ></InvoicePDF></div> */}
           {/* end */}
         </div>
       </DashboardBackground>
