@@ -10,7 +10,7 @@ class VersionController extends Controller
     //set php version
     public function __construct()
     {
-        $this->requiredPhpVersion = '8.0.2';
+        $this->requiredPhpVersion = '8.2.11';
     }
     //current php version
     public function currentPhpVersion()
