@@ -44,6 +44,7 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
 
 //Installation
 Route::controller(InstallationController::class)->group(function () {
+    Route::get('/already-install', 'alreadyInstall')->name('/already-install');
     Route::get('/step-1', 'step1')->name('/step-1');
     Route::get('/step-2', 'step2')->name('/step-2');
     Route::post('/step-3', 'step3')->name('/step-3');

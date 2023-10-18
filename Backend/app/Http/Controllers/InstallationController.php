@@ -208,4 +208,14 @@ class InstallationController extends Controller
 
         return response()->json($data);
     }
+    public function alreadyInstall()
+    {
+        if (file_exists('../license.txt')) {
+            $data = ['message' => 'Already Installed'];
+            return response()->json($data);
+        } else {
+            $data = ['message' => 'Not Installed'];
+            return response()->json($data);
+        }
+    }
 }
