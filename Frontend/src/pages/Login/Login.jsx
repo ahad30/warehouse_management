@@ -5,6 +5,7 @@ import { loginUser } from "../../features/Auth/authSlice";
 
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import DemoLogin from "./DemoLogin";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   UseTitle("Login");
@@ -15,6 +16,9 @@ const Login = () => {
   const { isLoading, error } = useSelector((state) => state?.auth);
 
   const handleOnSubmit = async ({ email, password }) => {
+    if (!email && !password) {
+      return toast.error("Please provide your Login Credentials", { id: 1 });
+    }
     dispatch(loginUser({ email, password }));
   };
 
