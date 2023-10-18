@@ -127,9 +127,10 @@ const styles = StyleSheet.create({
 
   totalSubTotalTax: {
     width: "100%",
-    paddingHorizontal: "20px",
-    position: "absolute",
-    bottom: "10px",
+    // paddingHorizontal: "20px",
+    // position: "absolute",
+    // bottom: "10px",
+     marginTop: "100px",
   },
 
   subtotalAndTax: {
