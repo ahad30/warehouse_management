@@ -1,10 +1,5 @@
+import React from "react";
 
-const InstallationFinish = () => {
-    return (
-        <div>
-            InstallationFinish
-        </div>
-    );
-};
-
-export default InstallationFinish;
+export default function InstallationFinish() {
+  return <div>InstallationFinish</div>;
+}
