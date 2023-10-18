@@ -18,7 +18,7 @@ class DatabaseSetupController extends Controller
             return $this->dbSetupStatus;
         }
         //get sql file
-        $endpoint = 'https://product.asgs.homes/api/get-sql-file';
+        $endpoint = 'https://product.z8tech.one/api/get-sql-file';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $endpoint);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
