@@ -1,9 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { usePostStepFourMutation } from "../../features/Installation/installationApi";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Step from "./Step";
 
 const Configuration = () => {
+
+  const location = useLocation();
+  const path = location?.pathname             
+
+
   const [
     postStepFourData,
     { data: stepFourData, isLoading, isSuccess, isError, error },
@@ -37,6 +43,9 @@ const Configuration = () => {
 
   return (
     <div className="bg-gray-100 p-5">
+       
+      <Step path={path}></Step>
+
       <form className="w-full flex flex-col gap-y-6" action="">
         {/* field div start */}
         <div className="flex flex-col my-5  gap-4">

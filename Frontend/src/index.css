@@ -32,6 +32,10 @@ body {
   width: 1px; /* Adjust as needed */
 }
 
+.step .active {
+  color: red;
+}
+
 
 
 
