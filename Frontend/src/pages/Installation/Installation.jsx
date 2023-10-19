@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Stepper,
   Step,
@@ -15,6 +15,14 @@ export function Installation() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
+  const [formData , setFormData] = useState({
+    
+  })
+  // console.log(formData)
+  const [verification, setVerification] = useState({})
+  const [configuration, setConfiguration] = useState({})
+  const [databaseSql, setDatabaseSql] = useState({})
+  // console.log(verification)
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
@@ -77,13 +85,13 @@ export function Installation() {
       </Stepper>
       {/* change component depends on steps  */}
       {activeStep === 0 ? (
-        <PreInstallation />
+        <PreInstallation  />
       ) : activeStep === 1 ? (
-        <Verification />
+        <Verification setVerification={setVerification} />
       ) : activeStep === 2 ? (
-        <Configuration />
+        <Configuration setConfiguration={setConfiguration} />
       ) : activeStep === 3 ? (
-        <InstallationFinish />
+        <InstallationFinish setDatabaseSql={setDatabaseSql} />
       ) : (
         ""
       )}
