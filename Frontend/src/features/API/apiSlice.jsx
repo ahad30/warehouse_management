@@ -14,6 +14,7 @@ const apiSlice = createApi({
     },
   }),
   tagTypes: [
+    "Install",
     "Dashboard",
     "Users",
     "Customers",

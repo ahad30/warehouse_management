@@ -17,6 +17,7 @@ use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\InstallationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,16 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
+//Installation
+Route::controller(InstallationController::class)->group(function () {
+    Route::get('/already-install', 'alreadyInstall')->name('/already-install');
+    Route::get('/step-1', 'step1')->name('/step-1');
+    Route::get('/step-2', 'step2')->name('/step-2');
+    Route::post('/step-3', 'step3')->name('/step-3');
+    Route::post('/step-4', 'step4')->name('/step-4');
+    Route::post('/final-step', 'finalStep')->name('/final-step');
+});
+
 /* -------------------------------------------------------------------------- */
 /*                             user profile                             */
 /* -------------------------------------------------------------------------- */
@@ -48,7 +59,6 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
 Route::controller(UserProfileController::class)->middleware('verifyJwtToken')->prefix('profile')->group(function () {
     Route::get('/findLoggedInUser', 'findLoggedInUser');
     Route::put('/updateProfile', 'updateProfile');
-
 });
 
 
