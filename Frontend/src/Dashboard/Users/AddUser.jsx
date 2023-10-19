@@ -14,18 +14,24 @@ import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/Use
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const AddUser = () => {
-  UseTitle("Add User");
+  UseTitle("Add User"); // Set the page title
+
+  // Initialize the form handling with react-hook-form
   const { register, handleSubmit } = useForm();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Mutation function for adding a new user
   const [addUser, { isLoading, isError, error, isSuccess, data }] =
     useAddUserMutation();
 
+  // Query for fetching user roles
   const { data: rolesData } = useGetUserRolesQuery();
 
-  // GET INPUT FIELD FORM
+  // Handle the form submission
   const onSubmit = async (data) => {
+    // Create a FormData object to send form data as multipart/form-data
     const formData = new FormData();
     formData.append("name", data?.name);
     formData.append("phone", data?.phone);
@@ -37,6 +43,8 @@ const AddUser = () => {
     formData.append("address", data?.address);
     formData.append("city", data?.city);
     formData.append("country", data?.country);
+
+    // Optional fields
     if (data?.zip_code) {
       formData.append("zip_code", data?.zip_code);
     }
@@ -46,22 +54,25 @@ const AddUser = () => {
     if (data?.img) {
       formData.append("img", data?.img[0]);
     }
+
+    // Call the addUser mutation to add a new user
     addUser(formData);
   };
 
+  // Custom hook to retrieve and display error messages
   const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
     if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
+      toast.loading(<p>Loading...</p>, { id: 1 }); // Display a loading toast
     }
     if (isError) {
       const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
+      toast.error(errorMessage, { id: 1 }); // Display an error toast message
     }
     if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/user");
+      toast.success(data?.message, { id: 1 }); // Display a success toast message
+      return navigate("/dashboard/user"); // Redirect to the user dashboard on success
     }
   }, [
     isLoading,
@@ -80,6 +91,7 @@ const AddUser = () => {
         <h2 className="text-xl my-5 font-semibold">Add User</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid md:grid-cols-2 gap-5">
+            {/* Input fields for user information */}
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Name<span className="text-red-500 p-0">*</span>
@@ -158,6 +170,7 @@ const AddUser = () => {
               />
             </label>
 
+            {/* Uncomment this section if you want to include a "Status" dropdown */}
             {/* <label className="input-group">
               <span className="font-semibold min-w-[100px]">
                 Status<span className="text-red-500 p-0">*</span>
@@ -172,7 +185,8 @@ const AddUser = () => {
                 </option>
                 <option value={"inactive"}>Inactive</option>
               </select>
-            </label> */}
+            </label>
+            */}
 
             <label className="input-group">
               <span className="font-semibold min-w-[100px]">
@@ -236,13 +250,16 @@ const AddUser = () => {
               />
             </div>
           </div>
+
+          {/* Submit button with loading and icon */}
           <SubmitButton
             title={isLoading ? "Adding User..." : "Add User"}
             icon={<AiOutlineUserAdd size={20} />}
             isLoading={isLoading}
           />
         </form>
-        {/* Display error messages */}
+
+        {/* Display error messages, if any */}
         {errorMessages.map((errorMessage, index) => (
           <p
             key={index}

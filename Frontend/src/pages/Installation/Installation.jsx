@@ -34,7 +34,7 @@ export function Installation() {
         >
           <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
             <Typography variant="h6" color="black">
-              PreInstallation
+              Pre Installation
             </Typography>
           </div>
         </Step>
