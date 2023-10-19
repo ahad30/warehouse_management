@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, {  useState } from "react";
 import {
   Stepper,
   Step,
   Button,
   Typography,
-  CardHeader,
+  
 } from "@material-tailwind/react";
 
 import PreInstallation from "./PreInstallation";
@@ -26,6 +26,17 @@ export function Installation() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
+  const [formData , setFormData] = useState({
+    
+  })
+  // console.log(formData)
+  const [verification, setVerification] = useState({})
+  const [configuration, setConfiguration] = useState({})
+  const [databaseSql, setDatabaseSql] = useState({})
+  // console.log(verification)
+  console.log("verification", verification)
+  console.log("configuration", configuration)
+  console.log("databaseSql", databaseSql)
 
   const handleNext = () => {
     console.log(activeStep);
@@ -95,13 +106,13 @@ export function Installation() {
       </Stepper>
       {/* change component depends on steps  */}
       {activeStep === 0 ? (
-        <PreInstallation />
+        <PreInstallation  />
       ) : activeStep === 1 ? (
-        <Verification />
+        <Verification setVerification={setVerification} />
       ) : activeStep === 2 ? (
-        <Configuration />
+        <Configuration setConfiguration={setConfiguration} />
       ) : activeStep === 3 ? (
-        <InstallationFinish />
+        <InstallationFinish setDatabaseSql={setDatabaseSql} />
       ) : (
         ""
       )}
