@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetStepOneQuery } from "../../features/Installation/installationApi";
 
@@ -80,9 +81,8 @@ const PreInstallation = () => {
 
   return (
     <div className="p-5 flex flex-col gap-y-4">
-     
       {/* table one  */}
-      <div className="w-full">
+      <div className="w-full ">
         <p>
           1. Please configure your php settings to match following requirement
         </p>
@@ -242,6 +242,14 @@ const PreInstallation = () => {
           </div>
         </div>
         {/* each footer end */}
+      </div>
+      <div className="flex justify-between items-center">
+        <button>
+          <Link to={"/"}>Prev</Link>
+        </button>
+        <button disabled={stepOneData?.requirementForStep1}>
+          <Link to={"/verification"}>Next</Link>
+        </button>
       </div>
     </div>
   );

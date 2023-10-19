@@ -32,6 +32,10 @@ import MIRoute from "./MIRoute";
 import ManagerRoute from "./ManagerRoute";
 import HomePage from "../pages/HomePage";
 import Installation from "../pages/Installation/Installation";
+import PreInstallation from "../pages/Installation/PreInstallation";
+import Verification from "../pages/Installation/Verification";
+import Configuration from "../pages/Installation/Configuration";
+import InstallationFinish from "../pages/Installation/InstallationFinish";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -67,6 +71,22 @@ const routes = createBrowserRouter([
       {
         path: "/installation", // Password reset page with token
         element: <Installation />,
+      },
+      {
+        path: "/pre-installation", // Password reset page with token
+        element: <PreInstallation />,
+      },
+      {
+        path: "/verification", // Password reset page with token
+        element: <Verification />,
+      },
+      {
+        path: "/configuration", // Password reset page with token
+        element: <Configuration />,
+      },
+      {
+        path: "/final-step", // Password reset page with token
+        element: <InstallationFinish />,
       },
       {
         path: "/dashboard", // Dashboard path

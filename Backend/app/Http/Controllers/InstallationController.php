@@ -18,6 +18,7 @@ use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\DatabaseSetupController;
+use Illuminate\Support\Facades\Validator;
 
 class InstallationController extends Controller
 {
@@ -97,10 +98,19 @@ class InstallationController extends Controller
         if (!$request->requirementForStep1)
             return response()->json(['message' => 'Requirement for Step 1 is not met'], 400);
         //verify purchase code
-        $request->validate([
+       
+        $validateInput = Validator::make($request->all(),[
             'purchaseCode' => 'required',
             'evantoUsername' => 'required',
         ]);
+   
+    if ($validateInput->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validation Error!',
+            'errors' => $validateInput->errors()
+        ], 401);
+    }
         $purchaseCode = $request->purchaseCode;
         $evantoUsername = $request->evantoUsername;
         $verification = new VerificationController;
@@ -130,13 +140,20 @@ class InstallationController extends Controller
 
         if (!$request->requirementForStep2)
             return response()->json(['message' => 'Requirement for Step 2 is not met'], 400);
-
-        $request->validate([
-            'appName' => 'required',
-            'databaseName' => 'required',
-            'hostName' => 'required',
-            'dbUsername' => 'required',
-        ]);
+            $validateInput = Validator::make($request->all(),[
+                'appName' => 'required',
+                'databaseName' => 'required',
+                'hostName' => 'required',
+                'databaseUserName' => 'required',
+            ]);
+       
+        if ($validateInput->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error!',
+                'errors' => $validateInput->errors()
+            ], 401);
+        }
         // env update
         $envInstance = new EnvController;
         $env_update = $envInstance->updateEnv([
