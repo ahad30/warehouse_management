@@ -161,9 +161,9 @@ const UsersList = () => {
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
-          <button onClick={() => onDelete(row?.id)}>
+          {/* <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button>
+          </button> */}
         </div>
       ),
     },

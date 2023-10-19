@@ -19,9 +19,5 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test', function () {
-    // $string = "Hello,  World!";
-    // return preg_match('/\s/', $string);
-    return env('APP_NAME');
-});
+
 require __DIR__ . '/auth.php';
