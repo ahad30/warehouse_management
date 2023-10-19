@@ -60,6 +60,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
     }
   }, [user, setValue]);
 
+  // Handle form submission
   const onSubmit = (data) => {
     if (!data?.role_id) {
       toast.error("Please fill in all required fields.", { id: 1 });
@@ -69,6 +70,7 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
     updateUser({ ...data, id: user?.id });
   };
 
+  // Get error messages
   const errorMessages = UseErrorMessages(updateError);
 
   return modalIsOpen ? (
@@ -94,7 +96,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                       <select
                         className="select select-bordered w-full"
                         {...register("role_id")}
-                        // disabled={user?.role_id === loggedInUser?.role_id}
                         required
                       >
                         <option value={""}>Select Role</option>
@@ -105,19 +106,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                         ))}
                       </select>
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold min-w-[100px]">
-                        Status<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <select
-                        className="select select-bordered w-full"
-                        {...register("status")}
-                        // disabled={user?.role_id === loggedInUser?.role_id}
-                      >
-                        <option value={"active"}>Active</option>
-                        <option value={"inactive"}>Inactive</option>
-                      </select>
-                    </label> */}
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">

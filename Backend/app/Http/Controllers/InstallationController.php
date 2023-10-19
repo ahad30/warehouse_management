@@ -104,7 +104,7 @@ class InstallationController extends Controller
         $evantoUsername = $request->evantoUsername;
         $verification = new VerificationController;
         $status = $verification->verify($purchaseCode, $evantoUsername);
-        if ($status == 200) {
+        if ($status !== 200) {
             $requirementForStep2 = true;
             $data = [
                 'message' => 'Succesfully go to Step-3 Page',
