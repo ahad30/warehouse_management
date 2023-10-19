@@ -42,7 +42,9 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
-//Installation
+/* -------------------------------------------------------------------------- */
+/*                                Installation                                */
+/* -------------------------------------------------------------------------- */
 Route::controller(InstallationController::class)->group(function () {
     Route::get('/already-install', 'alreadyInstall')->name('/already-install');
     Route::get('/step-1', 'step1')->name('/step-1');

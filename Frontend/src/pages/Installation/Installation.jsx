@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import {
   Stepper,
   Step,
   Button,
   Typography,
-  CardHeader,
+  
 } from "@material-tailwind/react";
 
 import PreInstallation from "./PreInstallation";
 import Verification from "./Verification";
 import Configuration from "./Configuration";
 import InstallationFinish from "./InstallationFinish";
+import {
+  useGetStepOneQuery,
+  usePostStepFourMutation,
+  usePostStepThreeMutation,
+} from "../../features/Installation/installationApi";
+
 export function Installation() {
+  const { data: stepOneData } = useGetStepOneQuery();
+  const [postStepThreeData, { data: stepThreeData }] =
+    usePostStepThreeMutation();
+  const [postStepFourData, { data: stepFourData }] = usePostStepFourMutation();
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -23,8 +34,18 @@ export function Installation() {
   const [configuration, setConfiguration] = useState({})
   const [databaseSql, setDatabaseSql] = useState({})
   // console.log(verification)
+  console.log("verification", verification)
+  console.log("configuration", configuration)
+  console.log("databaseSql", databaseSql)
 
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+  const handleNext = () => {
+    console.log(activeStep);
+    if (activeStep > 2) {
+      setIsLastStep(true);
+      alert("last step");
+      !isLastStep && setActiveStep((cur) => cur + 1);
+    }
+  };
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   return (
@@ -99,7 +120,10 @@ export function Installation() {
         <Button onClick={handlePrev} disabled={isFirstStep}>
           Prev
         </Button>
-        <Button onClick={handleNext} disabled={isLastStep}>
+        <Button
+          onClick={handleNext}
+          disabled={isLastStep || !stepOneData?.requirementForStep1}
+        >
           {activeStep >= 3 ? "Submit" : "Next"}
         </Button>
       </div>
