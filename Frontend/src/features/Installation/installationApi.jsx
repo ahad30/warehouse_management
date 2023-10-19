@@ -6,13 +6,13 @@ const installationApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/already-install",
       }),
-      invalidatesTags: [],
+      providesTags: [],
     }),
     getStepOne: build.query({
       query: () => ({
         url: "/step-1",
       }),
-      invalidatesTags: [],
+      providesTags: [],
     }),
     getStepTwo: build.query({
       query: ({ requirementForStep1 }) => ({
