@@ -32,6 +32,9 @@ import MIRoute from "./MIRoute";
 import ManagerRoute from "./ManagerRoute";
 import HomePage from "../pages/HomePage";
 import Installation from "../pages/Installation/Installation";
+import PreInstallation from "../pages/Installation/PreInstallation";
+import InstallationRoute from "./InstallationRoute";
+import InstallationRouteCopy from "./InstallationRouteCopy";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -43,14 +46,20 @@ const routes = createBrowserRouter([
       {
         path: "/", // Root path
         element: (
-          <PrivateRoute>
-            <HomePage></HomePage>
-          </PrivateRoute>
+          <InstallationRouteCopy>
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          </InstallationRouteCopy>
         ),
       },
       {
         path: "/login", // Login page
-        element: <Login />,
+        element: (
+          <InstallationRoute>
+            <Login />
+          </InstallationRoute>
+        ),
       },
       {
         path: "/register", // Registration page
@@ -67,6 +76,10 @@ const routes = createBrowserRouter([
       {
         path: "/installation", // Password reset page with token
         element: <Installation />,
+      },
+      {
+        path: "/pre-installation", // Password reset page with token
+        element: <PreInstallation />,
       },
       {
         path: "/dashboard", // Dashboard path

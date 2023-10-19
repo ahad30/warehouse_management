@@ -80,7 +80,7 @@ const ProductReport = () => {
     },
     {
       name: "Sold Price (Avg.)",
-      selector: (row) => <>{row?.price.toFixed(2)}</>,
+      selector: (row) => <>{row?.price?.toFixed(2)}</>,
     },
     {
       name: "Quantity",
@@ -89,7 +89,7 @@ const ProductReport = () => {
     },
     {
       name: `${defaultSettings?.settings?.taxation} (Avg.)`,
-      selector: (row) => <>{row?.average_vat.toFixed(2)}</>,
+      selector: (row) => <>{row?.average_vat?.toFixed(2)}</>,
     },
     {
       name: "Total",
