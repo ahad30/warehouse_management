@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 //controller added
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ExtensionController;
-use App\Http\Controllers\VersionController;
-use App\Http\Controllers\DatabaseSetupController;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\EnvController;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\LicenseController;
 //model added
-use App\Models\User;
-//other aaccess
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Session;
-use Carbon\Carbon;
+use App\Http\Controllers\VersionController;
+//other access
+use App\Http\Controllers\ExtensionController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\DatabaseSetupController;
 
 class InstallationController extends Controller
 {
@@ -87,7 +88,7 @@ class InstallationController extends Controller
         if (!$request->requirementForStep1) {
             return response()->json(['message' => 'Requirement for Step 1 is not met'], 400);
         } else {
-            $data = ['message' => 'Succesfully go to Step-2 Page', 'requirementForStep1' => $request->requirementForStep1];
+            $data = ['message' => 'Successfully go to Step-2 Page', 'requirementForStep1' => $request->requirementForStep1];
             return response()->json($data);
         }
     }
@@ -107,7 +108,7 @@ class InstallationController extends Controller
         if ($status !== 200) {
             $requirementForStep2 = true;
             $data = [
-                'message' => 'Succesfully go to Step-3 Page',
+                'message' => 'Successfully go to Step-3 Page',
                 'requirementForStep1' => $request->requirementForStep1,
                 'requirementForStep2' => $requirementForStep2,
                 'status' => $status,
@@ -118,10 +119,12 @@ class InstallationController extends Controller
             return response()->json($data);
         }
         $requirementForStep2 = false;
-        return response()->json(['error' => 'Purchase Code or Envato Username is not valid.'], 400);
+        return response()->json(['error' => 'Purchase Code or CodeCanyon Username is not valid.'], 400);
     }
     public function step4(Request $request)
     {
+
+
         if (!$request->requirementForStep1)
             return response()->json(['message' => 'Requirement for Step 1 is not met'], 400);
 
@@ -137,15 +140,15 @@ class InstallationController extends Controller
         // env update
         $envInstance = new EnvController;
         $env_update = $envInstance->updateEnv([
-            'DB_DATABASE'   => $request->databaseName,
-            'DB_USERNAME'   => $request->dbUsername,
-            'DB_PASSWORD'   => $request->dbPassword,
-            'APP_NAME'      => $request->appName,
-            'APP_DEBUG'     => 'false',
+            'DB_DATABASE' => $request->databaseName,
+            'DB_USERNAME' => $request->dbUsername,
+            'DB_PASSWORD' => $request->dbPassword,
+            'APP_NAME' => $request->appName,
+            'APP_DEBUG' => 'false',
             'MAIL_USERNAME' => $request->mailUsername,
             'MAIL_PASSWORD' => $request->mailPassword,
             'MAIL_FROM_ADDRESS' => $request->mailAddress,
-            'MAIL_PASSWORD' => $request->mailAppPassword,
+            // 'MAIL_PASSWORD' => $request->mailAppPassword,
         ]);
         $requirementForStep1 = $request->requirementForStep1;
         $requirementForStep2 = $request->requirementForStep2;
@@ -155,7 +158,7 @@ class InstallationController extends Controller
         $evantoUsername = $request->evantoUsername;
 
         $data = [
-            'message' => 'Succesfully go to Final Step Page',
+            'message' => 'Successfully go to Final Step Page',
             'requirementForStep1' => $requirementForStep1,
             'requirementForStep2' => $requirementForStep2,
             'requirementForStep3' => $requirementForStep3,
@@ -195,7 +198,7 @@ class InstallationController extends Controller
         $license = new LicenseController;
         $license->createLicense($request->purchaseCode, $request->evantoUsername);
         $data = [
-            'message' => 'Succesfully Installation Completed',
+            'message' => 'Successfully Installation Completed',
             'requirementForStep1' => $requirementForStep1,
             'requirementForStep2' => $requirementForStep2,
             'requirementForStep3' => $requirementForStep3,
