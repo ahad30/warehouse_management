@@ -45,11 +45,31 @@ class ProductReportController extends Controller
         }
 
         $products = $query->orderByDesc('quantity')->get();
+        $productData = [];
+        foreach ($products as $product) {
+            $productData[] = [
+                "product_name" => $product->product_name,
+                "quantity" => formatLargeNumber($product->quantity),
+                "price" => formatLargeNumber($product->price),
+                "average_vat" => formatLargeNumber($product->average_vat),
+                "total_sold_price_without_vat" => formatLargeNumber($product->total_sold_price_without_vat),
+                "last_sale_date" => $product->last_sale_date
+            ];
+        }
 
+        // $productData = [
+        //     "product_name" => $products->product_name,
+        //     "quantity" => 1,
+        //     "price" => 647,
+        //     "average_vat" => 2,
+        //     "total_sold_price_without_vat" => 647,
+        //     "last_sale_date" => "2014-01-27"
+
+        // ];
         if ($products->count() > 0) {
             return response()->json([
                 'status' => true,
-                'products' => $products
+                'products' => $productData
             ], 200);
         }
 
