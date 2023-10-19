@@ -49,10 +49,18 @@ class UserController extends Controller
 
         $user = User::find($request->id);
         $loggedInUser = auth()->user();
+        // not permitting when the user wants to update his role
         if ($user->id == $loggedInUser->id) {
             return response()->json([
                 'status' => false,
                 'message' => "You can't update your role",
+            ], 401);
+        }
+        // not permitting when the user wants to update super admin
+        if ($user->id == 1) {
+            return response()->json([
+                'status' => false,
+                'message' => "You can't update superadmin",
             ], 401);
         }
         if ($user == null) {

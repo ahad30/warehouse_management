@@ -42,7 +42,7 @@ export function Installation() {
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   return (
-    <div className="w-full py-4 px-8 space-y-[10rem] m-auto max-w-[1200px]">
+    <div className="my-20 w-full py-4 px-8 space-y-[10rem] m-auto max-w-[1200px]">
       <Stepper
         activeStep={activeStep}
         lineClassName="bg-blue-400/50"

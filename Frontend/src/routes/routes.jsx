@@ -35,6 +35,9 @@ import Installation from "../pages/Installation/Installation";
 import PreInstallation from "../pages/Installation/PreInstallation";
 import InstallationRoute from "./InstallationRoute";
 import InstallationRouteCopy from "./InstallationRouteCopy";
+import Verification from "../pages/Installation/Verification";
+import Configuration from "../pages/Installation/Configuration";
+import InstallationFinish from "../pages/Installation/InstallationFinish";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -80,6 +83,18 @@ const routes = createBrowserRouter([
       {
         path: "/pre-installation", // Password reset page with token
         element: <PreInstallation />,
+      },
+      {
+        path: "/verification", // Password reset page with token
+        element: <Verification />,
+      },
+      {
+        path: "/configuration", // Password reset page with token
+        element: <Configuration />,
+      },
+      {
+        path: "/final-step", // Password reset page with token
+        element: <InstallationFinish />,
       },
       {
         path: "/dashboard", // Dashboard path
