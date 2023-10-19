@@ -32,9 +32,10 @@ export function Installation() {
     if (activeStep > 2) {
       setIsLastStep(true);
       alert("last step");
-      !isLastStep && setActiveStep((cur) => cur + 1);
     }
+    !isLastStep && setActiveStep((cur) => cur + 1);
   };
+
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   return (
