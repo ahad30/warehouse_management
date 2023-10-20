@@ -33,11 +33,10 @@ import ManagerRoute from "./ManagerRoute";
 import HomePage from "../pages/HomePage";
 import Installation from "../pages/Installation/Installation";
 import PreInstallation from "../pages/Installation/PreInstallation";
-import InstallationRoute from "./InstallationRoute";
-import InstallationRouteCopy from "./InstallationRouteCopy";
 import Verification from "../pages/Installation/Verification";
 import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
+import InstallationRoute from "./InstallationRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -49,11 +48,11 @@ const routes = createBrowserRouter([
       {
         path: "/", // Root path
         element: (
-          <InstallationRouteCopy>
+          <InstallationRoute>
             <PrivateRoute>
               <HomePage />
             </PrivateRoute>
-          </InstallationRouteCopy>
+          </InstallationRoute>
         ),
       },
       {
