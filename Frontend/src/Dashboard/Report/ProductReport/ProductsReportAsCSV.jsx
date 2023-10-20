@@ -5,12 +5,14 @@ import { CSVLink } from "react-csv";
 const ProductsReportAsCSV = ({ data }) => {
   const csvData = data?.map((item) => ({
     "Product Name": item?.product_name,
-    "Sold Price (Avg.)": item?.price.toFixed(2),
+    "Sold Price (Avg.)": parseFloat(item?.price).toFixed(2),
     Quantity: item?.quantity,
-    "VAT (Avg.)": item?.average_vat.toFixed(2),
+    "VAT (Avg.)": parseFloat(item?.average_vat).toFixed(2),
     Total: (
-      item?.total_sold_price_without_vat +
-      (item?.total_sold_price_without_vat * item?.average_vat) / 100
+      parseFloat(item?.total_sold_price_without_vat) +
+      (parseFloat(item?.total_sold_price_without_vat) *
+        parseFloat(item?.average_vat)) /
+        100
     ).toFixed(2),
     "Last Sale Date": item?.last_sale_date,
   }));
