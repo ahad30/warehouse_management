@@ -72,7 +72,9 @@ const EditInvoice = ({ modalIsOpen, setModalIsOpen, invoice }) => {
                         type="text"
                         placeholder="New Paid Amount"
                         className="input input-bordered w-full"
-                        disabled={invoice?.due_amount <= 0}
+                        disabled={
+                          parseFloat(invoice?.due_amount).toFixed(2) <= 0
+                        }
                         {...register("paid_amount")}
                       />
                     </label>
