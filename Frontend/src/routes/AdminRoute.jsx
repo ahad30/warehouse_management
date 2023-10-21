@@ -27,14 +27,12 @@ const AdminRoute = ({ children }) => {
 
  
   // return children;
-  // if(user?.get_role?.role !== "admin"){
-  //   toast.error("Sorry! You have not Permitted!", { id: 1 });
-  //   return <Navigate to={"/"} state={{ from: location }} replace />;
-  // }
+  return <Navigate to={"/login"} state={{ from: location }} replace />;
 
-  else  {
-    return <Navigate to={"/login"} state={{ from: location }} replace />;
-  }
+
+  // else  {
+  //   return <Navigate to={"/login"} state={{ from: location }} replace />;
+  // }
   
   
 };
