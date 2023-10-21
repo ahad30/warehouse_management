@@ -2,15 +2,11 @@ import { useRef } from "react";
 import Navbar from "../Shared/Navbar/Navbar";
 import DashboardSidebar from "../layouts/Dashboard/DashboardSidebar";
 import { useSelector } from "react-redux";
-import { useReactToPrint } from 'react-to-print';
+import { useReactToPrint } from "react-to-print";
 
 const HomePage = () => {
   const { user } = useSelector((state) => state?.auth);
- 
-  
-    
-    
-  
+
   return (
     <div className="max-w-[1920px] mx-auto">
       <div className="sticky top-0 z-10">
@@ -29,7 +25,7 @@ const HomePage = () => {
           {/* Dashboard content rendered inside the layout */}
           <div className="lg:w-5/6 w-full">
             <div className="border h-screen flex justify-center items-center w-full m-3">
-              <div className="">
+              <div className="p-4">
                 <h1 className="text-4xl pb-12 text-center font-semibold">
                   Welcome, {user?.name ? user?.name : "user"}!!
                 </h1>
@@ -40,7 +36,6 @@ const HomePage = () => {
                 />
               </div>
             </div>
-            
           </div>
         </div>
 

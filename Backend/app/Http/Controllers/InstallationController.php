@@ -98,19 +98,19 @@ class InstallationController extends Controller
         if (!$request->requirementForStep1)
             return response()->json(['message' => 'Requirement for Step 1 is not met'], 400);
         //verify purchase code
-       
-        $validateInput = Validator::make($request->all(),[
+
+        $validateInput = Validator::make($request->all(), [
             'purchaseCode' => 'required',
             'evantoUsername' => 'required',
         ]);
-   
-    if ($validateInput->fails()) {
-        return response()->json([
-            'status' => false,
-            'message' => 'Validation Error!',
-            'errors' => $validateInput->errors()
-        ], 401);
-    }
+
+        if ($validateInput->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error!',
+                'errors' => $validateInput->errors()
+            ], 401);
+        }
         $purchaseCode = $request->purchaseCode;
         $evantoUsername = $request->evantoUsername;
         $verification = new VerificationController;
@@ -140,13 +140,13 @@ class InstallationController extends Controller
 
         if (!$request->requirementForStep2)
             return response()->json(['message' => 'Requirement for Step 2 is not met'], 400);
-            $validateInput = Validator::make($request->all(),[
-                'appName' => 'required',
-                'databaseName' => 'required',
-                'hostName' => 'required',
-                'databaseUserName' => 'required',
-            ]);
-       
+        $validateInput = Validator::make($request->all(), [
+            'appName' => 'required',
+            'databaseName' => 'required',
+            'hostName' => 'required',
+            'databaseUserName' => 'required',
+        ]);
+
         if ($validateInput->fails()) {
             return response()->json([
                 'status' => false,

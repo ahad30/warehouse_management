@@ -80,17 +80,13 @@ const ProductsReportAsPDF = ({ data, startDate, endDate }) => {
             data?.map((item) => (
               <View key={item?.id} style={styles.tableBody}>
                 <Text style={styles.rowTwo}>{item?.product_name}</Text>
-                <Text style={styles.rowTwo}>{item?.price.toFixed(2)}</Text>
+                <Text style={styles.rowTwo}>{item?.price}</Text>
                 <Text style={styles.rowTwo}>{item?.quantity}</Text>
+                <Text style={styles.rowTwo}>{item?.average_vat}</Text>
                 <Text style={styles.rowTwo}>
-                  {item?.average_vat.toFixed(2)}
-                </Text>
-                <Text style={styles.rowTwo}>
-                  {(
-                    item?.total_sold_price_without_vat +
+                  {item?.total_sold_price_without_vat +
                     (item?.total_sold_price_without_vat * item?.average_vat) /
-                      100
-                  ).toFixed(2)}
+                      100}
                 </Text>
                 <Text style={styles.rowTwo}>{item?.last_sale_date}</Text>
               </View>
