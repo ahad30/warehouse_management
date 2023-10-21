@@ -1,11 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetStepOneQuery } from "../../features/Installation/installationApi";
+import { Path } from "@react-pdf/renderer";
+import { useEffect, useState } from "react";
+import Step from "./Step";
 
 const PreInstallation = () => {
   UseTitle("Pre Installation");
   const { data: stepOneData } = useGetStepOneQuery();
+  
 
+  const location = useLocation();
+  const path = location?.pathname             
+
+
+ 
+  
+   
   const extensionData = [
     {
       name: "internetConnection",
@@ -80,7 +91,12 @@ const PreInstallation = () => {
   ];
 
   return (
-    <div className="p-5 flex flex-col gap-y-4">
+    <div className="p-20 flex flex-col gap-y-4">
+
+      
+
+      <Step path={path}></Step>
+
       {/* table one  */}
       <div className="w-full ">
         <p>
@@ -169,9 +185,9 @@ const PreInstallation = () => {
       </div>
 
       {/* footer page */}
-      <div className="w-full">
-        <p>
-          2. Please make sure the extension/settings listed below are
+      <div className="w-full my-12">
+        <p className="mb-12">
+          3. Please make sure the extension/settings listed below are
           installed/enabled your php setting to match following requirement:
         </p>
         {/* each footer start */}
@@ -244,10 +260,13 @@ const PreInstallation = () => {
         {/* each footer end */}
       </div>
       <div className="flex justify-between items-center">
-        <button>
+        <button className="btn bg-black text-white ">
           <Link to={"/"}>Prev</Link>
         </button>
-        <button disabled={stepOneData?.requirementForStep1}>
+        <button
+          className="btn bg-black text-white"
+          disabled={stepOneData?.requirementForStep1}
+        >
           <Link to={"/verification"}>Next</Link>
         </button>
       </div>

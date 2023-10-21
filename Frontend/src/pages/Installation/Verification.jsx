@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { usePostStepThreeMutation } from "../../features/Installation/installationApi";
 import toast from "react-hot-toast";
+import Step from "./Step";
 
 const Verification = () => {
+
+  const location = useLocation();
+  const path = location?.pathname             
+
+  
+  
+
+
   const [
     postStepThreeData,
     { data: stepThreeData, isLoading, isError, error, isSuccess },
@@ -32,6 +41,11 @@ const Verification = () => {
 
   return (
     <div className="bg-gray-100 p-5">
+    
+   
+
+<Step path={path}></Step>
+
       <p className="font-semibold">
         Please enter your item purchase code and evanto username
       </p>

@@ -29,9 +29,25 @@ body {
 .bg-gray-100::-webkit-scrollbar {
   width: 1px; /* Adjust as needed */
 }
+
 .font-poppins {
   font-family: "Poppins", sans-serif;
 }
+
+
+.step .active {
+  color: red;
+}
+
+
+
+
+
+
+
+
+
+
 
 /* .sideBar a.active {
   color: red;
