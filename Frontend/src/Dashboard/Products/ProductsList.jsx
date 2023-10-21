@@ -232,9 +232,9 @@ const ProductsList = () => {
         />
 
         {/* filler by category , store brand */}
-        <div className="flex flex-col lg:flex-row gap-x-3">
+        <div className="flex flex-col md:flex-row gap-x-3">
           {/* category */}
-          <div className="form-control my-2 ">
+          <div className="form-control my-2 w-full px-2 md:w-fit">
             <label className="label">
               <span className="label-text font-bold">Filter by category</span>
             </label>
@@ -254,7 +254,7 @@ const ProductsList = () => {
           </div>
 
           {/* store */}
-          <div className="form-control my-2">
+          <div className="form-control my-2 w-full px-2 md:w-fit">
             <label className="label">
               <span className="label-text font-bold">Filter by store</span>
             </label>
@@ -274,7 +274,7 @@ const ProductsList = () => {
           </div>
 
           {/* brand */}
-          <div className="form-control my-2">
+          <div className="form-control my-2 w-full px-2 md:w-fit">
             <label className="label">
               <span className="label-text font-bold">Filter by brand</span>
             </label>

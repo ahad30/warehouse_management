@@ -90,15 +90,23 @@ const InvoicesAsPDF = ({ data, startDate, endDate }) => {
                 <Text style={styles.rowTwo}>
                   {item?.customer?.name.slice(0, 10)}...
                 </Text>
-                <Text style={styles.rowOne}>{item?.sub_total}</Text>
+                <Text style={styles.rowOne}>
+                  {parseFloat(item?.sub_total).toFixed(2)}
+                </Text>
                 <Text style={styles.rowOne}>{`${item?.discount}%`}</Text>
                 <Text style={styles.rowOne}>{item?.shipping}</Text>
-                <Text style={styles.rowOne}>{item?.total}</Text>
-                <Text style={styles.rowOne}>{item?.paid_amount}</Text>
+                <Text style={styles.rowOne}>
+                  {parseFloat(item?.total).toFixed(2)}
+                </Text>
+                <Text style={styles.rowOne}>
+                  {parseFloat(item?.paid_amount).toFixed(2)}
+                </Text>
                 <Text style={styles.rowOne}>
                   {item?.status === 0 ? "Due" : "Paid"}
                 </Text>
-                <Text style={styles.rowOne}>{item?.due_amount}</Text>
+                <Text style={styles.rowOne}>
+                  {parseFloat(item?.due_amount).toFixed(2)}
+                </Text>
                 <Text style={styles.rowTwo}>{item?.due_date}</Text>
                 <Text style={styles.rowThree}>
                   {item?.saleitems?.map(
