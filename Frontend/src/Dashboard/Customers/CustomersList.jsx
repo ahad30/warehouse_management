@@ -143,7 +143,7 @@ const CustomersList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Customers {customersData?.customers?.length}
+          Customers : {customersData?.customers?.length}
         </TableHeadingTitle>
         <SearchAndAddBtn
           btnTitle={"Add customer"}
@@ -156,9 +156,9 @@ const CustomersList = () => {
         {!customersIsSuccess && customersData?.status ? (
           <p className="text-center text-2xl mt-10">{customersData?.message}</p>
         ) : (
-          (filterData?.length > 0 && filterData != "")  && (
+          filterData?.length > 0 &&
+          filterData != "" && (
             <DataTable
-           
               columns={columns}
               data={filterData}
               pagination

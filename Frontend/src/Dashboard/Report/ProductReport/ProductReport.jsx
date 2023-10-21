@@ -129,7 +129,7 @@ const ProductReport = () => {
       />
 
       {/* Download PDF and CSV */}
-      <div className="flex lg:flex-row justify-end gap-2">
+      <div className="flex lg:flex-row justify-center lg:justify-end gap-2">
         {/* Invoices download as CSV file */}
         <ProductsReportAsCSV data={filterData} />
         {/* Invoices download as PDF file */}
