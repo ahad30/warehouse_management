@@ -8,8 +8,6 @@ import {
 } from "@react-pdf/renderer";
 import { object } from "prop-types";
 
-
-
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
@@ -32,7 +30,6 @@ const styles = StyleSheet.create({
   },
 
   headLeft: {
-    
     fontSize: "4px",
     fontWeight: "300",
     // border: "1px solid red",
@@ -45,14 +42,15 @@ const styles = StyleSheet.create({
     // border: "1px solid red",
   },
   brImage: {
-    width: "20px"
+    width: "20px",
   },
   date: {
     marginVertical: "5px",
   },
-  headRight: {  textAlign: "right",  
-  // border: "1px solid red", 
-},
+  headRight: {
+    textAlign: "right",
+    // border: "1px solid red",
+  },
 
   billAndPay: {
     display: "flex",
@@ -60,15 +58,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // alignContent: "space-between",
     justifyContent: "space-between",
-    
   },
   bill: {
     width: "50%",
-    
   },
   billRight: {
     width: "50%",
-    
+
     textAlign: "right",
   },
 
@@ -123,7 +119,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: "5px",
     // position: "absolute",
     // bottom: "5px",
-    marginTop: "30px"
+    marginTop: "30px",
   },
 
   subtotalAndTax: {
@@ -155,13 +151,16 @@ const styles = StyleSheet.create({
   //   marginTop: "10px",
   // },
 });
-const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
+const RecieptPDF = ({
+  invoice,
+  companyDetails,
+  defaultSettings,
+  companyImg,
+}) => (
   <Document>
     <Page size="A8" style={styles.page}>
       {/* main view layout  */}
       <View style={styles.main}>
-
-
         {/* head information */}
         <View style={styles.head}>
           {/* head information left */}
@@ -183,9 +182,7 @@ const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           {/* head information right */}
           <View style={styles?.headRight}>
             {/* <Text>Z-TECH</Text> */}
-            <Image style={styles.logoImage}
-              source={`${companyImg}`}
-            ></Image>
+            <Image style={styles.logoImage} source={`${companyImg}`}></Image>
           </View>
         </View>
 
@@ -194,9 +191,15 @@ const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           <View style={styles?.bill}>
             <Text style={styles.billFrom}>Bill From</Text>
             <Text style={styles.billName}>{companyDetails?.company_name}</Text>
-            <Text style={styles.billAddress}>{companyDetails?.company_email}</Text>
-            <Text style={styles.billAddress}>{companyDetails?.company_phone}</Text>
-            <Text style={styles.billAddress}>{companyDetails?.company_address}</Text>
+            <Text style={styles.billAddress}>
+              {companyDetails?.company_email}
+            </Text>
+            <Text style={styles.billAddress}>
+              {companyDetails?.company_phone}
+            </Text>
+            <Text style={styles.billAddress}>
+              {companyDetails?.company_address}
+            </Text>
           </View>
 
           {/* pay Address  */}
@@ -240,7 +243,7 @@ const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           {/* subtotal */}
           <View style={styles.subtotalAndTax}>
             <Text>SubTotal</Text>
-            <Text>{invoice?.sub_total}</Text>
+            <Text>{parseFloat(invoice?.sub_total).toFixed(2)}</Text>
           </View>
           {/* tax */}
           <View style={styles.subtotalAndTax}>
@@ -256,19 +259,17 @@ const RecieptPDF = ({ invoice,companyDetails,defaultSettings,companyImg }) => (
           {/* total */}
           <View style={styles.subtotalAndTax}>
             <Text>Total</Text>
-            <Text>{invoice?.total}</Text>
-          </View>
-
-          {/* due */}
-          <View style={styles.subtotalAndTax}>
-            <Text>Due</Text>
-            <Text>{invoice?.due_amount}</Text>
+            <Text>{parseFloat(invoice?.total).toFixed(2)}</Text>
           </View>
           {/* paid */}
-
           <View style={styles.subtotalAndTax}>
             <Text>Paid</Text>
             <Text>{invoice?.paid_amount}</Text>
+          </View>
+          {/* due */}
+          <View style={styles.subtotalAndTax}>
+            <Text>Due</Text>
+            <Text>{parseFloat(invoice?.due_amount).toFixed(2)}</Text>
           </View>
         </View>
       </View>
