@@ -43,12 +43,12 @@ const Verification = () => {
         Please enter your item purchase code and evanto username
       </p>
 
-      <form className="w-full" action="">
+      <form className="w-full">
         <div className="flex flex-col my-5 lg:flex-row gap-4">
           {/* field one */}
           <div className="form-control  w-full">
             <label className="label">
-              <span className="label-text">Evanto Username</span>
+              <span className="label-text">Envato Username</span>
             </label>
             <input
               onChange={submitData}

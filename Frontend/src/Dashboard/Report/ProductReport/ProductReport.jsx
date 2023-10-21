@@ -118,7 +118,7 @@ const ProductReport = () => {
   return (
     <DashboardBackground>
       <TableHeadingTitle>
-        Products {productsReport?.products?.length}
+        Products: {productsReport?.products?.length}
       </TableHeadingTitle>
 
       <SearchAndAddBtn

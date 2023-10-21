@@ -158,14 +158,14 @@ class InstallationController extends Controller
         $envInstance = new EnvController;
         $env_update = $envInstance->updateEnv([
             'DB_DATABASE' => $request->databaseName,
-            'DB_USERNAME' => $request->dbUsername,
-            // 'DB_PASSWORD' => $request->dbPassword,
+            'DB_USERNAME' => $request->databaseUserName,
+            'DB_PASSWORD' => $request->dbPassword,
             'APP_NAME' => $request->appName,
             'APP_DEBUG' => 'false',
             'MAIL_USERNAME' => $request->mailUsername,
             'MAIL_PASSWORD' => $request->mailPassword,
             'MAIL_FROM_ADDRESS' => $request->mailAddress,
-            // 'MAIL_PASSWORD' => $request->mailAppPassword,
+            'MAIL_PASSWORD' => $request->mailAppPassword,
         ]);
         $requirementForStep1 = $request->requirementForStep1;
         $requirementForStep2 = $request->requirementForStep2;
