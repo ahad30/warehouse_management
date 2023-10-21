@@ -8,29 +8,22 @@ const InstallationRoute = ({ children }) => {
 
   useEffect(() => {
     const checkInstallation = async () => {
-      const installationLocal = localStorage.getItem("installationLocal");
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_PORT}/already-install`
+        );
 
-      // if (installationLocal && installationLocal === "true") {
-      //   // You can do something with children if needed.
-      //   return;
-      // } else if (!installationLocal || installationLocal === "false") {
-        try {
-          const response = await axios.get(
-            `${import.meta.env.VITE_REACT_APP_PORT}/already-install`
-          );
-
-          const data = response?.data;
-          if (data?.message === "Not Installed") {
-            navigate("/pre-installation");
-            localStorage.setItem("installationLocal", "false");
-          } else if (data?.message === "Already Installed") {
-            localStorage.setItem("installationLocal", "true");
-            
-          }
-        } catch (error) {
-          console.error("An error occurred:", error);
+        const data = response?.data;
+        if (data?.message === "Not Installed") {
+          navigate("/pre-installation");
+          localStorage.setItem("installationLocal", "false");
+        } else if (data?.message === "Already Installed") {
+          localStorage.setItem("installationLocal", "true");
         }
-      // }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+   
     };
 
     checkInstallation();
