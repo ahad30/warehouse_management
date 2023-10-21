@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditUser from "./EditUser";
-import { RiDeleteBin4Line } from "react-icons/ri";
+
 import {
   useDeleteUserMutation,
   useGetUserRolesQuery,
@@ -117,11 +117,7 @@ const UsersList = () => {
     {
       name: "email",
       selector: (row) => <>{row?.email}</>,
-      // cell: (row) => {
-      // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
-      //     {row?.email}
-      //   </div>
-      // }
+     
     },
     {
       name: "phone",
@@ -131,23 +127,7 @@ const UsersList = () => {
       name: "role",
       selector: (row) => row?.get_role?.role,
     },
-    // {
-    //   name: "Status",
-    //   cell: (row) => (
-    //     <div>
-    //       {row.status === "active" ? (
-    //         <p className="flex items-center gap-x-2">
-    //           {" "}
-    //           {row?.status} <FaCheckCircle style={{ color: "green" }} />
-    //         </p>
-    //       ) : (
-    //         <p className="flex items-center gap-x-2">
-    //           {row?.status} <FaTimesCircle style={{ color: "red" }} />
-    //         </p>
-    //       )}
-    //     </div>
-    //   ),
-    // },
+  
     {
       name: "address",
       // selector: "address",

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/Auth/authSlice";
 
@@ -12,6 +12,8 @@ const Login = () => {
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
   const { isLoading, error } = useSelector((state) => state?.auth);
 
@@ -25,7 +27,8 @@ const Login = () => {
   let access_token = JSON.parse(localStorage.getItem("access_token"));
 
   if (access_token) {
-    return navigate("/");
+    navigate(from, { replace: true });
+    // return navigate("/");
   }
 
   return (

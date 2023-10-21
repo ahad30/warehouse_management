@@ -14,9 +14,9 @@ const Step = ({path}) => {
   return (
     <ul className="steps w-full mb-12 step">
       {pathName?.map((item, i) => (
-        <li
+        <li 
           key={i}
-          className={`step ${
+          className={`step mx-2 ${
             handleActiveColor(item.path) === "active" ? "step-primary" : ""
           }`}
         >

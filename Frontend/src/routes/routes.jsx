@@ -101,6 +101,7 @@ const routes = createBrowserRouter([
           <PrivateRoute>
             <DashboardLayout />
           </PrivateRoute>
+         
         ),
         errorElement: <ErrorPage />, // Error page for the dashboard
         children: [
@@ -110,6 +111,7 @@ const routes = createBrowserRouter([
               <AdminRoute>
                 <DashboardAnalytics />
               </AdminRoute>
+              
             ),
           },
           // USERS
