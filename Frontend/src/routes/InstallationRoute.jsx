@@ -1,41 +1,36 @@
 import { node } from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const InstallationRoute = ({ children }) => {
   const navigate = useNavigate();
-  const [installation, setInstallation] = useState(true);
 
   useEffect(() => {
-    const installationLocal = localStorage.getItem("installation");
-    setInstallation(installation);
+    const installationLocal = localStorage.getItem("installationLocal");
 
-    if (installation === "false") {
-      navigate("/pre-installation");
-    } else if (installationLocal === "false") {
-      fetch(`${import.meta.env.VITE_REACT_APP_PORT}/already-install`)
-        .then((res) => res.json())
-        .then((data) => {
+    if (installationLocal && installationLocal === "true") {
+      return children;
+    } else if (!installationLocal || installationLocal === "false") {
+      axios
+        .get(`${import.meta.env.VITE_REACT_APP_PORT}/already-install`)
+        .then((response) => {
+          const data = response?.data;
           if (data?.message === "Not Installed") {
-            setInstallation(false);
-            localStorage.setItem("installationLocal", installation);
+            navigate("/pre-installation");
+            localStorage.setItem("installationLocal", "false");
           } else if (data?.message === "Already Installed") {
-            setInstallation(true);
-            localStorage.setItem("installationLocal", installation);
+            localStorage.setItem("installationLocal", "true");
+            return children;
           }
+        })
+        .catch((error) => {
+          console.error("An error occurred:", error);
         });
     }
-  }, [navigate, installation]);
+  }, [navigate, children]);
 
-  console.log(installation);
-
-  // if (data?.message === "Not Installed") {
-  //   toast.error("Please, Complete installation Process!", { id: 1 });
-  //   return (
-  //     <Navigate to={"/pre-installation"} state={{ from: location }} replace />
-  //   );
-  // }
-  return children;
+  // return children;
 };
 
 InstallationRoute.propTypes = {

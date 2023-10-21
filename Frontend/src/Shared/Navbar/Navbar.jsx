@@ -1,4 +1,5 @@
-import { AiOutlinePlusCircle, AiOutlineMenu, HiMenuAlt1 } from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { HiMenuAlt1 } from "react-icons/hi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";

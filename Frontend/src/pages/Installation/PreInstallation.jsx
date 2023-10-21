@@ -2,10 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetStepOneQuery } from "../../features/Installation/installationApi";
 import Step from "./Step";
+import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 
 const PreInstallation = () => {
   UseTitle("Pre Installation");
-  const { data: stepOneData } = useGetStepOneQuery();
+  const { data: stepOneData, isLoading } = useGetStepOneQuery();
 
   const location = useLocation();
   const path = location?.pathname;
@@ -82,6 +83,10 @@ const PreInstallation = () => {
       status: stepOneData?.fileinfoPhpExtension ? "ok" : "not ok",
     },
   ];
+
+  if (isLoading) {
+    return <UseLoading />;
+  }
 
   return (
     <div className="p-20 flex flex-col gap-y-4 mx-10">
