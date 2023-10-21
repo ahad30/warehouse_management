@@ -80,6 +80,8 @@ const ProductReport = () => {
     },
     {
       name: "Sold Price (Avg.)",
+
+
       selector: (row) => <>{parseFloat(row?.price).toFixed(2)}</>,
     },
     {
@@ -89,6 +91,7 @@ const ProductReport = () => {
     },
     {
       name: `${defaultSettings?.settings?.taxation} (Avg.)`,
+
       selector: (row) => <>{parseFloat(row?.average_vat).toFixed(2)}</>,
     },
     {
