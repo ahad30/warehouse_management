@@ -5,10 +5,8 @@ import toast from "react-hot-toast";
 import Step from "./Step";
 
 const Configuration = () => {
-
   const location = useLocation();
-  const path = location?.pathname             
-
+  const path = location?.pathname;
 
   const [
     postStepFourData,
@@ -26,7 +24,8 @@ const Configuration = () => {
     postStepFourData({
       ...configuration,
       requirementForStep1: 1,
-      requirementForStep2: 2,
+      requirementForStep2: 1,
+      requirementForStep3: 1,
     });
   };
 
@@ -35,15 +34,14 @@ const Configuration = () => {
       toast.error(error?.data?.message);
     }
     if (isSuccess) {
-      navigate("/dashboard");
+      navigate("/final-step");
     }
   }, [navigate, isError, error, isSuccess]);
 
-  console.log(stepFourData, isLoading, isSuccess, isError, error);
+console.log(stepFourData, isLoading, isSuccess, isError, error);
 
   return (
     <div className="bg-gray-100 p-5">
-       
       <Step path={path}></Step>
 
       <form className="w-full flex flex-col gap-y-6" action="">
