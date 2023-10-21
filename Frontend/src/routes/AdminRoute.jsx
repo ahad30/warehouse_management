@@ -10,10 +10,6 @@ const AdminRoute = ({ children }) => {
   const location = useLocation();
   const { user, isLoading } = useSelector((state) => state?.auth);
   const handleLogOut = UserLogout();
-  
-
-
-  
 
   if (isLoading) {
     return <UseLoading />;
@@ -25,16 +21,16 @@ const AdminRoute = ({ children }) => {
     return children;
   }
 
- 
   // return children;
-  return <Navigate to={"/login"} state={{ from: location }} replace />;
+  else {
+    toast.error("Sorry! You have not Permitted!", { id: 1 });
 
+    return <Navigate to={"/login"} state={{ from: location }} replace />;
+  }
 
   // else  {
   //   return <Navigate to={"/login"} state={{ from: location }} replace />;
   // }
-  
-  
 };
 
 AdminRoute.propTypes = {

@@ -9,11 +9,8 @@ import UseLoading from "../components/Reusable/useLoading/UseLoading";
 const ManagerRoute = ({ children }) => {
   const location = useLocation();
   const { user, isLoading } = useSelector((state) => state?.auth);
-  
-  const handleLogOut = UserLogout();
 
  
-
 
   if (isLoading) {
     return <UseLoading />;
@@ -23,16 +20,15 @@ const ManagerRoute = ({ children }) => {
   //   toast.error("Sorry! You have not Permitted!", { id: 1 });
   //   return <Navigate to={"/"} state={{ from: location }} replace />;
   // }
-  if (user?.get_role?.role == "manager" || user?.get_role?.role == "admin" ) {
+  if (user?.get_role?.role == "manager" || user?.get_role?.role == "admin") {
     // toast.error("Sorry! You have not Permitted!", { id: 1 });
     // return <Navigate to={"/"} state={{ from: location }} replace />;
     return children;
-  }
+  } else {
+    toast.error("Sorry! You have not Permitted!", { id: 1 });
 
-  else {
     return <Navigate to={"/login"} state={{ from: location }} replace />;
   }
-
 };
 
 ManagerRoute.propTypes = {
