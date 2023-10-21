@@ -112,7 +112,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Total:</span>
           <input
             type="number"
-            value={total.toFixed(2)}
+            value={parseFloat(total).toFixed(2)}
             placeholder="Total"
             className="input input-bordered w-full max-w-xs"
             disabled
@@ -133,7 +133,7 @@ const Calculation = () => {
           <span className="mr-2 text-xl">Due:</span>
           <input
             type="number"
-            value={due.toFixed(2)}
+            value={parseFloat(due).toFixed(2)}
             placeholder="Paid"
             className="input input-bordered w-full max-w-xs"
             disabled
