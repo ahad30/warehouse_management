@@ -1,4 +1,4 @@
-import { AiOutlinePlusCircle, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlinePlusCircle, AiOutlineMenu, HiMenuAlt1 } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-gray-100 flex justify-between border-b border-gray-300">
-      <div className="border-r lg:w-2/12 p-4 border-gray-300 flex items-center justify-center">
+      <div className="border-r lg:w-2/12 lg:p-4 border-gray-300 flex items-center justify-center">
         {/* Link to the dashboard and company logo or name */}
         <Link to={"/"} className="font-bold hidden lg:block">
           {data?.company_info?.company_img ? (
@@ -36,8 +36,11 @@ const Navbar = () => {
         </Link>
 
         {/* Drawer button for mobile view */}
-        <label htmlFor="dashboard-drawer" className="drawer-button lg:hidden">
-          <AiOutlineMenu />
+        <label
+          htmlFor="dashboard-drawer"
+          className="drawer-button   lg:p-0 lg:hidden cursor-pointer text-lg btn"
+        >
+          <HiMenuAlt1 />
         </label>
       </div>
 
