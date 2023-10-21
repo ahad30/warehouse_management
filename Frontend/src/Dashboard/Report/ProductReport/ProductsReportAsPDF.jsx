@@ -84,6 +84,7 @@ const ProductsReportAsPDF = ({ data, startDate, endDate }) => {
                   {parseFloat(item?.price).toFixed(2)}
                 </Text>
                 <Text style={styles.rowTwo}>{item?.quantity}</Text>
+                <Text style={styles.rowTwo}>{item?.average_vat}</Text>
                 <Text style={styles.rowTwo}>
                   {parseFloat(item?.average_vat).toFixed(2)}
                 </Text>

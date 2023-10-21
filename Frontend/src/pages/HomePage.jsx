@@ -23,7 +23,7 @@ const HomePage = () => {
           {/* Dashboard content rendered inside the layout */}
           <div className="max-w-full lg:w-5/6 w-full">
             <div className="border h-screen flex justify-center items-center w-full m-3">
-              <div className="">
+              <div className="p-4">
                 <h1 className="text-4xl pb-12 text-center font-semibold">
                   Welcome, {user?.name ? user?.name : "user"}!!
                 </h1>
