@@ -200,9 +200,7 @@ const UsersList = () => {
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>
-          Users {usersData?.customers?.length}
-        </TableHeadingTitle>
+        <TableHeadingTitle>Users: {usersData?.users?.length}</TableHeadingTitle>
         {/* Users Table */}
 
         <SearchAndAddBtn

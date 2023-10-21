@@ -56,8 +56,7 @@ const ProductsList = () => {
 
   // DELETE STARTS
   const onDelete = (id) => {
-    
-    DeleteConformation(id,()=> deleteProduct(id))
+    DeleteConformation(id, () => deleteProduct(id));
   };
 
   useEffect(() => {
@@ -118,27 +117,27 @@ const ProductsList = () => {
     },
     {
       name: "Name",
-      selector: (row)=> <>{row?.product_name}</>,
+      selector: (row) => <>{row?.product_name}</>,
     },
     {
       name: "Code",
-      selector: (row)=> <>{row?.product_code}</>,
+      selector: (row) => <>{row?.product_code}</>,
     },
     {
       name: "Retail price",
-      selector: (row)=> <>{row?.product_retail_price}</>,
+      selector: (row) => <>{row?.product_retail_price}</>,
     },
     {
       name: "Sold price",
-      selector: (row)=> <>{row?.product_sale_price}</>,
+      selector: (row) => <>{row?.product_sale_price}</>,
     },
     {
       name: "Quantity",
-      selector: (row)=> <>{row?.product_quantity}</>,
+      selector: (row) => <>{row?.product_quantity}</>,
     },
     {
       name: "Unit",
-      selector: (row)=> <>{row?.product_unit}</>,
+      selector: (row) => <>{row?.product_unit}</>,
     },
     {
       name: "Category",
@@ -222,7 +221,7 @@ const ProductsList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Products {productsData?.products?.length}
+          Products: {productsData?.products?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn

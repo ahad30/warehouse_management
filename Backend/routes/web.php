@@ -1,7 +1,9 @@
 <?php
 
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Notifications\TestNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,11 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
+Route::get('/notify', function () {
+    $user = User::latest()->first();
+
+    info($user->notify(new TestNotification));
+});
 
 
 require __DIR__ . '/auth.php';
