@@ -19,12 +19,12 @@ const HomePage = () => {
           className="drawer-toggle"
         />
 
-        <div className="drawer-content flex justify-end">
+        <div className="drawer-content flex justify-end relative -z-1">
           {/* Dashboard content rendered inside the layout */}
-          <div className="max-w-full lg:w-5/6 w-full">
-            <div className="border h-screen flex justify-center items-center w-full m-3">
+          <div className="lg:w-5/6 w-full">
+            <div className=" h-screen flex justify-center items-center w-full m-3">
               <div className="p-4">
-                <h1 className="text-4xl pb-12 text-center font-semibold">
+                <h1 className="text-4xl pb-12 text-center  font-poppins font-bold">
                   Welcome, {user?.name ? user?.name : "user"}!!
                 </h1>
                 <img
@@ -37,7 +37,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="drawer-side relative shadow-xl -z-0 top-auto">
+        <div className="drawer-side  shadow-xl  top-auto">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <DashboardSidebar />
           {/* Render the sidebar component for navigation within the dashboard */}

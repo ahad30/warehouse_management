@@ -1,5 +1,5 @@
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { HiMenuAlt1 } from "react-icons/hi";
+import { AiOutlinePlusCircle, AiOutlineMenu } from "react-icons/ai";
+import { HiBars3BottomLeft } from "react-icons/hi2";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ const Navbar = () => {
   const handleLogOut = UserLogout();
 
   return (
-    <div className="bg-gray-100 flex justify-between border-b border-gray-300">
+    <div className="bg-gray-100 flex items-center justify-between border-b border-gray-300 ">
       <div className="border-r lg:w-2/12 lg:p-4 border-gray-300 flex items-center justify-center">
         {/* Link to the dashboard and company logo or name */}
         <Link to={"/"} className="font-bold hidden lg:block">
@@ -39,9 +39,9 @@ const Navbar = () => {
         {/* Drawer button for mobile view */}
         <label
           htmlFor="dashboard-drawer"
-          className="drawer-button   lg:p-0 lg:hidden cursor-pointer text-lg btn"
+          className="drawer-button   lg:hidden cursor-pointer text-xl btn "
         >
-          <HiMenuAlt1 />
+          <HiBars3BottomLeft />
         </label>
       </div>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
           <Link to={"/dashboard/profile"}>
             {/* User profile image */}
             <img
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full object-contain"
               src={
                 user?.img
                   ? `${
