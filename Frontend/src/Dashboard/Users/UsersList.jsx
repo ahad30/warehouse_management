@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditUser from "./EditUser";
-import { RiDeleteBin4Line } from "react-icons/ri";
+
 import {
   useDeleteUserMutation,
   useGetUserRolesQuery,
@@ -16,6 +16,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
+import { RiDeleteBin4Line } from "react-icons/ri";
 
 const UsersList = () => {
   UseTitle("Users");
@@ -117,11 +118,6 @@ const UsersList = () => {
     {
       name: "email",
       selector: (row) => <>{row?.email}</>,
-      // cell: (row) => {
-      // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
-      //     {row?.email}
-      //   </div>
-      // }
     },
     {
       name: "phone",
@@ -131,23 +127,7 @@ const UsersList = () => {
       name: "role",
       selector: (row) => row?.get_role?.role,
     },
-    // {
-    //   name: "Status",
-    //   cell: (row) => (
-    //     <div>
-    //       {row.status === "active" ? (
-    //         <p className="flex items-center gap-x-2">
-    //           {" "}
-    //           {row?.status} <FaCheckCircle style={{ color: "green" }} />
-    //         </p>
-    //       ) : (
-    //         <p className="flex items-center gap-x-2">
-    //           {row?.status} <FaTimesCircle style={{ color: "red" }} />
-    //         </p>
-    //       )}
-    //     </div>
-    //   ),
-    // },
+
     {
       name: "address",
       // selector: "address",
@@ -161,9 +141,9 @@ const UsersList = () => {
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
-          {/* <button onClick={() => onDelete(row?.id)}>
+          <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button> */}
+          </button>
         </div>
       ),
     },
@@ -200,9 +180,7 @@ const UsersList = () => {
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>
-          Users {usersData?.customers?.length}
-        </TableHeadingTitle>
+        <TableHeadingTitle>Users: {usersData?.users?.length}</TableHeadingTitle>
         {/* Users Table */}
 
         <SearchAndAddBtn
@@ -212,7 +190,7 @@ const UsersList = () => {
           setFiltering={setFiltering}
         />
 
-        <div className="form-control my-5 w-full mb-3 lg:w-1/6 ">
+        <div className="form-control w-fit my-5 mb-3 lg:w-1/6 ">
           <label className="label">
             <span className="label-text font-bold">Filter by role</span>
           </label>
@@ -234,23 +212,25 @@ const UsersList = () => {
           </select>
         </div>
 
-        {!usersIsSuccess && usersData?.status ? (
-          <p className="text-center text-2xl mt-10">{usersData?.message}</p>
-        ) : (
-          filterData?.length > 0 && (
-            <DataTable
-              columns={columns}
-              data={filterData}
-              pagination
-              responsive
-              paginationPerPage={itemsPerPage}
-              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-              paginationTotalRows={filterData?.length}
-              onChangePage={(page) => setCurrentPage(page)}
-              keyField="id"
-            />
-          )
-        )}
+        <div className=" overflow-x-scroll">
+          {!usersIsSuccess && usersData?.status ? (
+            <p className="text-center text-2xl mt-10">{usersData?.message}</p>
+          ) : (
+            filterData?.length > 0 && (
+              <DataTable
+                columns={columns}
+                data={filterData}
+                pagination
+                responsive
+                paginationPerPage={itemsPerPage}
+                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+                paginationTotalRows={filterData?.length}
+                onChangePage={(page) => setCurrentPage(page)}
+                keyField="id"
+              />
+            )
+          )}
+        </div>
 
         <EditUser
           user={user}

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/Auth/authSlice";
 
@@ -12,6 +12,8 @@ const Login = () => {
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
   const { isLoading, error } = useSelector((state) => state?.auth);
 
@@ -25,13 +27,14 @@ const Login = () => {
   let access_token = JSON.parse(localStorage.getItem("access_token"));
 
   if (access_token) {
-    return navigate("/");
+    navigate(from, { replace: true });
+    // return navigate("/");
   }
 
   return (
     <div className="p-10  bg-white">
       <div className="flex justify-center items-center max-w-[1440px] h-screen mx-auto rounded-md ">
-        <div className="w-full lg:w-[800px] flex flex-col items-center justify-center border border-[#e2e8f0] lg:rounded-lg lg:bg-[#f8fafc] lg:h-[600px]">
+        <div className="w-full lg:min-w-[800px] flex flex-col items-center justify-center border border-transparent lg:border-[#e2e8f0] lg:rounded-lg lg:bg-[#f8fafc] lg:h-[600px]">
           <h2 className="text-center text-3xl mb-5">User Login</h2>
           <form className=" w-full" onSubmit={handleSubmit(handleOnSubmit)}>
             <div className="form-control w-full max-w-md mx-auto">

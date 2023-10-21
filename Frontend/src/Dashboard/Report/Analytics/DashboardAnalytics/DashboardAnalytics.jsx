@@ -13,14 +13,18 @@ const DashboardAnalytics = () => {
       <TotalCalculations />
       {/* Render the TotalCalculations component for total calculations */}
       <div className="grid mt-20 lg:grid-cols-1 gap-8">
-        <div className="bg-[#f0f9ff] border border-[#BAE6FD] flex flex-col gap-y-12 p-12 rounded-xl">
-          <h1 className="font-semibold  text-4xl">Last 30 days revenue</h1>{" "}
+        <div className="bg-[#f0f9ff] border border-[#BAE6FD] flex flex-col gap-y-12 p-3 lg:p-12 rounded-xl">
+          <h1 className="font-semibold text-2xl lg:text-4xl font-poppins text-center">
+            Last 30 days revenue
+          </h1>{" "}
           {/* Display the section title for revenue */}
           <RevenueSaleBar />
           {/* Render the RevenueSaleBar component for displaying revenue sales */}
         </div>
-        <div className=" bg-[#FFFBEB] flex flex-col gap-y-12 border border-[#FDE68A] p-12 rounded-xl">
-          <h1 className="font-semibold  text-4xl">Last 30 days Sales</h1>{" "}
+        <div className=" bg-[#FFFBEB] flex flex-col gap-y-12 border border-[#FDE68A]  p-3 lg:p-12  rounded-xl">
+          <h1 className="font-semibold  text-2xl lg:text-4xl font-poppins text-center">
+            Last 30 days Sales
+          </h1>{" "}
           {/* Display the section title for sales */}
           <ProductSaleBarChart />
           {/* Render the ProductSaleBarChart component for displaying product sales */}

@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: "20px",
     // position: "absolute",
     // bottom: "10px",
-     marginTop: "100px",
+    marginTop: "100px",
   },
 
   subtotalAndTax: {
@@ -243,7 +243,7 @@ const InvoicePDF = ({
           {/* subtotal */}
           <View style={styles.subtotalAndTax}>
             <Text>SubTotal</Text>
-            <Text>{invoice?.sub_total}</Text>
+            <Text>{parseFloat(invoice?.sub_total).toFixed(2)}</Text>
           </View>
           {/* tax */}
           <View style={styles.subtotalAndTax}>
@@ -259,19 +259,18 @@ const InvoicePDF = ({
           {/* total */}
           <View style={styles.subtotalAndTax}>
             <Text>Total</Text>
-            <Text>{invoice?.total}</Text>
+            <Text>{parseFloat(invoice?.total).toFixed(2)}</Text>
           </View>
 
+          {/* paid */}
+          <View style={styles.subtotalAndTax}>
+            <Text>Paid</Text>
+            <Text>{parseFloat(invoice?.paid_amount).toFixed(2)}</Text>
+          </View>
           {/* due */}
           <View style={styles.subtotalAndTax}>
             <Text>Due</Text>
-            <Text>{invoice?.due_amount}</Text>
-          </View>
-          {/* paid */}
-
-          <View style={styles.subtotalAndTax}>
-            <Text>Paid</Text>
-            <Text>{invoice?.paid_amount}</Text>
+            <Text>{parseFloat(invoice?.due_amount).toFixed(2)}</Text>
           </View>
         </View>
       </View>

@@ -1,11 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  Stepper,
-  Step,
-  Button,
-  Typography,
-  CardHeader,
-} from "@material-tailwind/react";
+import React, { useState } from "react";
+import { Stepper, Step, Button, Typography } from "@material-tailwind/react";
 
 import PreInstallation from "./PreInstallation";
 import Verification from "./Verification";
@@ -26,6 +20,15 @@ export function Installation() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
+  
+  // console.log(formData)
+  const [verification, setVerification] = useState({});
+  const [configuration, setConfiguration] = useState({});
+  const [databaseSql, setDatabaseSql] = useState({});
+
+  console.log("verification", verification);
+  console.log("configuration", configuration);
+  console.log("databaseSql", databaseSql);
 
   const handleNext = () => {
     console.log(activeStep);
@@ -35,10 +38,11 @@ export function Installation() {
     }
     !isLastStep && setActiveStep((cur) => cur + 1);
   };
+
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   return (
-    <div className="w-full py-4 px-8 space-y-[10rem] m-auto max-w-[1200px]">
+    <div className="my-20 w-full py-4 px-8 space-y-[10rem] m-auto max-w-[1200px]">
       <Stepper
         activeStep={activeStep}
         lineClassName="bg-blue-400/50"
@@ -97,11 +101,11 @@ export function Installation() {
       {activeStep === 0 ? (
         <PreInstallation />
       ) : activeStep === 1 ? (
-        <Verification />
+        <Verification setVerification={setVerification} />
       ) : activeStep === 2 ? (
-        <Configuration />
+        <Configuration setConfiguration={setConfiguration} />
       ) : activeStep === 3 ? (
-        <InstallationFinish />
+        <InstallationFinish setDatabaseSql={setDatabaseSql} />
       ) : (
         ""
       )}

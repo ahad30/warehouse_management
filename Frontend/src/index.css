@@ -19,12 +19,10 @@ body {
 .sideBar .active-link {
   color: #0369a1;
   /* background-color: #F0F9FF; */
-  border-left: 4px solid #0369a1
-  
+  border-left: 4px solid #0369a1;
 }
 
-
-.outlet{
+.outlet {
   width: calc(100% - 250px);
 }
 
@@ -32,6 +30,14 @@ body {
   width: 1px; /* Adjust as needed */
 }
 
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+
+.step .active {
+  color: red;
+}
 
 
 
@@ -46,7 +52,6 @@ body {
 /* .sideBar a.active {
   color: red;
 } */
-
 
 /* CUSTOM CSS ENDS */
 

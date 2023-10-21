@@ -27,7 +27,7 @@ const Settings = () => {
             <TabList>
               {/* Define tab titles */}
               <Tab>Default Settings</Tab>
-              <Tab>Backup</Tab>
+              {/* <Tab>Backup</Tab> */}
             </TabList>
 
             <TabPanel>
@@ -40,7 +40,7 @@ const Settings = () => {
 
             <TabPanel>
               {/* Render the Database Backup component */}
-              <DatabaseBackup />
+              {/* <DatabaseBackup /> */}
             </TabPanel>
           </Tabs>
         )}

@@ -149,7 +149,7 @@ const BrandsList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Brands {brandsData?.brands?.length}
+          Brands: {brandsData?.brands?.length}
           {/* Change the table title */}
         </TableHeadingTitle>
 

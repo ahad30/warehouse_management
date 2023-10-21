@@ -1,9 +1,15 @@
+import { Link, useLocation } from "react-router-dom";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetStepOneQuery } from "../../features/Installation/installationApi";
+import Step from "./Step";
+import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 
 const PreInstallation = () => {
   UseTitle("Pre Installation");
-  const { data: stepOneData } = useGetStepOneQuery();
+  const { data: stepOneData, isLoading } = useGetStepOneQuery();
+
+  const location = useLocation();
+  const path = location?.pathname;
 
   const extensionData = [
     {
@@ -78,10 +84,19 @@ const PreInstallation = () => {
     },
   ];
 
+  if (isLoading) {
+    return <UseLoading />;
+  }
+
   return (
-    <div className="p-5 flex flex-col gap-y-4">
+    <div className="lg:p-20 p-5 flex flex-col gap-y-4">
+
+      
+
+      <Step path={path}></Step>
+
       {/* table one  */}
-      <div className="w-full">
+      <div className="w-full ">
         <p>
           1. Please configure your php settings to match following requirement
         </p>
@@ -168,9 +183,9 @@ const PreInstallation = () => {
       </div>
 
       {/* footer page */}
-      <div className="w-full">
-        <p>
-          2. Please make sure the extension/settings listed below are
+      <div className="w-full my-12">
+        <p className="mb-12">
+          3. Please make sure the extension/settings listed below are
           installed/enabled your php setting to match following requirement:
         </p>
         {/* each footer start */}
@@ -241,6 +256,17 @@ const PreInstallation = () => {
           </div>
         </div>
         {/* each footer end */}
+      </div>
+      <div className="flex justify-between items-center">
+        <button className="btn bg-black text-white ">
+          <Link to={"/"}>Prev</Link>
+        </button>
+        <button
+          className="btn bg-black text-white"
+          disabled={!stepOneData?.requirementForStep1}
+        >
+          <Link to={"/verification"}>Next</Link>
+        </button>
       </div>
     </div>
   );

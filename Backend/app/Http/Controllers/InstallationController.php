@@ -18,6 +18,7 @@ use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\DatabaseSetupController;
+use Illuminate\Support\Facades\Validator;
 
 class InstallationController extends Controller
 {
@@ -97,10 +98,19 @@ class InstallationController extends Controller
         if (!$request->requirementForStep1)
             return response()->json(['message' => 'Requirement for Step 1 is not met'], 400);
         //verify purchase code
-        $request->validate([
+
+        $validateInput = Validator::make($request->all(), [
             'purchaseCode' => 'required',
             'evantoUsername' => 'required',
         ]);
+
+        if ($validateInput->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error!',
+                'errors' => $validateInput->errors()
+            ], 401);
+        }
         $purchaseCode = $request->purchaseCode;
         $evantoUsername = $request->evantoUsername;
         $verification = new VerificationController;
@@ -130,20 +140,28 @@ class InstallationController extends Controller
 
         if (!$request->requirementForStep2)
             return response()->json(['message' => 'Requirement for Step 2 is not met'], 400);
-
-        $request->validate([
+        $validateInput = Validator::make($request->all(), [
             'appName' => 'required',
             'databaseName' => 'required',
             'hostName' => 'required',
-            'dbUsername' => 'required',
+            'databaseUserName' => 'required',
         ]);
+
+        if ($validateInput->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error!',
+                'errors' => $validateInput->errors()
+            ], 401);
+        }
+
         // env update
         $envInstance = new EnvController;
         $env_update = $envInstance->updateEnv([
             'DB_DATABASE' => $request->databaseName,
-            'DB_USERNAME' => $request->dbUsername,
+            'DB_USERNAME' => $request->databaseUserName,
             'DB_PASSWORD' => $request->dbPassword,
-            'APP_NAME' => $request->appName,
+            'APP_NAME' => str_replace("_", " ", $request->appName),
             'APP_DEBUG' => 'false',
             'MAIL_USERNAME' => $request->mailUsername,
             'MAIL_PASSWORD' => $request->mailPassword,
@@ -198,6 +216,7 @@ class InstallationController extends Controller
         $license = new LicenseController;
         $license->createLicense($request->purchaseCode, $request->evantoUsername);
         $data = [
+            'status' => true,
             'message' => 'Successfully Installation Completed',
             'requirementForStep1' => $requirementForStep1,
             'requirementForStep2' => $requirementForStep2,
@@ -209,7 +228,7 @@ class InstallationController extends Controller
             'password' => $password,
         ];
 
-        return response()->json($data);
+        return response()->json($data, 200);
     }
     public function alreadyInstall()
     {

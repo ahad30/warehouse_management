@@ -55,7 +55,7 @@ const InvoicesList = () => {
 
   const handlePrint = useReactToPrint({
     content: () => reference.current,
-    pageStyle: pageStyle
+    pageStyle: pageStyle,
   });
   const { data: invoicesData, isLoading: invoicesIsLoading } =
     useGetInvoicesQuery({ startDate, endDate, date });
@@ -104,7 +104,6 @@ const InvoicesList = () => {
   // DELETE STARTS
   const onDelete = (id) => {
     DeleteConformation(id, () => deleteInvoice(id)(id));
-    
   };
 
   useEffect(() => {
@@ -186,16 +185,16 @@ const InvoicesList = () => {
     },
     {
       name: "Total",
-      selector: (row) => <>{row?.total}</>,
+      selector: (row) => <>{parseFloat(row?.total).toFixed(2)}</>,
     },
 
     {
       name: "Paid",
-      selector: (row) => <>{row?.paid_amount}</>,
+      selector: (row) => <>{parseFloat(row?.paid_amount).toFixed(2)}</>,
     },
     {
       name: "Due",
-      selector: (row) => <>{row?.due_amount}</>,
+      selector: (row) => <>{parseFloat(row?.due_amount).toFixed(2)}</>,
     },
     {
       name: "Status",
@@ -297,7 +296,7 @@ const InvoicesList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Invoices {invoicesData?.invoices?.length}
+          Invoices: {invoicesData?.invoices?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
@@ -339,7 +338,7 @@ const InvoicesList = () => {
           />
         </div>
 
-        <div className="overflow-x-scroll">
+        <div>
           <DataTable
             columns={columns}
             data={filterData}
@@ -369,14 +368,14 @@ const InvoicesList = () => {
         {/* hidden */}
         <div className="hidden">
           {/* start */}
-           <div className="" ref={reference}>
-           <InvoicePrint
-           invoice={invoice}
-           companyInfo={companyInfo}
-           defaultSettings={defaultSettings}
-           ></InvoicePrint>
-           </div>
-           {/* <div ref={reference} ><InvoicePDF
+          <div className="" ref={reference}>
+            <InvoicePrint
+              invoice={invoice}
+              companyInfo={companyInfo}
+              defaultSettings={defaultSettings}
+            ></InvoicePrint>
+          </div>
+          {/* <div ref={reference} ><InvoicePDF
             defaultSettings={defaultSettings}
             companyDetails={companyDetails}
             invoice={invoice}
@@ -390,4 +389,3 @@ const InvoicesList = () => {
 };
 
 export default InvoicesList;
-
