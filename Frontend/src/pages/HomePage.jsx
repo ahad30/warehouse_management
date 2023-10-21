@@ -1,8 +1,6 @@
-import { useRef } from "react";
 import Navbar from "../Shared/Navbar/Navbar";
 import DashboardSidebar from "../layouts/Dashboard/DashboardSidebar";
 import { useSelector } from "react-redux";
-import { useReactToPrint } from "react-to-print";
 
 const HomePage = () => {
   const { user } = useSelector((state) => state?.auth);
@@ -30,7 +28,7 @@ const HomePage = () => {
                   Welcome, {user?.name ? user?.name : "user"}!!
                 </h1>
                 <img
-                  className="w-[400px]"
+                  className="w-[400px] max-w-full"
                   src="../../src/assets/welcomePage.svg"
                   alt=""
                 />

@@ -29,7 +29,7 @@ class EnvController extends Controller
                 }
             }
             $env = implode("\n", $env);
-            file_put_contents(base_path() . '/.env', $env);
+            // file_put_contents(base_path() . '/.env', $env);
             return true;
         } else {
             return false;

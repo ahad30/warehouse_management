@@ -1,22 +1,36 @@
 import { node } from "prop-types";
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
-import UseLoading from "../components/Reusable/useLoading/UseLoading";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 const InstallationRoute = ({ children }) => {
-  const location = useLocation();
-  const { user, isLoading } = useSelector((state) => state?.auth);
+  const navigate = useNavigate();
 
-  if (isLoading) {
-    <UseLoading />;
-  }
+  useEffect(() => {
+    const installationLocal = localStorage.getItem("installationLocal");
 
-  if (user?.get_role?.role !== "admin") {
-    toast.error("Sorry! You have not Permitted!", { id: 1 });
-    return <Navigate to={"/"} state={{ from: location }} replace />;
-  }
-  return children;
+    if (installationLocal && installationLocal === "true") {
+      return children;
+    } else if (!installationLocal || installationLocal === "false") {
+      axios
+        .get(`${import.meta.env.VITE_REACT_APP_PORT}/already-install`)
+        .then((response) => {
+          const data = response?.data;
+          if (data?.message === "Not Installed") {
+            navigate("/pre-installation");
+            localStorage.setItem("installationLocal", "false");
+          } else if (data?.message === "Already Installed") {
+            localStorage.setItem("installationLocal", "true");
+            return children;
+          }
+        })
+        .catch((error) => {
+          console.error("An error occurred:", error);
+        });
+    }
+  }, [navigate, children]);
+
+  // return children;
 };
 
 InstallationRoute.propTypes = {

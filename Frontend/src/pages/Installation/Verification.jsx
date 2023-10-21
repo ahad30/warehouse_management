@@ -5,13 +5,8 @@ import toast from "react-hot-toast";
 import Step from "./Step";
 
 const Verification = () => {
-
   const location = useLocation();
-  const path = location?.pathname             
-
-  
-  
-
+  const path = location?.pathname;
 
   const [
     postStepThreeData,
@@ -41,21 +36,18 @@ const Verification = () => {
 
   return (
     <div className="bg-gray-100 p-5">
-    
-   
-
-<Step path={path}></Step>
+      <Step path={path}></Step>
 
       <p className="font-semibold">
         Please enter your item purchase code and evanto username
       </p>
 
-      <form className="w-full" action="">
+      <form className="w-full">
         <div className="flex flex-col my-5 lg:flex-row gap-4">
           {/* field one */}
           <div className="form-control  w-full">
             <label className="label">
-              <span className="label-text">Evanto Username</span>
+              <span className="label-text">Envato Username</span>
             </label>
             <input
               onChange={submitData}

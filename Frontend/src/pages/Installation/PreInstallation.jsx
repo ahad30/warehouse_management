@@ -1,22 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetStepOneQuery } from "../../features/Installation/installationApi";
-import { Path } from "@react-pdf/renderer";
-import { useEffect, useState } from "react";
 import Step from "./Step";
+import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 
 const PreInstallation = () => {
   UseTitle("Pre Installation");
-  const { data: stepOneData } = useGetStepOneQuery();
-  
+  const { data: stepOneData, isLoading } = useGetStepOneQuery();
 
   const location = useLocation();
-  const path = location?.pathname             
+  const path = location?.pathname;
 
-
- 
-  
-   
   const extensionData = [
     {
       name: "internetConnection",
@@ -90,11 +84,12 @@ const PreInstallation = () => {
     },
   ];
 
+  if (isLoading) {
+    return <UseLoading />;
+  }
+
   return (
-    <div className="p-20 flex flex-col gap-y-4">
-
-      
-
+    <div className="p-20 flex flex-col gap-y-4 mx-10">
       <Step path={path}></Step>
 
       {/* table one  */}
@@ -265,7 +260,7 @@ const PreInstallation = () => {
         </button>
         <button
           className="btn bg-black text-white"
-          disabled={stepOneData?.requirementForStep1}
+          disabled={!stepOneData?.requirementForStep1}
         >
           <Link to={"/verification"}>Next</Link>
         </button>

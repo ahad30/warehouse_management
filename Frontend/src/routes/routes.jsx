@@ -36,6 +36,7 @@ import PreInstallation from "../pages/Installation/PreInstallation";
 import Verification from "../pages/Installation/Verification";
 import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
+import InstallationRoute from "./InstallationRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -47,14 +48,20 @@ const routes = createBrowserRouter([
       {
         path: "/", // Root path
         element: (
-          <PrivateRoute>
-            <HomePage></HomePage>
-          </PrivateRoute>
+          <InstallationRoute>
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          </InstallationRoute>
         ),
       },
       {
         path: "/login", // Login page
-        element: <Login />,
+        element: (
+          <InstallationRoute>
+            <Login />
+          </InstallationRoute>
+        ),
       },
       {
         path: "/register", // Registration page
