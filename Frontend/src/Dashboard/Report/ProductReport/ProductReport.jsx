@@ -80,7 +80,7 @@ const ProductReport = () => {
     },
     {
       name: "Sold Price (Avg.)",
-      selector: (row) => <>{row?.price.toFixed(2)}</>,
+      selector: (row) => <>{parseFloat(row?.price).toFixed(2)}</>,
     },
     {
       name: "Quantity",
@@ -89,15 +89,17 @@ const ProductReport = () => {
     },
     {
       name: `${defaultSettings?.settings?.taxation} (Avg.)`,
-      selector: (row) => <>{row?.average_vat.toFixed(2)}</>,
+      selector: (row) => <>{parseFloat(row?.average_vat).toFixed(2)}</>,
     },
     {
       name: "Total",
       selector: (row) => (
         <>
           {(
-            row?.total_sold_price_without_vat +
-            (row?.total_sold_price_without_vat * row?.average_vat) / 100
+            parseFloat(row?.total_sold_price_without_vat) +
+            (parseFloat(row?.total_sold_price_without_vat) *
+              parseFloat(row?.average_vat)) /
+              100
           ).toFixed(2)}
         </>
       ),
@@ -127,7 +129,7 @@ const ProductReport = () => {
       />
 
       {/* Download PDF and CSV */}
-      <div className="flex lg:flex-row justify-end gap-2">
+      <div className="flex lg:flex-row justify-center lg:justify-end gap-2">
         {/* Invoices download as CSV file */}
         <ProductsReportAsCSV data={filterData} />
         {/* Invoices download as PDF file */}

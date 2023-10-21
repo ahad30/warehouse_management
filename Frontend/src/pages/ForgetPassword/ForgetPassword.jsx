@@ -32,8 +32,8 @@ const ForgetPassword = () => {
   };
   return (
     <div className="min-h-screen flex justify-center items-center  bg-gray-100">
-      <div className="max-w-[1440px] w-1/2 flex justify-center items-center  ">
-        <form onSubmit={handleForgetPassword} className="  w-1/2 " action="">
+      <div className="max-w-[1440px] lg:w-1/2 flex justify-center items-center  ">
+        <form onSubmit={handleForgetPassword} className="  lg:w-1/2 " action="">
           <div>
             <label htmlFor="email" className="block text-gray-700">
               Email:
@@ -61,7 +61,7 @@ const ForgetPassword = () => {
                   : "text-red-400 font-bold p-4 border border-red-400"
               }
             >
-              { message}
+              {message}
             </p>
           )}
         </form>

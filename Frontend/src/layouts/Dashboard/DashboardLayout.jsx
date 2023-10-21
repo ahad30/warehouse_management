@@ -4,27 +4,28 @@ import DashboardSidebar from "./DashboardSidebar";
 
 const DashboardLayout = () => {
   return (
-    <div className="max-w-[1920px] mx-auto">
-      <div className="sticky top-0 z-10">
-        <Navbar></Navbar>{" "}
+    <div className="z-1 font-poppins">
+      <div className="sticky top-0 " style={{ zIndex: 10 }}>
+        <Navbar></Navbar>
         {/* Render the Navbar component for user navigation */}
       </div>
 
-      <div className="drawer w-full lg:drawer-open">
+      <div className="drawer w-full lg:drawer-open -z-1">
         <input
           id="dashboard-drawer"
           type="checkbox"
           className="drawer-toggle"
         />
 
-        <div className="drawer-content flex justify-end">
+        <div className="drawer-content ">
           {/* Dashboard content rendered inside the layout */}
-          <div className="lg:w-5/6 w-full">
-            <Outlet /> {/* Render the content of the current route */}
+          <div className=" max-w-[100vw]">
+            <Outlet />
+            {/* Render the content of the current route */}
           </div>
         </div>
 
-        <div className="drawer-side relative shadow-xl -z-0 top-auto">
+        <div className="drawer-side  shadow-xl  top-auto">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <DashboardSidebar />
           {/* Render the sidebar component for navigation within the dashboard */}

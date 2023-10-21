@@ -234,23 +234,25 @@ const UsersList = () => {
           </select>
         </div>
 
-        {!usersIsSuccess && usersData?.status ? (
-          <p className="text-center text-2xl mt-10">{usersData?.message}</p>
-        ) : (
-          filterData?.length > 0 && (
-            <DataTable
-              columns={columns}
-              data={filterData}
-              pagination
-              responsive
-              paginationPerPage={itemsPerPage}
-              paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-              paginationTotalRows={filterData?.length}
-              onChangePage={(page) => setCurrentPage(page)}
-              keyField="id"
-            />
-          )
-        )}
+        <div className="w-[100vw] overflow-x-scroll">
+          {!usersIsSuccess && usersData?.status ? (
+            <p className="text-center text-2xl mt-10">{usersData?.message}</p>
+          ) : (
+            filterData?.length > 0 && (
+              <DataTable
+                columns={columns}
+                data={filterData}
+                pagination
+                responsive
+                paginationPerPage={itemsPerPage}
+                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+                paginationTotalRows={filterData?.length}
+                onChangePage={(page) => setCurrentPage(page)}
+                keyField="id"
+              />
+            )
+          )}
+        </div>
 
         <EditUser
           user={user}
