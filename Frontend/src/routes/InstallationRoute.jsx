@@ -9,7 +9,7 @@ const InstallationRoute = ({ children }) => {
   const { user, isLoading } = useSelector((state) => state?.auth);
 
   if (isLoading) {
-    <UseLoading />;
+    return <UseLoading />;
   }
 
   if (user?.get_role?.role !== "admin") {

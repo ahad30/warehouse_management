@@ -5,13 +5,8 @@ import toast from "react-hot-toast";
 import Step from "./Step";
 
 const Verification = () => {
-
   const location = useLocation();
-  const path = location?.pathname             
-
-  
-  
-
+  const path = location?.pathname;
 
   const [
     postStepThreeData,
@@ -40,13 +35,11 @@ const Verification = () => {
   }, [navigate, isError, error, isSuccess, stepThreeData?.requirementForStep2]);
 
   return (
-    <div className="bg-gray-100 p-5">
-    
-   
+    <div className=" p-3 lg:p-12">
+      <Step path={path}></Step>
 
-<Step path={path}></Step>
-
-      <p className="font-semibold">
+     <div className="bg-gray-100 p-2 lg:p-12">
+     <p className="font-semibold">
         Please enter your item purchase code and evanto username
       </p>
 
@@ -81,11 +74,17 @@ const Verification = () => {
         </div>
       </form>
 
-      <div className="flex justify-between items-center">
-        <button>
-          <Link to={"/pre-installation"}>Prev</Link>
+    
+
+     
+
+     </div>
+
+     <div className="flex justify-between   my-12 items-center">
+        <button className="btn text-white hover:text-black bg-black">
+          <Link  to={"/pre-installation"}>Prev</Link>
         </button>
-        <button onClick={handleSubmit}>
+        <button className="btn text-white hover:text-black bg-black" onClick={handleSubmit}>
           {isLoading ? "Processing" : "Next"}
         </button>
       </div>

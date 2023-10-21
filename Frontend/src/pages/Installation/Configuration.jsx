@@ -42,11 +42,11 @@ const Configuration = () => {
   console.log(stepFourData, isLoading, isSuccess, isError, error);
 
   return (
-    <div className="bg-gray-100 p-5">
+    <div className=" lg:p-12 p-2">
        
       <Step path={path}></Step>
 
-      <form className="w-full flex flex-col gap-y-6" action="">
+      <form className="w-full p-2 flex bg-gray-100 flex-col lg:p-12 gap-y-6" action="">
         {/* field div start */}
         <div className="flex flex-col my-5  gap-4">
           {/* field one */}
@@ -74,7 +74,7 @@ const Configuration = () => {
             2. Pleas enter your database connection details
           </p>
           {/* input field */}
-          <div className="grid grid-cols-2 my-4 gap-4 ">
+          <div className="grid lg:grid-cols-2 grid-cols-1 my-4 gap-4 ">
             <div className="form-control  w-full">
               <label className="label">
                 <span className="label-text">Database Host</span>
@@ -132,7 +132,9 @@ const Configuration = () => {
         <div>
           <p className="font-semibold">3. Pleas enter smtp details</p>
           {/* input field */}
-          <div className="grid grid-cols-2 my-4 gap-4 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 my-4 gap-4 ">
+
+
             <div className="form-control  w-full">
               <label className="label">
                 <span className="label-text">Mail Host</span>
@@ -158,7 +160,7 @@ const Configuration = () => {
               />
             </div>
 
-            <div className="col-span-2 flex gap-4">
+            <div className="lg:col-span-2 flex flex-col lg:flex-row gap-4">
               <div className="form-control  w-full">
                 <label className="label">
                   <span className="label-text">Mail Address</span>
@@ -201,11 +203,12 @@ const Configuration = () => {
 
         {/* field div end  */}
       </form>
-      <div className="flex justify-between items-center">
-        <button>
+
+      <div className="flex justify-between my-12 items-center">
+        <button className="btn bg-black text-white hover:text-black">
           <Link to={"/verification"}>Prev</Link>
         </button>
-        <button onClick={handleSubmit}>
+        <button className="btn bg-black text-white hover:text-black" onClick={handleSubmit}>
           {isLoading ? "Processing" : "Next"}
         </button>
       </div>
