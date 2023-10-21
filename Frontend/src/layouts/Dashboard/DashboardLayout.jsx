@@ -19,7 +19,7 @@ const DashboardLayout = () => {
 
         <div className="drawer-content ">
           {/* Dashboard content rendered inside the layout */}
-          <div className=" max-w-[100vw]">
+          <div className="max-w-[100vw] md:max-w-none border-2 border-red-400">
             <Outlet />
             {/* Render the content of the current route */}
           </div>

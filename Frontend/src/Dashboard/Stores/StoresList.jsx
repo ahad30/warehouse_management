@@ -165,7 +165,7 @@ const StoresList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Stores {storesData?.stores?.length}
+          Stores: {storesData?.stores?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn

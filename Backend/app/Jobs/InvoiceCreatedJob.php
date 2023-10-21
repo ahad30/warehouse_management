@@ -23,7 +23,7 @@ class InvoiceCreatedJob implements ShouldQueue
     public $settings; // settings data
     public $companyInfo; // companyInfo data
 
-
+    // public $tries = 3;
     /**
      * Create a new job instance.
      */
@@ -47,20 +47,20 @@ class InvoiceCreatedJob implements ShouldQueue
     {
 
         DB::beginTransaction();
-        try {
-            Mail::to($this->customerMail)->send(
-                (new SendInvoiceMail(json_encode($this->invoice)))->afterCommit()
-            );
-            DB::table('settings')->where('id', 1)->update([
-                'mail_credential_status' => 'active'
-            ]);
-            DB::commit();
-        } catch (Exception $e) {
-            info($e->getMessage());
-            DB::rollBack();
-            DB::table('settings')->where('id', 1)->update([
-                'mail_credential_status' => 'inactive'
-            ]);
-        }
+        // try {
+        Mail::to($this->customerMail)->send(
+            (new SendInvoiceMail(json_encode($this->invoice)))->afterCommit()
+        );
+        //     DB::table('settings')->where('id', 1)->update([
+        //         'mail_credential_status' => 'active'
+        //     ]);
+        //     DB::commit();
+        // } catch (Exception $e) {
+        //     info($e->getMessage());
+        // // DB::rollBack();
+        // DB::table('settings')->where('id', 1)->update([
+        //     'mail_credential_status' => 'inactive'
+        // ]);
+        // }
     }
 }
