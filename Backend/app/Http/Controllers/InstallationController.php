@@ -154,18 +154,19 @@ class InstallationController extends Controller
                 'errors' => $validateInput->errors()
             ], 401);
         }
+
         // env update
         $envInstance = new EnvController;
         $env_update = $envInstance->updateEnv([
             'DB_DATABASE' => $request->databaseName,
             'DB_USERNAME' => $request->databaseUserName,
             'DB_PASSWORD' => $request->dbPassword,
-            'APP_NAME' => $request->appName,
+            'APP_NAME' => str_replace("_", " ", $request->appName),
             'APP_DEBUG' => 'false',
             'MAIL_USERNAME' => $request->mailUsername,
             'MAIL_PASSWORD' => $request->mailPassword,
             'MAIL_FROM_ADDRESS' => $request->mailAddress,
-            'MAIL_PASSWORD' => $request->mailAppPassword,
+            // 'MAIL_PASSWORD' => $request->mailAppPassword,
         ]);
         $requirementForStep1 = $request->requirementForStep1;
         $requirementForStep2 = $request->requirementForStep2;
@@ -215,6 +216,7 @@ class InstallationController extends Controller
         $license = new LicenseController;
         $license->createLicense($request->purchaseCode, $request->evantoUsername);
         $data = [
+            'status' => true,
             'message' => 'Successfully Installation Completed',
             'requirementForStep1' => $requirementForStep1,
             'requirementForStep2' => $requirementForStep2,
@@ -226,7 +228,7 @@ class InstallationController extends Controller
             'password' => $password,
         ];
 
-        return response()->json($data);
+        return response()->json($data, 200);
     }
     public function alreadyInstall()
     {
