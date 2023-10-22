@@ -4,13 +4,13 @@ import DashboardSidebar from "./DashboardSidebar";
 
 const DashboardLayout = () => {
   return (
-    <div className="z-1 font-poppins">
-      <div className="sticky top-0 " style={{ zIndex: 10 }}>
+    <div className="z-1 font-poppins max-h-screen overflow-hidden">
+      <div className=" " style={{ zIndex: 10 }}>
         <Navbar></Navbar>
         {/* Render the Navbar component for user navigation */}
       </div>
 
-      <div className="drawer w-full lg:drawer-open -z-1">
+      <div className="drawer w-full lg:drawer-open -z-1    ">
         <input
           id="dashboard-drawer"
           type="checkbox"
@@ -19,13 +19,13 @@ const DashboardLayout = () => {
 
         <div className="drawer-content ">
           {/* Dashboard content rendered inside the layout */}
-          <div className="max-w-[100vw] lg:max-w-[90vw] overflow-x-hidden">
+          <div className="max-w-[100vw] lg:max-w-[90vw] overflow-x-hidden max-h-[90vh] overflow-y-scroll scrollbar-5">
             <Outlet />
             {/* Render the content of the current route */}
           </div>
         </div>
 
-        <div className="drawer-side  shadow-xl  top-auto">
+        <div className="drawer-side  shadow-xl  top-auto  ">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <DashboardSidebar />
           {/* Render the sidebar component for navigation within the dashboard */}
