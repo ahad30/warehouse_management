@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { usePostStepThreeMutation } from "../../features/Installation/installationApi";
 import toast from "react-hot-toast";
 import Step from "./Step";
+import ErrorMessage from "../../components/Reusable/Messages/ErrorMessage";
 
 const Verification = () => {
   const location = useLocation();
@@ -27,10 +28,10 @@ const Verification = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(error?.data?.error, { id });
+      toast.error(error?.data?.error);
     }
     if (isSuccess && stepThreeData?.requirementForStep2) {
-      toast.success(stepThreeData?.message, { id: 1 });
+      toast.success(stepThreeData?.message);
       navigate("/configuration");
     }
   }, [navigate, isError, error, isSuccess, stepThreeData?.requirementForStep2]);
@@ -41,7 +42,7 @@ const Verification = () => {
 
       <div className="bg-gray-100 p-2 lg:p-12">
         <p className="font-semibold">
-          Please enter your item purchase code and Envato username
+          Please enter your item purchase code and envato username
         </p>
 
         <form className="w-full">
@@ -49,7 +50,7 @@ const Verification = () => {
             {/* field one */}
             <div className="form-control  w-full">
               <label className="label">
-                <span className="label-text">Envato Username</span>
+                <span className="label-text">envato Username</span>
               </label>
               <input
                 onChange={submitData}
@@ -75,6 +76,10 @@ const Verification = () => {
           </div>
         </form>
       </div>
+
+      {isError && error?.data?.error && (
+        <ErrorMessage message={error?.data?.error} />
+      )}
 
       <div className="flex justify-between   my-12 items-center">
         <button className="btn text-white hover:text-black bg-black">
