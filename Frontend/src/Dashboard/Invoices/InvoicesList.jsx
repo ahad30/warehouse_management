@@ -185,16 +185,16 @@ const InvoicesList = () => {
     },
     {
       name: "Total",
-      selector: (row) => <>{row?.total}</>,
+      selector: (row) => <>{parseFloat(row?.total).toFixed(2)}</>,
     },
 
     {
       name: "Paid",
-      selector: (row) => <>{row?.paid_amount}</>,
+      selector: (row) => <>{parseFloat(row?.paid_amount).toFixed(2)}</>,
     },
     {
       name: "Due",
-      selector: (row) => <>{row?.due_amount}</>,
+      selector: (row) => <>{parseFloat(row?.due_amount).toFixed(2)}</>,
     },
     {
       name: "Status",
@@ -338,7 +338,7 @@ const InvoicesList = () => {
           />
         </div>
 
-        <div className="overflow-x-scroll">
+        <div>
           <DataTable
             columns={columns}
             data={filterData}

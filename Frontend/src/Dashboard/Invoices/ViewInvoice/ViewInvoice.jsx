@@ -137,7 +137,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     </span>
                     <span className="text-gray-500 text-lg">
                       {defaultSettings?.settings?.currency}
-                      {invoice?.sub_total}
+                      {parseFloat(invoice?.sub_total).toFixed(2)}
                     </span>
                   </p>
                   <p className="flex justify-between items-center">
@@ -161,7 +161,8 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                   <p className="flex justify-between items-center text-[#383FE1] font-bold">
                     <span className="text-bold text-xl text-right">Total:</span>
                     <span className=" text-lg">
-                      {defaultSettings?.settings?.currency} {invoice?.total}
+                      {defaultSettings?.settings?.currency}{" "}
+                      {parseFloat(invoice?.total).toFixed(2)}
                     </span>
                   </p>
                   <p className="flex justify-between items-center text-[green] font-bold">
@@ -175,7 +176,7 @@ const ViewInvoice = ({ viewInvoiceOpen, setViewInvoiceOpen, invoice }) => {
                     <span className="text-bold text-xl text-right">Due:</span>
                     <span className=" text-lg">
                       {defaultSettings?.settings?.currency}
-                      {invoice?.due_amount}
+                      {parseFloat(invoice?.due_amount).toFixed(2)}
                     </span>
                   </p>
                 </div>
