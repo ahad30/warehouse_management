@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-gray-100 flex items-center justify-between border-b border-gray-300 ">
-      <div className="border-r lg:w-2/12 lg:p-4 border-gray-300 flex items-center justify-center">
+      <div className=" lg:w-[15%] lg:p-4 border-gray-300 flex items-center justify-center">
         {/* Link to the dashboard and company logo or name */}
         <Link to={"/"} className="font-bold hidden lg:block">
           {data?.company_info?.company_img ? (

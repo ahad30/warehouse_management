@@ -6,7 +6,7 @@ const HomePage = () => {
   const { user } = useSelector((state) => state?.auth);
 
   return (
-    <div className="max-w-[1920px] mx-auto">
+    <div className="max-w-[1920px] mx-auto max-h-screen overflow-hidden">
       <div className="sticky top-0 z-10">
         <Navbar></Navbar>
         {/* Render the Navbar component for user navigation */}
@@ -19,7 +19,7 @@ const HomePage = () => {
           className="drawer-toggle"
         />
 
-        <div className="drawer-content flex justify-end relative -z-1">
+        <div className="drawer-content flex justify-center relative -z-1">
           {/* Dashboard content rendered inside the layout */}
           <div className="lg:w-5/6 w-full">
             <div className=" h-screen flex justify-center items-center w-full m-3">

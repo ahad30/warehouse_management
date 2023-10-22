@@ -112,7 +112,7 @@ const TotalCalculations = () => {
               <Link key={i} to={item?.path}>
                 <div
                   key={i}
-                  className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-gray-100 border border-gray-300"
+                  className="flex flex-col md:flex-row gap-y-5 justify-between items-center py-5 md:py-7 px-3 md:px-5 rounded-xl bg-gray-100 border border-gray-300 ring-1 ring-transparent hover:ring-red-400 duration-150 cursor-zoom-in"
                 >
                   <div
                     className={`h-[60px] p-5 rounded-lg flex justify-center items-center w-[60px]`}
