@@ -277,7 +277,10 @@ const DefaultSetting = () => {
                 role="alert"
               >
                 <p className="font-bold"> Warning</p>
-                <p>Check your SMTP Credential & generate an invoice to remove this message</p>
+                <p>
+                  Check your SMTP Credential & generate an invoice to remove
+                  this message
+                </p>
               </div>
             )}
             {/* Email settings form fields */}
@@ -331,7 +334,7 @@ const DefaultSetting = () => {
                   {errors.mail_port && <span>This field is required</span>}
                 </div>
 
-                <div className="">
+                {/* <div className="">
                   <label className="label" htmlFor="">
                     Mail Username
                   </label>
@@ -345,9 +348,9 @@ const DefaultSetting = () => {
                     {...register("mail_username")}
                   />
                   {errors.username && <span>This field is required</span>}
-                </div>
+                </div> */}
 
-                <div className="">
+                {/* <div className="">
                   <label className="label" htmlFor="">
                     Mail Password
                   </label>
@@ -361,7 +364,7 @@ const DefaultSetting = () => {
                     {...register("mail_password")}
                   />
                   {errors.mail_password && <span>This field is required</span>}
-                </div>
+                </div> */}
 
                 <div className="">
                   <label className="label" htmlFor="">
