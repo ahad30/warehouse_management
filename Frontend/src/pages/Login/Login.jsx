@@ -8,25 +8,41 @@ import DemoLogin from "./DemoLogin";
 import { toast } from "react-hot-toast";
 
 const Login = () => {
+  // Set the page title using the UseTitle custom hook
   UseTitle("Login");
+
+  // Initialize form control with useForm from react-hook-form
   const { handleSubmit, register } = useForm();
+
+  // Get navigation function for routing
   const navigate = useNavigate();
+
+  // Access the Redux dispatch function
   const dispatch = useDispatch();
+
+  // Get the current route location
   const location = useLocation();
+
+  // Determine the route to redirect to after login
   let from = location.state?.from?.pathname || "/";
 
+  // Get the loading status and error from the Redux store
   const { isLoading, error } = useSelector((state) => state?.auth);
 
+  // Handle form submission
   const handleOnSubmit = async ({ email, password }) => {
     if (!email && !password) {
       return toast.error("Please provide your Login Credentials", { id: 1 });
     }
+    // Dispatch the loginUser action with user credentials
     dispatch(loginUser({ email, password }));
   };
 
+  // Check if the user has an access token in local storage
   let access_token = JSON.parse(localStorage.getItem("access_token"));
 
   if (access_token) {
+    // Redirect to the originally requested route after successful login
     navigate(from, { replace: true });
     // return navigate("/");
   }
@@ -61,12 +77,9 @@ const Login = () => {
             </div>
 
             <div className="w-full max-w-md mx-auto">
-              {/* forget Password */}
+              {/* Forget Password */}
               <p className="text-end my-3">
-                <Link
-                  to="/forget-password"
-                  className="text-blue-700 font-semibold"
-                >
+                <Link to="/forget-password" className="text-blue-700 font-semibold">
                   Forgot password?
                 </Link>
               </p>

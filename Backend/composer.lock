@@ -4,8 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db7d8e1b410dfeda254eac7ec03ff93f",
+    "content-hash": "84c8da88ed046d63079822dbc0e1c5e6",
     "packages": [
+        {
+            "name": "ares333/php-curl",
+            "version": "v4.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ares333/php-curl.git",
+                "reference": "580025300c3cbf7cafe825bd454018ffc62233cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ares333/php-curl/zipball/580025300c3cbf7cafe825bd454018ffc62233cf",
+                "reference": "580025300c3cbf7cafe825bd454018ffc62233cf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ares333\\Curl\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ares",
+                    "homepage": "http://phpdr.net"
+                }
+            ],
+            "description": "The best php curl library.",
+            "keywords": [
+                "PHP cURL",
+                "aysnc http",
+                "curl",
+                "curlmulti"
+            ],
+            "support": {
+                "issues": "https://github.com/ares333/php-curl/issues",
+                "source": "https://github.com/ares333/php-curl/tree/master"
+            },
+            "time": "2018-12-13T03:47:27+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",

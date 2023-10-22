@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import UseLoading from "../components/Reusable/useLoading/UseLoading";
 
-const MIRoute = ({ children }) => {
-  // MANAGER, INVENTORY MANAGER
+const MSACRoute = ({ children }) => {
+  // MANAGER, SALES REPRESENTATIVE, ACCOUNTANT, CASHIER
+
   const location = useLocation();
   const { user, isLoading } = useSelector((state) => state?.auth);
 
@@ -14,7 +15,9 @@ const MIRoute = ({ children }) => {
   if (
     user?.get_role?.role == "admin" ||
     user?.get_role?.role == "manager" ||
-    user?.get_role?.role == "inventory_manager"
+    user?.get_role?.role == "sales_representative" ||
+    user?.get_role?.role == "accountant" ||
+    user?.get_role?.role == "cashier"
   ) {
     return children;
   } else {
@@ -23,8 +26,8 @@ const MIRoute = ({ children }) => {
   }
 };
 
-MIRoute.propTypes = {
+MSACRoute.propTypes = {
   children: node,
 };
 
-export default MIRoute;
+export default MSACRoute;

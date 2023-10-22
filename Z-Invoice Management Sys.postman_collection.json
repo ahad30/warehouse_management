@@ -1,0 +1,1760 @@
+{
+	"info": {
+		"_postman_id": "f2eaf30d-22c8-420d-8383-5353479b8f26",
+		"name": "Z-Invoice Management Sys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29375609",
+		"_collection_link": "https://blue-space-48685.postman.co/workspace/z8-tech~5e0969c8-ac18-4b4b-a59e-078738d70a09/collection/23937081-f2eaf30d-22c8-420d-8383-5353479b8f26?action=share&source=collection_link&creator=29375609"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjYwNTcwNSwiZXhwIjoxNjk2NjY1NzA1LCJuYmYiOjE2OTY2MDU3MDUsImp0aSI6IlF4T2wxcFpVeEZNSWc3MTIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.0Uf6hX589u9l8f9k8v4SDUDtqu9mYy4-Xv6iVDNE0js",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Komor",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "komor@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "asdfasdf",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "asdfasdf",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "Manager",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "018447f444",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "active",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "Bangladesh",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Ctg",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "fsdafsafsa",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/jwt/register",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"jwt",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzAwMDY3MiwiZXhwIjoxNjk3MDg3MDcyLCJuYmYiOjE2OTcwMDA2NzIsImp0aSI6IkJqV0VkbENiajVmbVFQbjAiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.N0_cpxg6b8SJtc-7EUDNpGaNPDvH7ZCgaxQHq0QqP3A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/jwt/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4MjgyMywiZXhwIjoxNjk2NTg2NDIzLCJuYmYiOjE2OTY1ODI4MjMsImp0aSI6IjNOUFBJV0xZZ1pORnJYbEoiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.k71kuPplTGhhXvWSUIpz2TIoAjSWUvkvo5dkleSoWWc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/jwt/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"jwt",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findLoggedInUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzA4NTk2NSwiZXhwIjoxNjk3MTcyMzY1LCJuYmYiOjE2OTcwODU5NjUsImp0aSI6Im5FZE41TFM5TG9CdEpMbE8iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.SVMNCgd7RIQ-tTMI8uKkDLma4TYmI0dGbZ9sCkIZGmo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/profile/findLoggedInUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"profile",
+								"findLoggedInUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/uploads/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"uploads",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgotten Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@mail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Total",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjgyNzA3NiwiZXhwIjoxNjk2OTEzNDc2LCJuYmYiOjE2OTY4MjcwNzYsImp0aSI6IlEwcVdWZGRsUjFQMzRzS1UiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.pbrttUByJqqQ0SQR8nrNhubbfW30elwEnOvkz8enUF0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/dashboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Graph of sell",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njg0NTA5MCwiZXhwIjoxNjk2OTMxNDkwLCJuYmYiOjE2OTY4NDUwOTAsImp0aSI6ImFpazYycUZqazUxM1JhSGUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6-5VkiJ2eI_rMGGiEHDDUfuLktrAThV0xIOWXbikM40",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/dashboard/sell-graph",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"dashboard",
+								"sell-graph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Graph of revenue",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njg0NTA5MCwiZXhwIjoxNjk2OTMxNDkwLCJuYmYiOjE2OTY4NDUwOTAsImp0aSI6ImFpazYycUZqazUxM1JhSGUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.6-5VkiJ2eI_rMGGiEHDDUfuLktrAThV0xIOWXbikM40",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/dashboard/revenue-graph",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"dashboard",
+								"revenue-graph"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/roles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_name\": \"Techno\",\r\n    \"description\": \"Techno\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMyMTM3MSwiZXhwIjoxNjk2MzI0OTcxLCJuYmYiOjE2OTYzMjEzNzEsImp0aSI6ImFyWEZ1STBXakRTS3lEaWoiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.MEzlzv5kSK1R5L5qtQJMPvUh9Lo_wqu7RtqXBQyyCh4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 454,\r\n    \"category_name\": \"Test Updated\",\r\n    \"description\": \"Test Updated\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/update/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"update",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NjY3MiwiZXhwIjoxNjk2NDkwMjcyLCJuYmYiOjE2OTY0ODY2NzIsImp0aSI6ImhoQUs0UERRVlpyYkd2cmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.q-3HjhkWdX7Y0MViLu9oymz6Qz249tFAEh8jydvoeRQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4ODY2NiwiZXhwIjoxNjk2NTkyMjY2LCJuYmYiOjE2OTY1ODg2NjYsImp0aSI6Ilk4dHlZZk5wRXNRN2dtQnEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.9o32ryCqjklCwYqsG-H7eBwBjDHBDJ7EO7iQTPOhbKo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "product_name",
+								"value": "tefdf",
+								"type": "text"
+							},
+							{
+								"key": "product_quantity",
+								"value": "stfsafa",
+								"type": "text"
+							},
+							{
+								"key": "product_unit",
+								"value": "45",
+								"type": "text"
+							},
+							{
+								"key": "product_retail_price",
+								"value": "455",
+								"type": "text"
+							},
+							{
+								"key": "product_sale_price",
+								"value": "454",
+								"type": "text"
+							},
+							{
+								"key": "category_id",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "product_des",
+								"value": "fsafasfsafsafasfasfsafsa ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_name\": \"Samsung A20\",\r\n    \"category_id\": \"1\",\r\n        \"brand_id\": \"1\",\r\n        \"product_code\": \"testCode1\",\r\n    \"price\": \"18500\",\r\n    \"product_unit\": \"pich\",\r\n    \"product_quantity\": 30,\r\n    \"product_retail_price\" : 40,\r\n    \"product_sale_price\" : 50,\r\n    \"product_desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4OTAyOCwiZXhwIjoxNjk2NDkyNjI4LCJuYmYiOjE2OTY0ODkwMjgsImp0aSI6Ik1CQnlxY2VjZ1A3eFE0OGsiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.lCkSKTdZKZKqMlu3EgV8ViNlqQJBFk_AjyZ3H_5NIVE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njc0MjE1NiwiZXhwIjoxNjk2ODI4NTU2LCJuYmYiOjE2OTY3NDIxNTYsImp0aSI6ImY5QmxXNEY1dVprZ2VkR2MiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.hjSTtCLh3IOrdS4GqUS8pooUfWtIzDPAS5fx0G9CQpQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/update/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company info",
+			"item": [
+				{
+					"name": "Get Company info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Company Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njc0MjE1NiwiZXhwIjoxNjk2ODI4NTU2LCJuYmYiOjE2OTY3NDIxNTYsImp0aSI6ImY5QmxXNEY1dVprZ2VkR2MiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.hjSTtCLh3IOrdS4GqUS8pooUfWtIzDPAS5fx0G9CQpQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "company_email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "company_phone",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "company_address",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/info/update/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"info",
+								"update",
+								""
+							],
+							"query": [
+								{
+									"key": "company_name",
+									"value": "bsv",
+									"disabled": true
+								},
+								{
+									"key": "company_email",
+									"value": "dhjks@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "company_phone",
+									"value": "3487236",
+									"disabled": true
+								},
+								{
+									"key": "company_address",
+									"value": "jbxcjgh eiuhnkjwe ew",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njg0NTk4MywiZXhwIjoxNjk2OTMyMzgzLCJuYmYiOjE2OTY4NDU5ODMsImp0aSI6ImVOQ1hMZkdYenlRVDlIaFQiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.503SQZ-O4yBrDfRDGMlqG3gfVdy8M9CQsW1lJQe4Pfo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "admin@mail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/profile/updateProfile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"profile",
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get all customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Morshed\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/store",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Morshedul Islam\",\r\n    \"email\": \"morshed@gmail.com\",\r\n    \"phone\": \"+8808374673864\",\r\n    \"address\": \"Chittagong, Bangladesh\",\r\n    \"note\": \"Good guy\",\r\n    \"profile_image\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/update/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/customers/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"customers",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoice",
+			"item": [
+				{
+					"name": "View all invoices",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzAwMDY3MiwiZXhwIjoxNjk3MDg3MDcyLCJuYmYiOjE2OTcwMDA2NzIsImp0aSI6IkJqV0VkbENiajVmbVFQbjAiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.N0_cpxg6b8SJtc-7EUDNpGaNPDvH7ZCgaxQHq0QqP3A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/list/null/null/31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"list",
+								"null",
+								"null",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invoice Infos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NjY3MiwiZXhwIjoxNjk2NDkwMjcyLCJuYmYiOjE2OTY0ODY2NzIsImp0aSI6ImhoQUs0UERRVlpyYkd2cmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.q-3HjhkWdX7Y0MViLu9oymz6Qz249tFAEh8jydvoeRQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store invoice",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzUzMDE3NSwiZXhwIjoxNjk3NjE2NTc1LCJuYmYiOjE2OTc1MzAxNzUsImp0aSI6InBCRFdoajcyVHJDREVHWFkiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.HwMNjNWPExHotgwe-SMNl5XJ8NQIEzt78j5twY4QxUA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"invoiceInfo\": {\r\n        \"issueDate\": \"2004-09-19\",\r\n        \"dueDate\": \"1985-05-16\"\r\n    },\r\n    \"company\": {\r\n        \"company_name\": \"\",\r\n        \"company_email\": \"\",\r\n        \"company_phone\": \"\",\r\n        \"company_address\": \"\"\r\n    },\r\n    \"customer\": {\r\n        \"id\": \"\",\r\n        \"name\": \"socyj@mailinator.com\",\r\n        \"email\": \"vacova@mailinator.com\",\r\n        \"phone\": \"famosyvopy@mailinator.com\",\r\n        \"address\": \"milej@mailinator.com\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"id\": 1,\r\n            \"product_name\": \"Nita Robbins\",\r\n            \"product_img\": null,\r\n            \"product_code\": \"Quo repudiandae culp\",\r\n            \"slug\": \"nita-robbinsquo-repudiandae-culp\",\r\n            \"product_unit\": \"pcs\",\r\n            \"product_quantity\": 10,\r\n            \"product_desc\": \"Quibusdam non necess\",\r\n            \"product_retail_price\": 133,\r\n            \"product_sale_price\": 478,\r\n            \"store_id\": 1,\r\n            \"category_id\": 2,\r\n            \"brand_id\": 1,\r\n            \"created_at\": \"2023-10-16T04:32:13.000000Z\",\r\n            \"updated_at\": \"2023-10-16T04:32:13.000000Z\",\r\n            \"get_category\": {\r\n                \"id\": 1,\r\n                \"category_name\": \"Medicine\",\r\n                \"slug\": \"medicine\",\r\n                \"description\": \"The Best Medicine collection\",\r\n                \"created_at\": \"2023-10-16T04:32:00.000000Z\",\r\n                \"updated_at\": \"2023-10-16T04:32:00.000000Z\"\r\n            },\r\n            \"get_brand\": {\r\n                \"id\": 1,\r\n                \"brand_name\": \"Others\",\r\n                \"brand_img\": null,\r\n                \"created_at\": \"2023-10-16T04:32:00.000000Z\",\r\n                \"updated_at\": \"2023-10-16T04:32:00.000000Z\"\r\n            },\r\n            \"get_store\": {\r\n                \"id\": 1,\r\n                \"store_name\": \"Others\",\r\n                \"store_phone\": \"00000000000\",\r\n                \"store_email\": \"other@gmail.com\",\r\n                \"store_web\": \"http://127.0.0.1:8000/\",\r\n                \"store_address\": \"no address\",\r\n                \"created_at\": \"2023-10-16T04:32:00.000000Z\",\r\n                \"updated_at\": \"2023-10-16T04:32:00.000000Z\"\r\n            },\r\n            \"quantity\": 10,\r\n            \"tax\": 50,\r\n            \"total_price_quantity_tax\": 7170\r\n        }\r\n    ],\r\n    \"calculation\": {\r\n        \"subTotal\": 4780,\r\n        \"discount\": 17,\r\n        \"shipping\": 37,\r\n        \"total\": 4004.4,\r\n        \"paidAmount\": 21,\r\n        \"due\": 3983.4\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update invoices",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njc2NjkyNywiZXhwIjoxNjk2ODUzMzI3LCJuYmYiOjE2OTY3NjY5MjcsImp0aSI6IjFiMzBac2V6WGk5NnV4UHQiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.BiJP4UqhxGirRwslpWZsNVEwQjYxpFcJAtENCO-P3Sw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "invoice_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "paid_amount",
+									"value": "8",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/update/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleting Invoice",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njc2NDM5NCwiZXhwIjoxNjk2ODUwNzk0LCJuYmYiOjE2OTY3NjQzOTQsImp0aSI6IlFuYW1MWXVXNk1ySnZNQ2MiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.xWHfQcpk5fnCsW3GWV_Zmlst6e-DmYg69lrzudqwgLQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/invoice/delete/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invoice",
+								"delete",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Brands",
+			"item": [
+				{
+					"name": "Store Brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjY1NDY4OCwiZXhwIjoxNjk2NzQxMDg4LCJuYmYiOjE2OTY2NTQ2ODgsImp0aSI6InRZc3l5elJRMXpxMEp5am4iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.rZ74uvl5MUglRDdXOvIFTYALG8eJjWogPIsabPdbbsw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand_img",
+									"type": "file",
+									"src": "/home/komor/Downloads/WhatsApp Image 2023-06-15 at 16.33.53.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/brands/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"brands",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5Njc0MjE1NiwiZXhwIjoxNjk2ODI4NTU2LCJuYmYiOjE2OTY3NDIxNTYsImp0aSI6ImY5QmxXNEY1dVprZ2VkR2MiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.hjSTtCLh3IOrdS4GqUS8pooUfWtIzDPAS5fx0G9CQpQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand_img",
+									"type": "file",
+									"src": "/home/komor/Pictures/splash-n.jpg",
+									"disabled": true
+								},
+								{
+									"key": "brand_name",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/brands/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"brands",
+								"update"
+							],
+							"query": [
+								{
+									"key": "test",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Get Roles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjMyMjMzMCwiZXhwIjoxNjk2MzI1OTMwLCJuYmYiOjE2OTYzMjIzMzAsImp0aSI6IkFQS3N1aFNUU0ZoWGkxSTQiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.qQfT_U6jlAoOLmBDKP3xtplj1TizfbXGKOcDuXnWXTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/stores/update?id=2&store_name=test store&store_address=test address&store_phone=01548754878",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"stores",
+								"update"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "store_name",
+									"value": "test store"
+								},
+								{
+									"key": "store_address",
+									"value": "test address"
+								},
+								{
+									"key": "store_phone",
+									"value": "01548754878"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Report",
+			"item": [
+				{
+					"name": "Products Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzI3NzI0MiwiZXhwIjoxNjk3MzYzNjQyLCJuYmYiOjE2OTcyNzcyNDIsImp0aSI6IkM4UTRTU2x6Zm9hQ25tR3MiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.QDgJn0B67ojOSqrfInd_MPoHdH7BuwQguIIfip8jAr8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/product-report/31/15-10-2023/15-1-2023/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"product-report",
+								"31",
+								"15-10-2023",
+								"15-1-2023",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "Update Settings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzA4NjExMSwiZXhwIjoxNjk3MTcyNTExLCJuYmYiOjE2OTcwODYxMTEsImp0aSI6ImJFcmlFUmtGd0pyOXlsR2MiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.X-ej7O-W1iadO1PGZQ67_OuY4sad9npxqiR6IlkfHqY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "discount",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "shipping",
+									"value": "25",
+									"type": "text"
+								},
+								{
+									"key": "taxation",
+									"value": "TAX",
+									"type": "text"
+								},
+								{
+									"key": "tax_value",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": " mailer",
+									"value": "smtp",
+									"type": "text"
+								},
+								{
+									"key": "mail_host",
+									"value": "sandbox.smtp.mailtrap.io",
+									"type": "text"
+								},
+								{
+									"key": "mail_port",
+									"value": "2525",
+									"type": "text"
+								},
+								{
+									"key": "mail_username",
+									"value": "37cbcb04559444",
+									"type": "text"
+								},
+								{
+									"key": "mail_password",
+									"value": "9aee1fb0abc410",
+									"type": "text"
+								},
+								{
+									"key": "mail_encryption",
+									"value": "null",
+									"type": "text"
+								},
+								{
+									"key": "mail_address",
+									"value": "nurulkomor152@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "$",
+									"type": "text"
+								},
+								{
+									"key": "footer_note",
+									"value": "test note",
+									"type": "text"
+								},
+								{
+									"key": "mail_option",
+									"value": "on",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/settings/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"settings",
+								"update"
+							],
+							"query": [
+								{
+									"key": "test",
+									"value": "est",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Settings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NzM1MTI4NywiZXhwIjoxNjk3NDM3Njg3LCJuYmYiOjE2OTczNTEyODcsImp0aSI6IkJzSmVUMklwdUl2U2tJWjkiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.UfhSNJAefiUlDUuR_ZkeEwn2z_UP1f8fMPgR0zywYOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/settings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"settings",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

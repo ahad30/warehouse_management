@@ -4,7 +4,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Notifications\TestNotification;
-
+use App\Http\Controllers\DatabaseSetupController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,11 +20,7 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::get('/notify', function () {
-    $user = User::latest()->first();
-
-    info($user->notify(new TestNotification));
-});
+Route::get('/test', [DatabaseSetupController::class, 'setupSQL']);
 
 
 require __DIR__ . '/auth.php';

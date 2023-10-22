@@ -26,7 +26,6 @@ import DashboardAnalytics from "../Dashboard/Report/Analytics/DashboardAnalytics
 import Settings from "../Dashboard/Settings/Settings";
 import UserProfileUpdate from "../Dashboard/Settings/UserProfileUpdate";
 import AdminRoute from "./AdminRoute";
-import MSACIRoute from "./MSACIRoute";
 import MACRoute from "./MACRoute";
 import MIRoute from "./MIRoute";
 import ManagerRoute from "./ManagerRoute";
@@ -37,6 +36,7 @@ import Verification from "../pages/Installation/Verification";
 import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
 import InstallationRoute from "./InstallationRoute";
+import MSACRoute from "./MSACRoute";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -101,7 +101,6 @@ const routes = createBrowserRouter([
           <PrivateRoute>
             <DashboardLayout />
           </PrivateRoute>
-         
         ),
         errorElement: <ErrorPage />, // Error page for the dashboard
         children: [
@@ -111,7 +110,6 @@ const routes = createBrowserRouter([
               <AdminRoute>
                 <DashboardAnalytics />
               </AdminRoute>
-              
             ),
           },
           // USERS
@@ -237,17 +235,17 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/invoice/new", // Create a new invoice
             element: (
-              <MSACIRoute>
+              <MSACRoute>
                 <NewInvoice />
-              </MSACIRoute>
+              </MSACRoute>
             ),
           },
           {
             path: "/dashboard/invoice", // Invoices list
             element: (
-              <MSACIRoute>
+              <MSACRoute>
                 <InvoicesList />
-              </MSACIRoute>
+              </MSACRoute>
             ),
           },
           // SETTING
