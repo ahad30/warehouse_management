@@ -90,9 +90,6 @@ const PreInstallation = () => {
 
   return (
     <div className="lg:p-20 p-5 flex flex-col gap-y-4">
-
-      
-
       <Step path={path}></Step>
 
       {/* table one  */}

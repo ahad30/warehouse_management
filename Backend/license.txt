@@ -1,1 +1,1 @@
-{"purchaseCode":null,"envantoUsername":null,"licenseKey":"11b80c79-7e39-45a9-b2ab-edb263103140"}
+{"purchaseCode":null,"envantoUsername":null,"licenseKey":"4be589a7-2d92-42bd-a804-59953cf6715b"}
