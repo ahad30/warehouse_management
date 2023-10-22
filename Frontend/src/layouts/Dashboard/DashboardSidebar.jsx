@@ -156,9 +156,9 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <div className=" bg-gray-100 pb-12 text lg:pl-5 lg:pr-[65px]  -mt-2 py-3 ">
-      <div className="join join-vertical flex flex-col  w-full px-4 rounded-none  border-gray-300 -base-content">
-        <ul className="sideBar  lg:mt-5">
+    <div className=" bg-gray-100 pb-12 text -mt-2 py-3   ">
+      <div className="join join-vertical flex flex-col  w-full px-4 rounded-none  border-gray-300 -base-content ">
+        <ul className="sideBar  lg:mt-5 ">
           {sideBarData &&
             sideBarData?.map((item) => (
               <li
