@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useFinalStepMutation } from "../../features/Installation/installationApi";
 import { toast } from "react-hot-toast";
 import SuccessMessage from "../../components/Reusable/Messages/SuccessMessage";
+import ErrorMessage from "../../components/Reusable/Messages/ErrorMessage";
 
 const InstallationFinish = () => {
   const [finalStep, { isLoading, isError, error, isSuccess, data }] =
@@ -49,6 +50,13 @@ const InstallationFinish = () => {
       )}
 
       {isSuccess && data?.message && <SuccessMessage message={data?.message} />}
+      {isError && (
+        <ErrorMessage
+          message={
+            "Something went wrong Please check your Database credentials."
+          }
+        />
+      )}
 
       <div className="flex justify-between   my-12 items-center">
         <button className="btn text-white hover:text-black bg-black">
