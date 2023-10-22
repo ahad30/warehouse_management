@@ -1,7 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import Step from "./Step";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFinalStepMutation } from "../../features/Installation/installationApi";
+import { toast } from "react-hot-toast";
+import SuccessMessage from "../../components/Reusable/Messages/SuccessMessage";
 
 const InstallationFinish = () => {
   const [finalStep, { isLoading, isError, error, isSuccess, data }] =
@@ -10,10 +12,6 @@ const InstallationFinish = () => {
   const location = useLocation();
   const path = location?.pathname;
 
-  const submitData = (e) => {
-    const { name, value } = e.target;
-    setDatabaseSql((prev) => ({ ...prev, [name]: value }));
-  };
   const importSql = (e) => {
     finalStep({
       requirementForStep1: 1,
@@ -22,35 +20,47 @@ const InstallationFinish = () => {
     });
   };
 
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.status, { id: 1 });
+    }
+    if (isSuccess) {
+      toast.success(data?.message, { id: 1 });
+    }
+  }, [isError, error, isSuccess]);
+
   console.log(isLoading, isError, error, isSuccess, data);
+
   return (
     <div className="lg:p-12 p-3">
       <Step path={path}></Step>
 
-      {/* <form */}
-      {/* action=""
-        className="w-full flex lg:p-12 bg-gray-100 justify-center "
-      > */}
-      <label htmlFor="file">
-        <div className="flex justify-center">
-          <button
-            onClick={importSql}
-            className="btn text-white btn-wide bg-blue-500 "
-          >
-            Import SQL
-          </button>
-        </div>
-        {/* <input onChange={submitData} name="sql_file" className="hidden" id="file" type="file" /> */}
-      </label>
-      {/* </form> */}
+      {!isSuccess && (
+        <label htmlFor="file">
+          <div className="flex justify-center">
+            <button
+              onClick={importSql}
+              className="btn text-white btn-wide bg-blue-500 "
+            >
+              Import SQL
+            </button>
+          </div>
+        </label>
+      )}
+
+      {isSuccess && data?.message && <SuccessMessage message={data?.message} />}
 
       <div className="flex justify-between   my-12 items-center">
         <button className="btn text-white hover:text-black bg-black">
           <Link to={"/configuration"}>Prev</Link>
         </button>
-        <button className="btn text-white hover:text-black bg-black">
+        <Link
+          disabled={!isSuccess}
+          className="btn text-white hover:text-black bg-black"
+          to={"/"}
+        >
           Finish
-        </button>
+        </Link>
       </div>
     </div>
   );
