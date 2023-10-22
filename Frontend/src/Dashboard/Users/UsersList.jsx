@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import EditUser from "./EditUser";
-
 import {
   useDeleteUserMutation,
   useGetUserRolesQuery,
@@ -19,26 +18,36 @@ import DeleteConformation from "../../components/DeleteConformationAlert/DeletCo
 import { RiDeleteBin4Line } from "react-icons/ri";
 
 const UsersList = () => {
+  // Set the title for the page
   UseTitle("Users");
+
+  // State to manage the edit user modal
   const [modalIsOpen, setModalIsOpen] = useState(null);
+
+  // State to hold user data for editing
   const [user, setUser] = useState({});
 
+  // Query to fetch user roles
   const { data: rolesData } = useGetUserRolesQuery();
 
+  // Pagination and filtering related states
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 11;
 
+  // Query to fetch user data
   const {
     data: usersData,
     isLoading: usersIsLoading,
     isSuccess: usersIsSuccess,
   } = useGetUsersQuery();
 
+  // When user data changes, set the filtered data
   useEffect(() => {
     setFilterData(usersData?.users);
   }, [usersData?.users, usersData]);
 
+  // Mutation to delete a user
   const [
     deleteUser,
     {
@@ -50,11 +59,12 @@ const UsersList = () => {
     },
   ] = useDeleteUserMutation();
 
-  // DELETE STARTS
+  // Function to delete a user
   const onDelete = (id) => {
     DeleteConformation(id, () => deleteUser(id));
   };
 
+  // Handle loading, error, and success to show toasts
   useEffect(() => {
     if (deleteIsLoading) {
       toast.loading("Loading...", { id: 1 });
@@ -75,15 +85,13 @@ const UsersList = () => {
     deleteData,
   ]);
 
-  // EDIT STARTS
+  // Function to handle opening the edit user modal
   const handleModalEditInfo = (row) => {
     setUser(row);
     setModalIsOpen(true);
   };
-  // EDIT ENDS
 
-  // SEARCH FILTERING ENDS
-
+  // Columns configuration for the DataTable
   const columns = [
     {
       name: "Serial",
@@ -94,7 +102,6 @@ const UsersList = () => {
         return <span>{serialNumber}</span>;
       },
     },
-
     {
       name: "Image",
       cell: (row) => (
@@ -127,13 +134,10 @@ const UsersList = () => {
       name: "role",
       selector: (row) => row?.get_role?.role,
     },
-
     {
       name: "address",
-      // selector: "address",
       selector: (row) => <>{row?.address}</>,
     },
-
     {
       name: "Actions",
       cell: (row) => (
@@ -149,6 +153,19 @@ const UsersList = () => {
     },
   ];
 
+  // Function to filter users based on role
+  const handleFilter = (data) => {
+    if (usersData?.users && data) {
+      const filter = usersData?.users.filter(
+        (user) => user?.get_role?.role === data
+      );
+      setFilterData(filter);
+    } else {
+      setFilterData(usersData?.users);
+    }
+  };
+
+  // Function to set the filter data based on user name search
   const setFiltering = (search) => {
     const filteredData = usersData?.users?.filter((item) =>
       item?.name?.toLowerCase().includes(search.toLowerCase())
@@ -161,40 +178,26 @@ const UsersList = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  // ALL USERS
+  // Render loading indicator if user data is loading
   if (usersIsLoading) {
     return <UseLoading />;
   }
-
-  const handleFilter = (data) => {
-    if (usersData?.users && data) {
-      const filter = usersData?.users.filter(
-        (user) => user?.get_role?.role === data
-      );
-      setFilterData(filter);
-    } else {
-      setFilterData(usersData?.users);
-    }
-  };
 
   return (
     <>
       <DashboardBackground>
         <TableHeadingTitle>Users: {usersData?.users?.length}</TableHeadingTitle>
         {/* Users Table */}
-
         <SearchAndAddBtn
           btnTitle={"Add user"}
           btnPath={"/dashboard/user/add"}
           btnIcon={<BiSolidDuplicate size={20}></BiSolidDuplicate>}
           setFiltering={setFiltering}
         />
-
         <div className="form-control w-fit my-5 mb-3 lg:w-1/6 ">
           <label className="label">
             <span className="label-text font-bold">Filter by role</span>
           </label>
-
           <select
             onChange={(e) => handleFilter(e?.target?.value)}
             className="select select-bordered"
@@ -202,7 +205,7 @@ const UsersList = () => {
             <option value={""}>Select Role</option>
             {rolesData?.roles?.map((userRole) => (
               <option
-                className="focus:border-0"
+                className="focus-border-0"
                 key={userRole?.id}
                 value={userRole?.role}
               >
@@ -211,7 +214,6 @@ const UsersList = () => {
             ))}
           </select>
         </div>
-
         <div className=" overflow-x-scroll">
           {!usersIsSuccess && usersData?.status ? (
             <p className="text-center text-2xl mt-10">{usersData?.message}</p>
@@ -231,7 +233,6 @@ const UsersList = () => {
             )
           )}
         </div>
-
         <EditUser
           user={user}
           modalIsOpen={modalIsOpen}
