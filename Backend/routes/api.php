@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -174,4 +173,5 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
     Route::apiResource('warehouses', WarehouseController::class);
+
 });
