@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Product;
-use App\Models\SaleItem;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
@@ -29,8 +26,6 @@ class ProductReportController extends Controller
         // Apply date filters based on the time range
         if ($timeRange == 1) {
             $query->whereDate('sales.issue_date', '=', now()->toDateString());
-
-
         } elseif ($timeRange == 7) {
             $query->whereBetween('sales.issue_date', [now()->subDays(7), now()]);
         } elseif ($timeRange == 31) {
@@ -57,15 +52,6 @@ class ProductReportController extends Controller
             ];
         }
 
-        // $productData = [
-        //     "product_name" => $products->product_name,
-        //     "quantity" => 1,
-        //     "price" => 647,
-        //     "average_vat" => 2,
-        //     "total_sold_price_without_vat" => 647,
-        //     "last_sale_date" => "2014-01-27"
-
-        // ];
         if ($products->count() > 0) {
             return response()->json([
                 'status' => true,
