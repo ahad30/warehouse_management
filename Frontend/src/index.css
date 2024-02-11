@@ -17,9 +17,9 @@ body {
 }
 
 .sideBar .active-link {
-  color: #0369a1;
+  color: #e74c3c;
   /* background-color: #F0F9FF; */
-  border-left: 4px solid #0369a1;
+  border-left: 4px solid #e74c3c;
 }
 
 .outlet {
