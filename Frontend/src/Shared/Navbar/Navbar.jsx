@@ -1,4 +1,4 @@
-import { AiOutlinePlusCircle, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className="flex items-center gap-2">
         {/* Button to create a new invoice */}
         {user?.get_role?.role !== "inventory_manager" && (
-          <div className="flex items-center space-x-2 bg-[#0369A1] text-white rounded-md px-3 py-2 ">
+          <div className="flex items-center space-x-2 bg-[#e74c3c] text-white rounded-md px-3 py-2">
             <Link
               className="flex justify-center gap-2 items-center"
               to={"/dashboard/invoice/new"}
