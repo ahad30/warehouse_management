@@ -14,6 +14,13 @@ trait QueryTrait
         }
         return $data;
     }
+    /**
+     *  Store a newly created resource in storage.
+     * @param mixed $model
+     * @param mixed $request
+     * @param mixed $image
+     * @return void
+     */
     public function storeData($model, $request, $image = null)
     {
         DB::transaction(function () use ($model, $request, $image) {
@@ -21,7 +28,7 @@ trait QueryTrait
             return $data;
         }, 5);
     }
-    public function updateData($model, $id, $request, $image = null)
+    public function updateData($id, $model, $request, $image = null)
     {
         DB::transaction(function () use ($model, $id, $request, $image) {
             $data = $model::findOrFail($id)
@@ -29,7 +36,7 @@ trait QueryTrait
             return $data;
         }, 5);
     }
-    public function destroyData($model, $id)
+    public function destroyData($id, $model)
     {
         $data = $model::findOrFail($id)->delete();
         return $data;
