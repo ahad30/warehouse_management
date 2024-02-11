@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InstallationController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -169,4 +170,8 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::get('/product-report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
+    /* -------------------------------------------------------------------------- */
+    /*                               Warehouse Crud                               */
+    /* -------------------------------------------------------------------------- */
+    Route::apiResource('warehouses', WarehouseController::class);
 });

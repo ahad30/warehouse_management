@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Warehouse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreWarehouseRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreWarehouseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,6 @@ class StoreWarehouseRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return Warehouse::$rules;
     }
 }
