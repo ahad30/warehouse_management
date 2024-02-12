@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    use ResponseTrait;
     // index
     public function index(Request $request)
     {
-        // $categories = Category::orderBy('id', 'DESC')->with('warehouses')->get();
-        $categories = Category::orderBy('id', 'DESC')->get();
+        $categories =  CategoryResource::collection(Category::all());
 
         if ($categories->count() > 0) {
-            return response()->json([
+            return $this->successResponse([
                 'status' => true,
-                'categories' => $categories,
+                'data' => $categories,
             ]);
         } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Categories Found',
-            ]);
+            return $this->errorResponse(null, "No Categories Found");
         }
     }
 
