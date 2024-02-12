@@ -20,6 +20,9 @@ class WarehouseController extends Controller
     public function index()
     {
         $data = WarehouseResource::collection($this->getData(Warehouse::get()));
+        if ($data->count() < 1) {
+            return $this->errorResponse(null, 'data not found', 404);
+        }
         return $this->successResponse($data);
     }
 
@@ -28,7 +31,6 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
-
         $image = ['image' => $this->imageUpload($request, 'image', 'uploads/warehouse')];
         Warehouse::create(array_merge($request->validated(), $image));
         return $this->createdResponse(['status' => true, 'message' => "Warehouse Created"]);
