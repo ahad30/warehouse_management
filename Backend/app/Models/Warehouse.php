@@ -22,6 +22,15 @@ class Warehouse extends Model
         'site_link',
     ];
 
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function brands()
+    {
+        return $this->hasMany(Brand::class);
+
     // Define mutator for 'slug' attribute
     public function setNameAttribute($value)
     {

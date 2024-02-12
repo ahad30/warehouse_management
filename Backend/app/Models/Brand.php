@@ -13,4 +13,9 @@ class Brand extends Model
         'brand_name',
         'brand_img'
     ];
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
 }

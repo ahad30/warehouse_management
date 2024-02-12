@@ -12,6 +12,7 @@ class CategoryController extends Controller
     // index
     public function index(Request $request)
     {
+        // $categories = Category::orderBy('id', 'DESC')->with('warehouses')->get();
         $categories = Category::orderBy('id', 'DESC')->get();
 
         if ($categories->count() > 0) {
