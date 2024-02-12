@@ -7,23 +7,22 @@ use App\Http\Requests\UpdateWarehouseRequest;
 use App\Http\Resources\WarehouseResource;
 use App\Models\Warehouse;
 use App\Traits\ImageTrait;
-use App\Traits\QueryTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    use QueryTrait, ResponseTrait, ImageTrait;
+    use ResponseTrait, ImageTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = WarehouseResource::collection($this->getData(Warehouse::get()));
+        $data = WarehouseResource::collection(Warehouse::get());
         if ($data->count() < 1) {
             return $this->errorResponse(null, 'data not found', 404);
         }
-        return $this->successResponse($data);
+        return $this->successResponse(['status' => true, 'data' => $data]);
     }
 
     /**
