@@ -2,75 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    use ResponseTrait;
     // index
-    public function index(Request $request)
+    public function index()
     {
-        // $categories = Category::orderBy('id', 'DESC')->with('warehouses')->get();
-        $categories = Category::orderBy('id', 'DESC')->get();
+        $categories =  CategoryResource::collection(Category::all());
 
         if ($categories->count() > 0) {
-            return response()->json([
+            return $this->successResponse([
                 'status' => true,
-                'categories' => $categories,
+                'data' => $categories,
             ]);
         } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Categories Found',
-            ]);
+            return $this->errorResponse(null, "No Categories Found");
         }
     }
 
     // store
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $validateInput = Validator::make($request->all(), [
-            'category_name' => 'required|string|max:255',
-            'description' => 'nullable',
+        $category = Category::create($request->validated());
+
+        if (!$category) {
+            return $this->errorResponse(null, "Something went wrong");
+        }
+        return $this->createdResponse([
+            'status' => true,
+            'data' => $category,
         ]);
-
-        if ($validateInput->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error',
-                'errors' => $validateInput->errors()
-            ], 401);
-        }
-
-        $categoryExist = Category::where('slug', Str::slug($request->category_name))->first();
-        if ($categoryExist) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Already Exist',
-            ], 401);
-        } else {
-            Category::create([
-                'category_name' => $request->category_name,
-                'slug' => Str::slug($request->category_name),
-                'description' => $request->description
-            ]);
-
-            $category = Category::latest()->first();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category Created Successfully',
-                'category' => $category
-            ], 201);
-        }
     }
 
     // edit
     public function edit($id)
     {
-        $category = Category::find($id);
+        $category = CategoryResource::collection(Category::find($id));
+        return $category;
 
         if ($category) {
             return response()->json([
