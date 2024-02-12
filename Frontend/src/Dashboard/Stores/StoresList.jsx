@@ -14,6 +14,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { FaEdit, FaStore } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
+import { FaEye } from "react-icons/fa";
 
 const StoresList = () => {
   UseTitle("Customers");
@@ -31,6 +32,7 @@ const StoresList = () => {
     error: storesError,
     isSuccess: storesIsSuccess,
   } = useGetStoresQuery();
+
 
   useEffect(() => {
     setFilterData(storesData?.stores);
@@ -78,6 +80,7 @@ const StoresList = () => {
     setStore(store);
     setModalIsOpen(true);
   };
+  console.log(store)
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS
@@ -95,38 +98,40 @@ const StoresList = () => {
     {
       name: "Name",
       // selector: "store_name",
-      selector: (row) => <>{row?.store_name}</>,
+      selector: (row) => <>{row?.name}</>,
     },
     {
       name: "email",
       // selector: "store_email",
-      selector: (row) => <>{row?.store_email}</>,
+      selector: (row) => <>{row?.email}</>,
     },
     {
       name: "phone",
       // selector: "store_phone",
-      selector: (row) => <>{row?.store_phone}</>,
+      selector: (row) => <>{row?.phone}</>,
     },
     {
       name: "web",
-      selector: (row) => <>{row?.store_web}</>,
+      selector: (row) => <>{row?.site_link}</>,
     },
 
     {
       name: "address",
       // selector: "store_address",
-      selector: (row) => <>{row?.store_address}</>,
+      selector: (row) => <>{row?.address}</>,
     },
 
     {
       name: "Actions",
       cell: (row) => (
-        <div>
+        <div className="space-x-2">
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
           <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+          </button>
+          <button><FaEye size={20}/>
           </button>
         </div>
       ),

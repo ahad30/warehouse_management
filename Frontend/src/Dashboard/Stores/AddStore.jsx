@@ -65,7 +65,7 @@ const AddStore = () => {
               placeholder="Store Name"
               className="input input-bordered w-full"
               required
-              {...register("store_name")}
+              {...register("name")}
             />
           </label>
           <label className="input-group">
@@ -77,7 +77,7 @@ const AddStore = () => {
               placeholder="Phone"
               className="input input-bordered w-full"
               required
-              {...register("store_phone")}
+              {...register("phone")}
             />
           </label>
           <label className="input-group">
@@ -86,7 +86,7 @@ const AddStore = () => {
               type="email"
               placeholder="Email"
               className="input input-bordered w-full"
-              {...register("store_email")}
+              {...register("email")}
             />
           </label>
           <label className="input-group">
@@ -95,7 +95,7 @@ const AddStore = () => {
               type="url"
               placeholder="Customer Web link"
               className="input input-bordered w-full"
-              {...register("store_web")}
+              {...register("site_link")}
             />
           </label>
           <label className="input-group">
@@ -107,7 +107,7 @@ const AddStore = () => {
               placeholder="Address"
               className="input input-bordered w-full"
               required
-              {...register("store_address")}
+              {...register("address")}
             />
           </label>
         </div>
