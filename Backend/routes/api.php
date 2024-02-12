@@ -76,6 +76,9 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/revenue-graph', 'revenueGraph');
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*                              Category controller                              */
+    /* -------------------------------------------------------------------------- */
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
