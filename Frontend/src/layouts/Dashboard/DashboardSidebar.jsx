@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSetting, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiCategory, BiUserCircle } from "react-icons/bi";
-import { FiUsers } from "react-icons/fi";
+// import { FiUsers } from "react-icons/fi";
 import { LiaFileInvoiceDollarSolid, LiaStoreSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import UserLogout from "../../components/Reusable/UserLogout/UserLogout";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { MdOutlineImportExport } from "react-icons/md";
 import { FaHistory } from "react-icons/fa";
+import { IoSearch } from "react-icons/io5";
 
 const DashboardSidebar = () => {
   const location = useLocation();
@@ -32,7 +33,7 @@ const DashboardSidebar = () => {
     },
     {
       name: "Search",
-      icon: <FiUsers size={25} />,
+      icon: <IoSearch size={25} />,
       path: "/dashboard/customer",
     },
     {
@@ -170,8 +171,8 @@ const DashboardSidebar = () => {
 
   return (
     <div className=" bg-gray-100 pb-12 text -mt-2 py-3   ">
-      <div className="join join-vertical flex flex-col  w-full px-4 rounded-none  border-gray-300 -base-content ">
-        <ul className="sideBar  lg:mt-5 ">
+      <div className="join join-vertical flex flex-col  w-full px-4 rounded-none  border-gray-300 -base-content">
+        <ul className="sideBar lg:mt-5 ">
           {sideBarData &&
             sideBarData?.map((item) => (
               <li
