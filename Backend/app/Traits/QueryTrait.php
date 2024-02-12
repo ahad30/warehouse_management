@@ -16,18 +16,21 @@ trait QueryTrait
     }
     /**
      *  Store a newly created resource in storage.
-     * @param mixed $model
      * @param mixed $request
      * @param mixed $image
-     * @return void
      */
-    public function storeData($model, $request, $image = null)
-    {
-        DB::transaction(function () use ($model, $request, $image) {
-            $data =  $model::create(array_merge($request->validated(), $image));
-            return $data;
-        }, 5);
-    }
+    // public function storeData($request, $image = "")
+    // {
+    //     DB::transaction(function () use ($request, $image) {
+    //         if ($image) {
+    //             $data = array_merge($request->validated() + [$image]);
+    //         } else {
+    //             $data = $request->validated();
+    //         }
+
+    //         return $data;
+    //     }, 5);
+    // }
     public function updateData($id, $model, $request, $image = null)
     {
         DB::transaction(function () use ($model, $id, $request, $image) {
