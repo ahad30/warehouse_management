@@ -1,9 +1,12 @@
 {
 	"info": {
+
 		"_postman_id": "549c3d09-61ca-45e6-972d-a72231cbd7db",
 		"name": "Z-Invoice Management Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28541532"
+		"_collection_link": "https://blue-space-48685.postman.co/workspace/z8-tech~5e0969c8-ac18-4b4b-a59e-078738d70a09/collection/31753603-5174f485-49b7-4cf5-998a-388089c49b57?action=share&source=collection_link&creator=31753603"
+
 	},
 	"item": [
 		{
@@ -1779,6 +1782,186 @@
 								""
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Warehouse",
+			"item": [
+				{
+					"name": "Get Warehouse data",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "store warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzY0NjQwMCwiZXhwIjoxNzA3NzMyODAwLCJuYmYiOjE3MDc2NDY0MDAsImp0aSI6Imd3ZWxuZFZUSTJuMFhxZ1oiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.2Y4kg2XTtHefTW4EYR1xgswCizbaxdDMunRF-cWLewg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/warehouses",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"warehouses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzY0NjQwMCwiZXhwIjoxNzA3NzMyODAwLCJuYmYiOjE3MDc2NDY0MDAsImp0aSI6Imd3ZWxuZFZUSTJuMFhxZ1oiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.2Y4kg2XTtHefTW4EYR1xgswCizbaxdDMunRF-cWLewg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "warhouse s5454 update",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "bd",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "ctg",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "bd , ctg",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+8801871661869",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@email.com",
+									"type": "text"
+								},
+								{
+									"key": "site_link",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/warehouses/16",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"warehouses",
+								"16"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "warhouse s5454",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "bd",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "ctg",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "bd , ctg",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "+8801871661869",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "email@email.com",
+									"disabled": true
+								},
+								{
+									"key": "site_link",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Warehouse",
+					"request": {
+						"method": "DELETE",
+						"header": []
 					},
 					"response": []
 				}

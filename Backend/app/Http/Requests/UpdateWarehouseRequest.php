@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Warehouse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateWarehouseRequest extends FormRequest
@@ -23,7 +22,7 @@ class UpdateWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:warehouses,name,' . $this->route('warehouse'),
             'country' => 'required|string',
             'city' => 'required|string',
             'address' => 'nullable',
