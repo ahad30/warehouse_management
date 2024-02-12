@@ -27,8 +27,17 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
-        $data = $this->storeData(Warehouse::class, $request);
+        // Okay start
+        $imageName = "";
+        if ($request->hasFile("image")) {
+            $image = $request->file("image");
+            $imageName = time() . '_' . $image->getClientOriginalName();
+        }
+        $image = ["image" => $imageName];
+
+        $data = Warehouse::create(array_merge($request->validated(), $image));
         return $this->successResponse($data);
+        // Okay end
     }
 
     /**
