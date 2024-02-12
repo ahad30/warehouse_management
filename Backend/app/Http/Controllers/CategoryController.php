@@ -23,9 +23,8 @@ class CategoryController extends Controller
                 'status' => true,
                 'data' => $categories,
             ]);
-        } else {
-            return $this->errorResponse(null, "No Categories Found");
         }
+        return $this->errorResponse(null, "No Categories Found");
     }
 
     // store
@@ -38,27 +37,22 @@ class CategoryController extends Controller
         }
         return $this->createdResponse([
             'status' => true,
-            'data' => $category,
+            'message' => "Category successfully created",
         ]);
     }
 
     // edit
     public function edit($id)
     {
-        $category = CategoryResource::collection(Category::find($id));
-        return $category;
+        $category = new CategoryResource(Category::find($id));
 
         if ($category) {
-            return response()->json([
+            return $this->successResponse([
                 'status' => true,
-                'category' => $category,
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Not Found',
-            ], 500);
+                'data' => $category,
+            ]);
         }
+        return $this->errorResponse(null, "No Categories Found");
     }
 
     // update
@@ -67,40 +61,12 @@ class CategoryController extends Controller
 
         $category = Category::find($request->id);
 
-        if ($category) {
-            $validateInput = Validator::make(
-                $request->all(),
-                [
-                    'category_name' => 'required|string|max:255',
-                    'description' => 'nullable',
-                ]
-            );
 
-            if ($validateInput->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation Error!',
-                    'errors' => $validateInput->errors()
-                ], 401);
-            }
-
-            $category->update([
-                'category_name' => $request->category_name,
-                'slug' => Str::slug($request->category_name),
-                'description' => $request->description
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category successfully updated',
-                'category' => $category,
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Not Found',
-            ], 500);
-        }
+        $category->update([
+            'category_name' => $request->category_name,
+            'slug' => Str::slug($request->category_name),
+            'description' => $request->description
+        ]);
     }
 
     // destroy
