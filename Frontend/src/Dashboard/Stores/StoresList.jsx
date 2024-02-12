@@ -101,12 +101,6 @@ const StoresList = () => {
       name: "email",
       // selector: "store_email",
       selector: (row) => <>{row?.store_email}</>,
-
-      // cell: (row) => {
-      // return  <div style={{ overflow: "auto", whiteSpace: "nowrap", width: "100%" }}>
-      //     {row?.email}
-      //   </div>
-      // }
     },
     {
       name: "phone",
