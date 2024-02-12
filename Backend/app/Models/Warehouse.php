@@ -30,7 +30,7 @@ class Warehouse extends Model
     public function brands()
     {
         return $this->hasMany(Brand::class);
-
+    }
     // Define mutator for 'slug' attribute
     public function setNameAttribute($value)
     {
