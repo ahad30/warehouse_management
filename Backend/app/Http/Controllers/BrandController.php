@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Brand;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -44,6 +45,7 @@ class BrandController extends Controller
             'brand_name' => 'required|max:100|unique:' . Brand::class,
             'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -63,6 +65,7 @@ class BrandController extends Controller
 
 
         $data = Brand::create([
+            'warehouse_id' => Warehouse::find($request->id),
             'brand_name' => $request->brand_name,
             'brand_img' => $imageData,
         ]);
@@ -124,6 +127,7 @@ class BrandController extends Controller
         }
         // updating brand
         $brand->update([
+            'warehouse_id' => Warehouse::find($request->id),
             'brand_name' => $request->brand_name,
             'brand_img' => $imageData != null ? $imageData : $brand->brand_img
         ]);
