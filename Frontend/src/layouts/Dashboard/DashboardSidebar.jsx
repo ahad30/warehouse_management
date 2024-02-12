@@ -10,6 +10,8 @@ import { TbFileInvoice } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
 import UserLogout from "../../components/Reusable/UserLogout/UserLogout";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { MdOutlineImportExport } from "react-icons/md";
+import { FaHistory } from "react-icons/fa";
 
 const DashboardSidebar = () => {
   const location = useLocation();
@@ -24,15 +26,26 @@ const DashboardSidebar = () => {
       path: "/dashboard",
     },
     {
-      name: "Users",
-      icon: <BiUserCircle size={25} />,
-      path: "/dashboard/user",
+      name: "Import/Export",
+      icon: <MdOutlineImportExport size={25}></MdOutlineImportExport>,
+      path: "/dashboard/import",
     },
     {
-      name: "Customers",
+      name: "Search",
       icon: <FiUsers size={25} />,
       path: "/dashboard/customer",
     },
+    {
+      name: "Warehouse",
+      icon: <LiaStoreSolid size={25}></LiaStoreSolid>,
+      path: "/dashboard/store",
+    },
+    {
+      name: "POS",
+      icon: <LiaFileInvoiceDollarSolid size={25} />,
+      path: "/dashboard/invoice",
+    },
+   
     {
       name: "Category",
       icon: <BiCategory size={25} />,
@@ -44,19 +57,19 @@ const DashboardSidebar = () => {
       path: "/dashboard/brand",
     },
     {
-      name: "Store",
-      icon: <LiaStoreSolid size={25}></LiaStoreSolid>,
-      path: "/dashboard/store",
-    },
-    {
-      name: "Product",
+      name: "Products",
       icon: <AiOutlineShoppingCart size={25}></AiOutlineShoppingCart>,
       path: "/dashboard/product",
     },
     {
-      name: "Invoices",
-      icon: <LiaFileInvoiceDollarSolid size={25} />,
-      path: "/dashboard/invoice",
+      name: "History",
+      icon: <FaHistory size={18}></FaHistory>,
+      path: "/dashboard/history",
+    },
+    {
+      name: "Users",
+      icon: <BiUserCircle size={25} />,
+      path: "/dashboard/user",
     },
     {
       name: "Reports",

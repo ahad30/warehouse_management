@@ -37,6 +37,8 @@ import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
 import InstallationRoute from "./InstallationRoute";
 import MSACRoute from "./MSACRoute";
+import History from "../Dashboard/History/history";
+import ImportExport from "../Dashboard/Import/ImportExport";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -112,6 +114,21 @@ const routes = createBrowserRouter([
               </AdminRoute>
             ),
           },
+           
+          // Import/Export
+           
+          { 
+             path: "/dashboard/import",
+             element: (
+              <AdminRoute>
+                <ImportExport/>
+              </AdminRoute>
+             )
+          },
+
+
+      
+
           // USERS
           {
             path: "/dashboard/user", // Users list
@@ -223,6 +240,17 @@ const routes = createBrowserRouter([
               </MACRoute>
             ),
           },
+
+          // History
+          { 
+            path: "/dashboard/history",
+            element: (
+             <AdminRoute>
+               <History/>
+             </AdminRoute>
+            )
+         },
+
           {
             path: "/dashboard/analytics", // Dashboard analytics
             element: (

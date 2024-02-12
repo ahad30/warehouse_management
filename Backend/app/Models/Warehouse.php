@@ -4,34 +4,37 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product;
 use Illuminate\Support\Str;
 
-class Category extends Model
+class Warehouse extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'category_name',
-        'warehouse_id',
-        'image',
+        'name',
         'slug',
-        'description',
+        'image',
+        'country',
+        'city',
+        'address',
+        'phone',
+        'email',
+        'site_link',
     ];
 
-    public function products()
+    public function categories()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Category::class);
     }
 
-    public function warehouse()
+    public function brands()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->hasMany(Brand::class);
     }
-
     // Define mutator for 'slug' attribute
     public function setNameAttribute($value)
     {
-        $this->attributes['category_name'] = $value;
+        $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
 }
