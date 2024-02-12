@@ -98,27 +98,27 @@ const StoresList = () => {
     {
       name: "Name",
       // selector: "store_name",
-      selector: (row) => <>{row?.store_name}</>,
+      selector: (row) => <>{row?.name}</>,
     },
     {
       name: "email",
       // selector: "store_email",
-      selector: (row) => <>{row?.store_email}</>,
+      selector: (row) => <>{row?.email}</>,
     },
     {
       name: "phone",
       // selector: "store_phone",
-      selector: (row) => <>{row?.store_phone}</>,
+      selector: (row) => <>{row?.phone}</>,
     },
     {
       name: "web",
-      selector: (row) => <>{row?.store_web}</>,
+      selector: (row) => <>{row?.site_link}</>,
     },
 
     {
       name: "address",
       // selector: "store_address",
-      selector: (row) => <>{row?.store_address}</>,
+      selector: (row) => <>{row?.address}</>,
     },
 
     {
