@@ -18,11 +18,11 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        $data = WarehouseResource::collection(Warehouse::get());
-        if ($data->count() < 1) {
-            return $this->errorResponse(null, 'data not found', 404);
-        }
-        return $this->successResponse(['status' => true, 'data' => $data]);
+        $data = WarehouseResource::collection(Warehouse::all());
+        return $this->successResponse([
+            'status' => true,
+            'data' => $data,
+        ]);
     }
 
     /**
