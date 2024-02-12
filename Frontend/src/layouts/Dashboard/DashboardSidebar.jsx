@@ -41,12 +41,7 @@ const DashboardSidebar = () => {
       icon: <LiaStoreSolid size={25}></LiaStoreSolid>,
       path: "/dashboard/store",
     },
-    {
-      name: "POS",
-      icon: <LiaFileInvoiceDollarSolid size={25} />,
-      path: "/dashboard/invoice",
-    },
-   
+    
     {
       name: "Category",
       icon: <BiCategory size={25} />,
@@ -61,6 +56,11 @@ const DashboardSidebar = () => {
       name: "Products",
       icon: <AiOutlineShoppingCart size={25}></AiOutlineShoppingCart>,
       path: "/dashboard/product",
+    },
+    {
+      name: "POS",
+      icon: <LiaFileInvoiceDollarSolid size={25} />,
+      path: "/dashboard/invoice",
     },
     {
       name: "History",
