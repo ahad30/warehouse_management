@@ -32,7 +32,7 @@ class StoreWarehouseRequest extends FormRequest
             'address' => 'nullable',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'email' => 'required|email|string|lowercase',
-            'site_link' => 'nullable|active_url',
+            'site_link' => 'nullable',
             'image' => 'nullable',
         ];
     }
