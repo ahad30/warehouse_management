@@ -22,7 +22,7 @@ trait ImageTrait
             $filename = time() . rand(1, 99) . '.' . $extension;
             $file->move(public_path($path), $filename);
 
-            $filePath = public_path($path) / $filename;
+            $filePath = $path . '/' . $filename;
             return $filePath;
         }
         return null;
@@ -38,11 +38,10 @@ trait ImageTrait
     | newPath = "/uploads/categories"  // public/uploads/categories
     |
     |*/
-    public function imageUpdate($request, string $inputField, $modelField, string $oldPath, string $newPath)
+    public function imageUpdate($request, string $inputField, $modelField, string $newPath)
     {
         if ($request->file($inputField)) {
-
-            $previous_path = public_path($oldPath . $modelField);
+            $previous_path = public_path($modelField);
             if (File::exists($previous_path)) {
                 File::delete($previous_path);
             }
@@ -50,7 +49,8 @@ trait ImageTrait
             $file = $request->file($inputField);
             $filename = time() . rand(1, 99) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path($newPath), $filename);
-            return $filename;
+            $filePath = $newPath . '/' . $filename;
+            return $filePath;
         }
         return $modelField;
     }
@@ -63,9 +63,9 @@ trait ImageTrait
     | oldPath = "/uploads/categories"   // public/uploads/categories/.$filename
     |
     |*/
-    public function deleteImage($modelField, string $oldPath)
+    public function deleteImage($modelField)
     {
-        $previous_path = public_path($oldPath . $modelField);
+        $previous_path = public_path($modelField);
         if (File::exists($previous_path)) {
             File::delete($previous_path);
         }

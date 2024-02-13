@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Traits\ImageTrait;
@@ -42,13 +43,12 @@ class BrandController extends Controller
      * update brands
      *
      */
-    public function update(UpdateBrandRequest $request,$id)
+    public function update(UpdateBrandRequest $request, $id)
     {
         $data = Brand::findOrFail($id);
-        $image = ['brand_img' => $this->imageUpdate($request, 'brand_img', $data->brand_img, 'uploads/brand/', 'uploads/brand')];
+        $image = ['brand_img' => $this->imageUpdate($request, 'brand_img', $data->brand_img, 'uploads/brand')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Brand Updated Successfully"]);
-
     }
 
 
@@ -57,9 +57,8 @@ class BrandController extends Controller
     public function delete($id)
     {
         $data = Brand::findOrFail($id);
-        $this->deleteImage($data->brand_img, 'uploads/brand/');
+        $this->deleteImage($data->brand_img);
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Brand Deleted Successfully"]);
     }
-
 }
