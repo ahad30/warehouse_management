@@ -21,9 +21,11 @@ trait ImageTrait
             $extension = $file->getClientOriginalExtension();
             $filename = time() . rand(1, 99) . '.' . $extension;
             $file->move(public_path($path), $filename);
-            return $filename;
+
+            $filePath = public_path($path) / $filename;
+            return $filePath;
         }
-        return "N/A";
+        return null;
     }
 
     /*
