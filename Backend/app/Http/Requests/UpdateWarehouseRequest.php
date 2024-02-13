@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class UpdateWarehouseRequest extends FormRequest
 {
@@ -24,13 +25,13 @@ class UpdateWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:warehouses,name,' . $this->route('warehouse'),
+            'name' => ['required', Rule::unique('warehouses')->ignore($this->id)],
             'country' => 'required|string',
             'city' => 'required|string',
             'address' => 'nullable',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'email' => 'required|email|string|lowercase',
-            'site_link' => 'nullable|active_url',
+            'site_link' => 'nullable',
             'image' => 'nullable',
         ];
     }
