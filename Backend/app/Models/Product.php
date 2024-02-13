@@ -25,7 +25,6 @@ class Product extends Model
         "product_quantity",
         "product_retail_price",
         "product_sale_price",
-        "product_code",
         "product_desc",
     ];
 

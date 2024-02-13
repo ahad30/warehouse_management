@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanyInfoSeeder::class);
         $this->call(WarehouseSeeder::class);
         $this->call(CategoryTableSeeder::class);
-        // $this->call(ProductTableSeeder::class);
         $this->call(BrandTableSeeder::class);
-        $this->call(StoreTableSeeder::class);
+        $this->call(ProductTableSeeder::class);
+        // $this->call(StoreTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
     }
 }
