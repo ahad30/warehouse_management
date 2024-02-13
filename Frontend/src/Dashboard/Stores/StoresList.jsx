@@ -80,7 +80,7 @@ const StoresList = () => {
     setStore(store);
     setModalIsOpen(true);
   };
-  console.log(store)
+
   // EDIT ENDS
 
   // SEARCH FILTERING STARTS

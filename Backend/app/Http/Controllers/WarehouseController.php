@@ -27,6 +27,7 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
+
         // Okay start
         $imageName = "";
         if ($request->hasFile("image")) {
@@ -36,7 +37,7 @@ class WarehouseController extends Controller
         $image = ["image" => $imageName];
 
         $data = Warehouse::create(array_merge($request->validated(), $image));
-        return $this->successResponse($data);
+        return $this->successResponse(["status"=> true,'message' => "Warehouse created successfully"]);
         // Okay end
     }
 

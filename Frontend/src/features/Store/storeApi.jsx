@@ -6,6 +6,9 @@ const storeApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         url: "/warehouses",
+        header: {
+          contentType: "application/json"
+        },
         body: data,
       }),
       invalidatesTags: ["Stores", "Products"],

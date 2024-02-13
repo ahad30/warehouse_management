@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use App\Models\Warehouse;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator as Validation;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class StoreWarehouseRequest extends FormRequest
 {
@@ -33,4 +36,14 @@ class StoreWarehouseRequest extends FormRequest
             'image' => 'nullable',
         ];
     }
+    public function failedValidation(Validation $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'   => false,
+            'message'   => 'Validation errors',
+            'errors'      => $validator->errors()
+        ],400));
+    }
+
+
 }

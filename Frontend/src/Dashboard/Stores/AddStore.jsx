@@ -64,7 +64,7 @@ const AddStore = () => {
               type="text"
               placeholder="Store Name"
               className="input input-bordered w-full"
-              required
+              
               {...register("name")}
             />
           </label>
@@ -106,7 +106,7 @@ const AddStore = () => {
               type="text"
               placeholder="Address"
               className="input input-bordered w-full"
-              required
+              
               {...register("address")}
             />
           </label>
