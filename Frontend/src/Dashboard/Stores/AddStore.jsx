@@ -20,9 +20,22 @@ const AddStore = () => {
     useAddStoreMutation();
 
   const onSubmit = (data) => {
-    addStore(data);
-    console.log(data);
+    const formData = new FormData();
+    formData.append("name", data?.name);
+    formData.append("country", data?.country);
+    formData.append("city", data?.city);
+    formData.append("address", data?.address);
+    formData.append("phone", data?.phone);
+    formData.append("site_link", data?.site_link);
+    formData.append("email", data?.email);
+    if (data?.image) {
+      formData.append("image", data?.image[0]);
+    }
+    addStore(formData);
+      console.log(data);
+
   };
+
 
   const errorMessages = UseErrorMessages(error);
 
@@ -53,16 +66,16 @@ const AddStore = () => {
 
   return (
     <DashboardBackground>
-      <h2 className="text-xl my-5 font-semibold">Add Store</h2>
+      <h2 className="text-xl my-5 font-semibold">Add Warehouse</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
             <span className="font-semibold min-w-[100px]">
-              Warehouse Name<span className="text-red-500 p-0">*</span>
+               Name<span className="text-red-500 p-0">*</span>
             </span>
             <input
               type="text"
-              placeholder="Warehouse Name"
+              placeholder="Name"
               className="input input-bordered w-full"
               
               {...register("name")}
@@ -126,10 +139,10 @@ const AddStore = () => {
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold min-w-[100px]">Website Link</span>
+            <span className="font-semibold min-w-[100px]"> Link</span>
             <input
               type="text"
-              placeholder="Customer Web link"
+              placeholder="Web link"
               className="input input-bordered w-full"
               {...register("site_link")}
             />
@@ -138,38 +151,15 @@ const AddStore = () => {
             <span className="font-semibold min-w-[100px]">Image</span>
             <input
               type="file"
-              className="input input-bordered w-full"              
-              {...register("address")}
+              className="input input-bordered w-full py-2"              
+              {...register("image")}
             />
           </label>
-          <label className="input-group">
-            <span className="font-semibold min-w-[100px]">
-              City<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="text"
-              placeholder="Address"
-              className="input input-bordered w-full"
-              
-              {...register("city")}
-            />
-          </label>
-          <label className="input-group">
-            <span className="font-semibold min-w-[100px]">
-              Country<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="text"
-              placeholder="Address"
-              className="input input-bordered w-full"
-              
-              {...register("country")}
-            />
-          </label>
+
         </div>
         <SubmitButton
           icon={<FaStore size={20} />}
-          title={isLoading ? "Adding Store..." : "Save"}
+          title={isLoading ? "Adding Store..." : "Add Warehouse"}
           isLoading={isLoading}
         />
       </form>

@@ -34,7 +34,9 @@ const StoresList = () => {
 
   useEffect(() => {
     setFilterData(storesData?.data);
-  }, [storesData?.stores, storesData]);
+  }, [storesData?.data]);
+
+  // console.log(storesData);
 
   const [
     deleteCustomer,
@@ -112,8 +114,33 @@ const StoresList = () => {
       selector: (row) => <>{row?.address}</>,
     },
     {
+      name: "City",
+      // selector: "store_address",
+      selector: (row) => <>{row?.city}</>,
+    },
+    {
+      name: "Country",
+      // selector: "store_address",
+      selector: (row) => <>{row?.country}</>,
+    },
+    {
       name: "Web",
       selector: (row) => <>{row?.site_link}</>,
+    },
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row?.image
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }${row?.image}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          className="w-10 h-auto rounded-full"
+        />
+      ),
     },
 
     {
@@ -126,14 +153,16 @@ const StoresList = () => {
           <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
           </button>
+          {/* <button><FaEye size={20}/>
+          </button> */}
         </div>
       ),
     },
   ];
 
   const setFiltering = (search) => {
-    const filteredData = storesData?.stores.filter((item) =>
-      item?.store_name?.toLowerCase().includes(search.toLowerCase())
+    const filteredData = storesData?.data.filter((item) =>
+      item?.name?.toLowerCase().includes(search.toLowerCase())
     );
     if (filteredData) {
       setFilterData(filteredData);

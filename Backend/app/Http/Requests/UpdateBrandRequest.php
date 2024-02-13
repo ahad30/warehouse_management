@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateBrandRequest extends FormRequest
 {
@@ -26,5 +28,13 @@ class UpdateBrandRequest extends FormRequest
             'brand_name' => 'required|max:100|unique:brands,brand_name,' . $this->route('brand'),
             'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:5000'
         ];
+    }
+    public function failedValidation(Validation $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'   => false,
+            'message'   => 'Validation errors',
+            'errors'      => $validator->errors()
+        ], 400));
     }
 }
