@@ -57,7 +57,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request)
     {
         $data = Category::findOrFail($request->id);
-        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories/', 'uploads/categories')];
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
     }
@@ -66,7 +66,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $data = Category::findOrFail($id);
-        $this->deleteImage($data->image, 'uploads/categories/');
+        $this->deleteImage($data->image);
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
     }

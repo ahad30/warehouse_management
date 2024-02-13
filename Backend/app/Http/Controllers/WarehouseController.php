@@ -48,7 +48,7 @@ class WarehouseController extends Controller
     public function update(UpdateWarehouseRequest $request, $id)
     {
         $data = Warehouse::findOrFail($id);
-        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/warehouses/', 'uploads/warehouses')];
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image,  'uploads/warehouses')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Warehouse Updated"]);
     }
@@ -59,7 +59,7 @@ class WarehouseController extends Controller
     public function destroy($id)
     {
         $data = Warehouse::findOrFail($id);
-        $this->deleteImage($data->image, 'uploads/warehouses/');
+        $this->deleteImage($data->image);
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
     }
