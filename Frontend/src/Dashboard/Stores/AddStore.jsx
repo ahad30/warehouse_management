@@ -11,7 +11,7 @@ import { FaStore } from "react-icons/fa";
 import { useAddStoreMutation } from "../../features/Store/storeApi";
 
 const AddStore = () => {
-  UseTitle("Add Store");
+  UseTitle("Add Warehouse");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,8 +20,8 @@ const AddStore = () => {
     useAddStoreMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
     addStore(data);
+    console.log(data);
   };
 
   const errorMessages = UseErrorMessages(error);
@@ -58,14 +58,50 @@ const AddStore = () => {
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
             <span className="font-semibold min-w-[100px]">
-              Name<span className="text-red-500 p-0">*</span>
+              Warehouse Name<span className="text-red-500 p-0">*</span>
             </span>
             <input
               type="text"
-              placeholder="Store Name"
+              placeholder="Warehouse Name"
               className="input input-bordered w-full"
               
               {...register("name")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[100px]">
+              Country<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="text"
+              placeholder="Country"
+              className="input input-bordered w-full"
+              required
+              {...register("country")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[100px]">
+              City<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="text"
+              placeholder="City"
+              className="input input-bordered w-full"
+              required
+              {...register("city")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[100px]">
+              Address<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="text"
+              placeholder="Address"
+              className="input input-bordered w-full"
+              required
+              {...register("address")}
             />
           </label>
           <label className="input-group">
@@ -90,23 +126,19 @@ const AddStore = () => {
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold min-w-[100px]">Web</span>
+            <span className="font-semibold min-w-[100px]">Website Link</span>
             <input
-              type="url"
+              type="text"
               placeholder="Customer Web link"
               className="input input-bordered w-full"
               {...register("site_link")}
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold min-w-[100px]">
-              Address<span className="text-red-500 p-0">*</span>
-            </span>
+            <span className="font-semibold min-w-[100px]">Image</span>
             <input
-              type="text"
-              placeholder="Address"
-              className="input input-bordered w-full"
-              
+              type="file"
+              className="input input-bordered w-full"              
               {...register("address")}
             />
           </label>
@@ -137,7 +169,7 @@ const AddStore = () => {
         </div>
         <SubmitButton
           icon={<FaStore size={20} />}
-          title={isLoading ? "Adding Store..." : "Add Store"}
+          title={isLoading ? "Adding Store..." : "Save"}
           isLoading={isLoading}
         />
       </form>

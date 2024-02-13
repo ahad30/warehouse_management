@@ -76,6 +76,9 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/revenue-graph', 'revenueGraph');
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*                              Category controller                              */
+    /* -------------------------------------------------------------------------- */
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
@@ -128,7 +131,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::controller(BrandController::class)->prefix('/brands')->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
-        Route::put('/update', 'update');
+        Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'delete');
     });
 

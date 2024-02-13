@@ -2,147 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Traits\ImageTrait;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    use ResponseTrait, ImageTrait;
     // index
-    public function index(Request $request)
+    public function index()
     {
-        $categories = Category::orderBy('id', 'DESC')->get();
+        $categories =  CategoryResource::collection(Category::all());
 
         if ($categories->count() > 0) {
-            return response()->json([
+            return $this->successResponse([
                 'status' => true,
-                'categories' => $categories,
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Categories Found',
+                'data' => $categories,
             ]);
         }
+        return $this->errorResponse(null, "No Categories Found");
     }
 
     // store
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $validateInput = Validator::make($request->all(), [
-            'category_name' => 'required|string|max:255',
-            'description' => 'nullable',
+        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/categories')];
+        Category::create(array_merge($request->validated(), $image));
+        return $this->createdResponse([
+            'status' => true,
+            'message' => "Category successfully created",
         ]);
-
-        if ($validateInput->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error',
-                'errors' => $validateInput->errors()
-            ], 401);
-        }
-
-        $categoryExist = Category::where('slug', Str::slug($request->category_name))->first();
-        if ($categoryExist) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Already Exist',
-            ], 401);
-        } else {
-            Category::create([
-                'category_name' => $request->category_name,
-                'slug' => Str::slug($request->category_name),
-                'description' => $request->description
-            ]);
-
-            $category = Category::latest()->first();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category Created Successfully',
-                'category' => $category
-            ], 201);
-        }
     }
 
     // edit
     public function edit($id)
     {
-        $category = Category::find($id);
+        $category = new CategoryResource(Category::find($id));
 
         if ($category) {
-            return response()->json([
+            return $this->successResponse([
                 'status' => true,
-                'category' => $category,
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Not Found',
-            ], 500);
+                'data' => $category,
+            ]);
         }
+        return $this->errorResponse(null, "No Categories Found");
     }
 
     // update
-    public function update(Request $request)
+    public function update(CategoryRequest $request)
     {
-
-        $category = Category::find($request->id);
-
-        if ($category) {
-            $validateInput = Validator::make(
-                $request->all(),
-                [
-                    'category_name' => 'required|string|max:255',
-                    'description' => 'nullable',
-                ]
-            );
-
-            if ($validateInput->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation Error!',
-                    'errors' => $validateInput->errors()
-                ], 401);
-            }
-
-            $category->update([
-                'category_name' => $request->category_name,
-                'slug' => Str::slug($request->category_name),
-                'description' => $request->description
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category successfully updated',
-                'category' => $category,
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Not Found',
-            ], 500);
-        }
+        $data = Category::findOrFail($request->id);
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories/', 'uploads/categories')];
+        $data->update(array_merge($request->validated(), $image));
+        return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
     }
 
     // destroy
     public function destroy($id)
     {
-        $category = Category::find($id);
-
-        if ($category) {
-            $category->delete();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category successfully deleted'
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category not found'
-            ], 500);
-        }
+        $data = Category::findOrFail($id);
+        $this->deleteImage($data->image, 'uploads/categories/');
+        $data->delete();
+        return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Warehouse;
+use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateWarehouseRequest extends FormRequest
 {
@@ -22,6 +23,23 @@ class UpdateWarehouseRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Warehouse::$rules;
+        return [
+            'name' => 'required|unique:warehouses,name,' . $this->route('warehouse'),
+            'country' => 'required|string',
+            'city' => 'required|string',
+            'address' => 'nullable',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'email' => 'required|email|string|lowercase',
+            'site_link' => 'nullable|active_url',
+            'image' => 'nullable',
+        ];
+    }
+    public function failedValidation(Validation $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'   => false,
+            'message'   => 'Validation errors',
+            'errors'      => $validator->errors()
+        ], 400));
     }
 }
