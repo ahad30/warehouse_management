@@ -2,6 +2,7 @@ import apiSlice from "../API/apiSlice";
 
 const storeApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
+
     addStore: build.mutation({
       query: (data) => ({
         method: "POST",
@@ -13,20 +14,26 @@ const storeApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Stores", "Products"],
     }),
+
     getStores: build.query({
       query: () => ({
         url: "/warehouses",
       }),
       providesTags: ["Stores"],
     }),
+
     updateStore: build.mutation({
       query: (customerData, id) => ({
         method: "PUT",
         url: `/warehouses/${id}`,
+        header: {
+          contentType: "application/json"
+        },
         body: customerData,
       }),
       invalidatesTags: ["Stores", "Products"],
     }),
+    
     deleteStore: build.mutation({
       query: (id) => ({
         method: "DELETE",
