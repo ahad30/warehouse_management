@@ -31,11 +31,8 @@ class CategoryController extends Controller
     // store
     public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
-
-        if (!$category) {
-            return $this->errorResponse(null, "Something went wrong");
-        }
+        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/categories')];
+        Category::create(array_merge($request->validated(), $image));
         return $this->createdResponse([
             'status' => true,
             'message' => "Category successfully created",
@@ -57,36 +54,20 @@ class CategoryController extends Controller
     }
 
     // update
-    public function update(Request $request)
+    public function update(CategoryRequest $request)
     {
-
-        $category = Category::find($request->id);
-
-
-        $category->update([
-            'category_name' => $request->category_name,
-            'slug' => Str::slug($request->category_name),
-            'description' => $request->description
-        ]);
+        $data = Category::findOrFail($request->id);
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories/', 'uploads/categories')];
+        $data->update(array_merge($request->validated(), $image));
+        return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
     }
 
     // destroy
     public function destroy($id)
     {
-        $category = Category::find($id);
-
-        if ($category) {
-            $category->delete();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category successfully deleted'
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category not found'
-            ], 500);
-        }
+        $data = Category::findOrFail($id);
+        $this->deleteImage($data->image, 'uploads/categories/');
+        $data->delete();
+        return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
     }
 }
