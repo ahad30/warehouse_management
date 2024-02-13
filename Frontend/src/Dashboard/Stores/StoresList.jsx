@@ -14,7 +14,6 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { FaEdit, FaStore } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
-import { FaEye } from "react-icons/fa";
 
 const StoresList = () => {
   UseTitle("Customers");
@@ -33,9 +32,8 @@ const StoresList = () => {
     isSuccess: storesIsSuccess,
   } = useGetStoresQuery();
 
-
   useEffect(() => {
-    setFilterData(storesData?.stores);
+    setFilterData(storesData?.data);
   }, [storesData?.stores, storesData]);
 
   const [
@@ -81,8 +79,6 @@ const StoresList = () => {
     setModalIsOpen(true);
   };
 
-  // EDIT ENDS
-
   // SEARCH FILTERING STARTS
   const columns = [
     {
@@ -101,24 +97,23 @@ const StoresList = () => {
       selector: (row) => <>{row?.name}</>,
     },
     {
-      name: "email",
+      name: "Email",
       // selector: "store_email",
       selector: (row) => <>{row?.email}</>,
     },
     {
-      name: "phone",
+      name: "Phone",
       // selector: "store_phone",
       selector: (row) => <>{row?.phone}</>,
     },
     {
-      name: "web",
-      selector: (row) => <>{row?.site_link}</>,
-    },
-
-    {
-      name: "address",
+      name: "Address",
       // selector: "store_address",
       selector: (row) => <>{row?.address}</>,
+    },
+    {
+      name: "Web",
+      selector: (row) => <>{row?.site_link}</>,
     },
 
     {
@@ -130,8 +125,6 @@ const StoresList = () => {
           </button>
           <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button>
-          <button><FaEye size={20}/>
           </button>
         </div>
       ),
@@ -164,11 +157,11 @@ const StoresList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Stores: {storesData?.stores?.length}
+          Warehouse: {storesData?.stores?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
-          btnTitle={"Add store"}
+          btnTitle={"Add Warehouse"}
           btnPath={"/dashboard/store/add"}
           btnIcon={<FaStore size={20} />}
           setFiltering={setFiltering}

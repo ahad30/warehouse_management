@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Brand;
 
-class UpdateWarehouseRequest extends FormRequest
+class StoreBrandRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +23,9 @@ class UpdateWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:warehouses,name,' . $this->route('warehouse'),
-            'country' => 'required|string',
-            'city' => 'required|string',
-            'address' => 'nullable',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'email' => 'required|email|string|lowercase',
-            'site_link' => 'nullable|active_url',
-            'image' => 'nullable',
+            'warehouse_id' => 'required',
+            'brand_name' => 'required|max:100|unique:brands,brand_name' ,
+            'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ];
     }
 }

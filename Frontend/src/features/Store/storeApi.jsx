@@ -24,7 +24,6 @@ const storeApi = apiSlice.injectEndpoints({
         method: "PUT",
         url: `/warehouses/${id}`,
         body: customerData,
-        
       }),
       invalidatesTags: ["Stores", "Products"],
     }),

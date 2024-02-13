@@ -26,7 +26,7 @@ class StoreWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:warehouses,name',
             'country' => 'required|string',
             'city' => 'required|string',
             'address' => 'nullable',
