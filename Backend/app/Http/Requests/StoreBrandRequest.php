@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Brand;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreBrandRequest extends FormRequest
 {
@@ -27,5 +28,13 @@ class StoreBrandRequest extends FormRequest
             'brand_name' => 'required|max:100|unique:brands,brand_name' ,
             'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ];
+    }
+    public function failedValidation(Validation $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'   => false,
+            'message'   => 'Validation errors',
+            'errors'      => $validator->errors()
+        ], 400));
     }
 }

@@ -33,8 +33,10 @@ const StoresList = () => {
   } = useGetStoresQuery();
 
   useEffect(() => {
-    setFilterData(storesData);
-  }, [storesData]);
+    setFilterData(storesData?.data);
+  }, [storesData?.data]);
+
+  console.log(storesData);
 
   const [
     deleteCustomer,
@@ -111,9 +113,25 @@ const StoresList = () => {
       // selector: "store_address",
       selector: (row) => <>{row?.address}</>,
     },
+    // {
+    //   name: "Web",
+    //   selector: (row) => <>{row?.site_link}</>,
+    // },
     {
-      name: "Web",
-      selector: (row) => <>{row?.site_link}</>,
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row?.image
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }${row?.image}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          alt="User"
+          className="w-10 h-auto rounded-full"
+        />
+      ),
     },
 
     {
@@ -134,8 +152,8 @@ const StoresList = () => {
   ];
 
   const setFiltering = (search) => {
-    const filteredData = storesData?.stores.filter((item) =>
-      item?.store_name?.toLowerCase().includes(search.toLowerCase())
+    const filteredData = storesData?.data.filter((item) =>
+      item?.name?.toLowerCase().includes(search.toLowerCase())
     );
     if (filteredData) {
       setFilterData(filteredData);
