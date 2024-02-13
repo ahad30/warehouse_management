@@ -116,7 +116,7 @@ const AddStore = () => {
             </span>
             <input
               type="text"
-              placeholder="Address"
+              placeholder="City "
               className="input input-bordered w-full"
               
               {...register("city")}
@@ -128,7 +128,7 @@ const AddStore = () => {
             </span>
             <input
               type="text"
-              placeholder="Address"
+              placeholder="Country"
               className="input input-bordered w-full"
               
               {...register("country")}

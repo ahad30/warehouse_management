@@ -35,8 +35,8 @@ const StoresList = () => {
 
 
   useEffect(() => {
-    setFilterData(storesData?.stores);
-  }, [storesData?.stores, storesData]);
+    setFilterData(storesData);
+  }, [storesData]);
 
   const [
     deleteCustomer,
@@ -131,8 +131,8 @@ const StoresList = () => {
           <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
           </button>
-          <button><FaEye size={20}/>
-          </button>
+          {/* <button><FaEye size={20}/>
+          </button> */}
         </div>
       ),
     },
