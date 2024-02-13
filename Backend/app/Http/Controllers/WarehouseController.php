@@ -8,7 +8,6 @@ use App\Http\Resources\WarehouseResource;
 use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
@@ -30,7 +29,7 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
-        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/warehouse')];
+        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/warehouses')];
         Warehouse::create(array_merge($request->validated(), $image));
         return $this->createdResponse(['status' => true, 'message' => "Warehouse Created"]);
     }
@@ -49,7 +48,7 @@ class WarehouseController extends Controller
     public function update(UpdateWarehouseRequest $request, $id)
     {
         $data = Warehouse::findOrFail($id);
-        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/warehouse/', 'uploads/warehouse')];
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/warehouses/', 'uploads/warehouses')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Warehouse Updated"]);
     }
@@ -60,7 +59,7 @@ class WarehouseController extends Controller
     public function destroy($id)
     {
         $data = Warehouse::findOrFail($id);
-        $this->deleteImage($data->image, 'uploads/warehouse/');
+        $this->deleteImage($data->image, 'uploads/warehouses/');
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
     }
