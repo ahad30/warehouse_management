@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('warehouse_id');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('product_name');
             $table->string('product_img')->nullable();
             $table->string('product_code')->nullable();
@@ -22,12 +25,9 @@ return new class extends Migration
             $table->text('product_desc')->nullable();
             $table->float('product_retail_price');
             $table->float('product_sale_price');
-            $table->unsignedBigInteger('store_id')->default(1)->nullable();
-            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
-            $table->unsignedBigInteger('category_id')->default(1)->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->unsignedBigInteger('brand_id')->default(1)->nullable();
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
             $table->timestamps();
         });
     }

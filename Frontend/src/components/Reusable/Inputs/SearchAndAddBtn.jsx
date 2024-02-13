@@ -14,7 +14,7 @@ const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
 
         <Link
           to={btnPath}
-          className="btn rounded-lg bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
+          className=" rounded-lg bg-primary text-white hover:bg-gray-600 hover:text-white"
         >
           <span className="flex items-center gap-x-2">
             <span>{btnIcon}</span>
