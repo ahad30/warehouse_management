@@ -64,7 +64,7 @@ const AddStore = () => {
               type="text"
               placeholder="Warehouse Name"
               className="input input-bordered w-full"
-              required
+              
               {...register("name")}
             />
           </label>
@@ -138,8 +138,32 @@ const AddStore = () => {
             <span className="font-semibold min-w-[100px]">Image</span>
             <input
               type="file"
+              className="input input-bordered w-full"              
+              {...register("address")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[100px]">
+              City<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="text"
+              placeholder="Address"
               className="input input-bordered w-full"
-              {...register("image")}
+              
+              {...register("city")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[100px]">
+              Country<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="text"
+              placeholder="Address"
+              className="input input-bordered w-full"
+              
+              {...register("country")}
             />
           </label>
         </div>
