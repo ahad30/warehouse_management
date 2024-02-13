@@ -20,7 +20,6 @@ const AddCategory = () => {
 
   const onSubmit = async (data) => {
     addCategory(data);
-    console.log(data);
   };
 
   useEffect(() => {
@@ -57,7 +56,6 @@ const AddCategory = () => {
             </span>
             <select
               {...register("warehouse_id")}
-              id=""
               className="input input-bordered w-full"
               required
             >
