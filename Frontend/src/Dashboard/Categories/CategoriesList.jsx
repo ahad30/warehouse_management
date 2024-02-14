@@ -39,8 +39,9 @@ const CategoriesList = () => {
   ] = useDeleteCategoryMutation();
 
   useEffect(() => {
-    setFilterData(categoriesData?.categories);
-  }, [categoriesData?.categories, categoriesData]);
+    setFilterData(categoriesData?.data);
+  }, [categoriesData?.data]);
+
 
   // DELETE STARTS
   const onDelete = (id) => {
@@ -78,7 +79,7 @@ const CategoriesList = () => {
 
   // SEARCH FILTERING STARTS
   const setFiltering = (search) => {
-    const filteredData = categoriesData?.categories?.filter((item) =>
+    const filteredData = categoriesData?.data?.filter((item) =>
       item?.category_name?.toLowerCase().includes(search.toLowerCase())
     );
     if (filteredData) {
@@ -99,10 +100,28 @@ const CategoriesList = () => {
         return <span>{serialNumber}</span>;
       },
     },
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row?.image
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }${row?.image}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          className="w-10 h-auto rounded-full"
+        />
+      ),
+    },
+    // {
+    //   name: "Store",
+    //   selector: (row) => {row?.name},
+    // },
 
     {
       name: "Name",
-
       selector: (row) => <>{row?.category_name}</>,
     },
     {
