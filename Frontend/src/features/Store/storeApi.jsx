@@ -33,7 +33,7 @@ const storeApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Stores", "Products"],
     }),
-    
+
     deleteStore: build.mutation({
       query: (id) => ({
         method: "DELETE",
