@@ -17,7 +17,7 @@ class CategoryController extends Controller
     // index
     public function index()
     {
-        $categories =  CategoryResource::collection(Category::all());
+        $categories =  CategoryResource::collection(Category::latest()->get());
 
         if ($categories->count() > 0) {
             return $this->successResponse([

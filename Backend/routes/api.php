@@ -175,5 +175,5 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
-    Route::resource('warehouses', WarehouseController::class);
+    Route::apiResource('warehouses', WarehouseController::class);
 });
