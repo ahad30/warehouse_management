@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('product_img')->nullable();
             $table->string('product_code')->nullable();
+            $table->string('scan_code')->nullable();
             $table->string('slug');
-            $table->string('product_unit');
+            $table->string('product_unit')->nullable();
             $table->integer('product_quantity')->default(0);
             $table->text('product_desc')->nullable();
             $table->float('product_retail_price');
