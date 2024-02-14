@@ -17,7 +17,7 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        $data = WarehouseResource::collection(Warehouse::all());
+        $data = WarehouseResource::collection(Warehouse::latest()->get());
         return $this->successResponse([
             'status' => true,
             'data' => $data,
