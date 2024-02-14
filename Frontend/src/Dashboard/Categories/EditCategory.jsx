@@ -25,7 +25,8 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
       return;
     }
 
-    updateCategory({ ...data, id: category.id });
+    updateCategory({ ...data, id: category?.id });
+    console.log(data)
   };
 
   const errorMessages = UseErrorMessages(updateError);
@@ -55,8 +56,8 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   // Set default values using setValue from react-hook-form
   useEffect(() => {
     if (category) {
-      setValue("category_name", category.category_name || "");
-      setValue("description", category.description || "");
+      setValue("category_name", category?.category_name || "");
+      setValue("description", category?.description || "");
     }
   }, [category, setValue]);
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class CategoryRequest extends FormRequest
 {
@@ -24,8 +27,16 @@ class CategoryRequest extends FormRequest
         return [
             'warehouse_id' => 'required|exists:warehouses,id',
             'category_name' => 'required|string|max:255',
-            'image' => 'required|mimes:jpg,jpeg,png,gif',
+            'image' => 'nullable|mimes:jpg,jpeg,png,gif',
             'description' => 'nullable',
         ];
+    }
+    public function failedValidation(Validation $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'   => false,
+            'message'   => 'Validation errors',
+            'errors'      => $validator->errors()
+        ], 400));
     }
 }
