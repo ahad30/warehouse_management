@@ -20,12 +20,13 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   ] = useUpdateStoreMutation();
 
   const onSubmit = (data) => {
-    if (!store?.store_name || !store?.store_phone || !store?.store_address) {
+    if (!store?.name || !store?.phone || !store?.address) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
     }
 
     updateStore({ ...data, id: store?.id });
+    console.log(data);
   };
 
   const errorMessages = UseErrorMessages(updateError);
@@ -54,11 +55,13 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
 
   useEffect(() => {
     if (store) {
-      setValue("store_name", store?.store_name || "");
-      setValue("store_email", store?.store_email || "");
-      setValue("store_phone", store?.store_phone || "");
-      setValue("store_web", store?.store_web || "");
-      setValue("store_address", store?.store_address || "");
+      setValue("name", store?.name || "");
+      setValue("email", store?.email || "");
+      setValue("phone", store?.phone || "");
+      setValue("site_link", store?.site_link || "");
+      setValue("address", store?.address || "");
+      setValue("city", store?.city || "");
+      setValue("country", store?.country || "");
     }
   }, [store, setValue]);
 
@@ -84,10 +87,10 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                       </span>
                       <input
                         type="text"
-                        placeholder="Store Name"
+                        placeholder="Warehouse Name"
                         className="input input-bordered w-full"
                         required
-                        {...register("store_name")}
+                        {...register("name")}
                       />
                     </label>
                     <label className="input-group">
@@ -98,7 +101,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         type="text"
                         placeholder="Phone"
                         className="input input-bordered w-full"
-                        {...register("store_phone")}
+                        {...register("phone")}
                       />
                     </label>
                     <label className="input-group">
@@ -107,16 +110,16 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         type="email"
                         placeholder="Email"
                         className="input input-bordered w-full"
-                        {...register("store_email")}
+                        {...register("email")}
                       />
                     </label>
                     <label className="input-group">
                       <span className="font-semibold min-w-[100px]">Web</span>
                       <input
-                        type="url"
-                        placeholder="Customer Web link"
+                        type="text"
+                        placeholder="Warehouse Web link"
                         className="input input-bordered w-full"
-                        {...register("store_web")}
+                        {...register("site_link")}
                       />
                     </label>
                     <label className="input-group">
@@ -127,7 +130,29 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         type="text"
                         placeholder="Address"
                         className="input input-bordered w-full"
-                        {...register("store_address")}
+                        {...register("address")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold min-w-[100px]">
+                        City<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="City"
+                        className="input input-bordered w-full"
+                        {...register("city")}
+                      />
+                    </label>
+                    <label className="input-group">
+                      <span className="font-semibold min-w-[100px]">
+                        Country<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Country"
+                        className="input input-bordered w-full"
+                        {...register("country")}
                       />
                     </label>
                   </div>

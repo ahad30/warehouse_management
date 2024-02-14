@@ -52,6 +52,30 @@ const AddCategory = () => {
         <div className="grid lg:grid-cols-2 gap-5">
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">
+              WareHouse<span className="text-red-500 p-0">*</span>
+            </span>
+            <select
+              {...register("warehouse_id")}
+              className="input input-bordered w-full"
+              required
+            >
+              <option value="">Select Warehouse</option>
+              <option value="1">Warehouse 1</option>
+            </select>
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[110px]">
+              Image<span className="text-red-500 p-0">*</span>
+            </span>
+            <input
+              type="file"
+              className="input input-bordered w-full"
+              required
+              {...register("image")}
+            />
+          </label>
+          <label className="input-group">
+            <span className="font-semibold min-w-[110px]">
               Name<span className="text-red-500 p-0">*</span>
             </span>
             <input

@@ -24,6 +24,7 @@ class CategoryRequest extends FormRequest
         return [
             'warehouse_id' => 'required|exists:warehouses,id',
             'category_name' => 'required|string|max:255',
+            'image' => 'required|mimes:jpg,jpeg,png,gif',
             'description' => 'nullable',
         ];
     }

@@ -19,7 +19,7 @@ const MIRoute = ({ children }) => {
     return children;
   } else {
     // toast.error("Sorry! You have not Permitted!", { id: 1 });
-    return <Navigate to={"/"} state={{ from: location }} replace />;
+    // return <Navigate to={"/"} state={{ from: location }} replace />;
   }
 };
 
