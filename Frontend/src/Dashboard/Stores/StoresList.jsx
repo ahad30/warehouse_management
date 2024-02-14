@@ -118,15 +118,15 @@ const StoresList = () => {
       // selector: "store_address",
       selector: (row) => <>{row?.city}</>,
     },
-    {
-      name: "Country",
-      // selector: "store_address",
-      selector: (row) => <>{row?.country}</>,
-    },
-    {
-      name: "Web",
-      selector: (row) => <>{row?.site_link}</>,
-    },
+    // {
+    //   name: "Country",
+    //   // selector: "store_address",
+    //   selector: (row) => <>{row?.country}</>,
+    // },
+    // {
+    //   name: "Web",
+    //   selector: (row) => <>{row?.site_link}</>,
+    // },
     {
       name: "Image",
       cell: (row) => (
