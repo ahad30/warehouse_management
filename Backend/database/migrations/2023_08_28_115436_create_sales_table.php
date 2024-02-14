@@ -20,9 +20,6 @@ return new class extends Migration
             $table->float('total');
             $table->float('paid_amount');
             $table->string('due_amount')->nullable();
-            $table->unsignedBigInteger('customer_id')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->date('issue_date');
             $table->date('due_date')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

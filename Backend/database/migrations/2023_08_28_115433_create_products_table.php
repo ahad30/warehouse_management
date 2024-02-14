@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('product_name');
             $table->string('product_img')->nullable();
-            $table->string('product_code')->nullable();
+            $table->string('unique_code')->nullable();
             $table->string('scan_code')->nullable();
             $table->string('slug');
             $table->string('product_unit')->nullable();
