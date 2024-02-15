@@ -2,33 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductImage;
+use App\Traits\ImageTrait;
+use App\Traits\ResponseTrait;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    use ResponseTrait, ImageTrait;
     // index
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->with('getCategory', 'getBrand', 'getStore')->get();
-
-        if ($products->count() > 0) {
-            return response()->json([
+        $data = ProductResource::collection(Product::latest()->get());
+        if ($data->count() > 0) {
+            return $this->successResponse([
                 'status' => true,
-                'products' => $products,
-            ], 200);
+                'data' => $data,
+            ]);
         } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Products Found',
-                'products' => $products,
-            ], 404);
+            return $this->errorResponse(null, 'Data Not Found', 404);
         }
     }
 
@@ -51,82 +53,29 @@ class ProductController extends Controller
     }
 
     // store
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
+        try {
+            DB::beginTransaction();
+            $product = Product::create($request->validated());
+            $images = $this->multipleImageUpload($request, 'uploads/products/images');
 
-        $validateInput = Validator::make($request->all(), [
-            'product_name' => ['required', 'string', 'max:255'],
-            'product_quantity' => ['integer', 'required'],
-            'product_unit' => ['string', 'required'],
-            'product_retail_price' => ['required', 'max:10'],
-            'product_sale_price' => ['required', 'max:10'],
-            'product_code' => ['string', 'max:255'],
-            'category_id' => ['required'],
-            'store_id' => ['nullable'],
-            'brand_id' => ['nullable'],
-            'product_img' => ['nullable', 'max:5000'],
-        ]);
-
-        if ($validateInput->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error!',
-                'errors' => $validateInput->errors()
-            ], 400);
+            foreach ($images as $image) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $image
+                ]);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['errors' => $e->getMessage()], 500);
         }
 
-        $productExist = Product::where('slug', Str::slug($request->product_name . $request->product_code))->first();
-        if ($productExist != null) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Product already exist',
-            ], 400);
-        } else {
-            // image upload
-            $imageData = null;
 
-            if ($request->hasFile('product_img')) {
-                $file = $request->file('product_img');
-                $filename = $file->getClientOriginalName();
-                $imageData = $request->product_name . "-" . time() . '-' . $filename;
-                $file->move('uploads/products/', $imageData);
-            }
-            // checking category is exit or not
-            if (Category::where('id', $request->category_id)->count() < 1) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Invalid Category',
-                ], 400);
-            }
-            if (Brand::where('id', $request->brand_id)->count() < 1) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Invalid Brand',
-                ], 400);
-            }
-
-            Product::create([
-                'product_name' => $request->product_name,
-                'product_img' => $imageData,
-                'product_quantity' => $request->product_quantity,
-                'product_unit' => $request->product_unit,
-                'product_desc' => $request->product_desc,
-                'product_retail_price' => $request->product_retail_price,
-                'product_sale_price' => $request->product_sale_price,
-                'slug' => Str::slug($request->product_name . $request->product_code),
-                'product_code' => $request->product_code,
-                'store_id' => $request->store_id == null ? 1 : $request->store_id,
-                'category_id' => $request->category_id == null ? 1 : $request->category_id,
-                'brand_id' => $request->brand_id == null ? 1 : $request->brand_id,
-            ]);
-            $product = Product::latest()->first();
-            return response()->json([
-                'status' => true,
-                'message' => 'New Product Updated Successfully',
-                'product' => $product,
-            ]);
-        }
+        return $this->successResponse(['data' => "products uploaded"]);
     }
+
 
     // edit
     public function edit($id)
@@ -161,6 +110,7 @@ class ProductController extends Controller
             'product_sale_price' => ['required', 'max:10'],
             'product_code' => ['string'],
             'category_id' => ['required'],
+            'warehouse_id' => ['required'],
             'brand_id' => ['nullable'],
             'product_img' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:5000']
         ]);
@@ -177,7 +127,6 @@ class ProductController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Product not found',
-
             ], 404);
         }
 

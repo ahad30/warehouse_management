@@ -36,7 +36,10 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
-
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
     public function saleitems()
     {
         return $this->belongsTo(SaleItem::class);
