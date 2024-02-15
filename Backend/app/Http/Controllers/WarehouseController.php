@@ -20,7 +20,7 @@ class WarehouseController extends Controller
 
         $data = WarehouseResource::collection(Warehouse::latest()->get());
         if (!$data) {
-            return $this->notFoundResponse('data not found');
+            return response()->json(['status' => true, 'data' => $data, 'message' => 'data not found'], 200);
         }
         return $this->successResponse([
             'status' => true,
