@@ -34,7 +34,7 @@ const AddProduct = () => {
     formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
-    formData.append("store_id", data?.store_id);
+    formData.append("warehouse_id", data?.warehouse_id);
     formData.append("product_quantity", data?.product_quantity);
     if (data?.product_img) {
       formData.append("product_img", data?.product_img[0]);
@@ -114,12 +114,12 @@ const AddProduct = () => {
             <select
               className="select select-bordered w-full"
               required
-              {...register("store_id")}
+              {...register("warehouse_id")}
             >
-              <option value={""}>Select Store Info</option>
-              {storesData?.stores?.map((store) => (
-                <option key={store?.id} value={store?.id}>
-                  {store?.store_name}
+              <option value={""}>Select Warehouse Info</option>
+              {storesData?.data?.map((data) => (
+                <option key={data?.id} value={data?.id}>
+                  {data?.name}
                 </option>
               ))}
             </select>

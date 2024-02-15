@@ -32,7 +32,7 @@ const AddStore = () => {
       formData.append("image", data?.image[0]);
     }
     addStore(formData);
-      console.log(data);
+      // console.log(data);
 
   };
 

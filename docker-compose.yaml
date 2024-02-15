@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  app:
+    build: ./Frontend
+    container_name: client
+    ports:
+      - '5174:5174'
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
