@@ -15,11 +15,12 @@ return [
     |
     */
 
-    'paths' => ['*'],
+    'paths' => ['*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'],
+    'access-control-allow-origin' => ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +30,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];
