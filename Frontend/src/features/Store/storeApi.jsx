@@ -23,13 +23,13 @@ const storeApi = apiSlice.injectEndpoints({
     }),
 
     updateStore: build.mutation({
-      query: (customerData, id) => ({
-        method: "PUT",
+      query: ({data , id}) => ({
+        method: "POST",
         url: `/warehouses/${id}`,
         header: {
-          contentType: "application/json"
+          contentType: "multipart/form-data"
         },
-        body: customerData,
+        body: data,
       }),
       invalidatesTags: ["Stores", "Products"],
     }),

@@ -32,7 +32,7 @@ class UpdateWarehouseRequest extends FormRequest
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'email' => 'required|email|string|lowercase',
             'site_link' => 'nullable',
-            'image' => 'nullable',
+            'image' => 'nullable|mimes:jpg, jpeg, png, gif',
         ];
     }
     public function failedValidation(Validation $validator)

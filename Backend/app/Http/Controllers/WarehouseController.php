@@ -47,7 +47,6 @@ class WarehouseController extends Controller
      */
     public function update(UpdateWarehouseRequest $request)
     {
-        // return $id;
         $data = Warehouse::findOrFail($request->id);
         $image = ['image' => $this->imageUpdate($request, 'image', $data->image,  'uploads/warehouses')];
         $data->update(array_merge($request->validated(), $image));

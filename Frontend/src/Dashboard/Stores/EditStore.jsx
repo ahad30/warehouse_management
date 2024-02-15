@@ -25,7 +25,21 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
       return;
     }
 
-    updateStore({ ...data, id: store?.id });
+    let formData = new FormData();
+    formData.append("name", data?.name);
+    formData.append("country", data?.country);
+    formData.append("city", data?.city);
+    formData.append("address", data?.address);
+    formData.append("phone", data?.phone);
+    formData.append("site_link", data?.site_link);
+    formData.append("email", data?.email);
+    formData.append("_method", "PUT");
+    if (data?.image) {
+      formData.append("image", data?.image[0]);
+    }
+
+    updateStore({ data:formData, id: store?.id });
+    // updateStore(formData);
     console.log(data);
   };
 
@@ -62,6 +76,8 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
       setValue("address", store?.address || "");
       setValue("city", store?.city || "");
       setValue("country", store?.country || "");
+      setValue("image", store?.image || "")
+
     }
   }, [store, setValue]);
 
@@ -155,6 +171,14 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         {...register("country")}
                       />
                     </label>
+                    <label className="input-group">
+            <span className="font-semibold min-w-[100px]">Image</span>
+            <input
+              type="file"
+              className="input input-bordered w-full py-2"              
+              {...register("image")}
+            />
+          </label>
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">
