@@ -45,10 +45,17 @@ class WarehouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWarehouseRequest $request)
+    public function update(UpdateWarehouseRequest $request, $id)
     {
-        $data = Warehouse::findOrFail($request->id);
-        $image = ['image' => $this->imageUpdate($request, 'image', $data->image,  'uploads/warehouses')];
+        // return response()->json($request->all(),500);
+        $data = Warehouse::find($id);
+        if(!$data){
+            return response()->json([
+                'status' => false,
+                'message' => "data not found"
+            ]);
+        }
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image,  'uploads/warehouses/')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Warehouse Updated"]);
     }

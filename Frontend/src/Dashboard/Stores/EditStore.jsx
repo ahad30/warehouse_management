@@ -26,6 +26,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     }
 
     let formData = new FormData();
+    formData.append("_method", "PUT");
     formData.append("name", data?.name);
     formData.append("country", data?.country);
     formData.append("city", data?.city);
@@ -33,8 +34,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     formData.append("phone", data?.phone);
     formData.append("site_link", data?.site_link);
     formData.append("email", data?.email);
-    formData.append("_method", "PUT");
-    if (data?.image) {
+    if (data?.image.length > 0) {
       formData.append("image", data?.image[0]);
     }
 

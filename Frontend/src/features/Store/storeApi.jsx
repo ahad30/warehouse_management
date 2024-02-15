@@ -27,7 +27,7 @@ const storeApi = apiSlice.injectEndpoints({
         method: "POST",
         url: `/warehouses/${id}`,
         header: {
-          contentType: "multipart/form-data"
+          contentType: "multipart/form-data" ,
         },
         body: data,
       }),

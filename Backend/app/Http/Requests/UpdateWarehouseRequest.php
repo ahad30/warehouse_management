@@ -25,14 +25,14 @@ class UpdateWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', Rule::unique('warehouses')->ignore($this->id)],
+            // 'name' => ['required', $this->route('warehouse')],
             'country' => 'required|string',
             'city' => 'required|string',
             'address' => 'nullable',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'email' => 'required|email|string|lowercase',
             'site_link' => 'nullable',
-            'image' => 'nullable|mimes:jpg, jpeg, png, gif',
+            'image' => 'nullable',
         ];
     }
     public function failedValidation(Validation $validator)
