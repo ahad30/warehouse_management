@@ -92,6 +92,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/create', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
+        Route::post('update/image/{id}', 'imageUpdate');
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'destroy');
     });

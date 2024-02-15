@@ -8,7 +8,7 @@ const storeApi = apiSlice.injectEndpoints({
         method: "POST",
         url: "/warehouses",
         header: {
-          contentType: "application/json"
+          // "Content-type": "application/json"
         },
         body: data,
       }),
