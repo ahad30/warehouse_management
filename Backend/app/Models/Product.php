@@ -21,7 +21,8 @@ class Product extends Model
         "slug",
         "product_img",
         "product_unit",
-        "product_code",
+        "unique_code",
+        'scan_code',
         "product_quantity",
         "product_retail_price",
         "product_sale_price",
@@ -36,7 +37,10 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
-
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
     public function saleitems()
     {
         return $this->belongsTo(SaleItem::class);

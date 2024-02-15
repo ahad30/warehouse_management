@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 trait ImageTrait
@@ -92,5 +93,30 @@ trait ImageTrait
             }
         }
         return $images;
+    }
+    // For uploading Image
+    public function multipleImageUpload($request, string $path)
+    {
+        DB::beginTransaction();
+        try {
+            $allowedFileExtension = ['jpg', 'png', 'jpeg', 'gif'];
+            $imagePaths = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $key => $image) {
+                    $extension = $image->getClientOriginalExtension();
+                    $check = in_array($extension, $allowedFileExtension);
+                    if ($check) {
+                        $imageName = time() . rand(1, 99) . '.' . $extension;
+                        $image->move(public_path($path), $imageName);
+                        $imagePath = $path . "/" . $imageName;
+                        $imagePaths[] = $imagePath;
+                    }
+                }
+            }
+            return $imagePaths;
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
     }
 }
