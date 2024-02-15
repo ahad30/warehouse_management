@@ -32,7 +32,7 @@ class ProductController extends Controller
                 'data' => $data,
             ]);
         } else {
-            return $this->notFoundResponse('data not found');
+            return response()->json(['data' => null, 'message' => 'data not found'], 200);
         }
     }
 
@@ -116,7 +116,7 @@ class ProductController extends Controller
                 // return $image_id;
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
-                    return $this->notFoundResponse('data not found');
+                    return response()->json(['data' => null, 'message' => 'data not found'], 200);
                 }
                 // delete files
                 if (File::exists($product_images->image)) {
@@ -146,7 +146,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if (!$product) {
-            return $this->notFoundResponse('data not found');
+            return response()->json(['data' => null, 'message' => 'data not found'], 200);
         }
         try {
             /**
