@@ -6,6 +6,9 @@ const categoryApi = apiSlice.injectEndpoints({
       query: (data) => ({
         method: "POST",
         url: "/categories/store",
+        header: {
+          contentType : "application/json"
+        },
         // url: "/posts",
         body: data,
       }),
@@ -21,6 +24,7 @@ const categoryApi = apiSlice.injectEndpoints({
     getCategory: builder.query({
       query: (id) => ({
         url: `/categories/edit/${id}`,
+        
         // url: `/posts/${id}`,
       }),
       providesTags: ["Categories"],
@@ -30,6 +34,9 @@ const categoryApi = apiSlice.injectEndpoints({
         method: "PUT",
         url: `/categories/update`,
         // url: `/posts/${id}`,
+        header: {
+          contentType : "application/json"
+        },
         body: categoryData,
       }),
       invalidatesTags: ["Categories"],

@@ -195,6 +195,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products);
     }
   };
+
   const filterBrand = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
@@ -205,6 +206,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products);
     }
   };
+  
   const filterStore = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
