@@ -32,7 +32,9 @@ class ProductController extends Controller
                 'data' => $data,
             ]);
         } else {
-            return response()->json(['data' => null, 'message' => 'data not found'], 200);
+            return response()->json([
+                'status' => true, 'data' => $data, 'message' => 'data not found'
+            ], 200);
         }
     }
 
