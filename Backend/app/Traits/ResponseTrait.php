@@ -118,7 +118,7 @@ trait ResponseTrait
     public function notFoundResponse(string $message = ''): JsonResponse
     {
         return response()->json([
-            'status' => false,
+            'status' => true,
             'message' => $message
         ], Response::HTTP_NOT_FOUND);
     }

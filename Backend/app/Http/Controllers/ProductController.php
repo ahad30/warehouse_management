@@ -74,9 +74,7 @@ class ProductController extends Controller
             DB::rollBack();
             return response()->json(['errors' => $e->getMessage()], 500);
         }
-
-
-        return $this->successResponse(['data' => "products uploaded"]);
+        return $this->successResponse(['status' => true, 'message' => "products uploaded"]);
     }
 
 
@@ -102,7 +100,7 @@ class ProductController extends Controller
             return $this->errorResponse(null, 'Product not found', 404);
         }
         $product->update($request->validated());
-        return $this->successResponse(['status' => true, "product updated"]);
+        return $this->successResponse(['status' => true, 'message' =>  "product updated"]);
     }
     public function imageUpdate(Request $request, $id)
     {
@@ -141,7 +139,7 @@ class ProductController extends Controller
                 DB::commit();
             }
         }
-        return $this->successResponse(['status' => true, 'Image Updated']);
+        return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
     }
     // destroy
     public function destroy($id)
