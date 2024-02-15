@@ -297,10 +297,10 @@ const ProductsList = () => {
         </div>
 
         {/* Products Table */}
-        {!productsIsSuccess && productsData?.status ? (
+        {/* {!productsIsSuccess && productsData?.status ? (
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
-          filterData?.length > 0 && (
+          filterData?.length > 0 && ( */}
             <div className="overflow-x-scroll">
               <DataTable
                 columns={columns}
@@ -314,8 +314,8 @@ const ProductsList = () => {
                 keyField="id"
               />
             </div>
-          )
-        )}
+          {/* ) */}
+        {/* )} */}
         <EditProduct
           product={product}
           modalIsOpen={modalIsOpen}

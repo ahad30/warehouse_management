@@ -96,7 +96,7 @@ const CategoriesList = () => {
       cell: (row) => {
         // Calculate the serial number based on the current page and items per page
         const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
         return <span>{serialNumber}</span>;
       },
     },
@@ -115,14 +115,15 @@ const CategoriesList = () => {
         />
       ),
     },
-    // {
-    //   name: "Store",
-    //   selector: (row) => {row?.name},
-    // },
+    
 
     {
-      name: "Name",
+      name: "Category Name",
       selector: (row) => <>{row?.category_name}</>,
+    },
+    {
+      name: "Warehouse Name",
+      selector: (row) => <>{row?.warehouse_name}</>,
     },
     {
       name: "Description",
@@ -167,7 +168,7 @@ const CategoriesList = () => {
           setFiltering={setFiltering}
         />
         {/* Categories Table */}
-        {filterData?.length > 0 && (
+        {/* {filterData?.length > 0 && ( */}
           <DataTable
             columns={columns}
             data={filterData}
@@ -179,7 +180,7 @@ const CategoriesList = () => {
             onChangePage={(page) => setCurrentPage(page)}
             keyField="id"
           />
-        )}
+        {/* )} */}
 
         <EditCategory
           category={category}
