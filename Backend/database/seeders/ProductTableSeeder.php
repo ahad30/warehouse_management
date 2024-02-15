@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProductTableSeeder extends Seeder
 {
@@ -19,7 +20,8 @@ class ProductTableSeeder extends Seeder
                 'category_id' => 1, // Replace with the actual category ID
                 'brand_id' => 1, // Replace with the actual brand ID
                 'product_name' => 'Product ' . $i,
-                'product_code' => 'PD' . '-' . $i . time(),
+                'unique_code' => 'PD' . '-' . $i . time(),
+                'scan_code' => 'SP' . '-' . $i . Str::random(8),
                 'product_unit' => 'pcs',
                 'product_quantity' => 10,
                 'product_desc' => 'Description of Product 1',
