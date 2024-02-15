@@ -112,13 +112,15 @@ trait ResponseTrait
     /**
      * Response with status code 404.
      *
-     * @param  mixed  $data
      * @param  string  $message
      * @return JsonResponse
      */
-    public function notFoundResponse(mixed $data, string $message = ''): JsonResponse
+    public function notFoundResponse(string $message = ''): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_NOT_FOUND);
+        return response()->json([
+            'status' => false,
+            'message' => $message
+        ], Response::HTTP_NOT_FOUND);
     }
 
     /**
