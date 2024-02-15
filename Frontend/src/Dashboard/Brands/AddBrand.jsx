@@ -39,6 +39,7 @@ const AddBrand = () => {
 
     // Call the addBrand mutation with the form data.
     addBrand(formData);
+    console.log(data)
   };
 
   // Handle side effects like showing loading/error/success messages.
@@ -82,6 +83,7 @@ const AddBrand = () => {
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>
       <form onSubmit={handleSubmit(onSubmit)} encType="mulitpart/form-data">
         <div className="grid lg:grid-cols-2 gap-5">
+          
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">
               Name<span className="text-red-500 p-0">*</span>
