@@ -17,7 +17,11 @@ class WarehouseController extends Controller
      */
     public function index()
     {
+
         $data = WarehouseResource::collection(Warehouse::latest()->get());
+        if (!$data) {
+            return response()->json(['status' => true, 'data' => $data, 'message' => 'data not found'], 200);
+        }
         return $this->successResponse([
             'status' => true,
             'data' => $data,
@@ -47,7 +51,6 @@ class WarehouseController extends Controller
      */
     public function update(UpdateWarehouseRequest $request, $id)
     {
-        // return response()->json($request->all(),500);
         $data = Warehouse::find($id);
         if(!$data){
             return response()->json([
