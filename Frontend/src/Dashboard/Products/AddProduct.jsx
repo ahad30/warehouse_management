@@ -116,7 +116,7 @@ const AddProduct = () => {
               required
               {...register("warehouse_id")}
             >
-              <option value={""}>Select Store Info</option>
+              <option value={""}>Select Warehouse Info</option>
               {storesData?.data?.map((data) => (
                 <option key={data?.id} value={data?.id}>
                   {data?.name}
