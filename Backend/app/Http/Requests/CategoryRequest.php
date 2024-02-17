@@ -37,7 +37,7 @@ class CategoryRequest extends FormRequest
         if ($this->method() == 'PUT') {
             return [
                 'category_name' => ['required', 'max:255'],
-                'image' => 'nullable|mimes:jpg,jpeg,png',
+                'new_image' => 'sometimes|mimes:jpg,jpeg,png',
                 'description' => 'nullable',
             ];
         }
@@ -46,7 +46,7 @@ class CategoryRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'status'   => false,
-            'message'   => 'Validation errors',
+            'message'   => 'Please Select Image',
             'errors'      => $validator->errors()
         ], 400));
     }

@@ -5,7 +5,7 @@ const AddNewButton = ({ children, path, icon }) => {
   return (
     <Link
       to={path}
-      className=" bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
+      className="bg-gray-600 text-white hover:bg-gray-600 hover:text-white"
     >
       <span className="flex items-center gap-x-2">
         <span>{icon}</span>

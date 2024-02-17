@@ -59,8 +59,10 @@ class CategoryController extends Controller
             return $this->errorResponse(null, 'category Not Found', 404);
         }
 
+
         $image = ['image' => $this->imageUpdate($request, 'image', $category->image, 'uploads/categories')];
         $category->update(array_merge($request->validated(), $image));
+
         return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
     }
 

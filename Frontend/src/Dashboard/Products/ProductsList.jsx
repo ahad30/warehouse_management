@@ -39,6 +39,7 @@ const ProductsList = () => {
     isSuccess: productsIsSuccess,
   } = useGetProductsQuery();
 
+  
   useEffect(() => {
     setFilterData(productsData?.products);
   }, [productsData?.products, productsData]);

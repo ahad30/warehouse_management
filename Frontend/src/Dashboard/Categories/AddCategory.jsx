@@ -8,22 +8,21 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
-import { useGetStoresQuery } from "../../features/Store/storeApi";
+// import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const AddCategory = () => {
   UseTitle("Add Category");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: storesData } = useGetStoresQuery();
+  // const { data: storesData } = useGetStoresQuery();
   const [addCategory, { isLoading, isError, error, isSuccess, data }] =
     useAddCategoryMutation();
 
   const onSubmit = async (data) => {
     let formData = new FormData();
     formData.append("category_name", data?.category_name);
-    formData.append("warehouse_id", data?.warehouse_id);
-   
+
     if (data?.image?.length>0) {
       
       formData.append("image", data?.image[0]);
@@ -63,7 +62,7 @@ const AddCategory = () => {
       <h2 className="text-xl my-5 font-semibold">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid lg:grid-cols-2 gap-5">
-        <label className="input-group">
+        {/* <label className="input-group">
             <span className="font-semibold">
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
@@ -79,7 +78,7 @@ const AddCategory = () => {
                 </option>
               ))}
             </select>
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">
               Image<span className="text-red-500 p-0">*</span>
