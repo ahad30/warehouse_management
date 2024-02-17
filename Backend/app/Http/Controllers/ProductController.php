@@ -23,7 +23,7 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $products = ProductResource::collection(Product::latest()->get());
+        $products = ProductResource::collection(Product::latest()->paginate(20));
         return response()->json([
             'status' => true,
             'products' => $products

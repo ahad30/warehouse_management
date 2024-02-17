@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('unique_code')->unique();
             $table->string('scan_code')->unique();
             $table->string('product_unit')->nullable();
-            $table->integer('product_quantity')->default(0);
             $table->float('product_retail_price');
             $table->float('product_sale_price');
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');

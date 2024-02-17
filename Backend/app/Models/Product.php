@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\SaleItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -19,9 +18,7 @@ class Product extends Model
         "product_name",
         "unique_code",
         'scan_code',
-        "product_img",
         "product_unit",
-        "product_quantity",
         "product_retail_price",
         "product_sale_price",
     ];
