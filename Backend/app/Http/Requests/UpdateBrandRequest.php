@@ -24,7 +24,6 @@ class UpdateBrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse_id' => 'required',
             'brand_name' => 'required|max:100|unique:brands,brand_name,' . $this->route('brand'),
             'brand_img' => 'mimes:jpg,png,jpeg,gif,svg|max:5000'
         ];

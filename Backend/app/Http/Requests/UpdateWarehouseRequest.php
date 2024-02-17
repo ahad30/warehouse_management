@@ -25,7 +25,7 @@ class UpdateWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'name' => ['required', $this->route('warehouse')],
+            'name' => ['required',  Rule::unique('warehouses')->ignore($this->warehouse)],
             'country' => 'required|string',
             'city' => 'required|string',
             'address' => 'nullable',

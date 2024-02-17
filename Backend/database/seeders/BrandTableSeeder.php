@@ -14,8 +14,12 @@ class BrandTableSeeder extends Seeder
     public function run(): void
     {
         Brand::create([
-            'warehouse_id' => 1,
             'brand_name' => "Others",
+            'brand_img' => "N/A",
+        ]);
+        Brand::create([
+            'brand_name' => "Brand 1",
+            'brand_img' => "N/A",
         ]);
     }
 }

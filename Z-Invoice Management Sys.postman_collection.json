@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5174f485-49b7-4cf5-998a-388089c49b57",
+		"_postman_id": "f2717743-1fd7-43f4-a600-656985467ac2",
 		"name": "Z-Invoice Management Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31753603",
-		"_collection_link": "https://blue-space-48685.postman.co/workspace/z8-tech~5e0969c8-ac18-4b4b-a59e-078738d70a09/collection/31753603-5174f485-49b7-4cf5-998a-388089c49b57?action=share&source=collection_link&creator=31753603"
+		"_exporter_id": "28541532"
 	},
 	"item": [
 		{
@@ -553,6 +552,47 @@
 								"api",
 								"categories",
 								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single-warehouse-categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/single-warehouse/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"single-warehouse",
 								"1"
 							]
 						}
@@ -1630,6 +1670,74 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "single-warehouse-brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/brands/single-warehouse/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"brands",
+								"single-warehouse",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/brands",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"brands"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2148,7 +2256,10 @@
 					"name": "Delete Warehouse",
 					"request": {
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
