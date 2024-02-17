@@ -15,6 +15,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -51,7 +52,15 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            $product = Product::create($request->validated());
+            $input = [
+                'warehouse_id' => $request->warehouse_id,
+                'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id,
+                'unique_code' => Str::random(8),
+                'scan_code' => $request->scan_code,
+            ];
+            $product = Product::create(array_merge($request->validated(), $input));
+
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
 
             $productImageData = [];
@@ -103,16 +112,27 @@ class ProductController extends Controller
             'warehouse_id' => $request->warehouse_id,
             'category_id' => $request->category_id,
             'brand_id' => $request->brand_id,
+            'unique_code' => Str::random(8),
+            'scan_code' => $request->scan_code,
         ];
 
-        $product->update(array_merge($request->validated(), $input));
-        return $this->successResponse(['status' => true, 'message' =>  "Product updated"]);
+        $data = $product->update(array_merge($request->validated(), $input));
+        if (!$data) {
+            return $this->errorResponse(null, 'Something went wrong');
+        }
+        return $this->successResponse([
+            'status' => true,
+            'message' =>  "Product successfully updated"
+        ]);
     }
 
     public function imageUpdate(Request $request, $id)
     {
         if (!Product::find($id)) {
-            return $this->badRequestResponse(['status' => false, "Product not found"]);
+            return $this->badRequestResponse([
+                'status' => false,
+                "Product not found"
+            ]);
         }
 
         /**
@@ -120,7 +140,6 @@ class ProductController extends Controller
          */
         if ($request->image_ids) {
             foreach ($request->image_ids as $image_id) {
-                // return $image_id;
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
                     return response()->json(['data' => null, 'message' => 'data not found'], 200);
@@ -148,6 +167,8 @@ class ProductController extends Controller
         }
         return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
     }
+
+
     // destroy
     public function destroy($id)
     {
