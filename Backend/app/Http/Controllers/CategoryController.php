@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
 
@@ -23,6 +24,20 @@ class CategoryController extends Controller
             ]);
         }
         return $this->errorResponse(null, "No Categories Found");
+    }
+
+    // single warehouse categories
+    public function singleWarehouseCategories($id)
+    {
+        $warehouse = Warehouse::find($id);
+        if (!$warehouse) {
+            return $this->errorResponse(null, 'Warehouse not found', 404);
+        }
+        $categories =  CategoryResource::collection($warehouse->categories);
+        return $this->successResponse([
+            'status' => true,
+            'data' => $categories,
+        ]);
     }
 
     // store
