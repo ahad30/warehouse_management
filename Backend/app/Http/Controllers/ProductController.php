@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+use function Laravel\Prompts\error;
+
 class ProductController extends Controller
 {
     use ResponseTrait, ImageTrait;
@@ -25,10 +27,10 @@ class ProductController extends Controller
     public function index()
     {
         $products = ProductResource::collection(Product::latest()->get());
-            return response()->json([
-                'status' => true,
-                'products' => $products
-            ],200);
+        return response()->json([
+            'status' => true,
+            'products' => $products
+        ], 200);
     }
 
     // create
@@ -38,7 +40,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'categories' => $categories,
-        ],200);
+        ], 200);
     }
 
     // store
@@ -64,7 +66,6 @@ class ProductController extends Controller
             DB::rollBack();
             return response()->json(['errors' => $e->getMessage()], 500);
         }
-
     }
 
 
@@ -154,7 +155,7 @@ class ProductController extends Controller
             $product->delete();
             return $this->successResponse(['status' => true, 'message' => 'product deleted successfully']);
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return $this->errorResponse(null, "Unable to delete product", 400);
         }
     }
 }

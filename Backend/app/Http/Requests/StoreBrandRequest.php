@@ -24,8 +24,8 @@ class StoreBrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse_id' => 'required',
-            'brand_name' => 'required|max:100|unique:brands,brand_name' ,
+            'warehouse_id' => 'required|exists:warehouses,id',
+            'brand_name' => 'required|max:100',
             'brand_img' => 'nullable|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ];
     }
