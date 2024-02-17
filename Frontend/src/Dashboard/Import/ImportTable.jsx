@@ -19,7 +19,7 @@ const ImportTable = () => {
       price: 99,
     },
   ];
-  console.log(tableData);
+
   return (
     <>
       <div className="mt-8">
