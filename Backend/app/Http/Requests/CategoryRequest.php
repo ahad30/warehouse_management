@@ -36,7 +36,7 @@ class CategoryRequest extends FormRequest
         //  if the request method is put
         if ($this->method() == 'PUT') {
             return [
-                'category_name' => ['required', 'max:255', Rule::unique('warehouses')->ignore($this->warehouse)],
+                'category_name' => ['required', 'max:255'],
                 'image' => 'nullable|mimes:jpg,jpeg,png',
                 'description' => 'nullable',
             ];
