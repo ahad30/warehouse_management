@@ -6,7 +6,6 @@ use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-
 class CategoryRequest extends FormRequest
 {
     /**
@@ -36,7 +35,7 @@ class CategoryRequest extends FormRequest
         //  if the request method is put
         if ($this->method() == 'PUT') {
             return [
-                // 'warehouse_id' => 'required|exists:warehouses,id',
+                'warehouse_id' => ['required', 'exists:warehouses,id'],
                 'category_name' => 'required|string|max:255',
                 'description' => 'nullable',
             ];
