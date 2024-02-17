@@ -8,9 +8,6 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -45,20 +42,22 @@ class CategoryController extends Controller
     {
         $category = new CategoryResource(Category::find($id));
 
-        if ($category) {
-            return $this->successResponse([
-                'status' => true,
-                'data' => $category,
-            ]);
+        if (!$category) {
+            return $this->errorResponse(null, "No Categories Found");
         }
-        return $this->errorResponse(null, "No Categories Found");
+        return $this->successResponse([
+            'status' => true,
+            'data' => $category,
+        ]);
     }
 
     // update
     public function update(UpdateCategoryRequest $request,$id)
     {
-        $data = Category::findOrFail($id);
-        return  $data;
+        $data = Category::find($request->id);
+        if (!$data) {
+            return $this->errorResponse(null, 'Data Not Found', 404);
+        }
         $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
@@ -68,6 +67,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $data = Category::findOrFail($id);
+        if (!$data) {
+            return $this->errorResponse(null, "No Categories Found");
+        }
         $this->deleteImage($data->image);
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Category Deleted"]);
