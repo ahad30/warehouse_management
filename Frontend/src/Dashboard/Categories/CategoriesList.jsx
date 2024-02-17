@@ -42,7 +42,7 @@ const CategoriesList = () => {
     setFilterData(categoriesData?.data);
   }, [categoriesData?.data]);
 
-
+// console.log(categoriesData);
   // DELETE STARTS
   const onDelete = (id) => {
     DeleteConformation(id, () => deleteCategory(id));
@@ -121,10 +121,10 @@ const CategoriesList = () => {
       name: "Category Name",
       selector: (row) => <>{row?.category_name}</>,
     },
-    {
-      name: "Warehouse Name",
-      selector: (row) => <>{row?.warehouse_name}</>,
-    },
+    // {
+    //   name: "Warehouse Name",
+    //   selector: (row) => <>{row?.warehouse_name}</>,
+    // },
     {
       name: "Description",
 
@@ -168,7 +168,7 @@ const CategoriesList = () => {
           setFiltering={setFiltering}
         />
         {/* Categories Table */}
-        
+
         {/* {filterData?.length > 0 && ( */}
           <DataTable
             columns={columns}
