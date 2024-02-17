@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('unique_code')->unique();
             $table->string('scan_code')->unique();
-            $table->string('product_img')->nullable();
             $table->string('product_unit')->nullable();
             $table->integer('product_quantity')->default(0);
             $table->float('product_retail_price');

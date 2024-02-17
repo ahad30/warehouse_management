@@ -31,7 +31,6 @@ class UpdateProductRequest extends FormRequest
             'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
-            'product_img' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:5000']
         ];
     }
     public function failedValidation(Validation $validator)

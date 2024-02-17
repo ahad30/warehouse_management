@@ -14,13 +14,13 @@ class ProductTableSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             Product::create([
                 'warehouse_id' => 1,
                 'category_id' => 1, // Replace with the actual category ID
                 'brand_id' => 1, // Replace with the actual brand ID
                 'product_name' => 'Product ' . $i,
-                'unique_code' => 'PD' . '-' . $i . time(),
+                'unique_code' => 'PD' . '-' . $i . time() . Str::random(4),
                 'scan_code' => 'SP' . '-' . $i . Str::random(8),
                 'product_unit' => 'pcs',
                 'product_quantity' => 10,
