@@ -32,7 +32,7 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
-
+// console.log(categoryData)
   const {
     data: productsData,
     isLoading: productsIsLoading,
@@ -95,7 +95,7 @@ console.log(productsData?.products)
       cell: (row) => {
         // Calculate the serial number based on the current page and items per page
         const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
         return <span>{serialNumber}</span>;
       },
     },
@@ -247,8 +247,8 @@ console.log(productsData?.products)
               className="select select-bordered"
             >
               <option value={""}>Select category</option>
-              {categoryData?.categories &&
-                categoryData?.categories.map((item) => (
+              {categoryData?.data &&
+                categoryData?.data.map((item) => (
                   <option key={item?.id} value={item?.id}>
                     {item?.category_name}
                   </option>
@@ -267,10 +267,10 @@ console.log(productsData?.products)
               className="select select-bordered"
             >
               <option value={""}>Select store</option>
-              {storesData?.stores &&
-                storesData?.stores.map((item) => (
+              {storesData?.data &&
+                storesData?.data.map((item) => (
                   <option key={item?.id} value={item?.id}>
-                    {item?.store_name}
+                    {item?.name}
                   </option>
                 ))}
             </select>
@@ -287,8 +287,8 @@ console.log(productsData?.products)
               className="select select-bordered"
             >
               <option value={""}>Select brand</option>
-              {brandsData?.brands &&
-                brandsData?.brands.map((item) => (
+              {brandsData?.data &&
+                brandsData?.data.map((item) => (
                   <option key={item?.id} value={item?.id}>
                     {item?.brand_name}
                   </option>

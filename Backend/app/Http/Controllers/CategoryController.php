@@ -53,13 +53,14 @@ class CategoryController extends Controller
     // update
     public function update(CategoryRequest $request, $id)
     {
-        $data = Category::find($id);
+        $category = Category::find($id);
 
-        if (!$data) {
-            return $this->errorResponse(null, 'Data Not Found', 404);
+        if (!$category) {
+            return $this->errorResponse(null, 'category Not Found', 404);
         }
-        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories')];
-        $data->update(array_merge($request->validated(), $image));
+
+        $image = ['image' => $this->imageUpdate($request, 'image', $category->image, 'uploads/categories')];
+        $category->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
     }
 
