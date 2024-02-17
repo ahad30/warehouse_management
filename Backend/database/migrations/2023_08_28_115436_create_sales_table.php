@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -19,9 +20,6 @@ return new class extends Migration {
             $table->float('total');
             $table->float('paid_amount');
             $table->string('due_amount')->nullable();
-            $table->unsignedBigInteger('customer_id')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->date('issue_date');
             $table->date('due_date')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

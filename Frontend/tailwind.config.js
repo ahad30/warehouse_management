@@ -5,6 +5,9 @@ export default withMT({
   darkMode: false,
   theme: {
     extend: {},
+    colors: {
+      primary: "#e74c3c"
+    }
   },
   plugins: [require("daisyui")],
   daisyui: {

@@ -18,6 +18,13 @@ class Category extends Model
         'description',
     ];
 
+    // Define mutator for 'slug' attribute
+    public function setCategoryNameAttribute($value)
+    {
+        $this->attributes['category_name'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);
@@ -26,12 +33,5 @@ class Category extends Model
     public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
-    }
-
-    // Define mutator for 'slug' attribute
-    public function setNameAttribute($value)
-    {
-        $this->attributes['category_name'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
     }
 }

@@ -81,9 +81,10 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
+        Route::get('/single-warehouse/{id}', 'singleWarehouseCategories');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update', 'update');
+        Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'destroy');
     });
 
@@ -92,6 +93,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/create', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
+        Route::post('update/image/{id}', 'imageUpdate');
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'destroy');
     });
@@ -130,8 +132,9 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::controller(BrandController::class)->prefix('/brands')->group(function () {
         Route::get('/', 'index');
+        Route::get('/single-warehouse/{id}', 'singleWarehouseBrands');
         Route::post('/store', 'store');
-        Route::put('/update', 'update');
+        Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'delete');
     });
 

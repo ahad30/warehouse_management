@@ -37,7 +37,7 @@ import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
 import InstallationRoute from "./InstallationRoute";
 import MSACRoute from "./MSACRoute";
-import History from "../Dashboard/History/history";
+import History from "../Dashboard/History/History";
 import ImportExport from "../Dashboard/Import/ImportExport";
 
 // Create the routes for the application using react-router-dom

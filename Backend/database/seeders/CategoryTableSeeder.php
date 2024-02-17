@@ -17,7 +17,6 @@ class CategoryTableSeeder extends Seeder
         Category::create([
             'warehouse_id' => 1,
             'category_name' => 'Others',
-            'slug' => 'other',
             'description' => 'The Uncategorized Products',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -26,7 +25,6 @@ class CategoryTableSeeder extends Seeder
         Category::create([
             'warehouse_id' => 1,
             'category_name' => 'Medicine',
-            'slug' => 'medicine',
             'description' => 'The Best Medicine collection',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -35,7 +33,6 @@ class CategoryTableSeeder extends Seeder
         Category::create([
             'warehouse_id' => 1,
             'category_name' => 'Electronics',
-            'slug' => 'electronics',
             'description' => 'The Best Electronics collection',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

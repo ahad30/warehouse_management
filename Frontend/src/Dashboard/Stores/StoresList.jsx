@@ -14,7 +14,6 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { FaEdit, FaStore } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
-import { FaEye } from "react-icons/fa";
 
 const StoresList = () => {
   UseTitle("Customers");
@@ -33,10 +32,11 @@ const StoresList = () => {
     isSuccess: storesIsSuccess,
   } = useGetStoresQuery();
 
-
   useEffect(() => {
-    setFilterData(storesData?.stores);
-  }, [storesData?.stores, storesData]);
+    setFilterData(storesData?.data);
+  }, [storesData?.data]);
+
+  // console.log(storesData);
 
   const [
     deleteCustomer,
@@ -80,8 +80,6 @@ const StoresList = () => {
     setStore(store);
     setModalIsOpen(true);
   };
-  console.log(store)
-  // EDIT ENDS
 
   // SEARCH FILTERING STARTS
   const columns = [
@@ -98,27 +96,51 @@ const StoresList = () => {
     {
       name: "Name",
       // selector: "store_name",
-      selector: (row) => <>{row?.store_name}</>,
+      selector: (row) => <>{row?.name}</>,
     },
     {
-      name: "email",
+      name: "Email",
       // selector: "store_email",
-      selector: (row) => <>{row?.store_email}</>,
+      selector: (row) => <>{row?.email}</>,
     },
     {
-      name: "phone",
+      name: "Phone",
       // selector: "store_phone",
-      selector: (row) => <>{row?.store_phone}</>,
+      selector: (row) => <>{row?.phone}</>,
     },
     {
-      name: "web",
-      selector: (row) => <>{row?.store_web}</>,
-    },
-
-    {
-      name: "address",
+      name: "Address",
       // selector: "store_address",
-      selector: (row) => <>{row?.store_address}</>,
+      selector: (row) => <>{row?.address}</>,
+    },
+    {
+      name: "City",
+      // selector: "store_address",
+      selector: (row) => <>{row?.city}</>,
+    },
+    // {
+    //   name: "Country",
+    //   // selector: "store_address",
+    //   selector: (row) => <>{row?.country}</>,
+    // },
+    // {
+    //   name: "Web",
+    //   selector: (row) => <>{row?.site_link}</>,
+    // },
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row?.image
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }${row?.image}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          className="w-10 h-auto rounded-full"
+        />
+      ),
     },
 
     {
@@ -131,16 +153,16 @@ const StoresList = () => {
           <button onClick={() => onDelete(row?.id)}>
             <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
           </button>
-          <button><FaEye size={20}/>
-          </button>
+          {/* <button><FaEye size={20}/>
+          </button> */}
         </div>
       ),
     },
   ];
 
   const setFiltering = (search) => {
-    const filteredData = storesData?.stores.filter((item) =>
-      item?.store_name?.toLowerCase().includes(search.toLowerCase())
+    const filteredData = storesData?.data.filter((item) =>
+      item?.name?.toLowerCase().includes(search.toLowerCase())
     );
     if (filteredData) {
       setFilterData(filteredData);
@@ -164,11 +186,11 @@ const StoresList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Stores: {storesData?.stores?.length}
+          Warehouse: {storesData?.stores?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
-          btnTitle={"Add store"}
+          btnTitle={"Add Warehouse"}
           btnPath={"/dashboard/store/add"}
           btnIcon={<FaStore size={20} />}
           setFiltering={setFiltering}

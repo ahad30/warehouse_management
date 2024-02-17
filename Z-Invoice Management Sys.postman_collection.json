@@ -1,13 +1,11 @@
 {
 	"info": {
-		"_postman_id": "5174f485-49b7-4cf5-998a-388089c49b57",
+		"_postman_id": "f2717743-1fd7-43f4-a600-656985467ac2",
 		"name": "Z-Invoice Management Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31753603",
-		"_collection_link": "https://blue-space-48685.postman.co/workspace/z8-tech~5e0969c8-ac18-4b4b-a59e-078738d70a09/collection/31753603-5174f485-49b7-4cf5-998a-388089c49b57?action=share&source=collection_link&creator=31753603"
+		"_exporter_id": "28541532"
 	},
 	"item": [
-		
 		{
 			"name": "Auth",
 			"item": [
@@ -559,6 +557,47 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "single-warehouse-categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/single-warehouse/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"single-warehouse",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -573,7 +612,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NjY3MiwiZXhwIjoxNjk2NDkwMjcyLCJuYmYiOjE2OTY0ODY2NzIsImp0aSI6ImhoQUs0UERRVlpyYkd2cmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.q-3HjhkWdX7Y0MViLu9oymz6Qz249tFAEh8jydvoeRQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE0ODYxNiwiZXhwIjoxNzA4MjM1MDE2LCJuYmYiOjE3MDgxNDg2MTYsImp0aSI6IkxOMlVSWjlZTnZUZWVLeksiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.t6_-hJNsc-ljzIvCofwbseoRyT2-5T_8XgYW2ho3ccA",
 									"type": "string"
 								}
 							]
@@ -630,7 +669,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4ODY2NiwiZXhwIjoxNjk2NTkyMjY2LCJuYmYiOjE2OTY1ODg2NjYsImp0aSI6Ilk4dHlZZk5wRXNRN2dtQnEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.9o32ryCqjklCwYqsG-H7eBwBjDHBDJ7EO7iQTPOhbKo",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE0ODYxNiwiZXhwIjoxNzA4MjM1MDE2LCJuYmYiOjE3MDgxNDg2MTYsImp0aSI6IkxOMlVSWjlZTnZUZWVLeksiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.t6_-hJNsc-ljzIvCofwbseoRyT2-5T_8XgYW2ho3ccA",
 									"type": "string"
 								}
 							]
@@ -674,13 +713,73 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"product_name\": \"Samsung A20\",\r\n    \"category_id\": \"1\",\r\n        \"brand_id\": \"1\",\r\n        \"product_code\": \"testCode1\",\r\n    \"price\": \"18500\",\r\n    \"product_unit\": \"pich\",\r\n    \"product_quantity\": 30,\r\n    \"product_retail_price\" : 40,\r\n    \"product_sale_price\" : 50,\r\n    \"product_desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_name",
+									"value": "adfasdf",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "warehouse_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "brand_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "product_code",
+									"value": "adfssda",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "5454",
+									"type": "text"
+								},
+								{
+									"key": "product_unit",
+									"value": "52",
+									"type": "text"
+								},
+								{
+									"key": "product_quantity",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "product_retail_price",
+									"value": "500",
+									"type": "text"
+								},
+								{
+									"key": "product_sale_price",
+									"value": "600",
+									"type": "text"
+								},
+								{
+									"key": "product_desc",
+									"value": "adf asdf asdf sadfasd fsdaf sadf asdsd",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1eeca3fc-dfc0-44a0-9d11-7cd57655b166",
+										"postman-cloud:///1eeca3fc-dd87-4710-9f45-f67ec0a7069b",
+										"postman-cloud:///1eeca3fc-dfee-4ad0-b6ee-23d11b5860ca"
+									]
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://127.0.0.1:8000/api/products/store",
@@ -784,10 +883,20 @@
 				{
 					"name": "Delete Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/delete/1",
+							"raw": "http://127.0.0.1:8000/api/products/delete/8",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -800,7 +909,69 @@
 								"api",
 								"products",
 								"delete",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imageupdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1eeca3fc-df96-4c90-bd01-0f60ab78728a",
+										"postman-cloud:///1eeca3fc-df61-4130-b732-822e0a94679d",
+										"postman-cloud:///1eeca3fc-de43-46e0-bdba-c17892d94d01"
+									],
+									"disabled": true
+								},
+								{
+									"key": "image_ids[]",
+									"value": "12,13,14",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/update/image/8",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
 								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"update",
+								"image",
+								"8"
 							]
 						}
 					},
@@ -1499,6 +1670,74 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "single-warehouse-brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/brands/single-warehouse/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"brands",
+								"single-warehouse",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/brands",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"brands"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1763,25 +2002,17 @@
 				{
 					"name": "Get Warehouse data",
 					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "store warehouse",
-					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzY0NjQwMCwiZXhwIjoxNzA3NzMyODAwLCJuYmYiOjE3MDc2NDY0MDAsImp0aSI6Imd3ZWxuZFZUSTJuMFhxZ1oiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.2Y4kg2XTtHefTW4EYR1xgswCizbaxdDMunRF-cWLewg",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "http://127.0.0.1:8000/api/warehouses",
@@ -1802,26 +2033,32 @@
 					"response": []
 				},
 				{
-					"name": "update Warehouse",
+					"name": "store warehouse",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzY0NjQwMCwiZXhwIjoxNzA3NzMyODAwLCJuYmYiOjE3MDc2NDY0MDAsImp0aSI6Imd3ZWxuZFZUSTJuMFhxZ1oiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.2Y4kg2XTtHefTW4EYR1xgswCizbaxdDMunRF-cWLewg",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
 									"key": "name",
-									"value": "warhouse s5454 update",
+									"value": "warhouse 5",
 									"type": "text"
 								},
 								{
@@ -1855,14 +2092,102 @@
 									"type": "text"
 								},
 								{
+									"key": "image",
+									"type": "file",
+									"src": "postman-cloud:///1eeca3fc-dd87-4710-9f45-f67ec0a7069b"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/warehouses",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"warehouses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "warhouse ",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "bddd",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "ctg",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "bd , ctg",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+8801871661869",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@email.com",
+									"type": "text"
+								},
+								{
+									"key": "site_link",
+									"value": "",
+									"type": "text"
+								},
+								{
 									"key": "_method",
 									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "postman-cloud:///1eeca3fc-dfc0-44a0-9d11-7cd57655b166"
+								},
+								{
+									"key": "id",
+									"value": "2",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/warehouses/16",
+							"raw": "http://127.0.0.1:8000/api/warehouses/4",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1874,7 +2199,7 @@
 							"path": [
 								"api",
 								"warehouses",
-								"16"
+								"4"
 							],
 							"query": [
 								{
@@ -1931,7 +2256,10 @@
 					"name": "Delete Warehouse",
 					"request": {
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}

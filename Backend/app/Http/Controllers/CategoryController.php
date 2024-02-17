@@ -5,121 +5,82 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Warehouse;
+use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    use ResponseTrait;
+    use ResponseTrait, ImageTrait;
     // index
     public function index()
     {
-        $categories =  CategoryResource::collection(Category::all());
+        $categories =  CategoryResource::collection(Category::latest()->get());
 
         if ($categories->count() > 0) {
             return $this->successResponse([
                 'status' => true,
                 'data' => $categories,
             ]);
-        } else {
-            return $this->errorResponse(null, "No Categories Found");
         }
+        return $this->errorResponse(null, "No Categories Found");
     }
 
     // store
     public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
+        $categories = Category::where('warehouse_id', $request->warehouse_id)->get();
 
-        if (!$category) {
-            return $this->errorResponse(null, "Something went wrong");
+        foreach ($categories as $category) {
+            if ($category->category_name == $request->category_name) {
+                return $this->errorResponse(null, 'Category already exists', 400);
+            }
         }
+
+        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/categories')];
+        Category::create(array_merge($request->validated(), $image));
         return $this->createdResponse([
             'status' => true,
-            'data' => $category,
+            'message' => "Category successfully created",
         ]);
     }
 
     // edit
     public function edit($id)
     {
-        $category = CategoryResource::collection(Category::find($id));
-        return $category;
+        $category = new CategoryResource(Category::find($id));
 
-        if ($category) {
-            return response()->json([
-                'status' => true,
-                'category' => $category,
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Not Found',
-            ], 500);
+        if (!$category) {
+            return $this->errorResponse(null, "No Categories Found");
         }
+        return $this->successResponse([
+            'status' => true,
+            'data' => $category,
+        ]);
     }
 
     // update
-    public function update(Request $request)
+    public function update(CategoryRequest $request, $id)
     {
+        $data = Category::find($id);
 
-        $category = Category::find($request->id);
-
-        if ($category) {
-            $validateInput = Validator::make(
-                $request->all(),
-                [
-                    'category_name' => 'required|string|max:255',
-                    'description' => 'nullable',
-                ]
-            );
-
-            if ($validateInput->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation Error!',
-                    'errors' => $validateInput->errors()
-                ], 401);
-            }
-
-            $category->update([
-                'category_name' => $request->category_name,
-                'slug' => Str::slug($request->category_name),
-                'description' => $request->description
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category successfully updated',
-                'category' => $category,
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category Not Found',
-            ], 500);
+        if (!$data) {
+            return $this->errorResponse(null, 'Data Not Found', 404);
         }
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories')];
+        $data->update(array_merge($request->validated(), $image));
+        return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
     }
 
     // destroy
     public function destroy($id)
     {
-        $category = Category::find($id);
-
-        if ($category) {
-            $category->delete();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Category successfully deleted'
-            ], 201);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Category not found'
-            ], 500);
+        $data = Category::find($id);
+        if (!$data) {
+            return $this->errorResponse(null, "No Categories Found");
         }
+        $this->deleteImage($data->image);
+        $data->delete();
+        return $this->successResponse(['status' => true, 'message' => "Category Deleted"]);
     }
 }
