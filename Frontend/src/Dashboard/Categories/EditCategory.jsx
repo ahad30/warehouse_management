@@ -41,7 +41,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     }
 
     updateCategory({ data: formData, id: category?.id });
-    console.log(data)
+    // console.log(data);
   };
 
   const errorMessages = UseErrorMessages(updateError);

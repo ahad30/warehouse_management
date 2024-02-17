@@ -168,6 +168,7 @@ const CategoriesList = () => {
           setFiltering={setFiltering}
         />
         {/* Categories Table */}
+        
         {/* {filterData?.length > 0 && ( */}
           <DataTable
             columns={columns}
