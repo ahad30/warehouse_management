@@ -20,7 +20,7 @@ const AddCategory = () => {
     useAddCategoryMutation();
 
   const onSubmit = async (data) => {
-    const formData = new FormData();
+    let formData = new FormData();
     formData.append("category_name", data?.category_name);
     formData.append("warehouse_id", data?.warehouse_id);
    

@@ -33,7 +33,7 @@ class StoreProductRequest extends FormRequest
             'category_id' => ['required'],
             'warehouse_id' => ['nullable'],
             'brand_id' => ['nullable'],
-            'images' => ['nullable', 'max:5000'],
+            'images' => ['required', 'max:5000','mimes:jpg,png,jpeg'],
         ];
     }
     public function failedValidation(Validation $validator)

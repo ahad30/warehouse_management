@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -28,6 +26,20 @@ class CategoryController extends Controller
         return $this->errorResponse(null, "No Categories Found");
     }
 
+    // single warehouse categories
+    public function singleWarehouseCategories($id)
+    {
+        $warehouse = Warehouse::find($id);
+        if (!$warehouse) {
+            return $this->errorResponse(null, 'Warehouse not found', 404);
+        }
+        $categories =  CategoryResource::collection($warehouse->categories);
+        return $this->successResponse([
+            'status' => true,
+            'data' => $categories,
+        ]);
+    }
+
     // store
     public function store(CategoryRequest $request)
     {
@@ -44,19 +56,23 @@ class CategoryController extends Controller
     {
         $category = new CategoryResource(Category::find($id));
 
-        if ($category) {
-            return $this->successResponse([
-                'status' => true,
-                'data' => $category,
-            ]);
+        if (!$category) {
+            return $this->errorResponse(null, "No Categories Found");
         }
-        return $this->errorResponse(null, "No Categories Found");
+        return $this->successResponse([
+            'status' => true,
+            'data' => $category,
+        ]);
     }
 
     // update
-    public function update(CategoryRequest $request)
+    public function update(CategoryRequest $request, $id)
     {
-        $data = Category::findOrFail($request->id);
+        $data = Category::find($id);
+
+        if (!$data) {
+            return $this->errorResponse(null, 'Data Not Found', 404);
+        }
         $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/categories')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Category Updated"]);
@@ -65,9 +81,12 @@ class CategoryController extends Controller
     // destroy
     public function destroy($id)
     {
-        $data = Category::findOrFail($id);
+        $data = Category::find($id);
+        if (!$data) {
+            return $this->errorResponse(null, "No Categories Found");
+        }
         $this->deleteImage($data->image);
         $data->delete();
-        return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
+        return $this->successResponse(['status' => true, 'message' => "Category Deleted"]);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('warehouse_id');
+            $table->unsignedBigInteger('warehouse_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('product_name');
@@ -27,8 +27,8 @@ return new class extends Migration
             $table->float('product_retail_price');
             $table->float('product_sale_price');
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null')->nullable();
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null')->nullable();
             $table->timestamps();
         });
     }
