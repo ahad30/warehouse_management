@@ -113,8 +113,8 @@ trait ImageTrait
                     }
                 }
             }
-            return $imagePaths;
             DB::commit();
+            return $imagePaths;
         } catch (\Exception $e) {
             DB::rollBack();
         }

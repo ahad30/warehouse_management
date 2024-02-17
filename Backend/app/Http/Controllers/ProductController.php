@@ -24,33 +24,21 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $data = ProductResource::collection(Product::latest()->get());
-        if ($data->count() > 0) {
-            return $this->successResponse([
+        $products = ProductResource::collection(Product::latest()->get());
+            return response()->json([
                 'status' => true,
-                'data' => $data,
-            ]);
-        } else {
-            return $this->errorResponse(null, 'Data Not Found', 404);
-        }
+                'products' => $products
+            ],200);
     }
 
     // create
     public function create()
     {
         $categories = Category::all();
-
-        if ($categories->count() > 0) {
-            return response()->json([
-                'status' => true,
-                'categories' => $categories,
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Products Found',
-            ]);
-        }
+        return response()->json([
+            'status' => true,
+            'categories' => $categories,
+        ],200);
     }
 
     // store
@@ -60,22 +48,23 @@ class ProductController extends Controller
             DB::beginTransaction();
             $product = Product::create($request->validated());
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
+            $productImageData = [];
             foreach ($images as $image) {
-                $data =  ProductImage::create([
+                $productImageData[] = [
                     'product_id' => $product->id,
                     'image' => $image,
-                ]);
-                if ($data) {
-                    DB::commit();
-                }
+                ];
             }
+            /**Inserting product image */
+            ProductImage::insert($productImageData);
+
+            DB::commit();
+            return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['errors' => $e->getMessage()], 500);
         }
 
-
-        return $this->successResponse(['data' => "products uploaded"]);
     }
 
 
@@ -101,12 +90,12 @@ class ProductController extends Controller
             return $this->errorResponse(null, 'Product not found', 404);
         }
         $product->update($request->validated());
-        return $this->successResponse(['status' => true, "product updated"]);
+        return $this->successResponse(['status' => true, 'message' =>  "Product updated"]);
     }
     public function imageUpdate(Request $request, $id)
     {
         if (!Product::find($id)) {
-            return $this->badRequestResponse(['status' => false, "product not found"]);
+            return $this->badRequestResponse(['status' => false, "Product not found"]);
         }
 
         /**
@@ -117,7 +106,7 @@ class ProductController extends Controller
                 // return $image_id;
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
-                    return $this->notFoundResponse('data not found');
+                    return response()->json(['data' => null, 'message' => 'data not found'], 200);
                 }
                 // delete files
                 if (File::exists($product_images->image)) {
@@ -140,14 +129,14 @@ class ProductController extends Controller
                 DB::commit();
             }
         }
-        return $this->successResponse(['status' => true, 'Image Updated']);
+        return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
     }
     // destroy
     public function destroy($id)
     {
         $product = Product::find($id);
         if (!$product) {
-            return $this->notFoundResponse('data not found');
+            return response()->json(['data' => null, 'message' => 'data not found'], 200);
         }
         try {
             /**
