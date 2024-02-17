@@ -10,13 +10,12 @@ class Brand extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'warehouse_id',
         'brand_name',
         'brand_img',
     ];
 
-    public function warehouse()
+    public function products()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->hasMany(Product::class);
     }
 }
