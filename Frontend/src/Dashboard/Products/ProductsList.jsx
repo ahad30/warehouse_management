@@ -42,7 +42,7 @@ const ProductsList = () => {
   useEffect(() => {
     setFilterData(productsData?.products);
   }, [productsData?.products, productsData]);
-
+console.log(productsData?.products)
   const [
     deleteProduct,
     {

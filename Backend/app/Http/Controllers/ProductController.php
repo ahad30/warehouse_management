@@ -24,36 +24,21 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $data = ProductResource::collection(Product::latest()->get());
-        if ($data->count() > 0) {
-
-            return $this->successResponse([
-                'status' => true,
-                'data' => $data,
-            ]);
-        } else {
+        $products = ProductResource::collection(Product::latest()->get());
             return response()->json([
-                'status' => true, 'data' => $data, 'message' => 'data not found'
-            ], 200);
-        }
+                'status' => true,
+                'products' => $products
+            ],200);
     }
 
     // create
     public function create()
     {
         $categories = Category::all();
-
-        if ($categories->count() > 0) {
-            return response()->json([
-                'status' => true,
-                'categories' => $categories,
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'No Products Found',
-            ]);
-        }
+        return response()->json([
+            'status' => true,
+            'categories' => $categories,
+        ],200);
     }
 
     // store
@@ -63,20 +48,23 @@ class ProductController extends Controller
             DB::beginTransaction();
             $product = Product::create($request->validated());
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
+            $productImageData = [];
             foreach ($images as $image) {
-                $data =  ProductImage::create([
+                $productImageData[] = [
                     'product_id' => $product->id,
                     'image' => $image,
-                ]);
-                if ($data) {
-                    DB::commit();
-                }
+                ];
             }
+            /**Inserting product image */
+            ProductImage::insert($productImageData);
+
+            DB::commit();
+            return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['errors' => $e->getMessage()], 500);
         }
-        return $this->successResponse(['status' => true, 'message' => "products uploaded"]);
+
     }
 
 
@@ -102,12 +90,12 @@ class ProductController extends Controller
             return $this->errorResponse(null, 'Product not found', 404);
         }
         $product->update($request->validated());
-        return $this->successResponse(['status' => true, 'message' =>  "product updated"]);
+        return $this->successResponse(['status' => true, 'message' =>  "Product updated"]);
     }
     public function imageUpdate(Request $request, $id)
     {
         if (!Product::find($id)) {
-            return $this->badRequestResponse(['status' => false, "product not found"]);
+            return $this->badRequestResponse(['status' => false, "Product not found"]);
         }
 
         /**
