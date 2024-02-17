@@ -23,10 +23,10 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $products = ProductResource::collection(Product::latest()->paginate(20));
+        $data = Product::with('getCategory:id', 'warehouse:id,name')->paginate(3);
         return response()->json([
             'status' => true,
-            'products' => $products
+            'products' => $data,
         ], 200);
     }
 
