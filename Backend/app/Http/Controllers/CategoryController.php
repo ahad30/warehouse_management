@@ -26,23 +26,17 @@ class CategoryController extends Controller
         return $this->errorResponse(null, "No Categories Found");
     }
 
-    // single warehouse categories
-    public function singleWarehouseCategories($id)
-    {
-        $warehouse = Warehouse::find($id);
-        if (!$warehouse) {
-            return $this->errorResponse(null, 'Warehouse not found', 404);
-        }
-        $categories =  CategoryResource::collection($warehouse->categories);
-        return $this->successResponse([
-            'status' => true,
-            'data' => $categories,
-        ]);
-    }
-
     // store
     public function store(CategoryRequest $request)
     {
+        $categories = Category::where('warehouse_id', $request->warehouse_id)->get();
+
+        foreach ($categories as $category) {
+            if ($category->category_name == $request->category_name) {
+                return $this->errorResponse(null, 'Category already exists', 400);
+            }
+        }
+
         $image = ['image' => $this->imageUpload($request, 'image', 'uploads/categories')];
         Category::create(array_merge($request->validated(), $image));
         return $this->createdResponse([

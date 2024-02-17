@@ -9,7 +9,6 @@ use App\Traits\ResponseTrait;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\BrandResource;
-use App\Models\Warehouse;
 
 class BrandController extends Controller
 {
@@ -27,20 +26,6 @@ class BrandController extends Controller
             'data' => $data,
         ]);
     }
-
-    // singleWarehouseBrands
-    public function singleWarehouseBrands($id)
-    {
-        $warehouse = Warehouse::find($id);
-        if (!$warehouse) {
-            return $this->errorResponse(null, 'Warehouse not found', 404);
-        }
-        $brands =  BrandResource::collection($warehouse->brands);
-        return $this->successResponse([
-            'status' => true,
-            'data' => $brands
-        ]);
-    }
     /**
      *
      * store brand
@@ -48,6 +33,16 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
+        $brands = Brand::where('warehouse_id', $request->warehouse_id)->get();
+
+        foreach ($brands as $brand) {
+            if ($brand->brand_name == $request->brand_name) {
+                return response()->json([
+                    'status' => true, 'message' => 'Brand already exists',
+                ], 400);
+            }
+        }
+
         $image = ['brand_img' => $this->imageUpload($request, 'brand_img', 'uploads/brand')];
         Brand::create(array_merge($request->validated(), $image));
         return $this->createdResponse(['status' => true, 'message' => "Brands Created Successfully"]);
