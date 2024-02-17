@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
 
@@ -29,14 +28,6 @@ class CategoryController extends Controller
     // store
     public function store(CategoryRequest $request)
     {
-        $categories = Category::where('warehouse_id', $request->warehouse_id)->get();
-
-        foreach ($categories as $category) {
-            if ($category->category_name == $request->category_name) {
-                return $this->errorResponse(null, 'Category already exists', 400);
-            }
-        }
-
         $image = ['image' => $this->imageUpload($request, 'image', 'uploads/categories')];
         Category::create(array_merge($request->validated(), $image));
         return $this->createdResponse([
