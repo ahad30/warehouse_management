@@ -22,7 +22,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse_id' => 'required|exists:warehouses,id',
+            'warehouse_id' => 'required',
             'category_name' => 'required|string|max:255',
             'description' => 'nullable',
         ];

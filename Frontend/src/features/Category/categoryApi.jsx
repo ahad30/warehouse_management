@@ -9,38 +9,40 @@ const categoryApi = apiSlice.injectEndpoints({
         header: {
           contentType : "application/json"
         },
-        // url: "/posts",
         body: data,
       }),
       invalidatesTags: ["Categories"],
     }),
+
     getCategories: builder.query({
       query: () => ({
         url: "/categories",
-        // url: "/posts",
+
       }),
       providesTags: ["Categories"],
     }),
+
+    
     getCategory: builder.query({
       query: (id) => ({
         url: `/categories/edit/${id}`,
         
-        // url: `/posts/${id}`,
       }),
       providesTags: ["Categories"],
     }),
+
     updateCategory: builder.mutation({
-      query: (categoryData) => ({
-        method: "PUT",
+      query: (data) => ({
+        method: "POST",
         url: `/categories/update`,
-        // url: `/posts/${id}`,
         header: {
-          contentType : "application/json"
+          contentType : "multipart/form-data",
         },
-        body: categoryData,
+        body: data,
       }),
       invalidatesTags: ["Categories"],
     }),
+
     deleteCategory: builder.mutation({
       query: (id) => ({
         method: "DELETE",
