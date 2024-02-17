@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Traits\ImageTrait;
@@ -52,7 +51,7 @@ class CategoryController extends Controller
     }
 
     // update
-    public function update(UpdateCategoryRequest $request,$id)
+    public function update(CategoryRequest $request)
     {
         $data = Category::find($request->id);
         if (!$data) {
@@ -66,7 +65,7 @@ class CategoryController extends Controller
     // destroy
     public function destroy($id)
     {
-        $data = Category::findOrFail($id);
+        $data = Category::find($id);
         if (!$data) {
             return $this->errorResponse(null, "No Categories Found");
         }
