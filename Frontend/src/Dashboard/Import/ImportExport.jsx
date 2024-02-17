@@ -30,13 +30,13 @@ const ImportExport = () => {
             <span className="hover:underline ">Import /</span>
             <span className="hover:underline ">Export</span>
           </p>
-          <div className="mt-5 border w-full bg-[#F3F4F6] rounded">
+          <div className="mt-4 border w-full bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
               <div className="mt-4 flex">
                 <label className="font-bold text-lg mt-4 px-4">Import:</label>
                 <input
                   type="file"
-                  className="file-input bg-[#e74c3c] w-full max-w-[350px] mt-2 mb-2 text-white"
+                  className="file-input bg-[#e74c3c] w-full max-w-[250px] mt-2 mb-2 text-white"
                 />
               </div>
               <div className="mt-7 mr-5">
@@ -48,13 +48,13 @@ const ImportExport = () => {
           </div>
           <div className="mt-4 border w-full bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
-              <div className="flex">
-                <label className="font-bold text-lg mt-5 px-4">Export :</label>
-                <div className="flex space-x-2 items-center">
-                  <button className="bg-[#e74c3c] mt-3 px-3 py-2 rounded-md text-white">
+              <div className="mt-4 flex">
+                <label className="font-bold text-lg mt-5 px-4">Export:</label>
+                <div className="flex space-x-2 items-center ">
+                  <button className="bg-[#e74c3c] mt-2 px-3 py-2 rounded-md text-white">
                     All
                   </button>
-                  <div className="mb-1">
+                  <div className="mb-2">
                     <select className="select select-bordered w-full max-w-xs mt-4 font-bold">
                       <option disabled selected className="font-bold">
                         Select Warehouse
@@ -85,7 +85,7 @@ const ImportExport = () => {
                     />
                   </label>
                 </div>
-                <div className="mt-5 mr-4">
+                <div className="mt-8 mr-4">
                   <button className="px-5 py-2 bg-[#e74c3c] text-white rounded">
                     Search
                   </button>
@@ -93,7 +93,7 @@ const ImportExport = () => {
               </div>
             </div>
           </div>
-          <div className="flex lg:flex-row justify-end gap-2 mt-4">
+          <div className="flex lg:flex-row justify-end  mt-4">
             {/* Import download as CSV file */}
             <ImportAsCSV data={filterData} />
           </div>
