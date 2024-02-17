@@ -412,7 +412,20 @@
 			"item": [
 				{
 					"name": "Get Categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1OTI3OCwiZXhwIjoxNzA4MjQ1Njc4LCJuYmYiOjE3MDgxNTkyNzgsImp0aSI6ImoyeUVwc1czd2dxckFBYWciLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.JX9L6YK9Zv3qklVJUbTFRgw_mWekc9XIcoCVtTHt3KY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -420,8 +433,17 @@
 								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NTcxNzI4MywiZXhwIjoxNjk1NzIwODgzLCJuYmYiOjE2OTU3MTcyODMsImp0aSI6IkdMUU9qSlhjak1SNHFoSFAiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.oqMaIyH2FO-xa1_ywK4HOLBLjHyOSH2cjvh-PthA6oA"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/roles",
+							"raw": "http://127.0.0.1:8000/api/categories",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -432,7 +454,7 @@
 							"port": "8000",
 							"path": [
 								"api",
-								"roles"
+								"categories"
 							]
 						}
 					},
@@ -552,47 +574,6 @@
 								"api",
 								"categories",
 								"delete",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "single-warehouse-categories",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/categories/single-warehouse/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"categories",
-								"single-warehouse",
 								"1"
 							]
 						}
@@ -1666,41 +1647,6 @@
 									"value": "test",
 									"disabled": true
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "single-warehouse-brands",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE1NzIzNywiZXhwIjoxNzA4MjQzNjM3LCJuYmYiOjE3MDgxNTcyMzcsImp0aSI6IjljeHJNc0E1NUNsM3o5cVYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.S_BWhND95NWGKyEx49wcJAfqrAkRc1zPFImsNVvL0sk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/brands/single-warehouse/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"brands",
-								"single-warehouse",
-								"1"
 							]
 						}
 					},

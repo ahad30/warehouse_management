@@ -17,13 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('product_name');
+            $table->string('unique_code')->unique();
+            $table->string('scan_code')->unique();
             $table->string('product_img')->nullable();
-            $table->string('unique_code')->nullable();
-            $table->string('scan_code')->nullable();
-            $table->string('slug');
             $table->string('product_unit')->nullable();
             $table->integer('product_quantity')->default(0);
-            $table->text('product_desc')->nullable();
             $table->float('product_retail_price');
             $table->float('product_sale_price');
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');

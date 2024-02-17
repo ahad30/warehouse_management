@@ -9,16 +9,12 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
+use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-
-use function Laravel\Prompts\error;
 
 class ProductController extends Controller
 {
@@ -36,10 +32,17 @@ class ProductController extends Controller
     // create
     public function create()
     {
+        $warehouses = Warehouse::all();
         $categories = Category::all();
+        $brands = Brand::all();
         return response()->json([
             'status' => true,
-            'categories' => $categories,
+            'data' => [
+                'warehouses' => $warehouses,
+                'categories' => $categories,
+                'brands' => $brands,
+            ],
+
         ], 200);
     }
 
@@ -50,6 +53,7 @@ class ProductController extends Controller
             DB::beginTransaction();
             $product = Product::create($request->validated());
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
+
             $productImageData = [];
             foreach ($images as $image) {
                 $productImageData[] = [
@@ -64,7 +68,10 @@ class ProductController extends Controller
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['errors' => $e->getMessage()], 500);
+            return $this->errorResponse([
+                'status' => false,
+                'message' => "something went wrong"
+            ]);
         }
     }
 
@@ -83,6 +90,7 @@ class ProductController extends Controller
         }
     }
 
+
     // update
     public function update(UpdateProductRequest $request)
     {
@@ -90,9 +98,17 @@ class ProductController extends Controller
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
         }
-        $product->update($request->validated());
+
+        $input = [
+            'warehouse_id' => $request->warehouse_id,
+            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
+        ];
+
+        $product->update(array_merge($request->validated(), $input));
         return $this->successResponse(['status' => true, 'message' =>  "Product updated"]);
     }
+
     public function imageUpdate(Request $request, $id)
     {
         if (!Product::find($id)) {
