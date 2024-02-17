@@ -46,7 +46,7 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  console.log(isLoading, isError, error, isSuccess, data);
+  // console.log(isLoading, isError, error, isSuccess, data);
 
   const errorMessages = UseErrorMessages();
 
@@ -80,7 +80,6 @@ const AddProduct = () => {
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Product</h2>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
@@ -109,9 +108,10 @@ const AddProduct = () => {
           </label>
           <label className="input-group">
             <span className="font-semibold">
-              Store<span className="text-red-500 p-0">*</span>
+              Warehouse<span className="text-red-500 p-0">*</span>
             </span>
             <select
+            // onChange={()=>}
               className="select select-bordered w-full"
               required
               {...register("warehouse_id")}
@@ -120,6 +120,23 @@ const AddProduct = () => {
               {storesData?.data?.map((data) => (
                 <option key={data?.id} value={data?.id}>
                   {data?.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="input-group">
+            <span className="font-semibold">
+              Category<span className="text-red-500 p-0">*</span>
+            </span>
+            <select
+              className="select select-bordered w-full"
+              required
+              {...register("category_id")}
+            >
+              <option value={""}>Select Category</option>
+              {categoryData?.categories?.map((category, idx) => (
+                <option key={idx} value={category?.id}>
+                  {category?.category_name}
                 </option>
               ))}
             </select>
@@ -197,23 +214,7 @@ const AddProduct = () => {
             </select>
           </label>
 
-          <label className="input-group">
-            <span className="font-semibold">
-              Category<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              {...register("category_id")}
-            >
-              <option value={""}>Select Category</option>
-              {categoryData?.categories?.map((category, idx) => (
-                <option key={idx} value={category?.id}>
-                  {category?.category_name}
-                </option>
-              ))}
-            </select>
-          </label>
+         
           <label className="input-group">
             <span className="font-semibold">Description</span>
             <input
