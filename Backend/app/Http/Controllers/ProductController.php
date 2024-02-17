@@ -89,14 +89,12 @@ class ProductController extends Controller
     public function edit($id)
     {
         $data = ProductResource::collection(Product::latest()->get());
-        if ($data->count() > 0) {
+
             return $this->successResponse([
                 'status' => true,
                 'data' => $data,
             ]);
-        } else {
-            return $this->errorResponse(null, 'Data Not Found', 404);
-        }
+
     }
 
 
@@ -161,9 +159,7 @@ class ProductController extends Controller
                 'product_id' => $id,
                 'image' => $image,
             ]);
-            if ($data) {
-                DB::commit();
-            }
+
         }
         return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
     }
