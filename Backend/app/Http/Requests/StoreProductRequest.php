@@ -24,16 +24,15 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'warehouse_id' => 'required|exists:warehouses, id',
+            'category_id' => 'required|exists:categories, id',
+            'brand_id' => 'nullable|exists:brands, id',
             'product_name' => ['required', 'string', 'max:255'],
             'product_quantity' => ['integer', 'required'],
             'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
-            'product_code' => ['string', 'max:255'],
-            'category_id' => ['required'],
-            'warehouse_id' => ['nullable'],
-            'brand_id' => ['nullable'],
-            'images' => ['required', 'max:5000','mimes:jpg,png,jpeg'],
+            'images' => ['required', 'max:5000', 'mimes:jpg,png,jpeg'],
         ];
     }
     public function failedValidation(Validation $validator)
