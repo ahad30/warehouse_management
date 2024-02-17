@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('warehouse_id');
             $table->string('category_name');
             $table->string('image')->nullable();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('description')->nullable();
-            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
             $table->timestamps();
         });
     }
