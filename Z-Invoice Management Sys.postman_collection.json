@@ -3,8 +3,8 @@
 		"_postman_id": "5174f485-49b7-4cf5-998a-388089c49b57",
 		"name": "Z-Invoice Management Sys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23937081",
-		"_collection_link": "https://blue-space-48685.postman.co/workspace/z8-tech~5e0969c8-ac18-4b4b-a59e-078738d70a09/collection/31753603-5174f485-49b7-4cf5-998a-388089c49b57?action=share&source=collection_link&creator=23937081"
+		"_exporter_id": "31753603",
+		"_collection_link": "https://blue-space-48685.postman.co/workspace/z8-tech~5e0969c8-ac18-4b4b-a59e-078738d70a09/collection/31753603-5174f485-49b7-4cf5-998a-388089c49b57?action=share&source=collection_link&creator=31753603"
 	},
 	"item": [
 		{
@@ -572,7 +572,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjQ4NjY3MiwiZXhwIjoxNjk2NDkwMjcyLCJuYmYiOjE2OTY0ODY2NzIsImp0aSI6ImhoQUs0UERRVlpyYkd2cmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.q-3HjhkWdX7Y0MViLu9oymz6Qz249tFAEh8jydvoeRQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE0ODYxNiwiZXhwIjoxNzA4MjM1MDE2LCJuYmYiOjE3MDgxNDg2MTYsImp0aSI6IkxOMlVSWjlZTnZUZWVLeksiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.t6_-hJNsc-ljzIvCofwbseoRyT2-5T_8XgYW2ho3ccA",
 									"type": "string"
 								}
 							]
@@ -629,7 +629,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTY5NjU4ODY2NiwiZXhwIjoxNjk2NTkyMjY2LCJuYmYiOjE2OTY1ODg2NjYsImp0aSI6Ilk4dHlZZk5wRXNRN2dtQnEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.9o32ryCqjklCwYqsG-H7eBwBjDHBDJ7EO7iQTPOhbKo",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwODE0ODYxNiwiZXhwIjoxNzA4MjM1MDE2LCJuYmYiOjE3MDgxNDg2MTYsImp0aSI6IkxOMlVSWjlZTnZUZWVLeksiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.t6_-hJNsc-ljzIvCofwbseoRyT2-5T_8XgYW2ho3ccA",
 									"type": "string"
 								}
 							]
@@ -673,13 +673,73 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"product_name\": \"Samsung A20\",\r\n    \"category_id\": \"1\",\r\n        \"brand_id\": \"1\",\r\n        \"product_code\": \"testCode1\",\r\n    \"price\": \"18500\",\r\n    \"product_unit\": \"pich\",\r\n    \"product_quantity\": 30,\r\n    \"product_retail_price\" : 40,\r\n    \"product_sale_price\" : 50,\r\n    \"product_desc\": \"Samsung Galexy A20, RAM:4GB, ROM: 128GB\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_name",
+									"value": "adfasdf",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "warehouse_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "brand_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "product_code",
+									"value": "adfssda",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "5454",
+									"type": "text"
+								},
+								{
+									"key": "product_unit",
+									"value": "52",
+									"type": "text"
+								},
+								{
+									"key": "product_quantity",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "product_retail_price",
+									"value": "500",
+									"type": "text"
+								},
+								{
+									"key": "product_sale_price",
+									"value": "600",
+									"type": "text"
+								},
+								{
+									"key": "product_desc",
+									"value": "adf asdf asdf sadfasd fsdaf sadf asdsd",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1eeca3fc-dfc0-44a0-9d11-7cd57655b166",
+										"postman-cloud:///1eeca3fc-dd87-4710-9f45-f67ec0a7069b",
+										"postman-cloud:///1eeca3fc-dfee-4ad0-b6ee-23d11b5860ca"
+									]
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://127.0.0.1:8000/api/products/store",
@@ -783,10 +843,20 @@
 				{
 					"name": "Delete Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/products/delete/1",
+							"raw": "http://127.0.0.1:8000/api/products/delete/8",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -799,7 +869,7 @@
 								"api",
 								"products",
 								"delete",
-								"1"
+								"8"
 							]
 						}
 					},
@@ -813,13 +883,19 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzg5NDc4OSwiZXhwIjoxNzA3OTgxMTg5LCJuYmYiOjE3MDc4OTQ3ODksImp0aSI6IndHTlBWcHdxbDBGRjJRWFIiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.5pk3PNXmSXrPeLTIspCt_yV-AOyqdDOXVu_NTsl90Zg",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -830,7 +906,13 @@
 										"postman-cloud:///1eeca3fc-df96-4c90-bd01-0f60ab78728a",
 										"postman-cloud:///1eeca3fc-df61-4130-b732-822e0a94679d",
 										"postman-cloud:///1eeca3fc-de43-46e0-bdba-c17892d94d01"
-									]
+									],
+									"disabled": true
+								},
+								{
+									"key": "image_ids[]",
+									"value": "12,13,14",
+									"type": "text"
 								}
 							]
 						},
@@ -1817,7 +1899,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzgwMjA0NCwiZXhwIjoxNzA3ODg4NDQ0LCJuYmYiOjE3MDc4MDIwNDQsImp0aSI6IkVRMUVDMHFlalB5VDFUcTYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.W_zZCBUUhO77_qyXzok2ALLWyxXr0hkXhS8OtEC6uDo",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
 									"type": "string"
 								}
 							]
@@ -1934,7 +2016,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzgxNzc4MiwiZXhwIjoxNzA3OTA0MTgyLCJuYmYiOjE3MDc4MTc3ODIsImp0aSI6InBJaDI2c0VPMHl1elE0T2ciLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.8FVc9mvwUNvkAGLTPXmsdr-hkSBM0Azc-rw6-NlxocA",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2p3dC9sb2dpbiIsImlhdCI6MTcwNzk4ODE0MCwiZXhwIjoxNzA4MDc0NTQwLCJuYmYiOjE3MDc5ODgxNDAsImp0aSI6InV3aGx3d0VLUjdEbVRtdEUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nBWx5ZiDG7_x1VfwVD2bipfRXrv1c_NIVFCTGHcYrps",
 									"type": "string"
 								}
 							]
@@ -1987,7 +2069,12 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": []
+									"src": "postman-cloud:///1eeca3fc-dfc0-44a0-9d11-7cd57655b166"
+								},
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text"
 								}
 							]
 						},
