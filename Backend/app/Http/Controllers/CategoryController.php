@@ -51,9 +51,10 @@ class CategoryController extends Controller
     }
 
     // update
-    public function update(CategoryRequest $request)
+    public function update(CategoryRequest $request, $id)
     {
-        $data = Category::find($request->id);
+        $data = Category::find($id);
+
         if (!$data) {
             return $this->errorResponse(null, 'Data Not Found', 404);
         }

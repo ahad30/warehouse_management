@@ -32,9 +32,9 @@ const categoryApi = apiSlice.injectEndpoints({
     }),
 
     updateCategory: builder.mutation({
-      query: (data) => ({
+      query: ({data,id}) => ({
         method: "POST",
-        url: `/categories/update`,
+        url: `/categories/update/${id}`,
         header: {
           contentType : "multipart/form-data",
         },

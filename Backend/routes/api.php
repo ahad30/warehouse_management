@@ -83,7 +83,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update', 'update');
+        Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'destroy');
     });
 
