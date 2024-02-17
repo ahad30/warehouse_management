@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Traits\ImageTrait;
@@ -51,7 +52,7 @@ class CategoryController extends Controller
     }
 
     // update
-    public function update(CategoryRequest $request)
+    public function update(UpdateCategoryRequest $request,$id)
     {
         $data = Category::find($request->id);
         if (!$data) {
@@ -71,6 +72,6 @@ class CategoryController extends Controller
         }
         $this->deleteImage($data->image);
         $data->delete();
-        return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
+        return $this->successResponse(['status' => true, 'message' => "Category Deleted"]);
     }
 }
