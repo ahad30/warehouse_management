@@ -19,7 +19,7 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
-
+import Paginator from '../../components/Paginator/Paginator'
 const ProductsList = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -314,8 +314,8 @@ console.log(productsData?.products)
                 // onChangePage={(page) => setCurrentPage(page)}
                 keyField="id"
               />
+          <Paginator links=""/>
             </div>
-            
           {/* ) */}
         {/* )} */}
         <EditProduct

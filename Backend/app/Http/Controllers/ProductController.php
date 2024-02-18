@@ -20,10 +20,22 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     use ResponseTrait, ImageTrait;
-    // index
-    public function index()
+    /**
+     * Retrieves products
+     */
+    public function index(Request $request)
     {
-        $data = Product::with('getCategory:id', 'warehouse:id,name')->paginate(3);
+
+        $query = Product::query();
+        /**
+         * To retrieve product using scan_code
+         */
+        if($request->scan_code){
+            $query = $query->where('scan_code',$request->scan_code);
+        }
+
+        $data =  $query->with('getCategory:id', 'warehouse:id,name')->paginate(15);
+
         return response()->json([
             'status' => true,
             'products' => $data,
