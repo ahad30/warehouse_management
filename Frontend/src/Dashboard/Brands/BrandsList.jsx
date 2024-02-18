@@ -31,8 +31,8 @@ const BrandsList = () => {
   } = useGetBrandsQuery();
 
   useEffect(() => {
-    setFilterData(brandsData?.brands);
-  }, [brandsData?.brands, brandsData]);
+    setFilterData(brandsData?.data);
+  }, [brandsData?.data, brandsData]);
 
   const [
     deleteBrand,
@@ -182,6 +182,7 @@ const BrandsList = () => {
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
+        
       </DashboardBackground>
     </>
   );
