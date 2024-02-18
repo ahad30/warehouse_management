@@ -90,11 +90,10 @@ class ProductController extends Controller
     {
         $data = ProductResource::collection(Product::latest()->get());
 
-            return $this->successResponse([
-                'status' => true,
-                'data' => $data,
-            ]);
-
+        return $this->successResponse([
+            'status' => true,
+            'data' => $data,
+        ]);
     }
 
 
@@ -159,7 +158,6 @@ class ProductController extends Controller
                 'product_id' => $id,
                 'image' => $image,
             ]);
-
         }
         return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
     }
