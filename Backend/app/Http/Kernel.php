@@ -46,6 +46,14 @@ class Kernel extends HttpKernel
         'verifyAdmin' => [
             \App\Http\Middleware\VerifyJwtTokenMiddleware::class,
             \App\Http\Middleware\VerifyAdminMiddleware::class,
+        ],
+        'verifySub_admin' => [
+            \App\Http\Middleware\VerifyJwtTokenMiddleware::class,
+            \App\Http\Middleware\VerifySub_AdminMiddleware::class,
+        ],
+        'verifyStaff' => [
+            \App\Http\Middleware\VerifyJwtTokenMiddleware::class,
+            \App\Http\Middleware\VerifyStaffMiddleware::class,
         ]
     ];
 
