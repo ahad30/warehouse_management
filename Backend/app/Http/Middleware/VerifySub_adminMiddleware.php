@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class VerifyAdminMiddleware
+class VerifySub_adminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,9 @@ class VerifyAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         $user = JWTAuth::parseToken()->authenticate();
-        // admin role = 1
-        if ($user->role_id == 1) {
+        // sub admin role = 2
+        if ($user->role_id == 2) {
             return $next($request);
         } else {
             return response()->json([
@@ -27,8 +26,5 @@ class VerifyAdminMiddleware
                 'message' => "You don't have permission"
             ], 401);
         }
-
-
-
     }
 }
