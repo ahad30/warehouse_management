@@ -7,23 +7,25 @@ use App\Http\Requests\UpdateWarehouseRequest;
 use App\Http\Resources\WarehouseResource;
 use App\Models\Warehouse;
 use App\Traits\ImageTrait;
-use App\Traits\QueryTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    use QueryTrait, ResponseTrait, ImageTrait;
+    use ResponseTrait, ImageTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = WarehouseResource::collection($this->getData(Warehouse::get()));
-        if ($data->count() < 1) {
-            return $this->errorResponse(null, 'data not found', 404);
+
+        $data = WarehouseResource::collection(Warehouse::latest()->get());
+        if (!$data) {
+            return response()->json(['status' => true, 'data' => $data, 'message' => 'data not found'], 200);
         }
-        return $this->successResponse($data);
+        return $this->successResponse([
+            'status' => true,
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -31,7 +33,7 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
-        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/warehouse')];
+        $image = ['image' => $this->imageUpload($request, 'image', 'uploads/warehouses')];
         Warehouse::create(array_merge($request->validated(), $image));
         return $this->createdResponse(['status' => true, 'message' => "Warehouse Created"]);
     }
@@ -49,8 +51,14 @@ class WarehouseController extends Controller
      */
     public function update(UpdateWarehouseRequest $request, $id)
     {
-        $data = Warehouse::findOrFail($id);
-        $image = ['image' => $this->imageUpdate($request, 'image', $data->image, 'uploads/warehouse/', 'uploads/warehouse')];
+        $data = Warehouse::find($id);
+        if(!$data){
+            return response()->json([
+                'status' => false,
+                'message' => "data not found"
+            ]);
+        }
+        $image = ['image' => $this->imageUpdate($request, 'image', $data->image,  'uploads/warehouses/')];
         $data->update(array_merge($request->validated(), $image));
         return $this->successResponse(['status' => true, 'message' => "Warehouse Updated"]);
     }
@@ -61,7 +69,7 @@ class WarehouseController extends Controller
     public function destroy($id)
     {
         $data = Warehouse::findOrFail($id);
-        $this->deleteImage($data->image, 'uploads/warehouse/');
+        $this->deleteImage($data->image);
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);
     }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CategoryRequest extends FormRequest
 {
@@ -21,10 +23,30 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'warehouse_id' => 'required|exists:warehouses,id',
-            'category_name' => 'required|string|max:255',
-            'description' => 'nullable',
-        ];
+        //  if the request method is post
+        if ($this->method() == 'POST') {
+            return [
+                'category_name' => 'required|string|max:255|unique:categories',
+                'image' => 'required|mimes:jpg,jpeg,png',
+                'description' => 'nullable',
+            ];
+        }
+
+        //  if the request method is put
+        if ($this->method() == 'PUT') {
+            return [
+                'category_name' => ['required', 'max:255'],
+                'new_image' => 'sometimes|mimes:jpg,jpeg,png',
+                'description' => 'nullable',
+            ];
+        }
+    }
+    public function failedValidation(Validation $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'   => false,
+            'message'   => 'Please Select Image',
+            'errors'      => $validator->errors()
+        ], 400));
     }
 }

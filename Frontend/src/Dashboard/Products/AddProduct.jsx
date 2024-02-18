@@ -34,7 +34,7 @@ const AddProduct = () => {
     formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
-    formData.append("store_id", data?.store_id);
+    formData.append("warehouse_id", data?.warehouse_id);
     formData.append("product_quantity", data?.product_quantity);
     if (data?.product_img) {
       formData.append("product_img", data?.product_img[0]);
@@ -46,7 +46,7 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  console.log(isLoading, isError, error, isSuccess, data);
+  // console.log(isLoading, isError, error, isSuccess, data);
 
   const errorMessages = UseErrorMessages();
 
@@ -80,7 +80,6 @@ const AddProduct = () => {
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Product</h2>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
@@ -109,17 +108,35 @@ const AddProduct = () => {
           </label>
           <label className="input-group">
             <span className="font-semibold">
-              Store<span className="text-red-500 p-0">*</span>
+              Warehouse<span className="text-red-500 p-0">*</span>
+            </span>
+            <select
+            // onChange={()=>}
+              className="select select-bordered w-full"
+              required
+              {...register("warehouse_id")}
+            >
+              <option value={""}>Select Warehouse Info</option>
+              {storesData?.data?.map((data) => (
+                <option key={data?.id} value={data?.id}>
+                  {data?.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="input-group">
+            <span className="font-semibold">
+              Category<span className="text-red-500 p-0">*</span>
             </span>
             <select
               className="select select-bordered w-full"
               required
-              {...register("store_id")}
+              {...register("category_id")}
             >
-              <option value={""}>Select Store Info</option>
-              {storesData?.stores?.map((store) => (
-                <option key={store?.id} value={store?.id}>
-                  {store?.store_name}
+              <option value={""}>Select Category</option>
+              {categoryData?.categories?.map((category, idx) => (
+                <option key={idx} value={category?.id}>
+                  {category?.category_name}
                 </option>
               ))}
             </select>
@@ -197,23 +214,7 @@ const AddProduct = () => {
             </select>
           </label>
 
-          <label className="input-group">
-            <span className="font-semibold">
-              Category<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              {...register("category_id")}
-            >
-              <option value={""}>Select Category</option>
-              {categoryData?.categories?.map((category, idx) => (
-                <option key={idx} value={category?.id}>
-                  {category?.category_name}
-                </option>
-              ))}
-            </select>
-          </label>
+         
           <label className="input-group">
             <span className="font-semibold">Description</span>
             <input

@@ -39,9 +39,10 @@ const CategoriesList = () => {
   ] = useDeleteCategoryMutation();
 
   useEffect(() => {
-    setFilterData(categoriesData?.categories);
-  }, [categoriesData?.categories, categoriesData]);
+    setFilterData(categoriesData?.data);
+  }, [categoriesData?.data]);
 
+// console.log(categoriesData);
   // DELETE STARTS
   const onDelete = (id) => {
     DeleteConformation(id, () => deleteCategory(id));
@@ -78,7 +79,7 @@ const CategoriesList = () => {
 
   // SEARCH FILTERING STARTS
   const setFiltering = (search) => {
-    const filteredData = categoriesData?.categories?.filter((item) =>
+    const filteredData = categoriesData?.data?.filter((item) =>
       item?.category_name?.toLowerCase().includes(search.toLowerCase())
     );
     if (filteredData) {
@@ -95,16 +96,35 @@ const CategoriesList = () => {
       cell: (row) => {
         // Calculate the serial number based on the current page and items per page
         const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
         return <span>{serialNumber}</span>;
       },
     },
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={
+            row?.image
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }${row?.image}`
+              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+          }
+          className="w-10 h-auto rounded-full"
+        />
+      ),
+    },
+    
 
     {
-      name: "Name",
-
+      name: "Category Name",
       selector: (row) => <>{row?.category_name}</>,
     },
+    // {
+    //   name: "Warehouse Name",
+    //   selector: (row) => <>{row?.warehouse_name}</>,
+    // },
     {
       name: "Description",
 
@@ -148,7 +168,8 @@ const CategoriesList = () => {
           setFiltering={setFiltering}
         />
         {/* Categories Table */}
-        {filterData?.length > 0 && (
+
+        {/* {filterData?.length > 0 && ( */}
           <DataTable
             columns={columns}
             data={filterData}
@@ -160,7 +181,7 @@ const CategoriesList = () => {
             onChangePage={(page) => setCurrentPage(page)}
             keyField="id"
           />
-        )}
+        {/* )} */}
 
         <EditCategory
           category={category}

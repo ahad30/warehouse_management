@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Warehouse;
 
 class Brand extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'warehouse_id',
         'brand_name',
-        'brand_img'
+        'brand_img',
     ];
 
-    public function warehouse()
+    public function products()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->hasMany(Product::class);
     }
 }

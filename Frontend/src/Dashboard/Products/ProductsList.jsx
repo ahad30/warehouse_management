@@ -32,17 +32,18 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
-
+// console.log(categoryData)
   const {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
   } = useGetProductsQuery();
 
+  
   useEffect(() => {
     setFilterData(productsData?.products);
   }, [productsData?.products, productsData]);
-
+console.log(productsData?.products)
   const [
     deleteProduct,
     {
@@ -94,7 +95,7 @@ const ProductsList = () => {
       cell: (row) => {
         // Calculate the serial number based on the current page and items per page
         const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData.indexOf(row) + 1;
+          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
         return <span>{serialNumber}</span>;
       },
     },
@@ -195,6 +196,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products);
     }
   };
+
   const filterBrand = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
@@ -205,6 +207,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products);
     }
   };
+  
   const filterStore = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
@@ -244,8 +247,8 @@ const ProductsList = () => {
               className="select select-bordered"
             >
               <option value={""}>Select category</option>
-              {categoryData?.categories &&
-                categoryData?.categories.map((item) => (
+              {categoryData?.data &&
+                categoryData?.data.map((item) => (
                   <option key={item?.id} value={item?.id}>
                     {item?.category_name}
                   </option>
@@ -264,10 +267,10 @@ const ProductsList = () => {
               className="select select-bordered"
             >
               <option value={""}>Select store</option>
-              {storesData?.stores &&
-                storesData?.stores.map((item) => (
+              {storesData?.data &&
+                storesData?.data.map((item) => (
                   <option key={item?.id} value={item?.id}>
-                    {item?.store_name}
+                    {item?.name}
                   </option>
                 ))}
             </select>
@@ -284,8 +287,8 @@ const ProductsList = () => {
               className="select select-bordered"
             >
               <option value={""}>Select brand</option>
-              {brandsData?.brands &&
-                brandsData?.brands.map((item) => (
+              {brandsData?.data &&
+                brandsData?.data.map((item) => (
                   <option key={item?.id} value={item?.id}>
                     {item?.brand_name}
                   </option>
@@ -295,25 +298,26 @@ const ProductsList = () => {
         </div>
 
         {/* Products Table */}
-        {!productsIsSuccess && productsData?.status ? (
+        {/* {!productsIsSuccess && productsData?.status ? (
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
-          filterData?.length > 0 && (
-            <div className="overflow-x-scroll">
+          filterData?.length > 0 && ( */}
+            <div >
               <DataTable
                 columns={columns}
                 data={filterData}
-                pagination
+                // pagination
                 responsive
-                paginationPerPage={itemsPerPage}
-                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-                paginationTotalRows={filterData?.length}
-                onChangePage={(page) => setCurrentPage(page)}
+                // paginationPerPage={itemsPerPage}
+                // paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+                // paginationTotalRows={filterData?.length}
+                // onChangePage={(page) => setCurrentPage(page)}
                 keyField="id"
               />
             </div>
-          )
-        )}
+            
+          {/* ) */}
+        {/* )} */}
         <EditProduct
           product={product}
           modalIsOpen={modalIsOpen}

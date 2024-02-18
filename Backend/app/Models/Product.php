@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Brand;
-use App\Models\Store;
 use App\Models\Category;
 use App\Models\SaleItem;
 use Illuminate\Database\Eloquent\Model;
@@ -13,19 +12,15 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "product_name",
-        "product_img",
-        "product_unit",
-        "product_code",
-        "product_quantity",
-        "product_retail_price",
-        "product_sale_price",
-        "product_code",
-        "product_desc",
         "category_id",
         "brand_id",
-        "store_id",
-        "slug",
+        "warehouse_id",
+        "product_name",
+        "unique_code",
+        'scan_code',
+        "product_unit",
+        "product_retail_price",
+        "product_sale_price",
     ];
 
     public function getCategory()
@@ -36,14 +31,18 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
-    public function getStore()
+    public function warehouse()
     {
-        return $this->belongsTo(Store::class, 'store_id', 'id');
+        return $this->belongsTo(Warehouse::class);
     }
-
     public function saleitems()
     {
         return $this->belongsTo(SaleItem::class);
     }
 
+    // product images rel
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }
