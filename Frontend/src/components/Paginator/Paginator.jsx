@@ -4,12 +4,13 @@ import PropTypes from "prop-types";
 import { BiCloudLightRain } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { clear, incrementByAmount}  from "../../features/Page/pageSlice"
 
 const Paginator = ({ links }) => {
 
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
 
 
@@ -26,9 +27,24 @@ const Paginator = ({ links }) => {
     },[])
     
     const pageChangeHandler = (label) => {
-      incrementByAmount(label)
-      // console.log('label: ' + label)
-      // console.log('active page: ' + ActivePageNumber)
+      
+    
+      if(label== '&laquo; Previous'){
+          if(ActivePageNumber!=1){
+          dispatch(incrementByAmount(ActivePageNumber-1))
+          setCurrentPage(ActivePageNumber-1)
+        }
+      }else if(label == 'Next &raquo;'){
+        console.log(links?.length-2)
+        if(links?.length-2>ActivePageNumber){
+          dispatch(incrementByAmount(ActivePageNumber+1))
+          setCurrentPage(ActivePageNumber+1)
+        }
+      }
+      else{
+        dispatch(incrementByAmount(label))
+        setCurrentPage(label)
+      }
     }
   return (
     <nav className="float-right mb-3">
@@ -36,8 +52,8 @@ const Paginator = ({ links }) => {
   
         {links?.map((item, index) => (
           <span key={index}>
-            {item?.label == current_page ? (
-              <li onClick={()=> pageChangeHandler(item?.label)}>
+            {item?.label == current_page  ? (
+              <li>
                 <Link
                   to={`?page=${item?.label}`}
                   className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"

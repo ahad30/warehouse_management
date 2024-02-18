@@ -21,6 +21,7 @@ import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import Paginator from '../../components/Paginator/Paginator'
 import { useSelector } from "react-redux";
+
 const ProductsList = () => {
 
   UseTitle("Products");
@@ -36,12 +37,7 @@ const ProductsList = () => {
   const { data: storesData } = useGetStoresQuery();
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
 
-  // Get the query string from the current URL
-  const queryString = window.location.search;
-  // Create a URLSearchParams object by passing the query string
-  const urlParams = new URLSearchParams(queryString);
-  // Use the get method to retrieve the value of a specific parameter
-  const pageNumber = urlParams.get('page');
+
 
   const {
     data: productsData,
@@ -49,10 +45,14 @@ const ProductsList = () => {
     isSuccess: productsIsSuccess,
   } = useGetProductsQuery({pageNumber : ActivePageNumber});
 
-
+  const urlParams = new URLSearchParams(window.location.search);
+  // If you expected result is "http://foo.bar/?x=1&y=2&x=42"
+  urlParams.set('order', 'date');
+  
+  
   useEffect(() => {
     setFilterData(productsData?.products);
-  }, [productsData?.products, productsData,ActivePageNumber]);
+  }, [productsData?.products, productsData]);
 
   const [
     deleteProduct,
