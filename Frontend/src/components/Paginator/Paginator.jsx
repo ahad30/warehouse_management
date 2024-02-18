@@ -1,40 +1,67 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 
-const Paginator = ({links}) => {
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { BiCloudLightRain } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clear, incrementByAmount}  from "../../features/Page/pageSlice"
+
+const Paginator = ({ links }) => {
+
+  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
+  // const dispatch = useDispatch()
+
+
+
+  const [current_page, setCurrentPage] = useState(1);
+    // Get the query string from the current URL
+    const queryString = window.location.search;
+    // Create a URLSearchParams object by passing the query string
+    const urlParams = new URLSearchParams(queryString);
+    // Use the get method to retrieve the value of a specific parameter
+    const pageNumber = urlParams.get('page');
+
+    useEffect(()=>{
+      setCurrentPage(pageNumber)
+    },[])
+    
+    const pageChangeHandler = (label) => {
+      incrementByAmount(label)
+      // console.log('label: ' + label)
+      // console.log('active page: ' + ActivePageNumber)
+    }
   return (
+    <nav className="float-right mb-3">
+      <ul className="inline-flex -space-x-px text-sm">
   
+        {links?.map((item, index) => (
+          <span key={index}>
+            {item?.label == current_page ? (
+              <li onClick={()=> pageChangeHandler(item?.label)}>
+                <Link
+                  to={`?page=${item?.label}`}
+                  className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                 >
+              <div  dangerouslySetInnerHTML={{ __html: item?.label }}></div>
+                </Link>
+              </li>
+            ) : (
+              <li onClick={()=> pageChangeHandler(item?.label)}>
+                <Link
+                  to={`?page=${item?.label}`}
+                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                 <div  dangerouslySetInnerHTML={{ __html: item?.label }}></div>
+                </Link>
+              </li>
+            )}
+          </span>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
-<nav className='float-right mb-3'>
-  <ul className="inline-flex -space-x-px text-sm">
-    <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-    </li>
-    <li>
-      <a href="#"  className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-    </li>
-  </ul>
-</nav>
+Paginator.propTypes = {};
 
-
-  )
-}
-
-Paginator.propTypes = {}
-
-export default Paginator
+export default Paginator;
