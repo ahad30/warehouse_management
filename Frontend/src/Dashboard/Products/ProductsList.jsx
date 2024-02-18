@@ -301,19 +301,20 @@ console.log(productsData?.products)
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
           filterData?.length > 0 && ( */}
-            <div className="overflow-x-scroll">
+            <div >
               <DataTable
                 columns={columns}
                 data={filterData}
-                pagination
+                // pagination
                 responsive
-                paginationPerPage={itemsPerPage}
-                paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-                paginationTotalRows={filterData?.length}
-                onChangePage={(page) => setCurrentPage(page)}
+                // paginationPerPage={itemsPerPage}
+                // paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+                // paginationTotalRows={filterData?.length}
+                // onChangePage={(page) => setCurrentPage(page)}
                 keyField="id"
               />
             </div>
+            
           {/* ) */}
         {/* )} */}
         <EditProduct
