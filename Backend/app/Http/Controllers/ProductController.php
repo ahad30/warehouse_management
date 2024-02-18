@@ -9,16 +9,13 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
+use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-
-use function Laravel\Prompts\error;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -26,20 +23,27 @@ class ProductController extends Controller
     // index
     public function index()
     {
-        $products = ProductResource::collection(Product::latest()->get());
+        $data = Product::with('getCategory:id', 'warehouse:id,name')->paginate(3);
         return response()->json([
             'status' => true,
-            'products' => $products
+            'products' => $data,
         ], 200);
     }
 
     // create
     public function create()
     {
+        $warehouses = Warehouse::all();
         $categories = Category::all();
+        $brands = Brand::all();
         return response()->json([
             'status' => true,
-            'categories' => $categories,
+            'data' => [
+                'warehouses' => $warehouses,
+                'categories' => $categories,
+                'brands' => $brands,
+            ],
+
         ], 200);
     }
 
@@ -48,8 +52,17 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            $product = Product::create($request->validated());
+            $input = [
+                'warehouse_id' => $request->warehouse_id,
+                'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id,
+                'unique_code' => Str::random(8),
+                'scan_code' => $request->scan_code,
+            ];
+            $product = Product::create(array_merge($request->validated(), $input));
+
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
+
             $productImageData = [];
             foreach ($images as $image) {
                 $productImageData[] = [
@@ -64,7 +77,10 @@ class ProductController extends Controller
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['errors' => $e->getMessage()], 500);
+            return $this->errorResponse([
+                'status' => false,
+                'message' => "something went wrong"
+            ]);
         }
     }
 
@@ -73,15 +89,13 @@ class ProductController extends Controller
     public function edit($id)
     {
         $data = ProductResource::collection(Product::latest()->get());
-        if ($data->count() > 0) {
-            return $this->successResponse([
-                'status' => true,
-                'data' => $data,
-            ]);
-        } else {
-            return $this->errorResponse(null, 'Data Not Found', 404);
-        }
+
+        return $this->successResponse([
+            'status' => true,
+            'data' => $data,
+        ]);
     }
+
 
     // update
     public function update(UpdateProductRequest $request)
@@ -90,13 +104,32 @@ class ProductController extends Controller
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
         }
-        $product->update($request->validated());
-        return $this->successResponse(['status' => true, 'message' =>  "Product updated"]);
+
+        $input = [
+            'warehouse_id' => $request->warehouse_id,
+            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
+            'unique_code' => Str::random(8),
+            'scan_code' => $request->scan_code,
+        ];
+
+        $data = $product->update(array_merge($request->validated(), $input));
+        if (!$data) {
+            return $this->errorResponse(null, 'Something went wrong');
+        }
+        return $this->successResponse([
+            'status' => true,
+            'message' =>  "Product successfully updated"
+        ]);
     }
+
     public function imageUpdate(Request $request, $id)
     {
         if (!Product::find($id)) {
-            return $this->badRequestResponse(['status' => false, "Product not found"]);
+            return $this->badRequestResponse([
+                'status' => false,
+                "Product not found"
+            ]);
         }
 
         /**
@@ -104,7 +137,6 @@ class ProductController extends Controller
          */
         if ($request->image_ids) {
             foreach ($request->image_ids as $image_id) {
-                // return $image_id;
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
                     return response()->json(['data' => null, 'message' => 'data not found'], 200);
@@ -126,12 +158,11 @@ class ProductController extends Controller
                 'product_id' => $id,
                 'image' => $image,
             ]);
-            if ($data) {
-                DB::commit();
-            }
         }
         return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
     }
+
+
     // destroy
     public function destroy($id)
     {

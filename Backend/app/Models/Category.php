@@ -12,7 +12,6 @@ class Category extends Model
     use HasFactory;
     protected $fillable = [
         'category_name',
-        'warehouse_id',
         'image',
         'slug',
         'description',
@@ -28,10 +27,5 @@ class Category extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
-    }
-
-    public function warehouse()
-    {
-        return $this->belongsTo(Warehouse::class);
     }
 }

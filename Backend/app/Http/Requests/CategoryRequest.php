@@ -26,8 +26,8 @@ class CategoryRequest extends FormRequest
         //  if the request method is post
         if ($this->method() == 'POST') {
             return [
-                'warehouse_id' => 'required|exists:warehouses,id',
-                'category_name' => 'required|string|max:255',
+                'category_name' => 'required|string|max:255|unique:categories',
+                'image' => 'required|mimes:jpg,jpeg,png',
                 'description' => 'nullable',
             ];
         }
@@ -35,8 +35,8 @@ class CategoryRequest extends FormRequest
         //  if the request method is put
         if ($this->method() == 'PUT') {
             return [
-                'warehouse_id' => ['required', 'exists:warehouses,id'],
-                'category_name' => 'required|string|max:255',
+                'category_name' => ['required', 'max:255'],
+                'new_image' => 'sometimes|mimes:jpg,jpeg,png',
                 'description' => 'nullable',
             ];
         }
@@ -45,7 +45,7 @@ class CategoryRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'status'   => false,
-            'message'   => 'Validation errors',
+            'message'   => 'Please Select Image',
             'errors'      => $validator->errors()
         ], 400));
     }

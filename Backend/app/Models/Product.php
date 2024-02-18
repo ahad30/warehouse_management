@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use App\Models\Brand;
-use App\Models\Store;
 use App\Models\Category;
 use App\Models\SaleItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -18,15 +16,11 @@ class Product extends Model
         "brand_id",
         "warehouse_id",
         "product_name",
-        "slug",
-        "product_img",
-        "product_unit",
         "unique_code",
         'scan_code',
-        "product_quantity",
+        "product_unit",
         "product_retail_price",
         "product_sale_price",
-        "product_desc",
     ];
 
     public function getCategory()
@@ -50,12 +44,5 @@ class Product extends Model
     public function productImages()
     {
         return $this->hasMany(ProductImage::class);
-    }
-
-    // Define mutator for 'slug' attribute
-    public function setProductNameAttribute($value)
-    {
-        $this->attributes['product_name'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
     }
 }

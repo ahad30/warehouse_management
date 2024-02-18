@@ -4,11 +4,11 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-import { useGetStoresQuery } from "../../features/Store/storeApi";
+// import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   const { register, handleSubmit, setValue } = useForm();
-  const { data: storesData } = useGetStoresQuery();
+  // const { data: storesData } = useGetStoresQuery();
 
   const [
     updateCategory,
@@ -28,20 +28,21 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     }
 
     let formData = new FormData();
-    formData.append("_method" ,"PUT");
+    formData.append("_method", "PUT");
     formData.append("category_name", data?.category_name);
-    formData.append("warehouse_id", data?.warehouse_id);
-   
-    if (data?.image?.length>0) {
-      
-      formData.append("image", data?.image[0]);
+    // formData.append("warehouse_id", data?.warehouse_id);
+
+    if (data?.new_image?.length > 0) {
+
+      formData.append("image", data?.new_image[0]);
     }
     if (data?.description) {
       formData.append("description", data?.description);
     }
 
     updateCategory({ data: formData, id: category?.id });
-    console.log(data)
+    console.log(data);
+    // console.log(data?.image)
   };
 
   const errorMessages = UseErrorMessages(updateError);
@@ -73,7 +74,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     if (category) {
       setValue("category_name", category?.category_name || "");
       setValue("description", category?.description || "");
-      setValue("warehouse_id", category?.warehouse_id || "");
+      // setValue("warehouse_id", category?.warehouse_id || "");
       setValue("image", category?.image || "");
 
     }
@@ -115,35 +116,35 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                         {...register("description")}
                       />
                     </label>
+                    {/* <label className="input-group">
+                      <span className="font-semibold">
+                        Warehouse<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <select
+                        className="select select-bordered w-full"
+                        required
+                        {...register("warehouse_id")}
+                      >
+                        <option value={""}>Select Warehouse Info</option>
+                        {storesData?.data?.map((data) => (
+                          <option key={data?.id} value={data?.id}>
+                            {data?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label> */}
                     <label className="input-group">
-            <span className="font-semibold">
-              Warehouse<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              {...register("warehouse_id")}
-            >
-              <option value={""}>Select Warehouse Info</option>
-              {storesData?.data?.map((data) => (
-                <option key={data?.id} value={data?.id}>
-                  {data?.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="input-group">
-            <span className="font-semibold min-w-[110px]">
-              Image<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="file"
-              className="input input-bordered w-full py-2"
-               
-              {...register("image")}
-            />
-          </label>
-          </div>
+                      <span className="font-semibold min-w-[110px]">
+                        Image<span className="text-red-500 p-0">*</span>
+                      </span>
+                      <input
+                        type="file"
+                        className="input input-bordered w-full py-2"
+
+                        {...register("new_image")}
+                      />
+                    </label>
+                  </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <input

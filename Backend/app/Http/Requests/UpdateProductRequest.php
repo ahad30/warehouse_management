@@ -24,16 +24,13 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'warehouse_id' => ['required'],
+            'category_id' => ['required'],
             'product_name' => ['required', 'string', 'max:255'],
             'product_quantity' => ['integer', 'required'],
             'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
-            'product_code' => ['string'],
-            'category_id' => ['required'],
-            'warehouse_id' => ['required'],
-            'brand_id' => ['nullable'],
-            'product_img' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:5000']
         ];
     }
     public function failedValidation(Validation $validator)
