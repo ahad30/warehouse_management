@@ -37,7 +37,7 @@ Route::controller(JwtAuthController::class)->prefix('jwt')->group(function () {
     Route::post('/login', 'login')->name('login');
     /* -------------------- verifyJwtToken && verifyAdmin is created custom -------------------- */
     Route::group(['middleware' => 'verifyJwtToken'], function () {
-        Route::middleware(['verifyAdmin'])->post('/register', 'register');
+        Route::middleware(['verifyAdmin','verifySub_admin'])->post('/register', 'register');
     });
     Route::post('/logout', 'logout')->name('logout');
 });
@@ -79,7 +79,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                              Category controller                              */
     /* -------------------------------------------------------------------------- */
-    Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+    Route::middleware(['verifyAdmin','verifySub_admin'])->controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
         Route::get('/single-warehouse/{id}', 'singleWarehouseCategories');
         Route::post('/store', 'store');
@@ -88,7 +88,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::delete('/delete/{id}', 'destroy');
     });
 
-    Route::controller(ProductController::class)->prefix('/products')->group(function () {
+    Route::middleware(['verifyAdmin','verifySub_admin','verifyStaff'])->controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('/', 'index');
         Route::get('/create', 'create');
         Route::post('/store', 'store');
@@ -104,15 +104,15 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::middleware('verifyAdmin')->put('/info/update', 'update');
     });
 
-    Route::controller(CustomerController::class)->prefix('customers')->group(function () {
-        Route::get('/', 'index');
-        Route::post('/store', 'store');
-        Route::get('/edit/{id}', 'edit');
-        Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'destroy');
-    });
+    // Route::controller(CustomerController::class)->prefix('customers')->group(function () {
+    //     Route::get('/', 'index');
+    //     Route::post('/store', 'store');
+    //     Route::get('/edit/{id}', 'edit');
+    //     Route::put('/update', 'update');
+    //     Route::delete('/delete/{id}', 'destroy');
+    // });
 
-    Route::middleware('verifyAdmin')->controller(UserController::class)->prefix('users')->group(function () {
+    Route::middleware(['verifyAdmin','verifySub_admin'])->controller(UserController::class)->prefix('users')->group(function () {
         Route::get('/', 'index');
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'destroy');
@@ -123,14 +123,14 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                                 Role Routes                                */
     /* -------------------------------------------------------------------------- */
 
-    Route::get('/roles', RoleController::class)->name('role.index');
+    Route::middleware(['verifyAdmin','verifySub_admin'])->get('/roles', RoleController::class)->name('role.index');
 
 
     /* -------------------------------------------------------------------------- */
     /*                              Brand controller                              */
     /* -------------------------------------------------------------------------- */
 
-    Route::controller(BrandController::class)->prefix('/brands')->group(function () {
+    Route::middleware(['verifyAdmin','verifySub_admin'])->controller(BrandController::class)->prefix('/brands')->group(function () {
         Route::get('/', 'index');
         Route::get('/single-warehouse/{id}', 'singleWarehouseBrands');
         Route::post('/store', 'store');
@@ -142,12 +142,12 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                              store controller                              */
     /* -------------------------------------------------------------------------- */
 
-    Route::controller(StoreController::class)->prefix('/stores')->group(function () {
-        Route::get('/', 'index');
-        Route::post('/store', 'store');
-        Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'delete');
-    });
+    // Route::controller(StoreController::class)->prefix('/stores')->group(function () {
+    //     Route::get('/', 'index');
+    //     Route::post('/store', 'store');
+    //     Route::put('/update', 'update');
+    //     Route::delete('/delete/{id}', 'delete');
+    // });
 
     /* -------------------------------------------------------------------------- */
     /*                             Settings controller                            */
