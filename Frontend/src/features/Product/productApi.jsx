@@ -1,21 +1,22 @@
 import apiSlice from "../API/apiSlice";
 
+
 const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addProduct: builder.mutation({
       query: (data) => ({
         method: "POST",
         url: "/products/store",
-        // url: "/posts",
         body: data,
       }),
       invalidatesTags: ["Products", "Invoices", "Dashboard"],
     }),
     getProducts: builder.query({
-      query: () => ({
-        url: "/products",
-        // url: "/posts",
-      }),
+      query: ({pageNumber}) => {
+        return {
+          url: `/products?page=${pageNumber ? pageNumber : 1}`,
+        }
+      },
       providesTags: ["Products"],
     }),
     getProduct: builder.query({

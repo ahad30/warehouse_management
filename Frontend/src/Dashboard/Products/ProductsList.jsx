@@ -19,8 +19,10 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
-
+import Paginator from '../../components/Paginator/Paginator'
+import { useSelector } from "react-redux";
 const ProductsList = () => {
+
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
@@ -32,18 +34,26 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
-// console.log(categoryData)
+  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
+
+  // Get the query string from the current URL
+  const queryString = window.location.search;
+  // Create a URLSearchParams object by passing the query string
+  const urlParams = new URLSearchParams(queryString);
+  // Use the get method to retrieve the value of a specific parameter
+  const pageNumber = urlParams.get('page');
+
   const {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
-  } = useGetProductsQuery();
+  } = useGetProductsQuery({pageNumber : ActivePageNumber});
 
-  
+
   useEffect(() => {
     setFilterData(productsData?.products);
-  }, [productsData?.products, productsData]);
-console.log(productsData?.products)
+  }, [productsData?.products, productsData,ActivePageNumber]);
+
   const [
     deleteProduct,
     {
@@ -95,7 +105,7 @@ console.log(productsData?.products)
       cell: (row) => {
         // Calculate the serial number based on the current page and items per page
         const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
+          (currentPage - 1) * itemsPerPage + filterData?.data?.indexOf(row) + 1;
         return <span>{serialNumber}</span>;
       },
     },
@@ -215,10 +225,10 @@ console.log(productsData?.products)
       );
       filter && setFilterData(filter);
     } else {
-      setFilterData(productsData?.products);
+      setFilterData(productsData?.products?.data);
     }
   };
-  // console.log(brandsData.brands)
+  // console.log(filterData)
 
   return (
     <>
@@ -305,7 +315,7 @@ console.log(productsData?.products)
             <div >
               <DataTable
                 columns={columns}
-                data={filterData}
+                data={filterData?.data}
                 // pagination
                 responsive
                 // paginationPerPage={itemsPerPage}
@@ -314,8 +324,11 @@ console.log(productsData?.products)
                 // onChangePage={(page) => setCurrentPage(page)}
                 keyField="id"
               />
+              <br></br>
+          <Paginator links={filterData?.links}/>
+          <br></br>
+          <br></br>
             </div>
-            
           {/* ) */}
         {/* )} */}
         <EditProduct
