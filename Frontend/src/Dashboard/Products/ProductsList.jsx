@@ -234,7 +234,7 @@ const ProductsList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Products: {productsData?.products?.length}
+          Products: {productsData?.total}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
@@ -244,68 +244,7 @@ const ProductsList = () => {
           setFiltering={setFiltering}
         />
 
-        {/* filler by category , store brand */}
-        <div className="flex flex-col md:flex-row gap-x-3">
-          {/* category */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by category</span>
-            </label>
-
-            <select
-              onChange={(e) => filterCategory(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select category</option>
-              {categoryData?.data &&
-                categoryData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.category_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* store */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by store</span>
-            </label>
-
-            <select
-              onChange={(e) => filterStore(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select store</option>
-              {storesData?.data &&
-                storesData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* brand */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by brand</span>
-            </label>
-
-            <select
-              onChange={(e) => filterBrand(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select brand</option>
-              {brandsData?.data &&
-                brandsData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.brand_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
+       
 
         {/* Products Table */}
         {/* {!productsIsSuccess && productsData?.status ? (
@@ -316,12 +255,7 @@ const ProductsList = () => {
               <DataTable
                 columns={columns}
                 data={filterData?.data}
-                // pagination
                 responsive
-                // paginationPerPage={itemsPerPage}
-                // paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-                // paginationTotalRows={filterData?.length}
-                // onChangePage={(page) => setCurrentPage(page)}
                 keyField="id"
               />
               <br></br>
