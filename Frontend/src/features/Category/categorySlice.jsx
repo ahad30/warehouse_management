@@ -20,7 +20,7 @@ export const addCategory = createAsyncThunk(
         }
       );
       const response = request;
-      console.log(response);
+      // console.log(response);
     }
   }
 );
