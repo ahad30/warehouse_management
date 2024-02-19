@@ -14,9 +14,9 @@ trait ResponseTrait
      * @param  int  $statusCode
      * @return JsonResponse
      */
-    public function successResponse(mixed $data, int $statusCode = Response::HTTP_OK): JsonResponse
+    public function successResponse(mixed $data, int $statusCode = Response::HTTP_OK, $message=null): JsonResponse
     {
-        return new JsonResponse($data, $statusCode);
+        return new JsonResponse($data, $statusCode, $message=null);
     }
 
     /**

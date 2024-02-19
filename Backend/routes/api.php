@@ -18,6 +18,8 @@ use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\ProductShiftingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -180,3 +182,15 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     Route::middleware('verifyAdmin')->apiResource('warehouses', WarehouseController::class);
 });
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                               Product Shifting                              */
+    /* -------------------------------------------------------------------------- */
+
+    // Route::middleware(['verifyAdmin','verifySub_admin'])->controller(ProductShiftingController::class)
+    // ->prefix('/products')->group(function () {
+    //     Route::get('/', 'index');
+    //     Route::put('/update', 'update');
+    //     Route::delete('/delete/{id}', 'destroy');
+    // });
