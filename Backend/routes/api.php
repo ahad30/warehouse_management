@@ -185,12 +185,13 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
 
     /* -------------------------------------------------------------------------- */
-    /*                               Product Shifting                              */
+    /*                               Product Shifting  route                            */
     /* -------------------------------------------------------------------------- */
 
-    // Route::middleware(['verifyAdmin','verifySub_admin'])->controller(ProductShiftingController::class)
-    // ->prefix('/products')->group(function () {
-    //     Route::get('/', 'index');
-    //     Route::put('/update', 'update');
-    //     Route::delete('/delete/{id}', 'destroy');
-    // });
+    Route::middleware(['verifyAdmin','verifySubAdmin','verifyStaff'])->controller(ProductShiftingController::class)
+    ->prefix('/productshift')->group(function () {
+        Route::post('/store', 'ProductShiftingStore');
+        Route::get('/index', 'ProductShiftingIndex');
+        Route::put('/update', 'ProductShiftingUpdate');
+        Route::delete('/delete/{id}', 'ProductShiftingDelete');
+    });
