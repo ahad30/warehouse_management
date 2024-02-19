@@ -12,9 +12,9 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
+        "warehouse_id",
         "category_id",
         "brand_id",
-        "warehouse_id",
         "product_name",
         "unique_code",
         'scan_code',
