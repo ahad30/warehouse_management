@@ -23,7 +23,7 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-
+  console.log(storesData);
   const onSubmit = (data) => {
     const formData = new FormData();
 
@@ -111,7 +111,7 @@ const AddProduct = () => {
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
             <select
-            // onChange={()=>}
+              // onChange={()=>}
               className="select select-bordered w-full"
               required
               {...register("warehouse_id")}
@@ -134,9 +134,9 @@ const AddProduct = () => {
               {...register("category_id")}
             >
               <option value={""}>Select Category</option>
-              {categoryData?.categories?.map((category, idx) => (
-                <option key={idx} value={category?.id}>
-                  {category?.category_name}
+              {categoryData?.data?.map((data, idx) => (
+                <option key={idx} value={data?.id}>
+                  {data?.category_name}
                 </option>
               ))}
             </select>
@@ -206,15 +206,14 @@ const AddProduct = () => {
               {...register("brand_id")}
             >
               <option value={""}>Select Brand</option>
-              {brandsData?.brands?.map((brand) => (
-                <option value={brand?.id} key={brand?.id}>
-                  {brand?.brand_name}
+              {brandsData?.data?.map((data) => (
+                <option value={data?.id} key={data?.id}>
+                  {data?.brand_name}
                 </option>
               ))}
             </select>
           </label>
 
-         
           <label className="input-group">
             <span className="font-semibold">Description</span>
             <input

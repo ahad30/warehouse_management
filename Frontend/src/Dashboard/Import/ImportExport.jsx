@@ -1,6 +1,5 @@
 import { useState } from "react";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-// import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import ImportAsCSV from "./ImportAsCSV";
 import ImportTable from "./ImportTable";
 
@@ -58,7 +57,7 @@ const ImportExport = () => {
                   <button className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white">
                     All
                   </button>
-                  <div className="">
+                  <div>
                     <select className="select select-bordered w-full max-w-xs  font-bold">
                       <option disabled selected className="font-bold">
                         Select Warehouse
@@ -92,7 +91,7 @@ const ImportExport = () => {
                 <div className="m-3">
                   <button
                     type="submit"
-                    className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded    "
+                    className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded"
                   >
                     <svg
                       className="w-4 h-4 me-2"

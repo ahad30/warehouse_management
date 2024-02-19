@@ -2,7 +2,6 @@ import apiSlice from "../API/apiSlice";
 
 const storeApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-
     addStore: build.mutation({
       query: (data) => ({
         method: "POST",
@@ -23,11 +22,11 @@ const storeApi = apiSlice.injectEndpoints({
     }),
 
     updateStore: build.mutation({
-      query: ({data , id}) => ({
+      query: ({ data, id }) => ({
         method: "POST",
         url: `/warehouses/${id}`,
         header: {
-          contentType: "multipart/form-data" ,
+          contentType: "multipart/form-data",
         },
         body: data,
       }),
