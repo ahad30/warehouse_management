@@ -18,7 +18,7 @@ class VerifyStaffMiddleware
     {
         $user = JWTAuth::parseToken()->authenticate();
         // staff role = 3
-        if ($user->role_id == 3) {
+        if ($user->role_id == 3 ||$user->role_id == 2|| $user->role_id == 1) {
             return $next($request);
         } else {
             return response()->json([

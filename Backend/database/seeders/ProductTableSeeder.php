@@ -14,8 +14,9 @@ class ProductTableSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 20; $i++) {
-            Product::create([
+        $products = [];
+        for ($i = 0; $i < 2000; $i++) {
+          $products[]=[
                 'warehouse_id' => 1,
                 'category_id' => 1, // Replace with the actual category ID
                 'brand_id' => 1, // Replace with the actual brand ID
@@ -23,11 +24,11 @@ class ProductTableSeeder extends Seeder
                 'unique_code' => 'PD' . '-' . $i . time() . Str::random(4),
                 'scan_code' => 'SP' . '-' . $i . Str::random(8),
                 'product_unit' => 'pcs',
-                'product_quantity' => 10,
                 'product_retail_price' => 29.99,
                 'product_sale_price' => 24.99,
                 // Add more product data here
-            ]);
+            ];
         }
+        Product::insert($products);
     }
 }

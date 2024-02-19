@@ -19,8 +19,11 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
+import Paginator from '../../components/Paginator/Paginator'
+import { useSelector } from "react-redux";
 
 const ProductsList = () => {
+
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
@@ -32,18 +35,25 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
-// console.log(categoryData)
+  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
+
+
+
   const {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
-  } = useGetProductsQuery();
+  } = useGetProductsQuery({pageNumber : ActivePageNumber});
 
+  const urlParams = new URLSearchParams(window.location.search);
+  // If you expected result is "http://foo.bar/?x=1&y=2&x=42"
+  urlParams.set('order', 'date');
+  
   
   useEffect(() => {
     setFilterData(productsData?.products);
   }, [productsData?.products, productsData]);
-console.log(productsData?.products)
+
   const [
     deleteProduct,
     {
@@ -95,7 +105,7 @@ console.log(productsData?.products)
       cell: (row) => {
         // Calculate the serial number based on the current page and items per page
         const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
+          (currentPage - 1) * itemsPerPage + filterData?.data?.indexOf(row) + 1;
         return <span>{serialNumber}</span>;
       },
     },
@@ -215,16 +225,16 @@ console.log(productsData?.products)
       );
       filter && setFilterData(filter);
     } else {
-      setFilterData(productsData?.products);
+      setFilterData(productsData?.products?.data);
     }
   };
-  // console.log(brandsData.brands)
+  // console.log(filterData)
 
   return (
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Products: {productsData?.products?.length}
+          Products: {productsData?.total}
         </TableHeadingTitle>
 
         <SearchAndAddBtn
@@ -234,68 +244,7 @@ console.log(productsData?.products)
           setFiltering={setFiltering}
         />
 
-        {/* filler by category , store brand */}
-        <div className="flex flex-col md:flex-row gap-x-3">
-          {/* category */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by category</span>
-            </label>
-
-            <select
-              onChange={(e) => filterCategory(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select category</option>
-              {categoryData?.data &&
-                categoryData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.category_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* store */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by store</span>
-            </label>
-
-            <select
-              onChange={(e) => filterStore(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select store</option>
-              {storesData?.data &&
-                storesData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* brand */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by brand</span>
-            </label>
-
-            <select
-              onChange={(e) => filterBrand(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select brand</option>
-              {brandsData?.data &&
-                brandsData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.brand_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
+       
 
         {/* Products Table */}
         {/* {!productsIsSuccess && productsData?.status ? (
@@ -305,17 +254,15 @@ console.log(productsData?.products)
             <div >
               <DataTable
                 columns={columns}
-                data={filterData}
-                // pagination
+                data={filterData?.data}
                 responsive
-                // paginationPerPage={itemsPerPage}
-                // paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-                // paginationTotalRows={filterData?.length}
-                // onChangePage={(page) => setCurrentPage(page)}
                 keyField="id"
               />
+              <br></br>
+          <Paginator links={filterData?.links}/>
+          <br></br>
+          <br></br>
             </div>
-            
           {/* ) */}
         {/* )} */}
         <EditProduct

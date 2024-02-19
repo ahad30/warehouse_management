@@ -13,7 +13,7 @@ const MACRoute = ({ children }) => {
   }
 
   if (
-    user?.get_role?.role == "admin" ||
+    user?.get_role?.role == "Admin" ||
     user?.get_role?.role == "manager" ||
     user?.get_role?.role == "accountant" ||
     user?.get_role?.role == "cashier"

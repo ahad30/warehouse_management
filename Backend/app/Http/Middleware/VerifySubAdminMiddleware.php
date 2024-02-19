@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class VerifySub_adminMiddleware
+class VerifySubAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class VerifySub_adminMiddleware
     {
         $user = JWTAuth::parseToken()->authenticate();
         // sub admin role = 2
-        if ($user->role_id == 2) {
+        if ($user->role_id == 2|| $user->role_id ==1) {
             return $next($request);
         } else {
             return response()->json([
