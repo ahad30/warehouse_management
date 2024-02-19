@@ -19,11 +19,10 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
-import Paginator from '../../components/Paginator/Paginator'
+import Paginator from "../../components/Paginator/Paginator";
 import { useSelector } from "react-redux";
 
 const ProductsList = () => {
-
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
@@ -35,21 +34,18 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
-  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
-
-
+  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
-  } = useGetProductsQuery({pageNumber : ActivePageNumber});
+  } = useGetProductsQuery({ pageNumber: ActivePageNumber });
 
   const urlParams = new URLSearchParams(window.location.search);
   // If you expected result is "http://foo.bar/?x=1&y=2&x=42"
-  urlParams.set('order', 'date');
-  
-  
+  urlParams.set("order", "date");
+
   useEffect(() => {
     setFilterData(productsData?.products);
   }, [productsData?.products, productsData]);
@@ -132,7 +128,7 @@ const ProductsList = () => {
     },
     {
       name: "Code",
-      selector: (row) => <>{row?.product_code}</>,
+      selector: (row) => <>{row?.unique_code}</>,
     },
     {
       name: "Retail price",
@@ -156,7 +152,7 @@ const ProductsList = () => {
     },
     {
       name: "Store",
-      selector: (row) => row?.get_store?.store_name,
+      selector: (row) => row?.warehouse?.name,
     },
     {
       name: "Brand",
@@ -217,7 +213,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products);
     }
   };
-  
+
   const filterStore = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
@@ -233,9 +229,7 @@ const ProductsList = () => {
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>
-          Products: {productsData?.total}
-        </TableHeadingTitle>
+        <TableHeadingTitle>Products: {productsData?.total}</TableHeadingTitle>
 
         <SearchAndAddBtn
           btnTitle={"Add Product"}
@@ -244,26 +238,24 @@ const ProductsList = () => {
           setFiltering={setFiltering}
         />
 
-       
-
         {/* Products Table */}
         {/* {!productsIsSuccess && productsData?.status ? (
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
           filterData?.length > 0 && ( */}
-            <div >
-              <DataTable
-                columns={columns}
-                data={filterData?.data}
-                responsive
-                keyField="id"
-              />
-              <br></br>
-          <Paginator links={filterData?.links}/>
+        <div>
+          <DataTable
+            columns={columns}
+            data={filterData?.data}
+            responsive
+            keyField="id"
+          />
+          <br></br>
+          <Paginator links={filterData?.links} />
           <br></br>
           <br></br>
-            </div>
-          {/* ) */}
+        </div>
+        {/* ) */}
         {/* )} */}
         <EditProduct
           product={product}
