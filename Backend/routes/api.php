@@ -95,7 +95,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/edit/{id}', 'edit');
         Route::post('update/image/{id}', 'imageUpdate');
         Route::put('/update', 'update');
-        Route::delete('/delete/{id}', 'destroy');
+        Route::middleware(['verifyAdmin','verifySub_admin'])->delete('/delete/{id}', 'destroy');
     });
 
     Route::controller(CompanyInfoController::class)->prefix('company')->group(function () {
@@ -178,5 +178,5 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
-    Route::apiResource('warehouses', WarehouseController::class);
+    Route::middleware('verifyAdmin')->apiResource('warehouses', WarehouseController::class);
 });
