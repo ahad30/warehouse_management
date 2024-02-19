@@ -23,7 +23,7 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-
+console.log(categoryData)
   const onSubmit = (data) => {
     const formData = new FormData();
 
