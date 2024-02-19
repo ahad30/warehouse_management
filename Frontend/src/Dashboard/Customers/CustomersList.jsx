@@ -191,94 +191,92 @@ const CustomersList = () => {
               <span className="sr-only">Search</span>
             </button>
           </form>
-          <div className="mt-10">
-            <div className="grid grid-cols-2 ">
-              <div className="px-72 flex gap-10 ">
-                <img
-                  src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
-                  className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 rounded"
-                  alt="Apple Watch"
-                />
-                <img
-                  src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
-                  className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 "
-                  alt="Apple Watch"
-                />
-                <img
-                  src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
-                  className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 "
-                  alt="Apple Watch"
-                />
-                <img
-                  src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
-                  className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 "
-                  alt="Apple Watch"
-                />
-              </div>
-              <div className="gap-5">
-                <p className="pr-10 text-lg">Product Title: Watch</p>
-                {/* <p>Quantity: Watch</p> */}
-                <div className="flex items-center gap-1">
-                  <label>Quantity : </label>
-                  <button
-                    className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                    type="button"
+
+          <div className="grid grid-cols-2  mt-10">
+            <div className="px-2 lg:px-72 flex gap-2 lg:gap-10 ">
+              <img
+                src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
+                className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 rounded"
+                alt="Apple Watch"
+              />
+              <img
+                src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
+                className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 "
+                alt="Apple Watch"
+              />
+              <img
+                src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
+                className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 "
+                alt="Apple Watch"
+              />
+              <img
+                src="https://m.media-amazon.com/images/I/71fJ8PJ8ooL._AC_UL1500_.jpg"
+                className="w-10 md:w-8 max-w-full max-h-full h-20 md:h-15 "
+                alt="Apple Watch"
+              />
+            </div>
+            <div>
+              <p className="text-lg">Product Title: Watch</p>
+              <div className="flex items-center">
+                <label>Quantity : </label>
+                <button
+                  className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-5 w-5 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  type="button"
+                >
+                  <span className="sr-only">Quantity button</span>
+                  <svg
+                    className="w-2 h-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 2"
                   >
-                    <span className="sr-only">Quantity button</span>
-                    <svg
-                      className="w-3 h-3"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 18 2"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M1 1h16"
-                      />
-                    </svg>
-                  </button>
-                  <div>
-                    <input
-                      type="number"
-                      id="first_product"
-                      className="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="1"
-                      required
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 1h16"
                     />
-                  </div>
-                  <button
-                    className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                    type="button"
+                  </svg>
+                </button>
+                <div>
+                  <input
+                    type="number"
+                    id="first_product"
+                    className="bg-gray-50 w-12 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="0"
+                    required
+                  />
+                </div>
+                <button
+                  className="inline-flex items-center justify-center h-5 w-5 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  type="button"
+                >
+                  <span className="sr-only">Quantity button</span>
+                  <svg
+                    className="w-2 h-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
                   >
-                    <span className="sr-only">Quantity button</span>
-                    <svg
-                      className="w-3 h-3"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 1v16M1 9h16"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div className="text-lg">
-                  <p>Price: $230</p>
-                  <p>Description : Nice watch</p>
-                  <button className="px-2 py-1 bg-[#e74c3c] mt-3 rounded text-white">
-                    Buy Now
-                  </button>
-                </div>
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className="text-lg">
+                <p>Price: $230</p>
+                <p>Description : Nice watch</p>
+                <button className="px-2 py-1 bg-[#e74c3c] mt-3 rounded text-white">
+                  Buy Now
+                </button>
               </div>
             </div>
           </div>
