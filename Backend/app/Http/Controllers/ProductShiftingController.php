@@ -57,8 +57,6 @@ public function ProductShiftingStore(ProductShiftingRequest $request)
     {
         $histories = History::paginate(5);
         
-  
-
         return response()->json([
             'status' => true,
             'message' => "History Successfully Retrived",
