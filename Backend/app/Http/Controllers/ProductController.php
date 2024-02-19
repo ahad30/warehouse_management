@@ -39,6 +39,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'products' => $data,
+            'total' => Product::count()
         ], 200);
     }
 
