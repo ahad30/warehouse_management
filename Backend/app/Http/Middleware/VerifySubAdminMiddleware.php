@@ -18,7 +18,7 @@ class VerifySubAdminMiddleware
     {
         $user = JWTAuth::parseToken()->authenticate();
         // sub admin role = 2
-        if ($user->role_id == 2) {
+        if ($user->role_id == 2|| $user->role_id ==1) {
             return $next($request);
         } else {
             return response()->json([
