@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\History;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use App\Traits\ResponseTrait;
+use App\Http\Requests\ProductShiftingRequest;
 
 
 class ProductShiftingController extends Controller
@@ -15,25 +16,37 @@ class ProductShiftingController extends Controller
 use ResponseTrait;
     
 
-public function ProductShiftingStore(Request $request,$id)
+public function ProductShiftingStore(ProductShiftingRequest $request)
 {
 
     try {
 
-        $product_id = Product::find($id);
-        $product_id = DB::select('SELECT id FROM products');
+        $product = Product::find($request->product_id);
+
+        // return $product_id->warehouse_id;
+        // $product_id = DB::select('SELECT id FROM products');
+
         $history = History::create([
-            "from_warehouse_id" => $request->from_warehouse_id,
-            "to_warehouse_id" => $request->to_warehouse_id,
-            "product_id" =>   $product_id,
+            "from_warehouse_id" => request('from_warehouse_id'),
+            "to_warehouse_id" => request('to_warehouse_id'),
+            "product_id" =>   $product->id,
             "user_id" => Auth()->user()->id,
         ]);
 
-        return $this->successResponse([ 'data' => $history ,'status' => true, 'message' => "Histoy uploaded"]);
+        // return $history;
+        
+        $product->update([
+            "warehouse_id" => $request->to_warehouse_id,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => "History added Successfully",
+        ]);
 
     } catch (\Exception $e) {
         DB::rollBack();        
-        return $this->errorResponse(['status' => false, 'message' => "something went wrong"
+        return $this->errorResponse(['status' => false, 'message' => $e->getMessage(),
         ]);
     }
 
@@ -42,17 +55,35 @@ public function ProductShiftingStore(Request $request,$id)
 
     public function  ProductShiftingIndex(Request $request)
     {
-        $histories = History::all();
+        $histories = History::paginate(5);
+        
+  
 
-        if($histories->count() == 0)
-        {
-            return $this->errorResponse(['status' => false, 'message' => "something went wrong"]);
-        }
+        return response()->json([
+            'status' => true,
+            'message' => "History Successfully Retrived",
+            'data' => $histories,
+        ]);
 
-        return $this->successResponse([ 'data' => $histories ,'status' => true, 'message' => "Histoy Reterived"]);
+
+        
 
 
-    }
+    }// end ProductShiftingIndex()
+
+    public function ProductShiftingUpdate(Request $request,$id)
+    {
+
+    }//end ProductShiftingUpdate() 
+
+
+    public function ProductShiftingDelete(Request $request,$id)
+    {
+        $history = History::find($id);
+
+        $history->delete();
+
+    }//end ProductShiftingDelete 
 
 
 

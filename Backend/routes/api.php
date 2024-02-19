@@ -192,6 +192,4 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     ->prefix('/productshift')->group(function () {
         Route::post('/store', 'ProductShiftingStore');
         Route::get('/index', 'ProductShiftingIndex');
-        Route::put('/update', 'ProductShiftingUpdate');
-        Route::delete('/delete/{id}', 'ProductShiftingDelete');
     });
