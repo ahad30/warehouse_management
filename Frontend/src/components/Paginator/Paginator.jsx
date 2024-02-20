@@ -24,7 +24,11 @@ const Paginator = ({ links }) => {
 
     useEffect(()=>{
       setCurrentPage(pageNumber)
-    },[])
+      if(pageNumber > 1){
+        dispatch(incrementByAmount(ActivePageNumber))
+        // console.log(ActivePageNumber)
+      }
+    },[pageNumber,ActivePageNumber,dispatch])
     
     const pageChangeHandler = (label) => {
       

@@ -39,9 +39,14 @@ import InstallationRoute from "./InstallationRoute";
 import MSACRoute from "./MSACRoute";
 import History from "../Dashboard/History/History";
 import ImportExport from "../Dashboard/Import/ImportExport";
+import PermissionDenied from "../pages/Errors/PermissionDenied";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
+  {
+    path: "/403",
+    element: <PermissionDenied/>
+  },
   {
     path: "/", // Root path
     element: <MainLayout />, // Main layout component
@@ -125,10 +130,6 @@ const routes = createBrowserRouter([
               </AdminRoute>
              )
           },
-
-
-      
-
           // USERS
           {
             path: "/dashboard/user", // Users list
