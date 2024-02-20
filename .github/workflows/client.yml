@@ -15,5 +15,6 @@ jobs:
         username: ${{ secrets.FTPUSERNAME }}
         password: ${{ secrets.FTPPASSWORD }}
         protocol: ftps
+        port: 21
         server-dir: / 
         local-dir: Frontend/dist/
