@@ -24,6 +24,7 @@ class ProductTableSeeder extends Seeder
                 'unique_code' => 'PD' . '-' . $i . time() . Str::random(4),
                 'scan_code' => 'SP' . '-' . $i . Str::random(8),
                 'product_unit' => 'pcs',
+
                 'product_retail_price' => 29.99,
                 'product_sale_price' => 24.99,
                 // Add more product data here
