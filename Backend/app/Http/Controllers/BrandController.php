@@ -63,7 +63,7 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, $id)
     {
-        $brand = Brand::findOrFail($id);
+        $brand = Brand::find($id);
         if (!$brand) {
             return $this->errorResponse([
                 "status" => false,
