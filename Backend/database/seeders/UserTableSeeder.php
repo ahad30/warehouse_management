@@ -39,5 +39,17 @@ class UserTableSeeder extends Seeder
             'status' => "active",
             'password' => bcrypt('password'),
         ]);
+        $staffUsers =[];
+        for($i=1; $i<10; $i++) {
+            $staffUsers[] = [
+                'name' => "Staff".$i,
+                'email' => "staff".$i."@mail.com",
+                'role_id' => 3,
+                'status' => "active",
+                'password' => bcrypt('password'),
+            ];
+        }
+        User::insert($staffUsers);
+
     }
 }
