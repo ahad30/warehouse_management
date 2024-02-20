@@ -3,7 +3,7 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
 import { useAddProductMutation } from "../../features/Product/productApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
@@ -23,7 +23,11 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-  console.log(storesData);
+  const [scanCode, setScanCode] = useState(1);
+  let getYear = () => {
+    let currentYear = new Date().getFullYear();
+    return currentYear;
+  };
   const onSubmit = (data) => {
     const formData = new FormData();
 
@@ -36,8 +40,9 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("product_quantity", data?.product_quantity);
-    if (data?.product_img) {
-      formData.append("product_img", data?.product_img[0]);
+    formData.append("scan_code", getYear().data?.scan_code);
+    if (data?.images) {
+      formData.append("images", data?.images[0]);
     }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
@@ -74,8 +79,6 @@ const AddProduct = () => {
     data?.status,
     dispatch,
   ]);
-
-  console.log(isLoading, isError, error, isSuccess, data);
 
   return (
     <DashboardBackground>
@@ -227,7 +230,27 @@ const AddProduct = () => {
             <input
               type="file"
               className="file-input file-input-bordered w-full"
-              {...register("product_img")}
+              {...register("images")}
+            />
+          </div>
+          <div>
+            <label className="input-group">
+              <span className="font-semibold text-sm">scan code </span>
+              <input
+                type="number"
+                placeholder="Scan Code"
+                className="input input-bordered w-full"
+                {...register("scan_code")}
+                onKeyUp={(e) => {
+                  setScanCode(e.target.value);
+                  console.log(e.target);
+                }}
+              />
+            </label>
+            <img
+              src={`https://barcodeapi.org/api/128/${getYear()}${scanCode}`}
+              className="h-16 float-right my-2"
+              alt=""
             />
           </div>
         </div>
