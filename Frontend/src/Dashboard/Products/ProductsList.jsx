@@ -52,13 +52,18 @@ const ProductsList = () => {
   const pageNumber = urlParams.get("page");
 
   useEffect(() => {
-    console.log(pageNumber);
     if (pageNumber > 1) {
-      dispatch(incrementByAmount(ActivePageNumber));
+      dispatch(incrementByAmount(pageNumber));
     }
 
     setFilterData(productsData?.products);
-  }, [productsData?.products, productsData, ActivePageNumber]);
+  }, [
+    productsData?.products,
+    productsData,
+    ActivePageNumber,
+    dispatch,
+    pageNumber,
+  ]);
 
   const [
     deleteProduct,
