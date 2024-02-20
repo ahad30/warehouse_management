@@ -25,7 +25,7 @@ jobs:
         server: ftp.z8tech.one
         username: ${{ secrets.FTPUSERNAME }}
         password: ${{ secrets.FTPPASSWORD }}
-        protocol: FTPS
+        protocol: ftps
         server-dir: Backend/
         local-dir: Backend/
 
