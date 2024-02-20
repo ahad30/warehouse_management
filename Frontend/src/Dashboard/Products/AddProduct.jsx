@@ -78,7 +78,7 @@ console.log(categoryData)
   console.log(isLoading, isError, error, isSuccess, data);
 
   return (
-    <DashboardBackground>
+    <DashboardBackground>        
       <h2 className="text-xl my-5 font-semibold">Add Product</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">

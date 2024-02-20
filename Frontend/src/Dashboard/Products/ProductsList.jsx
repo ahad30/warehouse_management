@@ -51,6 +51,7 @@ const ProductsList = () => {
   
   
   useEffect(() => {
+    
     setFilterData(productsData?.products);
   }, [productsData?.products, productsData]);
 
