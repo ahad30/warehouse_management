@@ -47,8 +47,9 @@ const ProductsList = () => {
   urlParams.set("order", "date");
 
   useEffect(() => {
+    console.log(ActivePageNumber);
     setFilterData(productsData?.products);
-  }, [productsData?.products, productsData]);
+  }, [productsData?.products, productsData, ActivePageNumber]);
 
   const [
     deleteProduct,
@@ -138,10 +139,10 @@ const ProductsList = () => {
       name: "Sold price",
       selector: (row) => <>{row?.product_sale_price}</>,
     },
-    {
-      name: "Quantity",
-      selector: (row) => <>{row?.product_quantity}</>,
-    },
+    // {
+    //   name: "Quantity",
+    //   selector: (row) => <>{row?.product_quantity}</>,
+    // },
     {
       name: "Unit",
       selector: (row) => <>{row?.product_unit}</>,
@@ -195,7 +196,7 @@ const ProductsList = () => {
   const filterCategory = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
-        (product) => product?.get_category?.id == data
+        (product) => product?.get_category?.category_name?.id == data
       );
       filter && setFilterData(filter);
     } else {
@@ -224,7 +225,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-  // console.log(filterData)
+  console.log(filterData);
 
   return (
     <>
