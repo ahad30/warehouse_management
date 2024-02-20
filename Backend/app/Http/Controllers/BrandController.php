@@ -88,6 +88,7 @@ class BrandController extends Controller
     public function delete($id)
     {
         $brand = Brand::find($id);
+        return $brand;
         if (!$brand) {
             return $this->errorResponse([
                 "status" => false,
