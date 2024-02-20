@@ -16,7 +16,7 @@ const historyApi = apiSlice.injectEndpoints({
 
     getHistory: build.query({
       query: () => ({
-        url: "/history/index",
+        url: "/history",
       }),
       providesTags: ["Histories"],
     }),

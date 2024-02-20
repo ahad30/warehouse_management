@@ -202,5 +202,5 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::middleware(['verifyAdmin','verifySubAdmin','verifyStaff'])->controller(HistoryController::class)
     ->prefix('/history')->group(function () {
-        Route::get('/index', 'Histories');
+        Route::get('/', 'index');
     });
