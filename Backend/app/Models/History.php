@@ -10,6 +10,4 @@ class History extends Model
     use HasFactory;
 
     protected $guarded = [];
-
-
 }
