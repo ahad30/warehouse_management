@@ -69,10 +69,6 @@ public function ProductShiftingStore(ProductShiftingRequest $request)
 
     }// end ProductShiftingIndex()
 
-    public function ProductShiftingUpdate(Request $request,$id)
-    {
-
-    }//end ProductShiftingUpdate() 
 
 
     public function ProductShiftingDelete(Request $request,$id)

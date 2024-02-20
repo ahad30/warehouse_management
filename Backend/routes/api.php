@@ -19,6 +19,8 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ProductShiftingController;
+use App\Http\Controllers\HistoryController;
+
 
 
 /*
@@ -192,4 +194,13 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     ->prefix('/productshift')->group(function () {
         Route::post('/store', 'ProductShiftingStore');
         Route::get('/index', 'ProductShiftingIndex');
+    });
+
+      /* -------------------------------------------------------------------------- */
+    /*                              HistoryController  route                            */
+    /* -------------------------------------------------------------------------- */
+
+    Route::middleware(['verifyAdmin','verifySubAdmin','verifyStaff'])->controller(HistoryController::class)
+    ->prefix('/history')->group(function () {
+        Route::get('/index', 'Histories');
     });
