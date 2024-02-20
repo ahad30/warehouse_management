@@ -22,6 +22,7 @@ import DeleteConformation from "../../components/DeleteConformationAlert/DeletCo
 import Paginator from "../../components/Paginator/Paginator";
 import { useDispatch, useSelector } from "react-redux";
 import { clear, incrementByAmount } from "../../features/Page/pageSlice";
+import useGetCurrentPage from "../../Hooks/useGetCurrentPage";
 const ProductsList = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -44,18 +45,11 @@ const ProductsList = () => {
 
   const dispatch = useDispatch();
 
-  // Get the query string from the current URL
-  const queryString = window.location.search;
-  // Create a URLSearchParams object by passing the query string
-  const urlParams = new URLSearchParams(queryString);
-  // Use the get method to retrieve the value of a specific parameter
-  const pageNumber = urlParams.get("page");
-
+  const pageNumber = useGetCurrentPage()
   useEffect(() => {
     if (pageNumber > 1) {
       dispatch(incrementByAmount(pageNumber));
     }
-
     setFilterData(productsData?.products);
   }, [
     productsData?.products,
