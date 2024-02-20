@@ -45,7 +45,7 @@ const ProductsList = () => {
 
   const dispatch = useDispatch();
 
-  const pageNumber = useGetCurrentPage()
+  const pageNumber = useGetCurrentPage();
   useEffect(() => {
     if (pageNumber > 1) {
       dispatch(incrementByAmount(pageNumber));
@@ -239,13 +239,20 @@ const ProductsList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>Products: {productsData?.total}</TableHeadingTitle>
-
-        <SearchAndAddBtn
+        <div className="mr-10">
+          <SearchAndAddBtn
+            btnTitle={"Add Product"}
+            btnPath={"/dashboard/product/add"}
+            btnIcon={<BiCartAdd size={20} />}
+            setFiltering={setFiltering}
+          />
+        </div>
+        {/* <SearchAndAddBtn
           btnTitle={"Add Product"}
           btnPath={"/dashboard/product/add"}
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
-        />
+        /> */}
 
         {/* Products Table */}
         {/* {!productsIsSuccess && productsData?.status ? (
