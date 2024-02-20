@@ -63,7 +63,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("store_id", product?.store_id || "");
       setValue("category_id", product?.category_id || "");
       setValue("brand_id", product?.brand_id || "");
-      setValue("product_img", product?.product_img || "");
+      setValue("product_img", product?.images || "");
     }
   }, [product, setValue]);
 
@@ -193,9 +193,9 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("brand_id")}
                       >
                         <option value={""}>Select Brand</option>
-                        {brandsData?.brands?.map((brand) => (
-                          <option value={brand?.id} key={brand?.id}>
-                            {brand?.brand_name}
+                        {brandsData?.data?.map((data) => (
+                          <option value={data?.id} key={data?.id}>
+                            {data?.brand_name}
                           </option>
                         ))}
                       </select>
@@ -210,9 +210,9 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("store_id")}
                       >
                         <option value={""}>Select Store Info</option>
-                        {storesData?.stores?.map((store) => (
-                          <option key={store?.id} value={store?.id}>
-                            {store?.store_name}
+                        {storesData?.data?.map((data) => (
+                          <option key={data?.id} value={data?.id}>
+                            {data?.store_name}
                           </option>
                         ))}
                       </select>

@@ -34,7 +34,7 @@ class ProductController extends Controller
             $query = $query->where('scan_code', $request->scan_code);
         }
 
-        $data = $query->with('getCategory:id', 'warehouse:id,name')->latest()->paginate(15);
+        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name')->latest()->paginate(15);
 
         return response()->json([
             'status' => true,

@@ -3,7 +3,7 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
 import { useAddProductMutation } from "../../features/Product/productApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
@@ -23,8 +23,11 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-  console.log(categoryData);
-
+  const [scanCode, setScanCode] = useState(1);
+  let getYear = () => {
+    let currentYear = new Date().getFullYear();
+    return currentYear;
+  };
   const onSubmit = (data) => {
     const formData = new FormData();
 
@@ -37,7 +40,7 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("product_quantity", data?.product_quantity);
-    formData.append("scan_code", data?.scan_code);
+    formData.append("scan_code", getYear().data?.scan_code);
     if (data?.images) {
       formData.append("images", data?.images[0]);
     }
@@ -77,10 +80,8 @@ const AddProduct = () => {
     dispatch,
   ]);
 
-  console.log(isLoading, isError, error, isSuccess, data);
-
   return (
-    <DashboardBackground>        
+    <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Product</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
@@ -232,15 +233,26 @@ const AddProduct = () => {
               {...register("images")}
             />
           </div>
-          <label className="input-group">
-            <span className="font-semibold text-sm">scan code </span>
-            <input
-              type="text"
-              placeholder="Product Description"
-              className="input input-bordered w-full"
-              {...register("scan_code")}
+          <div>
+            <label className="input-group">
+              <span className="font-semibold text-sm">scan code </span>
+              <input
+                type="number"
+                placeholder="Scan Code"
+                className="input input-bordered w-full"
+                {...register("scan_code")}
+                onKeyUp={(e) => {
+                  setScanCode(e.target.value);
+                  console.log(e.target);
+                }}
+              />
+            </label>
+            <img
+              src={`https://barcodeapi.org/api/128/${getYear()}${scanCode}`}
+              className="h-16 float-right my-2"
+              alt=""
             />
-          </label>
+          </div>
         </div>
         <SubmitButton
           title={isLoading ? "Saving Product..." : "Save Product"}
