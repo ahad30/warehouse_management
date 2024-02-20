@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('from_warehouse_id');
             $table->unsignedBigInteger('to_warehouse_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('sale_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

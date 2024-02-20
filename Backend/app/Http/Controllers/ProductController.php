@@ -63,6 +63,7 @@ class ProductController extends Controller
     // store
     public function store(StoreProductRequest $request)
     {
+        // return $request->all();
         try {
             DB::beginTransaction();
             $input = [
@@ -92,7 +93,7 @@ class ProductController extends Controller
             DB::rollBack();
             return $this->errorResponse([
                 'status' => false,
-                'message' => "something went wrong"
+                'message' => "something went wrong". $e->getMessage()
             ]);
         }
     }
