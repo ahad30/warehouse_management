@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { BiCloudLightRain } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import useGetCurrentPage from "../../Hooks/useGetCurrentPage";
 import { clear, incrementByAmount } from "../../features/Page/pageSlice";
 
 const Paginator = ({ links }) => {
@@ -11,18 +11,13 @@ const Paginator = ({ links }) => {
   const dispatch = useDispatch();
 
   const [current_page, setCurrentPage] = useState(1);
-  // Get the query string from the current URL
-  const queryString = window.location.search;
-  // Create a URLSearchParams object by passing the query string
-  const urlParams = new URLSearchParams(queryString);
-  // Use the get method to retrieve the value of a specific parameter
-  const pageNumber = urlParams.get("page");
+
+  const pageNumber = useGetCurrentPage()
 
   useEffect(() => {
     setCurrentPage(pageNumber);
     if (pageNumber > 1) {
       dispatch(incrementByAmount(ActivePageNumber));
-      // console.log(ActivePageNumber)
     }
   }, [pageNumber, ActivePageNumber, dispatch]);
 
@@ -33,7 +28,6 @@ const Paginator = ({ links }) => {
         setCurrentPage(ActivePageNumber - 1);
       }
     } else if (label == "Next &raquo;") {
-      console.log(links?.length - 2);
       if (links?.length - 2 > ActivePageNumber) {
         dispatch(incrementByAmount(ActivePageNumber + 1));
         setCurrentPage(ActivePageNumber + 1);
