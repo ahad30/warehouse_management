@@ -233,7 +233,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-  console.log(filterData);
+
 
   return (
     <>
