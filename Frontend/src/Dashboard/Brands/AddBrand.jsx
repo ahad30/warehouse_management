@@ -29,6 +29,7 @@ const AddBrand = () => {
 
   // Handle form submission.
   const onSubmit = (data) => {
+    console.log(data);
     // Create a FormData object for sending form data, including files.
     const formData = new FormData();
     formData.append("brand_name", data?.brand_name);
@@ -39,7 +40,7 @@ const AddBrand = () => {
 
     // Call the addBrand mutation with the form data.
     addBrand(formData);
-    console.log(data)
+    console.log(data);
   };
 
   // Handle side effects like showing loading/error/success messages.
@@ -83,7 +84,6 @@ const AddBrand = () => {
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>
       <form onSubmit={handleSubmit(onSubmit)} encType="mulitpart/form-data">
         <div className="grid lg:grid-cols-2 gap-5">
-          
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">
               Name<span className="text-red-500 p-0">*</span>
@@ -111,15 +111,17 @@ const AddBrand = () => {
         />
       </form>
 
-      {/* Display error messages if any. */
-      errorMessages.map((errorMessage, index) => (
-        <p
-          key={index}
-          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-        >
-          {errorMessage}
-        </p>
-      ))}
+      {
+        /* Display error messages if any. */
+        errorMessages.map((errorMessage, index) => (
+          <p
+            key={index}
+            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+          >
+            {errorMessage}
+          </p>
+        ))
+      }
     </DashboardBackground>
   );
 };
