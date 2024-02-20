@@ -20,8 +20,8 @@ import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import Paginator from "../../components/Paginator/Paginator";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { clear, incrementByAmount } from "../../features/Page/pageSlice";
 const ProductsList = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -42,13 +42,28 @@ const ProductsList = () => {
     isSuccess: productsIsSuccess,
   } = useGetProductsQuery({ pageNumber: ActivePageNumber });
 
-  const urlParams = new URLSearchParams(window.location.search);
-  // If you expected result is "http://foo.bar/?x=1&y=2&x=42"
-  urlParams.set("order", "date");
+  const dispatch = useDispatch();
+
+  // Get the query string from the current URL
+  const queryString = window.location.search;
+  // Create a URLSearchParams object by passing the query string
+  const urlParams = new URLSearchParams(queryString);
+  // Use the get method to retrieve the value of a specific parameter
+  const pageNumber = urlParams.get("page");
 
   useEffect(() => {
+    if (pageNumber > 1) {
+      dispatch(incrementByAmount(pageNumber));
+    }
+
     setFilterData(productsData?.products);
-  }, [productsData?.products, productsData]);
+  }, [
+    productsData?.products,
+    productsData,
+    ActivePageNumber,
+    dispatch,
+    pageNumber,
+  ]);
 
   const [
     deleteProduct,
@@ -138,10 +153,10 @@ const ProductsList = () => {
       name: "Sold price",
       selector: (row) => <>{row?.product_sale_price}</>,
     },
-    {
-      name: "Quantity",
-      selector: (row) => <>{row?.product_quantity}</>,
-    },
+    // {
+    //   name: "Quantity",
+    //   selector: (row) => <>{row?.product_quantity}</>,
+    // },
     {
       name: "Unit",
       selector: (row) => <>{row?.product_unit}</>,
@@ -195,7 +210,7 @@ const ProductsList = () => {
   const filterCategory = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
-        (product) => product?.get_category?.id == data
+        (product) => product?.get_category?.category_name?.id == data
       );
       filter && setFilterData(filter);
     } else {
@@ -224,7 +239,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-  // console.log(filterData)
+  console.log(filterData);
 
   return (
     <>

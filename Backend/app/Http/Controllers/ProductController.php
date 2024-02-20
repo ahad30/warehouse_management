@@ -30,11 +30,11 @@ class ProductController extends Controller
         /**
          * To retrieve product using scan_code
          */
-        if($request->scan_code){
-            $query = $query->where('scan_code',$request->scan_code);
+        if ($request->scan_code) {
+            $query = $query->where('scan_code', $request->scan_code);
         }
 
-        $data =  $query->with('getCategory:id', 'warehouse:id,name')->paginate(15);
+        $data = $query->with('getCategory:id', 'warehouse:id,name')->latest()->paginate(15);
 
         return response()->json([
             'status' => true,
@@ -93,7 +93,7 @@ class ProductController extends Controller
             DB::rollBack();
             return $this->errorResponse([
                 'status' => false,
-                'message' => "something went wrong". $e->getMessage()
+                'message' => "something went wrong" . $e->getMessage()
             ]);
         }
     }
@@ -133,7 +133,7 @@ class ProductController extends Controller
         }
         return $this->successResponse([
             'status' => true,
-            'message' =>  "Product successfully updated"
+            'message' => "Product successfully updated"
         ]);
     }
 
@@ -168,12 +168,12 @@ class ProductController extends Controller
          */
         $images = $this->multipleImageUpload($request, 'uploads/products/images');
         foreach ($images as $image) {
-            $data =  ProductImage::create([
+            $data = ProductImage::create([
                 'product_id' => $id,
                 'image' => $image,
             ]);
         }
-        return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
+        return $this->successResponse(['status' => true, 'message' => 'Image Updated']);
     }
 
 

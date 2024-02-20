@@ -23,7 +23,8 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-  console.log(storesData);
+  console.log(categoryData);
+
   const onSubmit = (data) => {
     const formData = new FormData();
 
@@ -36,8 +37,9 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("product_quantity", data?.product_quantity);
-    if (data?.product_img) {
-      formData.append("product_img", data?.product_img[0]);
+    formData.append("scan_code", data?.scan_code);
+    if (data?.images) {
+      formData.append("images", data?.images[0]);
     }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
@@ -78,7 +80,7 @@ const AddProduct = () => {
   console.log(isLoading, isError, error, isSuccess, data);
 
   return (
-    <DashboardBackground>
+    <DashboardBackground>        
       <h2 className="text-xl my-5 font-semibold">Add Product</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
@@ -227,9 +229,18 @@ const AddProduct = () => {
             <input
               type="file"
               className="file-input file-input-bordered w-full"
-              {...register("product_img")}
+              {...register("images")}
             />
           </div>
+          <label className="input-group">
+            <span className="font-semibold text-sm">scan code </span>
+            <input
+              type="text"
+              placeholder="Product Description"
+              className="input input-bordered w-full"
+              {...register("scan_code")}
+            />
+          </label>
         </div>
         <SubmitButton
           title={isLoading ? "Saving Product..." : "Save Product"}
