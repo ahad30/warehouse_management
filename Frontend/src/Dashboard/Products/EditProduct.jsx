@@ -100,8 +100,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
         className="fixed inset-0 w-full h-full bg-black opacity-40"
         onClick={() => setModalIsOpen(false)}
       ></div>
-      <div className="flex items-center min-h-screen px-4 py-8">
-        <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">
+      <div className="flex items-center min-h-screen  px-4 py-8">
+        <div className="relative w-full  max-w-md p-4 mx-auto bg-white rounded-md shadow-lg">
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
@@ -109,7 +109,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
               </p>
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="grid gap-5 w-full">
+                  <div className="grid gap-5">
                     <label className="input-group">
                       <span className="font-semibold">
                         Name<span className="text-red-500 p-0">*</span>
@@ -156,7 +156,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         min={1}
                       />
                     </label>
-                    <label className="input-group">
+                    {/* <label className="input-group">
                       <span className="font-semibold">
                         Quantity<span className="text-red-500 p-0">*</span>
                       </span>
@@ -167,7 +167,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("product_quantity")}
                         min={1}
                       />
-                    </label>
+                    </label> */}
                     <label className="input-group">
                       <span className="font-semibold">
                         Unit<span className="text-red-500 p-0">*</span>
@@ -212,7 +212,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         <option value={""}>Select Store Info</option>
                         {storesData?.data?.map((data) => (
                           <option key={data?.id} value={data?.id}>
-                            {data?.store_name}
+                            {data?.name}
                           </option>
                         ))}
                       </select>
@@ -226,9 +226,9 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("category_id")}
                       >
                         <option>Select Category</option>
-                        {categoriesData?.categories?.map((category, idx) => (
-                          <option key={idx} value={category?.id}>
-                            {category?.category_name}
+                        {categoriesData?.data?.map((data, idx) => (
+                          <option key={idx} value={data?.id}>
+                            {data?.category_name}
                           </option>
                         ))}
                       </select>
