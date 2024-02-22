@@ -97,7 +97,7 @@ class SaleController extends Controller
         // Retrieving product, customer, and company info
         $company_info = CompanyInfo::latest()->first();
         $customers = Customer::all();
-        $productsQuery = Product::where('product_quantity', '>', '0');
+        $productsQuery = Product::where('is_sold',false);
 
         // Filtering products based on brand and category
         if ($brand_id != null) {
@@ -107,7 +107,7 @@ class SaleController extends Controller
             $productsQuery->where('category_id', $category_id);
         }
 
-        $products = $productsQuery->with('getCategory', 'getBrand', 'getStore')->get();
+        $products = $productsQuery->with('getCategory', 'getBrand', 'warehouse')->get();
 
         return response()->json([
             'status' => true,
