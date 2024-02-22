@@ -239,7 +239,7 @@ const ProductsList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>Products: {productsData?.total}</TableHeadingTitle>
-        <div className="mr-10">
+        <div className="">
           <SearchAndAddBtn
             btnTitle={"Add Product"}
             btnPath={"/dashboard/product/add"}
@@ -259,17 +259,16 @@ const ProductsList = () => {
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
           filterData?.length > 0 && ( */}
-        <div>
+        <div >
           <DataTable
             columns={columns}
-            data={filterData?.data}
-            responsive
+            data={filterData?.data}            
             keyField="id"
+            responsive={false}
           />
           <br></br>
           <Paginator links={filterData?.links} />
-          <br></br>
-          <br></br>
+        
         </div>
         {/* ) */}
         {/* )} */}
