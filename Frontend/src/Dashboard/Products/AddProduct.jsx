@@ -41,11 +41,10 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     // formData.append("product_quantity", data?.product_quantity);
-    formData.append("scan_code", data?.scan_code);
-    const images = data.images;
 
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images[]", images[i]);
+    formData.append("scan_code", data?.scan_code);
+    if (data?.images.length > 0) {
+      formData.append("images", data?.images);
     }
     // if (data?.images.length > 0) {
     //   formData.append("images", data?.images);
@@ -57,7 +56,7 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  const errorMessages = UseErrorMessages();
+  const errorMessages = UseErrorMessages(error);
 
   useEffect(() => {
     if (isLoading) {
