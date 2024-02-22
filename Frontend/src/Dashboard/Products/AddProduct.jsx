@@ -41,7 +41,7 @@ const AddProduct = () => {
     formData.append("warehouse_id", data?.warehouse_id);
     // formData.append("product_quantity", data?.product_quantity);
     formData.append("scan_code", getYear().data?.scan_code);
-    if (data?.images) {
+    if (data?.images.length > 0) {
       formData.append("images", data?.images[0]);
     }
     if (data?.product_desc) {
@@ -229,6 +229,7 @@ const AddProduct = () => {
           <div className="form-control w-full">
             <input
               type="file"
+              multiple="true"
               className="file-input file-input-bordered w-full"
               {...register("images")}
             />

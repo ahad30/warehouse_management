@@ -246,7 +246,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                       <input
                         type="file"
                         className="file-input file-input-bordered w-full"
-                        {...register("product_img")}
+                        {...register("images")}
                       />
                     </div>
                   </div>

@@ -120,10 +120,10 @@ const ProductsList = () => {
       cell: (row) => (
         <img
           src={
-            row?.product_img
-              ? `${
-                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                }/uploads/products/${row?.product_img}`
+            row?.images
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
+                  row?.images
+                }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt="User"

@@ -8,7 +8,7 @@ const brandApi = apiSlice.injectEndpoints({
         method: "POST",
         url: "/brands/store",
         header: {
-          // contentType,
+          "Content-type": "application/json"
         },
         body: data,
       }),
@@ -26,12 +26,15 @@ const brandApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Brands"],
     }),
+    
     updateBrand: builder.mutation({
-      query: (categoryData) => ({
+      query: ({data,id}) => ({
         method: "POST",
-        url: `/brands/update`,
-        // headers: { "Content-Type": "multipart/form-data" },
-        body: categoryData,
+        url: `/brands/update/${id}`,
+        headers: {
+          contentType : "multipart/form-data",
+          },
+        body: data,
       }),
       invalidatesTags: ["Brands"],
     }),
