@@ -1,8 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../../Shared/Navbar/Navbar";
 import DashboardSidebar from "./DashboardSidebar";
 
 const DashboardLayout = () => {
+  const location = useLocation();
+  console.log(location?.pathname);
   return (
     <div className="z-1 font-poppins max-h-screen overflow-hidden">
       <div className=" " style={{ zIndex: 10 }}>
@@ -19,17 +21,30 @@ const DashboardLayout = () => {
 
         <div className="drawer-content ">
           {/* Dashboard content rendered inside the layout */}
-          <div className="max-w-[100vw] lg:max-w-[90vw] overflow-x-hidden max-h-[90vh] overflow-y-scroll scrollbar-5">
+          <div
+            className={`max-w-[100vw] 
+          ${
+            location?.pathname === "/dashboard/pos"
+              ? "lg:max-w-[100vw]"
+              : "lg:max-w-[90vw]"
+          }
+          overflow-x-hidden max-h-[90vh] overflow-y-scroll scrollbar-5`}
+          >
             <Outlet />
             {/* Render the content of the current route */}
           </div>
         </div>
 
-        <div className="drawer-side  shadow-xl  top-auto  ">
-          <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <DashboardSidebar />
-          {/* Render the sidebar component for navigation within the dashboard */}
-        </div>
+        {location?.pathname !== "/dashboard/pos" && (
+          <div className="drawer-side  shadow-xl  top-auto  ">
+            <label
+              htmlFor="dashboard-drawer"
+              className="drawer-overlay"
+            ></label>
+            <DashboardSidebar />
+            {/* Render the sidebar component for navigation within the dashboard */}
+          </div>
+        )}
       </div>
     </div>
   );
