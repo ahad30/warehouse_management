@@ -279,9 +279,9 @@ const AddProduct = () => {
           <div className="form-control  w-full">
             <div className="mb-3">
               <label htmlFor="image">
-                <div className="file-input file-input-bordered w-full px-2 py-3 cursor-pointer">
-                  upload image : {selectedImages.length}
-                </div>
+                <input className="file-input-bordered w-full px-2 py-3 cursor-pointer">
+                  upload image : <span> {selectedImages.length}</span>
+                </input>
               </label>
               <input
                 className="file-input hidden file-input-bordered w-full"
