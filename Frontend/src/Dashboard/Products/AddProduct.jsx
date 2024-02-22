@@ -36,7 +36,7 @@ const AddProduct = () => {
     // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    // formData.append("product_unit", data?.product_unit);
+    formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
@@ -182,7 +182,7 @@ const AddProduct = () => {
               {...register("product_sale_price")}
             />
           </label>
-          {/* <label className="input-group">
+          <label className="input-group">
             <span className="font-semibold">
               Unit<span className="text-red-500 p-0">*</span>
             </span>
@@ -197,7 +197,7 @@ const AddProduct = () => {
               <option value={"kg"}>KG</option>
               <option value={"litre"}>Litre</option>
             </select>
-          </label> */}
+          </label>
           <label className="input-group">
             <span className="font-semibold">
               Brands<span className="text-red-500 p-0">*</span>
