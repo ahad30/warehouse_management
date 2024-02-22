@@ -88,7 +88,6 @@ class BrandController extends Controller
     public function delete($id)
     {
         $brand = Brand::find($id);
-        return $brand;
         if (!$brand) {
             return $this->errorResponse([
                 "status" => false,
@@ -98,6 +97,7 @@ class BrandController extends Controller
 
         $this->deleteImage($brand->brand_img);
         $brand->delete();
+        
         return $this->successResponse(['status' => true, 'message' => "Brand Deleted Successfully"]);
     }
 }
