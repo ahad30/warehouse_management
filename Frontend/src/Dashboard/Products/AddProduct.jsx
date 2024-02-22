@@ -23,7 +23,7 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-  const [scanCode, setScanCode] = useState(1);
+  const [scanCode, setScanCode] = useState("N/A");
   let getYear = () => {
     let currentYear = new Date().getFullYear();
     return currentYear;
@@ -36,14 +36,16 @@ const AddProduct = () => {
     // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    // formData.append("product_unit", data?.product_unit);
+    formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     // formData.append("product_quantity", data?.product_quantity);
-    formData.append("scan_code", getYear().data?.scan_code);
+
+    formData.append("scan_code", data?.scan_code);
     if (data?.images.length > 0) {
-      formData.append("images", data?.images[0]);
+      formData.append("images", data?.images);
+
     }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
@@ -52,7 +54,8 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  const errorMessages = UseErrorMessages();
+  const errorMessages = UseErrorMessages(error);
+ 
 
   useEffect(() => {
     if (isLoading) {
@@ -164,7 +167,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Retail Price"
               className="input input-bordered w-full"
-              required
+            required
               min={0}
               {...register("product_retail_price")}
             />
@@ -177,12 +180,12 @@ const AddProduct = () => {
               type="number"
               placeholder="Sold Price"
               className="input input-bordered w-full"
-              required
+             required
               min={0}
               {...register("product_sale_price")}
             />
           </label>
-          {/* <label className="input-group">
+          <label className="input-group">
             <span className="font-semibold">
               Unit<span className="text-red-500 p-0">*</span>
             </span>
@@ -197,7 +200,7 @@ const AddProduct = () => {
               <option value={"kg"}>KG</option>
               <option value={"litre"}>Litre</option>
             </select>
-          </label> */}
+          </label>
           <label className="input-group">
             <span className="font-semibold">
               Brands<span className="text-red-500 p-0">*</span>
@@ -248,7 +251,7 @@ const AddProduct = () => {
               />
             </label>
             <img
-              src={`https://barcodeapi.org/api/128/${getYear()}${scanCode}`}
+              src={`https://barcodeapi.org/api/128/${scanCode}`}
               className="h-16 float-right my-2"
               alt=""
             />

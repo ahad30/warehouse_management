@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 // import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const AddCategory = () => {
@@ -23,15 +24,13 @@ const AddCategory = () => {
     let formData = new FormData();
     formData.append("category_name", data?.category_name);
 
-    if (data?.image?.length>0) {
-      
+    if (data?.image?.length > 0) {
       formData.append("image", data?.image[0]);
     }
     if (data?.description) {
       formData.append("description", data?.description);
     }
     addCategory(formData);
-
   };
 
   useEffect(() => {
@@ -57,12 +56,14 @@ const AddCategory = () => {
     dispatch,
   ]);
 
+  const errorMessages = UseErrorMessages(error);
+
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid lg:grid-cols-2 gap-5">
-        {/* <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
@@ -86,7 +87,6 @@ const AddCategory = () => {
             <input
               type="file"
               className="input input-bordered w-full py-2"
-               
               {...register("image")}
             />
           </label>
@@ -117,6 +117,15 @@ const AddCategory = () => {
           icon={<BiSolidDuplicate size={20} />}
           isLoading={isLoading}
         />
+
+        {errorMessages?.map((errorMessage, index) => (
+          <p
+            key={index}
+            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+          >
+            {errorMessage}
+          </p>
+        ))}
       </form>
     </DashboardBackground>
   );
