@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Sale extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'invoice_no',
         'customer_id',
