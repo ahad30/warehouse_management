@@ -35,13 +35,13 @@ const AddProduct = () => {
     formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    formData.append("product_unit", data?.product_unit);
+    // formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
-    formData.append("product_quantity", data?.product_quantity);
+    // formData.append("product_quantity", data?.product_quantity);
     formData.append("scan_code", getYear().data?.scan_code);
-    if (data?.images) {
+    if (data?.images.length > 0) {
       formData.append("images", data?.images[0]);
     }
     if (data?.product_desc) {
@@ -144,7 +144,7 @@ const AddProduct = () => {
               ))}
             </select>
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Quantity<span className="text-red-500 p-0">*</span>
             </span>
@@ -156,7 +156,7 @@ const AddProduct = () => {
               min={1}
               {...register("product_quantity")}
             />
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Retail<span className="text-red-500 p-0">*</span>
@@ -183,7 +183,7 @@ const AddProduct = () => {
               {...register("product_sale_price")}
             />
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Unit<span className="text-red-500 p-0">*</span>
             </span>
@@ -198,7 +198,7 @@ const AddProduct = () => {
               <option value={"kg"}>KG</option>
               <option value={"litre"}>Litre</option>
             </select>
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Brands<span className="text-red-500 p-0">*</span>
@@ -229,6 +229,7 @@ const AddProduct = () => {
           <div className="form-control w-full">
             <input
               type="file"
+              multiple="true"
               className="file-input file-input-bordered w-full"
               {...register("images")}
             />

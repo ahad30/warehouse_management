@@ -28,8 +28,6 @@ class StoreProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'nullable|exists:brands,id',
             'product_name' => ['required', 'string', 'max:255'],
-            'product_quantity' => ['integer', 'required'],
-            'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
             'images' => ['required', 'max:5000', 'mimes:jpg,png,jpeg'],

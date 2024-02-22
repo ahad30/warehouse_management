@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\SaleItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Support\Str;
 class Product extends Model
 {
     use HasFactory;
