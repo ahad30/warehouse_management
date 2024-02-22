@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'category_name',
         'image',
