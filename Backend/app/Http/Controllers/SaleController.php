@@ -103,7 +103,9 @@ class SaleController extends Controller
         $customers = Customer::all();
         $productsQuery = Product::where('is_sold',false);
 
-        // Filtering products based on brand and category
+        // Filtering products based on brand and categor
+        
+        y
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
         }

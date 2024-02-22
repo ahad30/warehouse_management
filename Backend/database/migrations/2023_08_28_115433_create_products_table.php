@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('warehouse_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
-            $table->string('product_name');
+            $table->string(' ');
             $table->string('unique_code')->unique();
             $table->string('scan_code')->unique();
             $table->string('product_unit')->nullable();
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('brand_id')->references('id')->on('brands');
+            $table->string('is_sold')->default(false);
             $table->timestamps();
         });
     }
