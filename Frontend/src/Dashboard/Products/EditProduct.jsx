@@ -86,7 +86,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("store_id", data?.store_id);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
-    formData.append("id", product.id);
+    formData.append("id", product?.id);
     if (data?.product_img?.length > 0) {
       formData.append("product_img", data?.product_img[0]);
     }
