@@ -41,7 +41,7 @@ const AddProduct = () => {
     formData.append("warehouse_id", data?.warehouse_id);
     // formData.append("product_quantity", data?.product_quantity);
     formData.append("scan_code", getYear().data?.scan_code);
-    if (data?.images.length > 0) {
+    if (data?.images) {
       formData.append("images", data?.images[0]);
     }
     if (data?.product_desc) {
@@ -51,9 +51,8 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  // console.log(isLoading, isError, error, isSuccess, data);
-
-  const errorMessages = UseErrorMessages();
+  const errorMessages = UseErrorMessages(error);
+ 
 
   useEffect(() => {
     if (isLoading) {
@@ -165,7 +164,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Retail Price"
               className="input input-bordered w-full"
-              required
+            required
               min={0}
               {...register("product_retail_price")}
             />
@@ -178,7 +177,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Sold Price"
               className="input input-bordered w-full"
-              required
+             required
               min={0}
               {...register("product_sale_price")}
             />
