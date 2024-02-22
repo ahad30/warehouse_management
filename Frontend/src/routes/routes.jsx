@@ -41,6 +41,7 @@ import ImportExport from "../Dashboard/Import/ImportExport";
 import PermissionDenied from "../pages/Errors/PermissionDenied";
 import HistoryList from "../Dashboard/History/HistoryList";
 import AddHistory from "../Dashboard/History/addHistory";
+import Pos from "../Dashboard/Pos/Pos";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -276,6 +277,14 @@ const routes = createBrowserRouter([
             element: (
               <MSACRoute>
                 <NewInvoice />
+              </MSACRoute>
+            ),
+          },
+          {
+            path: "/dashboard/pos", // Create a new invoice
+            element: (
+              <MSACRoute>
+              <Pos></Pos>
               </MSACRoute>
             ),
           },
