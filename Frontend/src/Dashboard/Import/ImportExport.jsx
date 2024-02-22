@@ -33,12 +33,9 @@ const ImportExport = () => {
 
           <div className="flex mt-3 mb-2">
             <div className="w-full">
-              {/* <label htmlFor="voice-search" className="sr-only">
-                Search
-              </label> */}
               <input
                 type="file"
-                className="file-input bg-[#e74c3c] w-full text-white "
+                className="file-input bg-[#e74c3c] w-full text-white"
                 required
               />
             </div>

@@ -279,9 +279,9 @@ const AddProduct = () => {
           <div className="form-control  w-full">
             <div className="mb-3">
               <label htmlFor="image">
-                <input className="file-input-bordered w-full px-2 py-3 cursor-pointer">
-                  upload image : <span> {selectedImages.length}</span>
-                </input>
+                <div className="border w-full px-2 py-3 cursor-pointer rounded">
+                  Upload Image : {selectedImages.length}
+                </div>
               </label>
               <input
                 className="file-input hidden file-input-bordered w-full"
@@ -315,14 +315,6 @@ const AddProduct = () => {
               ))}
             </div>
           )}
-          {/* <div className="form-control w-full">
-            <input
-              type="file"
-              multiple="true"
-              className="file-input file-input-bordered w-full"
-              {...register("images")}
-            />
-          </div> */}
         </div>
         <SubmitButton
           title={isLoading ? "Saving Product..." : "Save Product"}
