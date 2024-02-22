@@ -2,17 +2,17 @@ import apiSlice from "../API/apiSlice";
 
 const historyApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    // addStore: build.mutation({
-    //   query: (data) => ({
-    //     method: "POST",
-    //     url: "/warehouses",
-    //     header: {
-    //       // "Content-type": "application/json"
-    //     },
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["Stores", "Products"],
-    // }),
+    addHistory: build.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: "/productshift/store",
+        header: {
+          // "Content-type": "application/json"
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Stores", "Products"],
+    }),
 
     getHistory: build.query({
       query: () => ({
@@ -24,7 +24,7 @@ const historyApi = apiSlice.injectEndpoints({
 });
 
 export const {
-//   useAddStoreMutation,
+  useAddHistoryMutation,
   useGetHistoryQuery,
 //   useUpdateStoreMutation,
 //   useDeleteStoreMutation,

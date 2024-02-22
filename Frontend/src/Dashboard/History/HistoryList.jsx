@@ -7,7 +7,7 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import DataTable from "react-data-table-component";
 import { useGetHistoryQuery } from "../../features/History/historyApi";
 
-const History = () => {
+const HistoryList = () => {
   // const [modalIsOpen, setModalIsOpen] = useState(false);
   // const [category, setCategory] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +25,7 @@ const History = () => {
     setFilterData(historiesData?.data);
   }, [historiesData?.data]);
 
-// console.log(categoriesData);
+// console.log(historiesData);
   
 
 
@@ -86,8 +86,8 @@ const History = () => {
         </TableHeadingTitle>
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
-          btnTitle={"Add Category"}
-          btnPath={"/dashboard/category/add"}
+          btnTitle={"Transfer Product"}
+          btnPath={"/dashboard/history/addHistory"}
           btnIcon={<BiSolidDuplicate size={20} />}
           // setFiltering={setFiltering}
         />
@@ -113,5 +113,5 @@ const History = () => {
   );
 };
 
-export default History;
+export default HistoryList;
 
