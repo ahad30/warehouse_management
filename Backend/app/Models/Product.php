@@ -7,14 +7,14 @@ use App\Models\Category;
 use App\Models\SaleItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Support\Str;
 class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
+        "warehouse_id",
         "category_id",
         "brand_id",
-        "warehouse_id",
         "product_name",
         "unique_code",
         'scan_code',

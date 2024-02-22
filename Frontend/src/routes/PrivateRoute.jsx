@@ -9,6 +9,7 @@ const PrivateRoute = ({ children }) => {
   let token = localStorage.getItem("access_token");
 
   // If the access token is not present, redirect to the login page
+
   if (!token) {
     return (
       <Navigate to={"/login"} state={{ from: location }} replace></Navigate>

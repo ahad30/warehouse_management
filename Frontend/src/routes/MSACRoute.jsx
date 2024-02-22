@@ -13,7 +13,7 @@ const MSACRoute = ({ children }) => {
     return <UseLoading />;
   }
   if (
-    user?.get_role?.role == "admin" ||
+    user?.get_role?.role == "Admin" ||
     user?.get_role?.role == "manager" ||
     user?.get_role?.role == "sales_representative" ||
     user?.get_role?.role == "accountant" ||

@@ -24,23 +24,22 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse_id' => 'required|exists:warehouses, id',
-            'category_id' => 'required|exists:categories, id',
-            'brand_id' => 'nullable|exists:brands, id',
+            'warehouse_id' => 'required|exists:warehouses,id',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
             'product_name' => ['required', 'string', 'max:255'],
-            'product_quantity' => ['integer', 'required'],
-            'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
             'images' => ['required', 'max:5000', 'mimes:jpg,png,jpeg'],
+            'scan_code' => ['required','unique:products,scan_code'],
         ];
     }
     public function failedValidation(Validation $validator)
     {
         throw new HttpResponseException(response()->json([
             'status'   => false,
-            'message'   => 'Validation errors',
-            'errors'      => $validator->errors()
+            'message'  => 'Validation errors',
+            'errors'   => $validator->errors()
         ], 400));
     }
 }

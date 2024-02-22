@@ -11,7 +11,7 @@ const ManagerRoute = ({ children }) => {
     return <UseLoading />;
   }
 
-  if (user?.get_role?.role == "manager" || user?.get_role?.role == "admin") {
+  if (user?.get_role?.role == "manager" || user?.get_role?.role == "Admin") {
     return children;
   } else {
     // toast.error("Sorry! You have not Permitted!", { id: 1 });

@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('unique_code')->unique();
             $table->string('scan_code')->unique();
-            $table->string('product_unit')->nullable();
             $table->float('product_retail_price');
             $table->float('product_sale_price');
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null')->nullable();
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->string('is_sold')->default(false);
             $table->timestamps();
         });
     }

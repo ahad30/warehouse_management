@@ -31,8 +31,8 @@ const BrandsList = () => {
   } = useGetBrandsQuery();
 
   useEffect(() => {
-    setFilterData(brandsData?.brands);
-  }, [brandsData?.brands, brandsData]);
+    setFilterData(brandsData?.data);
+  }, [brandsData?.data, brandsData]);
 
   const [
     deleteBrand,
@@ -97,7 +97,7 @@ const BrandsList = () => {
             row.brand_img
               ? `${
                   import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                }/uploads/brands/${row?.brand_img}`
+                }${row?.brand_img}`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt="User"
@@ -182,6 +182,7 @@ const BrandsList = () => {
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
+        
       </DashboardBackground>
     </>
   );

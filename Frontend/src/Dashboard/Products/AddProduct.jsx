@@ -3,7 +3,7 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
 import { useAddProductMutation } from "../../features/Product/productApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
@@ -23,21 +23,29 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-
+  const [scanCode, setScanCode] = useState("N/A");
+  let getYear = () => {
+    let currentYear = new Date().getFullYear();
+    return currentYear;
+  };
   const onSubmit = (data) => {
+    console.log(data);
     const formData = new FormData();
 
     formData.append("product_name", data?.product_name);
-    formData.append("product_code", data?.product_code);
+    // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
     formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
-    formData.append("product_quantity", data?.product_quantity);
-    if (data?.product_img) {
-      formData.append("product_img", data?.product_img[0]);
+    // formData.append("product_quantity", data?.product_quantity);
+
+    formData.append("scan_code", data?.scan_code);
+    if (data?.images.length > 0) {
+      formData.append("images", data?.images);
+
     }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
@@ -46,9 +54,8 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  // console.log(isLoading, isError, error, isSuccess, data);
-
-  const errorMessages = UseErrorMessages();
+  const errorMessages = UseErrorMessages(error);
+ 
 
   useEffect(() => {
     if (isLoading) {
@@ -75,8 +82,6 @@ const AddProduct = () => {
     dispatch,
   ]);
 
-  console.log(isLoading, isError, error, isSuccess, data);
-
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Product</h2>
@@ -94,7 +99,7 @@ const AddProduct = () => {
               {...register("product_name")}
             />
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Code<span className="text-red-500 p-0">*</span>
             </span>
@@ -105,13 +110,13 @@ const AddProduct = () => {
               required
               {...register("product_code")}
             />
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
             <select
-            // onChange={()=>}
+              // onChange={()=>}
               className="select select-bordered w-full"
               required
               {...register("warehouse_id")}
@@ -134,14 +139,14 @@ const AddProduct = () => {
               {...register("category_id")}
             >
               <option value={""}>Select Category</option>
-              {categoryData?.categories?.map((category, idx) => (
-                <option key={idx} value={category?.id}>
-                  {category?.category_name}
+              {categoryData?.data?.map((data, idx) => (
+                <option key={idx} value={data?.id}>
+                  {data?.category_name}
                 </option>
               ))}
             </select>
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Quantity<span className="text-red-500 p-0">*</span>
             </span>
@@ -153,7 +158,7 @@ const AddProduct = () => {
               min={1}
               {...register("product_quantity")}
             />
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Retail<span className="text-red-500 p-0">*</span>
@@ -162,7 +167,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Retail Price"
               className="input input-bordered w-full"
-              required
+            required
               min={0}
               {...register("product_retail_price")}
             />
@@ -175,7 +180,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Sold Price"
               className="input input-bordered w-full"
-              required
+             required
               min={0}
               {...register("product_sale_price")}
             />
@@ -206,15 +211,14 @@ const AddProduct = () => {
               {...register("brand_id")}
             >
               <option value={""}>Select Brand</option>
-              {brandsData?.brands?.map((brand) => (
-                <option value={brand?.id} key={brand?.id}>
-                  {brand?.brand_name}
+              {brandsData?.data?.map((data) => (
+                <option value={data?.id} key={data?.id}>
+                  {data?.brand_name}
                 </option>
               ))}
             </select>
           </label>
 
-         
           <label className="input-group">
             <span className="font-semibold">Description</span>
             <input
@@ -227,8 +231,29 @@ const AddProduct = () => {
           <div className="form-control w-full">
             <input
               type="file"
+              multiple="true"
               className="file-input file-input-bordered w-full"
-              {...register("product_img")}
+              {...register("images")}
+            />
+          </div>
+          <div>
+            <label className="input-group">
+              <span className="font-semibold text-sm">scan code </span>
+              <input
+                type="number"
+                placeholder="Scan Code"
+                className="input input-bordered w-full"
+                {...register("scan_code")}
+                onKeyUp={(e) => {
+                  setScanCode(e.target.value);
+                  console.log(e.target);
+                }}
+              />
+            </label>
+            <img
+              src={`https://barcodeapi.org/api/128/${scanCode}`}
+              className="h-16 float-right my-2"
+              alt=""
             />
           </div>
         </div>
