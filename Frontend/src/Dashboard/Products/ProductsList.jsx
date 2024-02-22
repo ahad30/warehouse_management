@@ -120,10 +120,10 @@ const ProductsList = () => {
       cell: (row) => (
         <img
           src={
-            row?.images
-              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
-                  row?.images
-                }`
+            row?.product_img
+              ? `${
+                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                }/uploads/products/${row?.product_img}`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt="User"
@@ -135,10 +135,10 @@ const ProductsList = () => {
       name: "Name",
       selector: (row) => <>{row?.product_name}</>,
     },
-    {
-      name: "Code",
-      selector: (row) => <>{row?.unique_code}</>,
-    },
+    // {
+    //   name: "Code",
+    //   selector: (row) => <>{row?.unique_code}</>,
+    // },
     {
       name: "Retail price",
       selector: (row) => <>{row?.product_retail_price}</>,
