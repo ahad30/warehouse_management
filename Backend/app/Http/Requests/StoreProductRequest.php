@@ -31,7 +31,7 @@ class StoreProductRequest extends FormRequest
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
             'images' => ['required', 'max:5000', 'mimes:jpg,png,jpeg'],
-            'scan_code' => ['required','unique']
+            'scan_code' => ['required','unique:products,scan_code'],
         ];
     }
     public function failedValidation(Validation $validator)
