@@ -97,6 +97,7 @@ class BrandController extends Controller
 
         $this->deleteImage($brand->brand_img);
         $brand->delete();
+        
         return $this->successResponse(['status' => true, 'message' => "Brand Deleted Successfully"]);
     }
 }

@@ -29,10 +29,11 @@ const AddProduct = () => {
     return currentYear;
   };
   const onSubmit = (data) => {
+    console.log(data);
     const formData = new FormData();
 
     formData.append("product_name", data?.product_name);
-    formData.append("product_code", data?.product_code);
+    // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
     // formData.append("product_unit", data?.product_unit);
@@ -96,7 +97,7 @@ const AddProduct = () => {
               {...register("product_name")}
             />
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Code<span className="text-red-500 p-0">*</span>
             </span>
@@ -107,7 +108,7 @@ const AddProduct = () => {
               required
               {...register("product_code")}
             />
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Warehouse<span className="text-red-500 p-0">*</span>
