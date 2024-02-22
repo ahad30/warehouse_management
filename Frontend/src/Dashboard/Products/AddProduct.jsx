@@ -23,7 +23,7 @@ const AddProduct = () => {
   const { data: storesData } = useGetStoresQuery();
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
-  const [scanCode, setScanCode] = useState(1);
+  const [scanCode, setScanCode] = useState("N/A");
   let getYear = () => {
     let currentYear = new Date().getFullYear();
     return currentYear;
@@ -41,9 +41,9 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     // formData.append("product_quantity", data?.product_quantity);
-    formData.append("scan_code", getYear().data?.scan_code);
+    formData.append("scan_code", data?.scan_code);
     if (data?.images.length > 0) {
-      formData.append("images", data?.images[0]);
+      formData.append("images", data?.images);
     }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
@@ -248,7 +248,7 @@ const AddProduct = () => {
               />
             </label>
             <img
-              src={`https://barcodeapi.org/api/128/${getYear()}${scanCode}`}
+              src={`https://barcodeapi.org/api/128/${scanCode}`}
               className="h-16 float-right my-2"
               alt=""
             />
