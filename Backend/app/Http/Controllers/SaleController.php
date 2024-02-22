@@ -98,14 +98,9 @@ class SaleController extends Controller
     // Create - Generate and store invoices
     public function create( Request $request): Response
     {
-        // Retrieving product, customer, and company info
-        $company_info = CompanyInfo::latest()->first();
-        $customers = Customer::all();
+    
         $productsQuery = Product::where('is_sold',false);
 
-        // Filtering products based on brand and categor
-        
-        y
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
         }
@@ -114,22 +109,23 @@ class SaleController extends Controller
             $productsQuery->where('category_id', $request->category_id);
         }
 
-//         if($request->warehouse_id!=null){
-//             $productsQuery->where('warehouse', $request->warehouse_id);
-            
-            
-// }
+        if($request->warehouse_id!=null){
+            $productsQuery->where('warehouse_id', $request->warehouse_id);
+        }
+
+        if($request->scan_code != null)
+        {
+            $productsQuery->where('scan_code', $request->scan_code);
+
+        }
 
 
-        $products = $productsQuery->with('getCategory', 'getBrand', 'getStore')->get();
+        $products = $productsQuery->paginate(15);
 
         return response()->json([
             'status' => true,
-            'data' => [
-                'company_info' => $company_info,
-                'customers' => $customers,
-                'products' => $products,
-            ],
+            'data' =>  $products ,
+     
         ]);
     }
 
