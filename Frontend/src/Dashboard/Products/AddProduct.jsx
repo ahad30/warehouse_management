@@ -43,7 +43,7 @@ const AddProduct = () => {
     // formData.append("product_quantity", data?.product_quantity);
     formData.append("scan_code", data?.scan_code);
     if (data?.images.length > 0) {
-      formData.append("images", data?.images[0]);
+      formData.append("images", data?.images);
     }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
