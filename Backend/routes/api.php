@@ -215,6 +215,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
+
         ->prefix('/product')->group(function () {
             Route::get('/search', 'index');
         });

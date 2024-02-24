@@ -11,19 +11,17 @@ class SearchProductController extends Controller
 
     public function index(Request $request)
     {
-        
-        $product = Product::all();
-
-        if($request->scan_code != null )
-        {
-            $product = Product::where('scan_code', $request->scan_code)->get();
+        $product = Product::where('scan_code', $request->scan_code)->with('history')->latest()->first();
+        if (!$product) {
+            return response()->json([
+                'status' => true,
+                'data' =>  [],
+                'message' => 'Product not found',
+            ], 200);
         }
-    
-       return response()->json([
-        'status' => true,
-        'data' =>  $product,
-         ]);
-
+        return response()->json([
+            'status' => true,
+            'data' =>  $product,
+        ], 200);
     }
-
 }
