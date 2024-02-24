@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import ImportTable from "./ImportTable";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
-import { useAddExportMutation } from "../../features/Export/ExportApi";
-import { useGetProductsQuery } from "../../features/Product/productApi";
+import { useSetExportMutation } from "../../features/Export/ExportApi";
+
+// import { useGetProductsQuery } from "../../features/Product/productApi";
 
 const ImportExport = () => {
   const [filterData, setFilterData] = useState([]);
@@ -13,13 +15,14 @@ const ImportExport = () => {
   // const [date, setDate] = useState(null);
   const { data: settingsData } = useGetDefaultSettingsQuery();
 
-  const [addExport, { isLoading, isError, error, isSuccess, data }] =
-    useAddExportMutation();
-  const {
-    data: productsData,
-    isLoading: productsIsLoading,
-    isSuccess: productsIsSuccess,
-  } = useGetProductsQuery({ pageNumber: 0 });
+  const [setExport, { isLoading, isError, error, isSuccess, data }] =
+    useSetExportMutation();
+
+  // const {
+  //   data: productsData,
+  //   isLoading: productsIsLoading,
+  //   isSuccess: productsIsSuccess,
+  // } = useGetProductsQuery({ pageNumber: 0 });
   // console.log(productsData);
   // const handleStartDate = (date) => {
   //   setStartDate(date);
@@ -30,9 +33,13 @@ const ImportExport = () => {
   //   setEndDate(date);
   //   setDate(null);
   // };
+
   const handleSubmit = async () => {
-    console.log("exporting");
-    console.log(productsData?.products?.data);
+    setExport();
+    console.log();
+
+    // console.log("exporting");
+    // console.log(productsData?.products?.data);
     // addExport();
     // const url = window.URL.createObjectURL(
     //   new Blob([productsData?.products?.data])
@@ -43,6 +50,7 @@ const ImportExport = () => {
     // document.body.appendChild(link);
     // link.click();
   };
+  const [dynamicFileLink, setDynamicFileLink] = useState("");
 
   return (
     <DashboardBackground>
@@ -96,6 +104,14 @@ const ImportExport = () => {
               </div>
               <div className="flex gap-10 ">
                 <div className="m-3">
+                  <a
+                    href={data?.url}
+                    // target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                  >
+                    Download File
+                  </a>
                   <button
                     onClick={handleSubmit}
                     type="submit"

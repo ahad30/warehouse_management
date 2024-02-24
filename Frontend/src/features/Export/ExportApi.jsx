@@ -2,18 +2,18 @@ import apiSlice from "../API/apiSlice";
 
 const ExportApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    addExport: build.mutation({
+    setExport: build.mutation({
       query: (data) => ({
         method: "POST",
-        url: "/products",
+        url: "/export",
         header: {
           "Content-type": "application/json",
         },
-        // body: data,
+        body: data,
       }),
       invalidatesTags: ["Stores", "Products"],
     }),
   }),
 });
 
-export const { useAddExportMutation } = ExportApi;
+export const { useSetExportMutation } = ExportApi;
