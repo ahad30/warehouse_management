@@ -29,7 +29,7 @@ jobs:
         protocol: ftps
         server-dir: Backend/app/Traits/
         local-dir: Backend/app/Traits/
-
+        dry-run: true
     - name: Install Dependencies 👨‍💻
       run: |
         cd Backend
