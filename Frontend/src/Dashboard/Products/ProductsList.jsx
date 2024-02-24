@@ -121,10 +121,10 @@ const ProductsList = () => {
         <img
           src={
             row?.product_img
-              // ? `${
-              //     import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-              //   }/${row?.product_img}`
-              // : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+            // ? `${
+            //     import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+            //   }/${row?.product_img}`
+            // : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt={row?.product_img}
           className=" w-10 h-auto rounded-lg"
@@ -135,10 +135,11 @@ const ProductsList = () => {
       name: "Name",
       selector: (row) => <>{row?.product_name}</>,
     },
-    // {
-    //   name: "Code",
-    //   selector: (row) => <>{row?.unique_code}</>,
-    // },
+    {
+      name: "Code",
+      selector: (row) => <>{row?.scan_code}</>,
+      minWidth: "180px",
+    },
     {
       name: "Retail price",
       selector: (row) => <>{row?.product_retail_price}</>,
@@ -234,7 +235,6 @@ const ProductsList = () => {
     }
   };
 
-
   return (
     <>
       <DashboardBackground>
@@ -259,16 +259,15 @@ const ProductsList = () => {
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
           filterData?.length > 0 && ( */}
-        <div >
+        <div>
           <DataTable
             columns={columns}
-            data={filterData?.data}            
+            data={filterData?.data}
             keyField="id"
             responsive={false}
           />
           <br></br>
           <Paginator links={filterData?.links} />
-        
         </div>
         {/* ) */}
         {/* )} */}
