@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('from_warehouse_id');
-            $table->unsignedBigInteger('to_warehouse_id');
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('from_warehouse_id')->constrained('warehouses');
+            $table->foreignId('to_warehouse_id')->constrained('warehouses');
+            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

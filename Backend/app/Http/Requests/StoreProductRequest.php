@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MultipleImageRule;
 use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -30,8 +31,9 @@ class StoreProductRequest extends FormRequest
             'product_name' => ['required', 'string', 'max:255'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
-            'images' => ['required', 'max:5000', 'mimes:jpg,png,jpeg'],
-            'scan_code' => ['required','unique:products,scan_code'],
+            'images' => ['required'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'scan_code' => ['required', 'unique:products,scan_code'],
         ];
     }
     public function failedValidation(Validation $validator)

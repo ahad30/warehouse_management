@@ -15,8 +15,8 @@ class ProductTableSeeder extends Seeder
     public function run(): void
     {
         $products = [];
-        for ($i = 0; $i < 8000; $i++) {
-          $products[]=[
+        for ($i = 0; $i < 5000; $i++) {
+            $products[] = [
                 'warehouse_id' => 1,
                 'category_id' => 1, // Replace with the actual category ID
                 'brand_id' => 1, // Replace with the actual brand ID
