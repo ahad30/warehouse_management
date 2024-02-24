@@ -7,19 +7,20 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
-use App\Http\Controllers\Api\UserProfileController;
-use App\Http\Controllers\ProductReportController;
-use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ImportExportController;
 use App\Http\Controllers\InstallationController;
-use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\ProductReportController;
+use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductShiftingController;
-use App\Http\Controllers\HistoryController;
 
 
 
@@ -204,3 +205,5 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     ->prefix('/history')->group(function () {
         Route::get('/index', 'Histories');
     });
+
+    Route::post('/import',[ImportExportController::class,'import']);
