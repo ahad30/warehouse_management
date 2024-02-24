@@ -34,7 +34,7 @@ const DashboardSidebar = () => {
     {
       name: "Search",
       icon: <IoSearch size={25} />,
-      path: "/dashboard/customer",
+      path: "/dashboard/product/search",
     },
     {
       name: "Warehouse",

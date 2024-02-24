@@ -133,9 +133,9 @@ const StoresList = () => {
         <img
           src={
             row?.image
-              ? `${
-                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                }${row?.image}`
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
+                  row?.image
+                }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           className="w-10 h-auto rounded-full"
@@ -186,7 +186,7 @@ const StoresList = () => {
     <>
       <DashboardBackground>
         <TableHeadingTitle>
-          Warehouse: {storesData?.stores?.length}
+          Warehouse: {storesData?.data?.length}
         </TableHeadingTitle>
 
         <SearchAndAddBtn

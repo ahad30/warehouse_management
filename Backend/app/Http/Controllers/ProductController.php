@@ -34,7 +34,7 @@ class ProductController extends Controller
             $query = $query->where('scan_code', $request->scan_code);
         }
 
-        $data = $query->with('getCategory:id', 'warehouse:id,name')->latest()->paginate(15);
+        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name')->latest()->paginate(15);
 
         return response()->json([
             'status' => true,
@@ -92,8 +92,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->errorResponse([
-                'status' => false,
-                'message' => "something went wrong" . $e->getMessage()
+                'message' => "something went wrong",
             ]);
         }
     }

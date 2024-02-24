@@ -45,7 +45,7 @@ class CategoryRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'status'   => false,
-            'message'   => 'Please Select Image',
+            'message'   => 'Validation Error',
             'errors'      => $validator->errors()
         ], 400));
     }
