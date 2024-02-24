@@ -189,38 +189,38 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::middleware('verifyAdmin')->apiResource('warehouses', WarehouseController::class);
 
 
-    
-/* -------------------------------------------------------------------------- */
-/*                               Product Shifting  route                            */
-/* -------------------------------------------------------------------------- */
 
-Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductShiftingController::class)
-->prefix('/productshift')->group(function () {
-    Route::post('/store', 'ProductShiftingStore');
-    Route::get('/index', 'ProductShiftingIndex');
-});
+    /* -------------------------------------------------------------------------- */
+    /*                               Product Shifting  route                            */
+    /* -------------------------------------------------------------------------- */
 
-/* -------------------------------------------------------------------------- */
-/*                              HistoryController  route                            */
-/* -------------------------------------------------------------------------- */
+    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductShiftingController::class)
+        ->prefix('/productshift')->group(function () {
+            Route::post('/store', 'ProductShiftingStore');
+            Route::get('/index', 'ProductShiftingIndex');
+        });
 
-Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(HistoryController::class)
-->prefix('/history')->group(function () {
-    Route::get('/index', 'Histories');
-});
+    /* -------------------------------------------------------------------------- */
+    /*                              HistoryController  route                            */
+    /* -------------------------------------------------------------------------- */
+
+    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(HistoryController::class)
+        ->prefix('/history')->group(function () {
+            Route::get('/index', 'Histories');
+        });
 
 
-/* -------------------------------------------------------------------------- */
-/*                              Search product route                            */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                              Search product route                            */
+    /* -------------------------------------------------------------------------- */
 
-Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
-->prefix('/product')->group(function () {
-    Route::get('/search', 'index');
-});
+    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
+        ->prefix('/product')->group(function () {
+            Route::get('/search', 'index');
+        });
 
-    Route::post('/import',[ImportExportController::class,'import']);
-    Route::post('/export',[ImportExportController::class,'export']);
+    Route::post('/import', [ImportExportController::class, 'import']);
+    Route::post('/export', [ImportExportController::class, 'export']);
 
 });
 
