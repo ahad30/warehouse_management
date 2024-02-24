@@ -21,7 +21,7 @@ const SuccessMessage = ({ message }) => {
           </div>
           <div className="self-center ml-3">
             <span className="text-green-600 font-semibold">Success</span>
-            <p className="text-green-600 mt-1">{message}</p>
+            {/* <p className="text-green-600 mt-1">{message}</p> */}
           </div>
         </div>
         <button className="self-start text-green-500">
