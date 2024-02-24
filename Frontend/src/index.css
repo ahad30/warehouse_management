@@ -43,6 +43,30 @@ body {
   color: red;
 }
 
+/* .wrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+  background-color: #aaa; /* or add it to the track */
+/* } */
+
+/* Add a thumb */
+/* .wrapper::-webkit-scrollbar-thumb {
+  background: #000;
+/* } */
+
+.wrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+  background-color: #aaa; /* or add it to the track */
+ 
+}
+
+/* Add a thumb */
+.wrapper::-webkit-scrollbar-thumb {
+  background: #03A9F4;
+
+}
+
 /* .sideBar a.active {
   color: red;
 } */
