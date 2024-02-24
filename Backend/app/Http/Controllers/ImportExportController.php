@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use 
-\Http\Response;
+use
+    \Http\Response;
 use App\Exports\ProductsExport;
 use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -20,14 +20,21 @@ class ImportExportController extends Controller
     /**
      * Export product CSV file
      */
-    public function export(){
-        try{
-           return Excel::download(new ProductsExport, 'products.csv');
-        }catch(\Exception $e){
+    public function export()
+    {
+        try {
+            Excel::store(new ProductsExport, 'public/products.csv');
+            // Generate the link to the file
+            $url = asset('storage/products.csv');
+            return response()->json([
+                'status' => true,
+                'url' => $url
+            ], 200);
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => 'something went wrong',
-            ],400);
+                'message' => "something went wrong",
+            ], 400);
         }
     }
 }
