@@ -214,11 +214,16 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                              Search product route                            */
     /* -------------------------------------------------------------------------- */
 
-    Route::controller(SearchProductController::class)
+    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
+
         ->prefix('/product')->group(function () {
             Route::get('/search', 'index');
         });
 
     Route::post('/import', [ImportExportController::class, 'import']);
-    Route::get('/export', [ImportExportController::class, 'export']);
+    Route::post('/export', [ImportExportController::class, 'export']);
+
 });
+
+
+
