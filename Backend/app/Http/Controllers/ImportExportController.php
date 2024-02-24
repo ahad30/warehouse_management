@@ -23,9 +23,11 @@ class ImportExportController extends Controller
     public function export(){
         try{
            return Excel::download(new ProductsExport, 'products.csv');
-            // return "ok";
         }catch(\Exception $e){
-            return $e->getMessage();
+            return response()->json([
+                'status' => false,
+                'message' => 'something went wrong',
+            ],400);
         }
     }
 }
