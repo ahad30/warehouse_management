@@ -293,15 +293,14 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                 </form>
               </div>
               {/* Display error messages */}
-              {updateIsError &&
-                errorMessages?.map((errorMessage, index) => (
-                  <p
-                    key={index}
-                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                  >
-                    {errorMessage}
-                  </p>
-                ))}
+              {errorMessages?.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>

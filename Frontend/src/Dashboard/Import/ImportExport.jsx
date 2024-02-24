@@ -31,14 +31,11 @@ const ImportExport = () => {
             <span className="hover:underline-offset-8 ">Import :</span>
           </p>
 
-          <div className="flex mt-2">
+          <div className="flex mt-3 mb-2">
             <div className="w-full">
-              <label htmlFor="voice-search" className="sr-only">
-                Search
-              </label>
               <input
                 type="file"
-                className="file-input bg-[#e74c3c] w-full text-white "
+                className="file-input bg-[#e74c3c] w-full text-white"
                 required
               />
             </div>
@@ -49,11 +46,12 @@ const ImportExport = () => {
               Import
             </button>
           </div>
-          <div className="mt-5 border bg-[#F3F4F6] rounded">
+          <label className="font-bold text-lg mt-5 ">Export :</label>
+          <div className="mt-2 border bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
               <div className="flex">
-                <label className="font-bold text-lg  p-5">Export :</label>
-                <div className="flex space-x-2 items-center ">
+                {/* <label className="font-bold text-lg  p-5">Export :</label> */}
+                <div className="flex space-x-2 items-center m-1">
                   <button className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white">
                     All
                   </button>
