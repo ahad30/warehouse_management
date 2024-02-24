@@ -16,6 +16,10 @@ class ImportExportController extends Controller
     public function import(Request $request)
     {
         Excel::import(new ProductsImport,  $request->file('file'));
+        return response()->json([
+            'success' => true,
+            'message' => "Imported successfully"
+        ]);
     }
     /**
      * Export product CSV file
