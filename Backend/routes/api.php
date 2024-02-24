@@ -21,7 +21,6 @@ use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductShiftingController;
-use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\SearchProductController;
 
 
