@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\SaleItem;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -46,8 +47,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class);
     }
-    public function history()
+    public function histories()
     {
         return $this->hasMany(History::class, 'product_id', 'id');
     }
+  
 }
