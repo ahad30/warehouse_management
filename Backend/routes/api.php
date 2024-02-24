@@ -187,27 +187,27 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
     Route::middleware('verifyAdmin')->apiResource('warehouses', WarehouseController::class);
-});
 
 
+    
 /* -------------------------------------------------------------------------- */
 /*                               Product Shifting  route                            */
 /* -------------------------------------------------------------------------- */
 
 Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductShiftingController::class)
-    ->prefix('/productshift')->group(function () {
-        Route::post('/store', 'ProductShiftingStore');
-        Route::get('/index', 'ProductShiftingIndex');
-    });
+->prefix('/productshift')->group(function () {
+    Route::post('/store', 'ProductShiftingStore');
+    Route::get('/index', 'ProductShiftingIndex');
+});
 
 /* -------------------------------------------------------------------------- */
 /*                              HistoryController  route                            */
 /* -------------------------------------------------------------------------- */
 
 Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(HistoryController::class)
-    ->prefix('/history')->group(function () {
-        Route::get('/index', 'Histories');
-    });
+->prefix('/history')->group(function () {
+    Route::get('/index', 'Histories');
+});
 
 
 /* -------------------------------------------------------------------------- */
@@ -215,8 +215,13 @@ Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(
 /* -------------------------------------------------------------------------- */
 
 Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
-    ->prefix('/product')->group(function () {
-        Route::get('/search', 'index');
-    });
+->prefix('/product')->group(function () {
+    Route::get('/search', 'index');
+});
+
+
+});
+
+
     Route::post('/import',[ImportExportController::class,'import']);
 
