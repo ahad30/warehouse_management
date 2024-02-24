@@ -210,6 +210,7 @@ Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(
         Route::get('/index', 'Histories');
     });
 
+
 /* -------------------------------------------------------------------------- */
 /*                              Search product route                            */
 /* -------------------------------------------------------------------------- */
@@ -219,3 +220,4 @@ Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(
         Route::get('/search', 'index');
     });
     Route::post('/import',[ImportExportController::class,'import']);
+
