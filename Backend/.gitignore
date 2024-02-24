@@ -21,3 +21,4 @@ yarn-error.log
 /public/uploads
 license.txt
 composer.lock
+.editorconfig
