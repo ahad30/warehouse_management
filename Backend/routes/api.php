@@ -219,9 +219,10 @@ Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(
     Route::get('/search', 'index');
 });
 
+    Route::post('/import',[ImportExportController::class,'import']);
+    Route::post('/export',[ImportExportController::class,'export']);
 
 });
 
 
-    Route::post('/import',[ImportExportController::class,'import']);
 
