@@ -52,10 +52,10 @@ const Navbar = () => {
           <div className="flex items-center space-x-2 bg-[#e74c3c] text-white rounded-md px-3 py-2">
             <Link
               className="flex justify-center gap-2 items-center"
-              to={"/dashboard/invoice/new"}
+              to={"/dashboard/pos"}
             >
               <AiOutlinePlusCircle size={25} />{" "}
-              <span className="hidden sm:block">New Invoice</span>
+              <span className="hidden sm:block">POS</span>
             </Link>
           </div>
         )}
