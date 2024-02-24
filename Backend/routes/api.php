@@ -205,5 +205,5 @@ Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(
     ->prefix('/history')->group(function () {
         Route::get('/index', 'Histories');
     });
-
-    Route::post('/import',[ImportExportController::class,'import']);
+    
+Route::post('/import',[ImportExportController::class,'import']);
