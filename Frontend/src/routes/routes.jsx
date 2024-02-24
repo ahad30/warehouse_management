@@ -13,7 +13,8 @@ import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import CategoriesList from "../Dashboard/Categories/CategoriesList";
-import CustomersList from "../Dashboard/Customers/CustomersList";
+// import CustomersList from "../Dashboard/Customers/CustomersList";
+import SearchProducts from "../Dashboard/SearchProducts/SearchProducts";
 import AddBrand from "../Dashboard/Brands/AddBrand";
 import AddStore from "../Dashboard/Stores/AddStore";
 import ProductsList from "../Dashboard/Products/ProductsList";
@@ -40,6 +41,7 @@ import MSACRoute from "./MSACRoute";
 import History from "../Dashboard/History/History";
 import ImportExport from "../Dashboard/Import/ImportExport";
 import PermissionDenied from "../pages/Errors/PermissionDenied";
+import Pos from "../Dashboard/Pos/Pos";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -148,13 +150,20 @@ const routes = createBrowserRouter([
             ),
           },
           // CUSTOMERS
-          {
-            path: "/dashboard/customer", // Customers list
-            element: (
-              <ManagerRoute>
-                <CustomersList />
-              </ManagerRoute>
-            ),
+          // {
+          //   path: "/dashboard/customer", // Customers list
+          //   element: (
+          //     <ManagerRoute>
+          //       <CustomersList />
+          //     </ManagerRoute>
+          //   ),
+            {
+              path: "/dashboard/product/search", 
+              element: (
+                <ManagerRoute>
+                  <SearchProducts />
+                </ManagerRoute>
+              ),
           },
           {
             path: "/dashboard/customer/add", // Add a new customer
@@ -266,6 +275,14 @@ const routes = createBrowserRouter([
             element: (
               <MSACRoute>
                 <NewInvoice />
+              </MSACRoute>
+            ),
+          },
+          {
+            path: "/dashboard/pos", // Create a new invoice
+            element: (
+              <MSACRoute>
+              <Pos></Pos>
               </MSACRoute>
             ),
           },

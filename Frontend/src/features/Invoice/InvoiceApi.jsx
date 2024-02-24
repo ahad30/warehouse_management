@@ -4,10 +4,11 @@ const invoiceApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getInvoiceInfos: builder.query({
       query: () => ({
-        url: "/invoice/create",
+        url: `/invoice/create`,
       }),
       providesTags: ["Invoices"],
     }),
+
     newInvoice: builder.mutation({
       query: (data) => ({
         method: "POST",
@@ -17,6 +18,7 @@ const invoiceApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Invoices", "Dashboard", "Products Report"],
     }),
+
     getInvoices: builder.query({
       query: ({ startDate, endDate, date }) => ({
         url: `/invoice/list/${startDate}/${endDate}/${date}`,

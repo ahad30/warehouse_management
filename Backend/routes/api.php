@@ -203,7 +203,12 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::middleware(['verifyAdmin','verifySubAdmin','verifyStaff'])->controller(HistoryController::class)
     ->prefix('/history')->group(function () {
+<<<<<<< HEAD
         Route::get('/index', 'Histories');
     });
 
     Route::post('/import',[ImportExportController::class,'import']);
+=======
+        Route::get('/', 'index');
+    });
+>>>>>>> c4acaa2ccdad93faa854580b6abf25d2a443e0cb

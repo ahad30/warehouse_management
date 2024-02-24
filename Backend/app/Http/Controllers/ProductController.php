@@ -92,8 +92,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->errorResponse([
-                'status' => false,
-                'message' => "something went wrong" . $e->getMessage()
+                'message' => "something went wrong",
             ]);
         }
     }
