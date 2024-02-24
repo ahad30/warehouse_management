@@ -8,6 +8,7 @@ use App\Models\SaleItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
+
 class Product extends Model
 {
     use HasFactory;
@@ -44,5 +45,9 @@ class Product extends Model
     public function productImages()
     {
         return $this->hasMany(ProductImage::class);
+    }
+    public function history()
+    {
+        return $this->hasMany(History::class, 'product_id', 'id');
     }
 }
