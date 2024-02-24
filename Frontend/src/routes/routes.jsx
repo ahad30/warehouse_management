@@ -42,13 +42,13 @@ import ImportExport from "../Dashboard/Import/ImportExport";
 import PermissionDenied from "../pages/Errors/PermissionDenied";
 import HistoryList from "../Dashboard/History/HistoryList";
 import Pos from "../Dashboard/Pos/Pos";
-import AddHistory from "../Dashboard/History/addHistory";
+import AddHistory from "../Dashboard/History/AddHistory";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
   {
     path: "/403",
-    element: <PermissionDenied/>
+    element: <PermissionDenied />,
   },
   {
     path: "/", // Root path
@@ -122,16 +122,16 @@ const routes = createBrowserRouter([
               </AdminRoute>
             ),
           },
-           
+
           // Import/Export
-           
-          { 
-             path: "/dashboard/import",
-             element: (
+
+          {
+            path: "/dashboard/import",
+            element: (
               <AdminRoute>
-                <ImportExport/>
+                <ImportExport />
               </AdminRoute>
-             )
+            ),
           },
           // USERS
           {
@@ -158,13 +158,13 @@ const routes = createBrowserRouter([
           //       <CustomersList />
           //     </ManagerRoute>
           //   ),
-            {
-              path: "/dashboard/product/search", 
-              element: (
-                <ManagerRoute>
-                  <SearchProducts />
-                </ManagerRoute>
-              ),
+          {
+            path: "/dashboard/product/search",
+            element: (
+              <ManagerRoute>
+                <SearchProducts />
+              </ManagerRoute>
+            ),
           },
           {
             path: "/dashboard/customer/add", // Add a new customer
@@ -253,23 +253,22 @@ const routes = createBrowserRouter([
           },
 
           // History
-          { 
+          {
             path: "/dashboard/history",
             element: (
-             <AdminRoute>
-               <HistoryList/>
-             </AdminRoute>
-            )
-         },
-          { 
+              <AdminRoute>
+                <HistoryList />
+              </AdminRoute>
+            ),
+          },
+          {
             path: "/dashboard/history/addHistory",
             element: (
-             <AdminRoute>
-               <AddHistory/>
-             </AdminRoute>
-            )
-         },
-
+              <AdminRoute>
+                <AddHistory />
+              </AdminRoute>
+            ),
+          },
 
           {
             path: "/dashboard/analytics", // Dashboard analytics
@@ -292,7 +291,7 @@ const routes = createBrowserRouter([
             path: "/dashboard/pos", // Create a new invoice
             element: (
               <MSACRoute>
-              <Pos></Pos>
+                <Pos></Pos>
               </MSACRoute>
             ),
           },
