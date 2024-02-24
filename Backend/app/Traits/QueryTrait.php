@@ -39,6 +39,7 @@ trait QueryTrait
             return $data;
         }, 5);
     }
+
     public function destroyData($id, $model)
     {
         $data = $model::findOrFail($id)->delete();

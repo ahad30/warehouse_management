@@ -21,6 +21,10 @@ use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductShiftingController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\SearchProductController;
+
+
 
 
 
@@ -168,7 +172,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::controller(SaleController::class)->prefix('invoice')->group(function () {
         /* ------------------------------- sale report ------------------------------ */
         Route::get('list/{from?}/{to?}/{dayCount?}', 'index');
-        Route::get('/create/{brand_id?}/{category_id?}/', 'create');
+        Route::get('/create/', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
@@ -205,5 +209,15 @@ Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(
     ->prefix('/history')->group(function () {
         Route::get('/index', 'Histories');
     });
-    
-Route::post('/import',[ImportExportController::class,'import']);
+
+
+/* -------------------------------------------------------------------------- */
+/*                              Search product route                            */
+/* -------------------------------------------------------------------------- */
+
+Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
+    ->prefix('/product')->group(function () {
+        Route::get('/search', 'index');
+    });
+    Route::post('/import',[ImportExportController::class,'import']);
+
