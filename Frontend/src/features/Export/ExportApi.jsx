@@ -13,7 +13,18 @@ const ExportApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Stores", "Products"],
     }),
+    setImport: build.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: "/import",
+        header: {
+          "Content-type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Stores", "Products"],
+    }),
   }),
 });
 
-export const { useSetExportMutation } = ExportApi;
+export const { useSetExportMutation, useSetImportMutation } = ExportApi;
