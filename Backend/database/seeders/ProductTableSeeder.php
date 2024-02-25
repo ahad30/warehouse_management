@@ -23,13 +23,14 @@ class ProductTableSeeder extends Seeder
                 'warehouse_id' => Warehouse::inRandomOrder()->first()->id,
                 'category_id' => Category::inRandomOrder()->first()->id, // Replace with the actual category ID
                 'brand_id' => Brand::inRandomOrder()->first()->id, // Replace with the actual brand ID
-                'product_name' => fake()->full,
+                'product_name' => fake()->firstNameMale(),
                 'unique_code' => 'PD' . '-' . $i . time() . Str::random(4),
                 'scan_code' => 'SP' . '-' . $i . Str::random(8),
                 // 'product_unit' => 'pcs',
                 'product_retail_price' => 29.99,
                 'product_sale_price' => 24.99,
                 // Add more product data here
+                'created_at' => now(),
             ];
         }
         Product::insert($products);
