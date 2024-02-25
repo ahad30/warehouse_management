@@ -1,6 +1,5 @@
 import apiSlice from "../API/apiSlice";
 
-
 const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addProduct: builder.mutation({
@@ -15,12 +14,12 @@ const productApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Products", "Invoices", "Dashboard"],
     }),
     getProducts: builder.query({
-
-      query: ({ pageNumber }) => {
+      query: ({ pageNumber, query, warehouse_id }) => {
         return {
-          url: `/products?page=${pageNumber ? pageNumber : 1}`,
+          url: `/products?page=${pageNumber ? pageNumber : 1}&query=${
+            query ? query : ""
+          }&warehouse_id=${warehouse_id ? warehouse_id : ""}`,
         };
-
       },
       providesTags: ["Products"],
     }),

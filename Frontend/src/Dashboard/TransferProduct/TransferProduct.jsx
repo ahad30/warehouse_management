@@ -10,39 +10,80 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { useAddHistoryMutation } from "../../features/History/historyApi";
 import { useGetProductsQuery } from "../../features/Product/productApi";
-
+import Select from "react-select";
 const TransferProduct = () => {
   UseTitle("Transfer Product");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: storesData } = useGetStoresQuery();
-  const { data: productsData } = useGetProductsQuery(1);
+  const [query, setQuery] = useState();
+  const [warehouse_id, setWarehouse_id] = useState();
+  const { data: warehouseData } = useGetStoresQuery();
+  const [fromWareHouseOptions, setFromWarehouseOptions] = useState([]);
+  const [toWareHouseOptions, setToProductWarehouseOptions] = useState([]);
+  const { data: productsData } = useGetProductsQuery({
+    pageNumber: 1,
+    query: query,
+    warehouse_id: warehouse_id,
+  });
+  const [productOptions, setProductOptions] = useState([]);
+
   const [addHistory, { isLoading, isError, error, isSuccess, data }] =
     useAddHistoryMutation();
-  const [selectedFromWarehouse, setSelectedFromWarehouse] = useState("");
-  const [selectedToWarehouse, setSelectedToWarehouse] = useState("");
-  console.log(productsData);
-  const handleFromWarehouseChange = (event) => {
-    const selectedValue = event.target.value;
-    setSelectedFromWarehouse(selectedValue);
-    if (selectedToWarehouse === selectedValue) {
-      setSelectedToWarehouse("");
-    }
-  };
-
-  const handleToWarehouseChange = (event) => {
-    setSelectedToWarehouse(event.target.value);
-  };
 
   const onSubmit = async (data) => {
     "from_warehouse_id", data?.from_warehouse_id;
     "to_warehouse_id", data?.to_warehouse_id;
     "product_id", data?.product_id;
     addHistory(data);
-    console.log(data);
   };
 
+  /** Initializing from warehouse options */
+  useEffect(() => {
+    let options = warehouseData?.data?.map((warehouse, index) => {
+      return { label: warehouse?.name, value: warehouse?.id };
+    });
+    setFromWarehouseOptions(options);
+  }, [warehouseData]);
+
+  /** Initializing to warehouse options */
+  const handleWarehouseChange = (val) => {
+    let options = warehouseData?.data?.map((warehouse, index) => {
+      if (val?.value != warehouse?.id) {
+        return { label: warehouse?.name, value: warehouse?.id };
+      } else {
+        return { label: warehouse?.name, value: warehouse?.id, disabled: true };
+      }
+    });
+    /** Fetching products */
+
+    setWarehouse_id(val?.value);
+    setToProductWarehouseOptions(options);
+  };
+
+  /** Initializing product options */
+  useEffect(() => {
+    let productsOption = productsData?.products?.data?.map((product, index) => {
+      return { label: product?.product_name, value: product?.id };
+    });
+    setProductOptions(productsOption);
+  }, [productsData, warehouse_id]);
+  /** Disabling fromSelectorDisabler */
+  const fromSelectorDisabler = (val) => {
+    let fromSelector = document.querySelector("#from-selector");
+    fromSelector.setAttribute("readonly", "true");
+    fromSelector.setAttribute("disabled", "disabled");
+    console.log(fromSelector);
+  };
+  /** find product using query */
+  const findProductHandler = (event) => {
+    let input = event.target.value;
+    if (input.length > 2) {
+      setQuery(input);
+    }
+  };
+
+  /** Fetching data after shifting product */
   useEffect(() => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
@@ -68,64 +109,43 @@ const TransferProduct = () => {
 
   return (
     <DashboardBackground>
-      <h2 className="text-xl my-5 font-semibold">Add History</h2>
+      <h2 className="text-xl my-5 font-semibold">Transfer Product</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <label className="input-group">
-            <span className="font-semibold">
-              Warehouse<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              value={selectedFromWarehouse}
-              onChange={handleFromWarehouseChange}
-            >
-              <option value={""}>From Warehouse</option>
-              {storesData?.data?.map((data) => (
-                <option key={data?.id} value={data?.id}>
-                  {data?.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="input-group">
-            <span className="font-semibold">
-              Warehouse<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              value={selectedToWarehouse}
-              onChange={handleToWarehouseChange}
-              required
-            >
-              <option value={""}>To Warehouse</option>
-              {storesData?.data
-                ?.filter((data) => data.id !== selectedFromWarehouse)
-                .map((data) => (
-                  <option key={data?.id} value={data?.id}>
-                    {data?.name}
-                  </option>
-                ))}
-            </select>
-          </label>
-
-          <label className="input-group">
-            <span className="font-semibold">
-              Product<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              {...register("product_id")}
-            >
-              <option value={""}>Select Product</option>
-              {productsData?.products?.data?.map((data) => (
-                <option key={data?.id} value={data?.id}>
-                  {data?.product_name}
-                </option>
-              ))}
-            </select>
-          </label>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 border px-3 py-4 bg-gray-50">
+          <div>
+            <label className="input-group mb-2 font-medium">
+              From Warehouse
+            </label>
+            <Select
+              options={fromWareHouseOptions}
+              className="w-full"
+              onChange={handleWarehouseChange}
+              id="from-selector"
+            />
+          </div>
+          <div>
+            <label className="input-group mb-2 font-medium">To Warehouse</label>
+            <Select
+              options={toWareHouseOptions}
+              className="w-full"
+              isOptionDisabled={(option) => option.disabled}
+              // onKeyDown={(e) => {
+              //   console.log(e.target.value);
+              // }}
+            />
+          </div>
+          <div>
+            <label className="input-group mb-2 font-medium">
+              Select Product
+            </label>
+            <Select
+              options={productOptions}
+              className="w-full"
+              isMulti={true}
+              onKeyDown={findProductHandler}
+              onChange={fromSelectorDisabler}
+            />
+          </div>
         </div>
         <SubmitButton
           title={isLoading ? "Shifting..." : "Shift"}
