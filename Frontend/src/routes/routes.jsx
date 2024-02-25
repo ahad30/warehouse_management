@@ -42,7 +42,7 @@ import ImportExport from "../Dashboard/Import/ImportExport";
 import PermissionDenied from "../pages/Errors/PermissionDenied";
 import HistoryList from "../Dashboard/History/HistoryList";
 import Pos from "../Dashboard/Pos/Pos";
-import AddHistory from "../Dashboard/History/AddHistory";
+import TransferProduct from "../Dashboard/TransferProduct/TransferProduct";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -265,7 +265,7 @@ const routes = createBrowserRouter([
             path: "/dashboard/products/transfer",
             element: (
               <AdminRoute>
-                <AddHistory />
+                <TransferProduct />
               </AdminRoute>
             ),
           },

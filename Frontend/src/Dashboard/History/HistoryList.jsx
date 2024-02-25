@@ -14,30 +14,12 @@ const HistoryList = () => {
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 11;
 
-  const {
-    data: historiesData,
-    isLoading: historiesIsLoading,
-  } =  useGetHistoryQuery();
-
-
+  const { data: historiesData, isLoading: historiesIsLoading } =
+    useGetHistoryQuery();
 
   useEffect(() => {
     setFilterData(historiesData?.data);
   }, [historiesData?.data]);
-
-// console.log(historiesData);
-  
-
-
-  // SEARCH FILTERING STARTS
-  // const setFiltering = (search) => {
-  //   const filteredData = historiesData?.data?.filter((item) =>
-  //     item?.category_name?.toLowerCase().includes(search.toLowerCase())
-  //   );
-  //   if (filteredData) {
-  //     setFilterData(filteredData);
-  //   }
-  // };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -53,7 +35,6 @@ const HistoryList = () => {
       },
     },
 
-    
     {
       name: "Category Name",
       selector: (row) => <>{row?.category_name}</>,
@@ -67,7 +48,6 @@ const HistoryList = () => {
 
       selector: (row) => <>{row?.description}</>,
     },
-
   ];
 
   // SEARCH FILTERING ENDS
@@ -86,7 +66,7 @@ const HistoryList = () => {
         </TableHeadingTitle>
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
-          btnTitle={"Transfer Product"}
+          // btnTitle={"Transfer Product"}
           btnPath={"/dashboard/history/addHistory"}
           btnIcon={<BiSolidDuplicate size={20} />}
           // setFiltering={setFiltering}
@@ -94,24 +74,21 @@ const HistoryList = () => {
         {/* Categories Table */}
 
         {/* {filterData?.length > 0 && ( */}
-          <DataTable
-            columns={columns}
-            data={filterData}
-            pagination
-            responsive
-            paginationPerPage={itemsPerPage}
-            paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-            paginationTotalRows={filterData?.length}
-            onChangePage={(page) => setCurrentPage(page)}
-            keyField="id"
-          />
+        <DataTable
+          columns={columns}
+          data={filterData}
+          pagination
+          responsive
+          paginationPerPage={itemsPerPage}
+          paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
+          paginationTotalRows={filterData?.length}
+          onChangePage={(page) => setCurrentPage(page)}
+          keyField="id"
+        />
         {/* )} */}
-
-      
       </DashboardBackground>
     </>
   );
 };
 
 export default HistoryList;
-

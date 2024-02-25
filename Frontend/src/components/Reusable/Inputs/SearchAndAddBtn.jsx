@@ -11,18 +11,21 @@ const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
           onChange={(e) => setFiltering(e.target.value)}
           placeholder="Search"
         />
-
-        <Link
-          to={btnPath}
-          className="bg-red-500 grid place-content-center text-white focus:ring-1 px-3 rounded-md"
-        >
-          <span className="flex items-center gap-x-2">
-            <span>{btnIcon}</span>
-            <span className="hidden sm:block">
-              {btnTitle ? btnTitle : "Add New"}
+        {btnTitle ? (
+          <Link
+            to={btnPath}
+            className="bg-red-500 grid place-content-center text-white focus:ring-1 px-3 rounded-md"
+          >
+            <span className="flex items-center gap-x-2">
+              <span>{btnIcon}</span>
+              <span className="hidden sm:block">
+                {btnTitle ? btnTitle : "Add New"}
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

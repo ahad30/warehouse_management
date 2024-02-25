@@ -41,7 +41,7 @@ const DashboardSidebar = () => {
       icon: <LiaStoreSolid size={25}></LiaStoreSolid>,
       path: "/dashboard/store",
     },
-    
+
     {
       name: "Category",
       icon: <BiCategory size={25} />,
@@ -58,9 +58,9 @@ const DashboardSidebar = () => {
       path: "/dashboard/product",
     },
     {
-      name: "POS",
+      name: "Shift Product",
       icon: <LiaFileInvoiceDollarSolid size={25} />,
-      path: "/dashboard/invoice",
+      path: "/dashboard/products/transfer",
     },
     {
       name: "History",
@@ -200,5 +200,3 @@ const DashboardSidebar = () => {
 };
 
 export default DashboardSidebar;
-
-
