@@ -27,8 +27,8 @@ jobs:
         username: ${{ secrets.FTPUSERNAME }}
         password: ${{ secrets.FTPPASSWORD }}
         protocol: ftps
-        server-dir: Backend/app/Traits/
-        local-dir: Backend/app/Traits/
+        server-dir: Backend/
+        local-dir: Backend/
         dry-run: true
     - name: Install Dependencies 👨‍💻
       run: |
