@@ -262,7 +262,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/history/addHistory",
+            path: "/dashboard/products/transfer",
             element: (
               <AdminRoute>
                 <AddHistory />
