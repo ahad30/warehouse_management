@@ -13,6 +13,7 @@ const ImportExport = () => {
 
   const handleSubmit = async () => {
     setExport();
+    console.log();
   };
 
   return (
@@ -40,6 +41,14 @@ const ImportExport = () => {
             >
               Import
             </button>
+          </div>
+          <div>
+            <p className="">
+              To know about how to import csv file and know about file structure
+              <a href="" className="px-2 underline text-blue-600">
+                click here
+              </a>
+            </p>
           </div>
 
           <label className="font-bold text-lg mt-5 ">Export :</label>
@@ -69,7 +78,7 @@ const ImportExport = () => {
                   {showButton && (
                     <a
                       href={data?.url}
-                      className="cursor-pointer m-auto border p-1 text-[#e74c3c] shadow-lg rounded text-xs"
+                      className="cursor-pointer m-auto border px-2 py-1 text-[#e74c3c]  rounded text-sm shadow transition duration-300"
                       rel="noopener noreferrer"
                       download
                     >
@@ -82,7 +91,7 @@ const ImportExport = () => {
                       type="submit"
                       className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded"
                     >
-                      Export
+                      Generate CSV
                     </button>
                   </div>
                 </div>

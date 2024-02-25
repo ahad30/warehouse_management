@@ -11,8 +11,8 @@ import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { useAddHistoryMutation } from "../../features/History/historyApi";
 import { useGetProductsQuery } from "../../features/Product/productApi";
 
-const AddHistory = () => {
-  UseTitle("Add History");
+const TransferProduct = () => {
+  UseTitle("Transfer Product");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,9 +36,9 @@ const AddHistory = () => {
   };
 
   const onSubmit = async (data) => {
-    ('from_warehouse_id', data?.from_warehouse_id);
-    ('to_warehouse_id', data?.to_warehouse_id);
-    ('product_id', data?.product_id);
+    "from_warehouse_id", data?.from_warehouse_id;
+    "to_warehouse_id", data?.to_warehouse_id;
+    "product_id", data?.product_id;
     addHistory(data);
     console.log(data);
   };
@@ -93,16 +93,20 @@ const AddHistory = () => {
             <span className="font-semibold">
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
-            <select className="select select-bordered w-full"
+            <select
+              className="select select-bordered w-full"
               value={selectedToWarehouse}
               onChange={handleToWarehouseChange}
-              required>
+              required
+            >
               <option value={""}>To Warehouse</option>
-              {storesData?.data?.filter((data) => data.id !== selectedFromWarehouse).map((data) => (
-                <option key={data?.id} value={data?.id}>
-                  {data?.name}
-                </option>
-              ))}
+              {storesData?.data
+                ?.filter((data) => data.id !== selectedFromWarehouse)
+                .map((data) => (
+                  <option key={data?.id} value={data?.id}>
+                    {data?.name}
+                  </option>
+                ))}
             </select>
           </label>
 
@@ -112,7 +116,6 @@ const AddHistory = () => {
             </span>
             <select
               className="select select-bordered w-full"
-
               {...register("product_id")}
             >
               <option value={""}>Select Product</option>
@@ -125,7 +128,7 @@ const AddHistory = () => {
           </label>
         </div>
         <SubmitButton
-          title={isLoading ? "Adding History..." : "Add History"}
+          title={isLoading ? "Shifting..." : "Shift"}
           icon={<BiSolidDuplicate size={20} />}
           isLoading={isLoading}
         />
@@ -134,4 +137,4 @@ const AddHistory = () => {
   );
 };
 
-export default AddHistory;
+export default TransferProduct;
