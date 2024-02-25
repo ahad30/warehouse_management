@@ -18,7 +18,7 @@ const productApi = apiSlice.injectEndpoints({
         return {
           url: `/products?page=${pageNumber ? pageNumber : 1}&query=${
             query ? query : ""
-          }&warehouse_id=${warehouse_id}`,
+          }&warehouse_id=${warehouse_id ? warehouse_id : ""}`,
         };
       },
       providesTags: ["Products"],

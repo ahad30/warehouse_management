@@ -16,8 +16,8 @@ const TransferProduct = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [query, setQuery] = useState("");
-  const [warehouse_id, setWarehouse_id] = useState("");
+  const [query, setQuery] = useState();
+  const [warehouse_id, setWarehouse_id] = useState();
   const { data: warehouseData } = useGetStoresQuery();
   const [fromWareHouseOptions, setFromWarehouseOptions] = useState([]);
   const [toWareHouseOptions, setToProductWarehouseOptions] = useState([]);
@@ -38,8 +38,6 @@ const TransferProduct = () => {
     addHistory(data);
   };
 
-  useEffect(() => {}, [productsData]);
-
   /** Initializing from warehouse options */
   useEffect(() => {
     let options = warehouseData?.data?.map((warehouse, index) => {
@@ -58,14 +56,34 @@ const TransferProduct = () => {
       }
     });
     /** Fetching products */
-    setWarehouse_id(options?.value);
+
+    setWarehouse_id(val?.value);
     setToProductWarehouseOptions(options);
-    /** Initializing product options */
+  };
+
+  /** Initializing product options */
+  useEffect(() => {
     let productsOption = productsData?.products?.data?.map((product, index) => {
       return { label: product?.product_name, value: product?.id };
     });
     setProductOptions(productsOption);
+  }, [productsData, warehouse_id]);
+  /** Disabling fromSelectorDisabler */
+  const fromSelectorDisabler = (val) => {
+    let fromSelector = document.querySelector("#from-selector");
+    fromSelector.setAttribute("readonly", "true");
+    fromSelector.setAttribute("disabled", "disabled");
+    console.log(fromSelector);
   };
+  /** find product using query */
+  const findProductHandler = (event) => {
+    let input = event.target.value;
+    if (input.length > 2) {
+      setQuery(input);
+    }
+  };
+
+  /** Fetching data after shifting product */
   useEffect(() => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
@@ -102,6 +120,7 @@ const TransferProduct = () => {
               options={fromWareHouseOptions}
               className="w-full"
               onChange={handleWarehouseChange}
+              id="from-selector"
             />
           </div>
           <div>
@@ -110,9 +129,9 @@ const TransferProduct = () => {
               options={toWareHouseOptions}
               className="w-full"
               isOptionDisabled={(option) => option.disabled}
-              onKeyDown={(e) => {
-                console.log(e.target.value);
-              }}
+              // onKeyDown={(e) => {
+              //   console.log(e.target.value);
+              // }}
             />
           </div>
           <div>
@@ -122,9 +141,9 @@ const TransferProduct = () => {
             <Select
               options={productOptions}
               className="w-full"
-              onKeyDown={(e) => {
-                console.log(e.target.value);
-              }}
+              isMulti={true}
+              onKeyDown={findProductHandler}
+              onChange={fromSelectorDisabler}
             />
           </div>
         </div>
