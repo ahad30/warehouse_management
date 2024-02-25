@@ -68,7 +68,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("category_id", product?.category_id || "");
       setValue("brand_id", product?.brand_id || "");
       setValue("product_img", product?.images || "");
-      setValue("scan_code", product?.scan_code || "");
+      setValue("scan_code", product.id?.scan_code || "");
     }
   }, [product, setValue]);
 
@@ -88,11 +88,9 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    // formData.append("store_id", data?.store_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
-
     formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
     if (data?.product_img?.length > 0) {
@@ -129,7 +127,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("product_name")}
                       />
                     </label>
-                    {/* <label className="input-group">
+                    <label className="input-group">
                       <span className="font-semibold">
                         Code<span className="text-red-500 p-0">*</span>
                       </span>
@@ -139,7 +137,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         className="input input-bordered w-full"
                         {...register("product_code")}
                       />
-                    </label> */}
+                    </label>
                     <label className="input-group">
                       <span className="font-semibold">
                         Retail<span className="text-red-500 p-0">*</span>
@@ -257,17 +255,39 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("images")}
                       />
                     </div>
+                    <div className="">
+                      <label className="input-group">
+                        <span className="font-semibold text-sm">
+                          scan code{" "}
+                        </span>
+                        <input
+                          type="number"
+                          placeholder="Scan Code"
+                          className="input input-bordered w-full "
+                          {...register("scan_code")}
+                          onKeyUp={(e) => {
+                            setScanCode(e.target.value);
+                            console.log(e.target);
+                          }}
+                        />
+                      </label>
+                      <img
+                        src={`https://barcodeapi.org/api/128/${scanCode} `}
+                        className="h-16 float-right my-2"
+                        alt=""
+                      />
+                    </div>
                   </div>
-                  <div className="mt-3">
+                  {/* <div className="mt-3">
                     <label className="input-group">
                       <span className="font-semibold text-sm">scan code </span>
                       <input
                         type="number"
                         placeholder="Scan Code"
-                        className="input input-bordered w-full"
+                        className="input input-bordered "
                         {...register("scan_code")}
                         onKeyUp={(e) => {
-                          setScanCode(e.target.value.id);
+                          setScanCode(e.target.value);
                           console.log(e.target);
                         }}
                       />
@@ -277,7 +297,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                       className="h-16 float-right my-2"
                       alt=""
                     />
-                  </div>
+                  </div> */}
 
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <button
