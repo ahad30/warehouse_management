@@ -4,7 +4,7 @@ import DashboardSidebar from "./DashboardSidebar";
 
 const DashboardLayout = () => {
   const location = useLocation();
-  console.log(location?.pathname);
+
   return (
     <div className="z-1 font-poppins max-h-screen overflow-hidden">
       <div className=" " style={{ zIndex: 10 }}>

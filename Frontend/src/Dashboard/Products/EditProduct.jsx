@@ -59,7 +59,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     if (product) {
       setValue("product_name", product?.product_name || "");
       setValue("product_code", product?.product_code || "");
-      setValue("product_unit", product?.product_unit || "");
+      // setValue("product_unit", product?.product_unit || "");
       setValue("product_quantity", product?.product_quantity || "1");
       setValue("product_desc", product?.product_desc || "");
       setValue("product_retail_price", product?.product_retail_price || "");
@@ -82,7 +82,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("product_name", data?.product_name);
     // formData.append("product_code", data?.product_code);
     formData.append("product_quantity", data?.product_quantity);
-    formData.append("product_unit", data?.product_unit);
+    // formData.append("product_unit", data?.product_unit);
     // formData.append("product_desc", data?.product_desc);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
@@ -174,7 +174,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         min={1}
                       />
                     </label> */}
-                    <label className="input-group">
+                    {/* <label className="input-group">
                       <span className="font-semibold">
                         Unit<span className="text-red-500 p-0">*</span>
                       </span>
@@ -188,7 +188,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         <option value={"kg"}>KG</option>
                         <option value={"litre"}>Litre</option>
                       </select>
-                    </label>
+                    </label> */}
                     <label className="input-group">
                       <span className="font-semibold">
                         Brands<span className="text-red-500 p-0">*</span>

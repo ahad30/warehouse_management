@@ -36,7 +36,7 @@ const AddProduct = () => {
     // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    formData.append("product_unit", data?.product_unit);
+    // formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
@@ -212,7 +212,7 @@ const AddProduct = () => {
               {...register("product_sale_price")}
             />
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Unit<span className="text-red-500 p-0">*</span>
             </span>
@@ -227,7 +227,7 @@ const AddProduct = () => {
               <option value={"kg"}>KG</option>
               <option value={"litre"}>Litre</option>
             </select>
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Brands<span className="text-red-500 p-0">*</span>
@@ -246,7 +246,7 @@ const AddProduct = () => {
             </select>
           </label>
 
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">Description</span>
             <input
               type="text"
@@ -254,7 +254,7 @@ const AddProduct = () => {
               className="input input-bordered w-full"
               {...register("product_desc")}
             />
-          </label>
+          </label> */}
           <div>
             <label className="input-group">
               <span className="font-semibold text-sm">scan code </span>
@@ -276,14 +276,28 @@ const AddProduct = () => {
             />
           </div>
 
-          <div className="form-control  w-full">
+          <div className="form-control">
             <div className="mb-3">
-              <label htmlFor="image">
+              <label className="input-group">
+                <span className="font-semibold text-sm ">
+                  Upload Image : {selectedImages.length}
+                </span>
+                <input
+                  className="file-input hidden file-input-bordered w-full"
+                  id="image"
+                  multiple="true"
+                  type="file"
+                  {...register("images", {
+                    onChange: (e) => handleImageChange(e),
+                  })}
+                />
+              </label>
+              {/* <label htmlFor="image">
                 <div className="border w-full px-2 py-3 cursor-pointer rounded">
                   Upload Image : {selectedImages.length}
                 </div>
-              </label>
-              <input
+              </label> */}
+              {/* <input
                 className="file-input hidden file-input-bordered w-full"
                 id="image"
                 multiple="true"
@@ -291,7 +305,7 @@ const AddProduct = () => {
                 {...register("images", {
                   onChange: (e) => handleImageChange(e),
                 })}
-              />
+              /> */}
             </div>
           </div>
 
