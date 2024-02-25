@@ -3,6 +3,7 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import { useSetExportMutation } from "../../features/Export/ExportApi";
+// import { useSetImportMutation } from "../../features/Import/ImportApi";
 
 const ImportExport = () => {
   const [filterData, setFilterData] = useState([]);
@@ -10,10 +11,13 @@ const ImportExport = () => {
   const { data: settingsData } = useGetDefaultSettingsQuery();
 
   const [setExport, { data }] = useSetExportMutation();
-
+  // const [setImport, { data }] = useSetImportMutation();
   const handleSubmit = async () => {
     setExport();
   };
+  // const handleSubmitImport = async () => {
+  //   setImport();
+  // };
 
   return (
     <DashboardBackground>
@@ -40,6 +44,14 @@ const ImportExport = () => {
             >
               Import
             </button>
+          </div>
+          <div>
+            <p className="">
+              To know about how to import csv file and know about file structure
+              <a href="" className="px-2 underline text-blue-500">
+                click here
+              </a>
+            </p>
           </div>
 
           <label className="font-bold text-lg mt-5 ">Export :</label>
