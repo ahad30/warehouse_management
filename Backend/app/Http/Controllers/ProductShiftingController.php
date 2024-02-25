@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\History;
 use App\Models\Product;
@@ -18,35 +17,50 @@ use ResponseTrait;
 
 public function ProductShiftingStore(ProductShiftingRequest $request)
 {
+     try {
 
-    try {
+        $productIds = $request->product_ids;
+         
+        if (!$productIds)
+         {
+            return response()->json([
+                'status' => false,
+                'message' => "No product selected",
+            ],404);
+        }
 
-        $product = Product::find($request->product_id);
-
-        // return $product_id->warehouse_id;
-        // $product_id = DB::select('SELECT id FROM products');
-
-        $history = History::create([
-            "from_warehouse_id" => request('from_warehouse_id'),
-            "to_warehouse_id" => request('to_warehouse_id'),
-            "product_id" =>   $product->id,
-            "user_id" => Auth()->user()->id,
-        ]);
-
-        // return $history;
-        
-        $product->update([
-            "warehouse_id" => $request->to_warehouse_id,
-        ]);
-
+        foreach ($productIds as $productId) {
+            // Create history record
+            History::create([
+                "from_warehouse_id" => $request->from_warehouse_id,
+                "to_warehouse_id" => $request->to_warehouse_id,
+                "product_id" => $productId,
+                "user_id" => Auth()->id(),
+            ]);
+            if(!Product::where('warehouse_id', $request->from_warehouse_id)){
+                return response()->json([
+                    'status' => false,
+                    'message' => "Product not found by this warehouse",
+                ],404);
+            }
+        // Update product's warehouse_id directly in the database query
+            Product::find($productId)->update([
+                "warehouse_id" => $request->to_warehouse_id,
+            ]);
+            
+        }
+  
+    
         return response()->json([
             'status' => true,
-            'message' => "History added Successfully",
+            'message' => "Products Successfully shifted.",
         ]);
-
-    } catch (\Exception $e) {
-        DB::rollBack();        
-        return $this->errorResponse(['status' => false, 'message' => $e->getMessage(),
+    
+    } catch (\Exception $e) { 
+        DB::rollback();       
+        return response()->json([
+            'status' => false,
+            'message' => "An error occurred while shifting products.",
         ]);
     }
 
@@ -55,6 +69,8 @@ public function ProductShiftingStore(ProductShiftingRequest $request)
 
     public function  ProductShiftingIndex(Request $request)
     {
+
+
         $histories = History::paginate(5);
         
         return response()->json([
