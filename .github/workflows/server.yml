@@ -1,37 +1,37 @@
-# This is a basic workflow to help you get started with Actions
+# # This is a basic workflow to help you get started with Actions
 
-name: 🚀 Deploying server-side on cpnal
+# name: 🚀 Deploying server-side on cpnal
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+# # Controls when the workflow will run
+# on:
+#   # Triggers the workflow on push or pull request events but only for the "main" branch
+#   push:
+#     branches: [ "master" ]
+#   pull_request:
+#     branches: [ "master" ]
     
-jobs:
-  web-deploy:
-    name: 🎉 Checking
-    runs-on: ubuntu-latest
+# jobs:
+#   web-deploy:
+#     name: 🎉 Checking
+#     runs-on: ubuntu-latest
     
-    steps:
+#     steps:
     
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
+#     - name: 🚚 Get latest code
+#       uses: actions/checkout@v3
         
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ftp.z8tech.one
-        username: ${{ secrets.FTPUSERNAME }}
-        password: ${{ secrets.FTPPASSWORD }}
-        protocol: ftps
-        server-dir: Backend/
-        local-dir: Backend/
-        dry-run : true
-    - name: Install Dependencies 👨‍💻
-      run: |
-        cd Backend
-        composer update
+#     - name: 📂 Sync files
+#       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+#       with:
+#         server: ftp.z8tech.one
+#         username: ${{ secrets.FTPUSERNAME }}
+#         password: ${{ secrets.FTPPASSWORD }}
+#         protocol: ftps
+#         server-dir: Backend/
+#         local-dir: Backend/
+#         dry-run : true
+#     - name: Install Dependencies 👨‍💻
+#       run: |
+#         cd Backend
+#         composer update
    
