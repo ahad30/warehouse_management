@@ -276,12 +276,10 @@ const AddProduct = () => {
             />
           </div>
 
-          <div className="form-control">
+          <div className="form-control ">
             <div className="mb-3">
-              <label className="input-group">
-                <span className="font-semibold text-sm ">
-                  Upload Image : {selectedImages.length}
-                </span>
+              <label className="input-group file-input file-input-bordered">
+                <span className="font-semibold text-sm">Upload Image</span>
                 <input
                   className="file-input hidden file-input-bordered w-full"
                   id="image"
@@ -291,21 +289,8 @@ const AddProduct = () => {
                     onChange: (e) => handleImageChange(e),
                   })}
                 />
+                <p className="py-3 px-2"> {selectedImages.length}</p>
               </label>
-              {/* <label htmlFor="image">
-                <div className="border w-full px-2 py-3 cursor-pointer rounded">
-                  Upload Image : {selectedImages.length}
-                </div>
-              </label> */}
-              {/* <input
-                className="file-input hidden file-input-bordered w-full"
-                id="image"
-                multiple="true"
-                type="file"
-                {...register("images", {
-                  onChange: (e) => handleImageChange(e),
-                })}
-              /> */}
             </div>
           </div>
 
@@ -316,7 +301,6 @@ const AddProduct = () => {
                   <img
                     key={index}
                     src={image}
-                    // alt={SelectedImage ${index + 1}}
                     className="w-full h-[100px] object-cover rounded"
                   />
                   <div
