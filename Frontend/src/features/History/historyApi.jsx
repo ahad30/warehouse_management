@@ -26,6 +26,6 @@ const historyApi = apiSlice.injectEndpoints({
 export const {
   useAddHistoryMutation,
   useGetHistoryQuery,
-//   useUpdateStoreMutation,
-//   useDeleteStoreMutation,
+  //   useUpdateStoreMutation,
+  //   useDeleteStoreMutation,
 } = historyApi;
