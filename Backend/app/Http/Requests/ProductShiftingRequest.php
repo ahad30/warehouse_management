@@ -24,9 +24,9 @@ class ProductShiftingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'from_warehouse_id' => 'required',
+            'from_warehouse_id' => 'required|exists:warehouses,id',
             'to_warehouse_id' => 'required|exists:warehouses,id',
-            'product_id' => 'required|exists:products,id',
+            'product_ids' => 'required',
 
         ];
     }
