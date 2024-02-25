@@ -28,17 +28,21 @@ class ProductShiftingController extends Controller
                     'message' => "No product selected",
                 ], 404);
             }
-            $products = Product::whereIn('id', $productIds)
-                ->where('warehouse_id', $request->from_warehouse_id)
-                ->get();
 
-            // If some products are not found in the from_warehouse_id, return error
-            if (count($products) !== count($productIds)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "One or more products not found in the specified warehouse",
-                ], 404);
+
+            /** checking is both warehouse is same or not */
+            if($this->isSameWarehouse($request->from_warehouse_id,$request->to_warehouse_id)){
+                return $this->isSameWarehouse($request->from_warehouse_id,$request->to_warehouse_id);
             }
+            
+                /** checking is the product belongs to warehouse or not */
+            if(!$this->isProductsBelongsToWarehouse($productIds,$request->from_warhouse_id)){
+                return response()->json(['status'=>true,'message' => "Product is not belongs to warehouse"]);
+            };
+              
+        
+
+
             foreach ($productIds as $productId) {
                 // Create history record
                 History::create([
@@ -47,6 +51,7 @@ class ProductShiftingController extends Controller
                     "product_id" => $productId,
                     "user_id" => Auth()->id(),
                 ]);
+
                 // Update product's warehouse_id directly in the database query
                 Product::where('id', $productId)->update([
                     "warehouse_id" => $request->to_warehouse_id,
@@ -66,30 +71,35 @@ class ProductShiftingController extends Controller
             ]);
         }
     }
-    //end  ProductShiftingStore() method
-
-    public function  ProductShiftingIndex(Request $request)
+    
+    /**
+     *  Same warehouse checker
+     * 
+     */
+    public function isSameWarehouse($fromWarehouse,$toWarehouse):array
     {
+        if($request->from_warehouse_id == $request->to_warehouse_id)
+            {
+             return  [
+                    'status' => false,
+                    'message' => "Same warehouse product can not shifted",
+                ];
+            }
+            
+    }
 
-
-        $histories = History::paginate(5);
-
-        return response()->json([
-            'status' => true,
-            'message' => "History Successfully Retrived",
-            'data' => $histories,
-        ]);
-    } // end ProductShiftingIndex()
-
-
-
-    public function ProductShiftingDelete(Request $request, $id)
-    {
-        $history = History::find($id);
-
-        $history->delete();
-    } //end ProductShiftingDelete 
-
-
-
+  /**
+   *  Is the product belongs to warehouse or nots
+   * 
+   */
+  public function isProductsBelongsToWarehouse($productId,$fromWarehouseId): boolean
+  {
+    foreach($productId as $id){
+        $product = Product::find($id);
+        if($product->id != $fromWarehouseId){
+            return false;
+        }
+    }
+    return true;
+  }
 }
