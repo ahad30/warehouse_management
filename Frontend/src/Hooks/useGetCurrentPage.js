@@ -5,8 +5,9 @@ const useGetCurrentPage = () => {
   const urlParams = new URLSearchParams(queryString);
   // Use the get method to retrieve the value of a specific parameter
   const pageNumber = urlParams.get("page");
-
-  return pageNumber ? pageNumber : 1;
+  if(parseInt(pageNumber)!='NaN'){
+    return pageNumber;
+  }
 }
 
 export default useGetCurrentPage

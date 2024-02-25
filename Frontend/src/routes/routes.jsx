@@ -13,7 +13,8 @@ import NewInvoice from "../Dashboard/Invoices/NewInvoice/NewInvoice";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import CategoriesList from "../Dashboard/Categories/CategoriesList";
-import CustomersList from "../Dashboard/Customers/CustomersList";
+// import CustomersList from "../Dashboard/Customers/CustomersList";
+import SearchProducts from "../Dashboard/SearchProducts/SearchProducts";
 import AddBrand from "../Dashboard/Brands/AddBrand";
 import AddStore from "../Dashboard/Stores/AddStore";
 import ProductsList from "../Dashboard/Products/ProductsList";
@@ -37,16 +38,17 @@ import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
 import InstallationRoute from "./InstallationRoute";
 import MSACRoute from "./MSACRoute";
-import History from "../Dashboard/History/History";
 import ImportExport from "../Dashboard/Import/ImportExport";
 import PermissionDenied from "../pages/Errors/PermissionDenied";
+import HistoryList from "../Dashboard/History/HistoryList";
 import Pos from "../Dashboard/Pos/Pos";
+import AddHistory from "../Dashboard/History/AddHistory";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
   {
     path: "/403",
-    element: <PermissionDenied/>
+    element: <PermissionDenied />,
   },
   {
     path: "/", // Root path
@@ -120,16 +122,16 @@ const routes = createBrowserRouter([
               </AdminRoute>
             ),
           },
-           
+
           // Import/Export
-           
-          { 
-             path: "/dashboard/import",
-             element: (
+
+          {
+            path: "/dashboard/import",
+            element: (
               <AdminRoute>
-                <ImportExport/>
+                <ImportExport />
               </AdminRoute>
-             )
+            ),
           },
           // USERS
           {
@@ -149,11 +151,18 @@ const routes = createBrowserRouter([
             ),
           },
           // CUSTOMERS
+          // {
+          //   path: "/dashboard/customer", // Customers list
+          //   element: (
+          //     <ManagerRoute>
+          //       <CustomersList />
+          //     </ManagerRoute>
+          //   ),
           {
-            path: "/dashboard/customer", // Customers list
+            path: "/dashboard/product/search",
             element: (
               <ManagerRoute>
-                <CustomersList />
+                <SearchProducts />
               </ManagerRoute>
             ),
           },
@@ -244,14 +253,22 @@ const routes = createBrowserRouter([
           },
 
           // History
-          { 
+          {
             path: "/dashboard/history",
             element: (
-             <AdminRoute>
-               <History/>
-             </AdminRoute>
-            )
-         },
+              <AdminRoute>
+                <HistoryList />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/history/addHistory",
+            element: (
+              <AdminRoute>
+                <AddHistory />
+              </AdminRoute>
+            ),
+          },
 
           {
             path: "/dashboard/analytics", // Dashboard analytics
@@ -274,7 +291,7 @@ const routes = createBrowserRouter([
             path: "/dashboard/pos", // Create a new invoice
             element: (
               <MSACRoute>
-              <Pos></Pos>
+                <Pos></Pos>
               </MSACRoute>
             ),
           },

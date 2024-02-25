@@ -12,7 +12,7 @@ import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/Use
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
-
+import { ImCross } from "react-icons/im";
 const AddProduct = () => {
   UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
@@ -36,7 +36,7 @@ const AddProduct = () => {
     // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    formData.append("product_unit", data?.product_unit);
+    // formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
@@ -45,8 +45,10 @@ const AddProduct = () => {
     formData.append("scan_code", data?.scan_code);
     if (data?.images.length > 0) {
       formData.append("images", data?.images);
-
     }
+    // if (data?.images.length > 0) {
+    //   formData.append("images", data?.images);
+    // }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
     }
@@ -55,7 +57,6 @@ const AddProduct = () => {
   };
 
   const errorMessages = UseErrorMessages(error);
- 
 
   useEffect(() => {
     if (isLoading) {
@@ -81,6 +82,32 @@ const AddProduct = () => {
     data?.status,
     dispatch,
   ]);
+
+  const [selectedImages, setSelectedImages] = useState([]);
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    console.log(files.length);
+    if (files.length > 5) {
+      console.log("succeed");
+      return alert("maximum upload 5");
+    } else {
+      console.log("You can not more then five image");
+      const imagesArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setSelectedImages(imagesArray);
+    }
+  };
+
+  const handleRemoveImage = (idx) => {
+    if (selectedImages?.length > 0) {
+      const filterImages = selectedImages.filter(
+        (item, index) => index !== idx
+      );
+      setSelectedImages(filterImages);
+    }
+  };
 
   return (
     <DashboardBackground>
@@ -167,7 +194,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Retail Price"
               className="input input-bordered w-full"
-            required
+              required
               min={0}
               {...register("product_retail_price")}
             />
@@ -180,12 +207,12 @@ const AddProduct = () => {
               type="number"
               placeholder="Sold Price"
               className="input input-bordered w-full"
-             required
+              required
               min={0}
               {...register("product_sale_price")}
             />
           </label>
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">
               Unit<span className="text-red-500 p-0">*</span>
             </span>
@@ -200,7 +227,7 @@ const AddProduct = () => {
               <option value={"kg"}>KG</option>
               <option value={"litre"}>Litre</option>
             </select>
-          </label>
+          </label> */}
           <label className="input-group">
             <span className="font-semibold">
               Brands<span className="text-red-500 p-0">*</span>
@@ -219,7 +246,7 @@ const AddProduct = () => {
             </select>
           </label>
 
-          <label className="input-group">
+          {/* <label className="input-group">
             <span className="font-semibold">Description</span>
             <input
               type="text"
@@ -227,15 +254,7 @@ const AddProduct = () => {
               className="input input-bordered w-full"
               {...register("product_desc")}
             />
-          </label>
-          <div className="form-control w-full">
-            <input
-              type="file"
-              multiple="true"
-              className="file-input file-input-bordered w-full"
-              {...register("images")}
-            />
-          </div>
+          </label> */}
           <div>
             <label className="input-group">
               <span className="font-semibold text-sm">scan code </span>
@@ -256,6 +275,44 @@ const AddProduct = () => {
               alt=""
             />
           </div>
+
+          <div className="form-control ">
+            <div className="mb-3">
+              <label className="input-group file-input file-input-bordered">
+                <span className="font-semibold text-sm">Upload Image</span>
+                <input
+                  className="file-input hidden file-input-bordered w-full"
+                  id="image"
+                  multiple="true"
+                  type="file"
+                  {...register("images", {
+                    onChange: (e) => handleImageChange(e),
+                  })}
+                />
+                <p className="py-3 px-2"> {selectedImages.length}</p>
+              </label>
+            </div>
+          </div>
+
+          {selectedImages.length > 0 && (
+            <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5">
+              {selectedImages.map((image, index) => (
+                <div key={index} className="relative">
+                  <img
+                    key={index}
+                    src={image}
+                    className="w-full h-[100px] object-cover rounded"
+                  />
+                  <div
+                    onClick={() => handleRemoveImage(index)}
+                    className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                  >
+                    <ImCross size={12} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <SubmitButton
           title={isLoading ? "Saving Product..." : "Save Product"}

@@ -59,7 +59,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     if (product) {
       setValue("product_name", product?.product_name || "");
       setValue("product_code", product?.product_code || "");
-      setValue("product_unit", product?.product_unit || "");
+      // setValue("product_unit", product?.product_unit || "");
       setValue("product_quantity", product?.product_quantity || "1");
       setValue("product_desc", product?.product_desc || "");
       setValue("product_retail_price", product?.product_retail_price || "");
@@ -68,6 +68,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("category_id", product?.category_id || "");
       setValue("brand_id", product?.brand_id || "");
       setValue("product_img", product?.images || "");
+      setValue("scan_code", product?.scan_code || "");
     }
   }, [product, setValue]);
 
@@ -82,7 +83,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("product_name", data?.product_name);
     // formData.append("product_code", data?.product_code);
     formData.append("product_quantity", data?.product_quantity);
-    formData.append("product_unit", data?.product_unit);
+    // formData.append("product_unit", data?.product_unit);
     // formData.append("product_desc", data?.product_desc);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
@@ -91,7 +92,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
-    formData.append("scan_code", getYear().data?.scan_code);
+
+    formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
     if (data?.product_img?.length > 0) {
       formData.append("product_img", data?.product_img[0]);
@@ -107,7 +109,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
         onClick={() => setModalIsOpen(false)}
       ></div>
       <div className="flex items-center min-h-screen  px-4 py-8">
-        <div className="relative w-[] p-4 mx-auto bg-white rounded-md shadow-lg">
+        <div className="relative p-4 mx-auto bg-white rounded-md shadow-lg">
           <div>
             <div className="mt-2 text-center sm:ml-4 sm:text-left">
               <p className="text-lg font-semibold text-center mb-5">
@@ -174,7 +176,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         min={1}
                       />
                     </label> */}
-                    <label className="input-group">
+                    {/* <label className="input-group">
                       <span className="font-semibold">
                         Unit<span className="text-red-500 p-0">*</span>
                       </span>
@@ -188,7 +190,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         <option value={"kg"}>KG</option>
                         <option value={"litre"}>Litre</option>
                       </select>
-                    </label>
+                    </label> */}
                     <label className="input-group">
                       <span className="font-semibold">
                         Brands<span className="text-red-500 p-0">*</span>
@@ -265,13 +267,13 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         className="input input-bordered w-full"
                         {...register("scan_code")}
                         onKeyUp={(e) => {
-                          setScanCode(e.target.value);
+                          setScanCode(e.target.value.id);
                           console.log(e.target);
                         }}
                       />
                     </label>
                     <img
-                      src={`https://barcodeapi.org/api/128/${getYear()}${scanCode}`}
+                      src={`https://barcodeapi.org/api/128/${scanCode} `}
                       className="h-16 float-right my-2"
                       alt=""
                     />
@@ -293,15 +295,14 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                 </form>
               </div>
               {/* Display error messages */}
-              {updateIsError &&
-                errorMessages?.map((errorMessage, index) => (
-                  <p
-                    key={index}
-                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                  >
-                    {errorMessage}
-                  </p>
-                ))}
+              {errorMessages?.map((errorMessage, index) => (
+                <p
+                  key={index}
+                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+                >
+                  {errorMessage}
+                </p>
+              ))}
             </div>
           </div>
         </div>

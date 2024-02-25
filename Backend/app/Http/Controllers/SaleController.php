@@ -124,7 +124,7 @@ class SaleController extends Controller
 
         return response()->json([
             'status' => true,
-            'data' =>  $products ,
+            'data' =>  $products ,cd
      
         ]);
     }

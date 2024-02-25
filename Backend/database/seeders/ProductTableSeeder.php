@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -15,12 +18,12 @@ class ProductTableSeeder extends Seeder
     public function run(): void
     {
         $products = [];
-        for ($i = 0; $i < 8000; $i++) {
-          $products[]=[
-                'warehouse_id' => 1,
-                'category_id' => 1, // Replace with the actual category ID
-                'brand_id' => 1, // Replace with the actual brand ID
-                'product_name' => 'Product ' . $i,
+        for ($i = 0; $i < 5000; $i++) {
+            $products[] = [
+                'warehouse_id' => Warehouse::inRandomOrder()->first()->id,
+                'category_id' => Category::inRandomOrder()->first()->id, // Replace with the actual category ID
+                'brand_id' => Brand::inRandomOrder()->first()->id, // Replace with the actual brand ID
+                'product_name' => fake()->full,
                 'unique_code' => 'PD' . '-' . $i . time() . Str::random(4),
                 'scan_code' => 'SP' . '-' . $i . Str::random(8),
                 // 'product_unit' => 'pcs',
