@@ -33,7 +33,13 @@ class ProductController extends Controller
         if ($request->scan_code) {
             $query = $query->where('scan_code', $request->scan_code);
         }
-
+  /**
+         * To retrieve product using scan_code
+         */
+        if ($request->warehouse_id) {
+            $query = $query->where('warehouse_id', $request->warehouse_id);
+        }
+        
         $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name')->latest()->paginate(15);
 
         return response()->json([
