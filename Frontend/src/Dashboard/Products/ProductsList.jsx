@@ -135,10 +135,11 @@ const ProductsList = () => {
       name: "Name",
       selector: (row) => <>{row?.product_name}</>,
     },
-    // {
-    //   name: "Code",
-    //   selector: (row) => <>{row?.unique_code}</>,
-    // },
+    {
+      name: "Code",
+      selector: (row) => <>{row?.scan_code}</>,
+      minWidth: "180px",
+    },
     {
       name: "Retail price",
       selector: (row) => <>{row?.product_retail_price}</>,

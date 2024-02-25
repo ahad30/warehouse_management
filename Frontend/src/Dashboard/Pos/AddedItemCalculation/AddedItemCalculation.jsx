@@ -4,7 +4,7 @@ const AddedItemCalculation = ({
     addedProduct
 }) => {
     return (
-        <div className="border border-purple-400">
+        <div className="">
             Added item Calculation
         </div>
     );

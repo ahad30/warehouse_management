@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class CategoryRequest extends FormRequest
 {
@@ -23,8 +24,8 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        //  if the request method is post
-        if ($this->method() == 'POST') {
+        // If the request method is post
+        if ($this->isMethod('post')) {
             return [
                 'category_name' => 'required|string|max:255|unique:categories',
                 'image' => 'required|mimes:jpg,jpeg,png',
@@ -32,10 +33,14 @@ class CategoryRequest extends FormRequest
             ];
         }
 
-        //  if the request method is put
-        if ($this->method() == 'PUT') {
+        // If the request method is put
+        if ($this->isMethod('put')) {
             return [
-                'category_name' => ['required', 'max:255'],
+                'category_name' => [
+                    'required',
+                    'max:255',
+                    Rule::unique('categories')->ignore($this->route('category')),
+                ],
                 'new_image' => 'sometimes|mimes:jpg,jpeg,png',
                 'description' => 'nullable',
             ];

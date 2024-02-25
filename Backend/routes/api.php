@@ -89,7 +89,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     Route::middleware(['verifyAdmin', 'verifySubAdmin'])->controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
-        Route::get('/single-warehouse/{id}', 'singleWarehouseCategories');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update/{id}', 'update');
@@ -140,7 +139,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::middleware(['verifyAdmin', 'verifySubAdmin'])->controller(BrandController::class)->prefix('/brands')->group(function () {
         Route::get('/', 'index');
-        Route::get('/single-warehouse/{id}', 'singleWarehouseBrands');
         Route::post('/store', 'store');
         Route::put('/update/{id}', 'update');
         Route::delete('/delete/{id}', 'delete');
@@ -171,7 +169,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::controller(SaleController::class)->prefix('invoice')->group(function () {
         /* ------------------------------- sale report ------------------------------ */
         Route::get('list/{from?}/{to?}/{dayCount?}', 'index');
-        Route::get('/create/', 'create');
+        Route::get('/create', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::put('/update', 'update');
@@ -222,8 +220,4 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::post('/import', [ImportExportController::class, 'import']);
     Route::post('/export', [ImportExportController::class, 'export']);
-
 });
-
-
-
