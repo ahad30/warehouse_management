@@ -1,56 +1,19 @@
 import { useState } from "react";
-
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
-import ImportTable from "./ImportTable";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import { useSetExportMutation } from "../../features/Export/ExportApi";
 
-// import { useGetProductsQuery } from "../../features/Product/productApi";
-
 const ImportExport = () => {
   const [filterData, setFilterData] = useState([]);
-  // const [startDate, setStartDate] = useState(null);
-  // const [endDate, setEndDate] = useState(null);
-  // const [date, setDate] = useState(null);
+  const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
 
-  const [setExport, { isLoading, isError, error, isSuccess, data }] =
-    useSetExportMutation();
-
-  // const {
-  //   data: productsData,
-  //   isLoading: productsIsLoading,
-  //   isSuccess: productsIsSuccess,
-  // } = useGetProductsQuery({ pageNumber: 0 });
-  // console.log(productsData);
-  // const handleStartDate = (date) => {
-  //   setStartDate(date);
-  //   setDate(null);
-  // };
-
-  // const handleEndDate = (date) => {
-  //   setEndDate(date);
-  //   setDate(null);
-  // };
+  const [setExport, { data }] = useSetExportMutation();
 
   const handleSubmit = async () => {
     setExport();
-    console.log();
-
-    // console.log("exporting");
-    // console.log(productsData?.products?.data);
-    // addExport();
-    // const url = window.URL.createObjectURL(
-    //   new Blob([productsData?.products?.data])
-    // );
-    // const link = document.createElement("a");
-    // link.href = url;
-    // link.setAttribute("download", "file.csv"); //or any other extension
-    // document.body.appendChild(link);
-    // link.click();
   };
-  const [dynamicFileLink, setDynamicFileLink] = useState("");
 
   return (
     <DashboardBackground>
@@ -83,7 +46,6 @@ const ImportExport = () => {
           <div className="mt-2 border bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
               <div className="flex">
-                {/* <label className="font-bold text-lg  p-5">Export :</label> */}
                 <div className="flex space-x-2 items-center m-1">
                   <button className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white">
                     All
@@ -103,22 +65,26 @@ const ImportExport = () => {
                 </div>
               </div>
               <div className="flex gap-10 ">
-                <div className="m-3">
-                  <a
-                    href={data?.url}
-                    // target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                  >
-                    Download File
-                  </a>
-                  <button
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded"
-                  >
-                    Export
-                  </button>
+                <div className="m-3 flex">
+                  {showButton && (
+                    <a
+                      href={data?.url}
+                      className="cursor-pointer m-auto border p-1 text-[#e74c3c] shadow-lg rounded text-xs"
+                      rel="noopener noreferrer"
+                      download
+                    >
+                      Download
+                    </a>
+                  )}
+                  <div onClick={() => setShowButton(!showButton)}>
+                    <button
+                      onClick={handleSubmit}
+                      type="submit"
+                      className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded"
+                    >
+                      Export
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -127,7 +93,7 @@ const ImportExport = () => {
             {/* Import download as CSV file */}
             <ImportAsCSV data={filterData} />
           </div>
-          <ImportTable />
+          {/* <ImportTable /> */}
         </div>
       </>
     </DashboardBackground>
