@@ -19,7 +19,7 @@ class ImportExportController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Imported successfully"
-        ]);
+        ], 200);
     }
     /**
      * Export product CSV file
