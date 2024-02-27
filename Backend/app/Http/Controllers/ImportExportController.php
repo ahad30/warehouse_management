@@ -26,10 +26,11 @@ class ImportExportController extends Controller
      */
     public function export()
     {
+        $file_name = time() . uniqid() . '-' . 'products.csv';
         try {
-            Excel::store(new ProductsExport, 'public/products.csv');
+            Excel::store(new ProductsExport, 'public/' . $file_name);
             // Generate the link to the file
-            $url = asset('storage/products.csv');
+            $url = asset('storage/' . $file_name);
             return response()->json([
                 'status' => true,
                 'url' => $url
