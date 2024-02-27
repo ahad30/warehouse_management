@@ -1,18 +1,38 @@
+import { useEffect } from "react";
 import { useSetImportMutation } from "../../features/Import/ImportApi";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import { useForm } from "react-hook-form";
-
+import { useDispatch } from "react-redux";
+import { toast } from "react-hot-toast";
 const ImportData = () => {
   const { data: settingsData } = useGetDefaultSettingsQuery();
-  const [setImport, { data }] = useSetImportMutation();
+  const [setImport, { isLoading, isError, error, isSuccess, data }] =
+    useSetImportMutation();
   const { register, handleSubmit } = useForm();
-
+  const dispatch = useDispatch();
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("file", data?.csv[0]);
     setImport(formData);
   };
-
+  useEffect(() => {
+    if (isError) {
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
+    }
+    if (isSuccess && data?.status) {
+      return toast.success(data?.message, { id: 1 });
+    }
+  }, [
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data?.message,
+    data?.status,
+    dispatch,
+  ]);
+  console.log(data);
   return (
     <>
       <div>

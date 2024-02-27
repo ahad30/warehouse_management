@@ -5,8 +5,12 @@ import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi"
 import { useSetExportMutation } from "../../features/Export/ExportApi";
 
 import ImportData from "./ImportData";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
+import { useForm } from "react-hook-form";
 
 const ImportExport = () => {
+  const { register } = useForm();
+  const { data: storesData } = useGetStoresQuery();
   const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
@@ -42,16 +46,24 @@ const ImportExport = () => {
                     All
                   </button>
                   <div>
-                    <select className="select select-bordered w-full max-w-xs  font-bold">
-                      <option disabled selected className="font-bold">
-                        Select Warehouse
-                      </option>
-                      <option>Warehouse One</option>
-                      <option>Warehouse Two</option>
-                      <option>Warehouse Three</option>
-                      <option>Warehouse Four</option>
-                      <option>Warehouse Five</option>
-                    </select>
+                    <label className="input-group">
+                      {/* <span className="font-semibold">
+                        Warehouse<span className="text-red-500 p-0">*</span>
+                      </span> */}
+                      <select
+                        // onChange={()=>}
+                        className="select select-bordered w-full max-w-xs"
+                        required
+                        {...register("warehouse_id")}
+                      >
+                        <option value={""}>Select Warehouse Info</option>
+                        {storesData?.data?.map((data) => (
+                          <option key={data?.id} value={data?.id}>
+                            {data?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </div>
                 </div>
               </div>
