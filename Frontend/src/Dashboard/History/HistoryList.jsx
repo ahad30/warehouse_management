@@ -10,24 +10,24 @@ import Paginator from "../../components/Paginator/Paginator";
 import { useSelector } from "react-redux";
 
 const HistoryList = () => {
-
   const [filterData, setFilterData] = useState([]);
-
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const { data: historiesData, isLoading: historiesIsLoading } =
     useGetHistoryQuery({ pageNumber: ActivePageNumber });
-  console.log(historiesData?.data?.paginator)
+
   useEffect(() => {
     setFilterData(historiesData?.data?.histories);
   }, [historiesData?.data]);
-
 
   // ALL CATEGORIES
   if (historiesIsLoading) {
     return <UseLoading />;
   }
-
+  /**For Searching */
+  const setFiltering = (val) => {
+    console.log(val);
+  };
   return (
     <>
       <DashboardBackground>
@@ -37,12 +37,11 @@ const HistoryList = () => {
         </TableHeadingTitle>
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
+          setFiltering={setFiltering}
           // btnTitle={"Transfer Product"}
           btnPath={"/dashboard/history/addHistory"}
           btnIcon={<BiSolidDuplicate size={20} />}
-
         />
-
 
         <Histories histories={filterData} />
         <br></br>
