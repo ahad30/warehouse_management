@@ -132,6 +132,7 @@ const TransferProduct = () => {
               onChange={handleWarehouseChange}
               id="from-selector"
               name="from_warehouse_id"
+              placeholder="Select source warehouse"
             />
           </div>
           <div>
@@ -141,6 +142,7 @@ const TransferProduct = () => {
               className="w-full"
               isOptionDisabled={(option) => option.disabled}
               name="to_warehouse_id"
+              placeholder="Select targeted warehouse"
             />
           </div>
           <div>
@@ -154,6 +156,7 @@ const TransferProduct = () => {
               onKeyDown={findProductHandler}
               onChange={fromSelectorDisabler}
               name="product_id[]"
+              placeholder="Select products"
             />
           </div>
         </div>

@@ -33,4 +33,8 @@ class History extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+    public function getCreatedAtAttribute($date)
+    {
+        return date('d-m-Y', strtotime($date));;
+    }
 }

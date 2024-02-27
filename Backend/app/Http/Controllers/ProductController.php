@@ -24,6 +24,7 @@ class ProductController extends Controller
     /**
      * Retrieves products
      */
+ 
     public function index(Request $request)
     {
 

@@ -8,6 +8,9 @@ const ImportData = () => {
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [setImport, { isLoading, isError, error, isSuccess, data }] =
     useSetImportMutation();
+
+  // console.log(data);
+
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
@@ -15,13 +18,17 @@ const ImportData = () => {
     formData.append("file", data?.csv[0]);
     setImport(formData);
   };
+
   useEffect(() => {
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
-    if (isSuccess && data?.status) {
-      return toast.success(data?.message, { id: 1 });
+    if (isSuccess) {
+      toast.success("Successfully Imported", { id: 1 });
+    } else if (isError) {
+      toast.error("Error importing");
+    } else if (isLoading) {
+      toast.loading("Importing! Please wait...");
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
     }
   }, [
     isLoading,
@@ -32,7 +39,7 @@ const ImportData = () => {
     data?.status,
     dispatch,
   ]);
-  console.log(data);
+
   return (
     <>
       <div>
