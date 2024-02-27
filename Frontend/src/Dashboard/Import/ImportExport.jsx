@@ -3,6 +3,7 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import { useSetExportMutation } from "../../features/Export/ExportApi";
+
 import ImportData from "./ImportData";
 
 const ImportExport = () => {
@@ -23,34 +24,15 @@ const ImportExport = () => {
           <p className="text-center text-xl font-semibold font-poppins underline underline-offset-8 ">
             Import / Export
           </p>
-          {/* <p className="text-xl font-semibold font-poppins mt-1 cursor-pointer">
-            <span className="hover:underline-offset-8 ">Import :</span>
-          </p> */}
           <ImportData />
-          {/* <div className="flex mt-3 mb-2">
-            <div className="w-full">
-              <input
-                type="file"
-                className="file-input bg-[#e74c3c] w-full text-white"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="inline-flex items-center py-2 px-4 ms-2 text-sm font-medium text-white rounded bg-[#e74c3c]"
-            >
-              Import
-            </button>
-          </div> */}
           <div>
-            <p className="">
+            <p>
               To know about how to import csv file and know about file structure
               <a href="" className="px-2 underline text-blue-600">
                 click here
               </a>
             </p>
           </div>
-
           <label className="font-bold text-lg mt-5 ">Export :</label>
           <div className="mt-2 border bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
