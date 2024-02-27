@@ -1,15 +1,54 @@
-import { array } from "prop-types";
+import { array, number } from "prop-types";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
-  console.log(addedProduct);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const handleRemoveItem = (id) => {
     const filterItem = addedProduct?.filter((item) => item?.id !== id);
     setAddedProduct([...filterItem]);
   };
 
+  const addedProductPrice = addedProduct?.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + Number(currentValue?.product_sale_price);
+    },
+    0
+  );
+
+  useEffect(() => {
+    const addedProductPrice = addedProduct?.reduce(
+      (accumulator, currentValue) => {
+        return accumulator + Number(currentValue?.product_sale_price);
+      },
+      0
+    );
+    setTotalPrice(addedProductPrice);
+  }, [addedProduct]);
+
+  //   console.log(totalPrice);
+  const handleTextAndDiscount = (value) => {
+    const count =
+      Number(totalPrice) - Number(totalPrice) * (Number(value) / 100);
+    if (count < 0) {
+      toast.error("Provided Value is too high");
+    } else {
+      setTotalPrice(count);
+    }
+  };
+  const handleShipping = (value) => {
+    const count =
+      Number(totalPrice) - Number(value) ;
+    if (count < 0) {
+      toast.error("Provided Value is too high");
+    } else {
+      setTotalPrice(count);
+    }
+  };
   return (
-    <div className="">
+    <div className=" flex flex-col items-stretch">
       <div className="border-b border-gray-200 shadow">
         <table className="divide-y w-full  border  divide-gray-300 ">
           <thead className=" ">
@@ -55,7 +94,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
         </table>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3">
+      <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
         {/* discount tax shipping start  */}
         <div className="flex  flex-col gap-y-4">
           {/*  tax */}
@@ -63,7 +102,8 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
             <input
               placeholder="Tax"
               className="border-0 focus:border-0 focus:ring-0"
-              type="text"
+              type="number"
+              onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
             />
             <span>%</span>
           </div>
@@ -72,16 +112,18 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
             <input
               placeholder="Discount"
               className="border-0 focus:border-0 focus:ring-0"
-              type="text"
+              type="number"
+              onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
             />
-            <span>$</span>
+            <span>%</span>
           </div>
-          {/*  tax */}
+          {/*  shipping */}
           <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
             <input
               placeholder="Shipping"
               className="border-0 focus:border-0 focus:ring-0"
-              type="text"
+              type="number"
+              onKeyUp={(e) => handleShipping(e.target?.value)}
             />
             <span>$</span>
           </div>
@@ -90,9 +132,13 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
 
         {/* sidebar text Calculation start */}
 
-        <div className="">
-            <h1 className="text-2xl my-2 font-semibold">Sub Total {0.00}</h1>
-            <h1 className="text-xl my-2 font-semibold">Total QTY {0.00}</h1>
+        <div className=" text-center">
+          <h1 className="text-2xl my-2 font-semibold">
+            Sub Total: {Number(addedProductPrice).toFixed(2)}
+          </h1>
+          <h1 className="text-xl my-2 font-semibold">
+            Total Price Sub Total: {Number(totalPrice).toFixed(2)}
+          </h1>
         </div>
         {/* sidebar text Calculation end */}
       </div>

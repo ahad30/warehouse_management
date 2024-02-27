@@ -40,7 +40,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
         ></CategoryBrandsAndWareHouse>
       </div>
 
-      <div className="bg-[#FCFCFC] py-5  min-h-screen rounded-b-lg p-3">
+      <div className="bg-[#FCFCFC] py-5   rounded-b-lg p-3">
         {/* products card  start */}
         <div className="grid grid-cols-2 gap-5 mt-5 lg:grid-cols-5 ">
           {productsData?.map(
