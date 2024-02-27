@@ -23,17 +23,14 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    
+
     public function rules(): array
     {
         return [
-            'id' => ['required','exists:products,id'],
+            'id' => ['required', 'exists:products,id'],
             'warehouse_id' => ['required'],
             'category_id' => ['required'],
             'product_name' => ['required', 'string', 'max:255'],
-            // 'product_quantity' => ['integer', 'required'],
-            "scan_code" => ['required',  Rule::unique('products')->ignore($this->product)],
-            // 'product_unit' => ['string', 'required'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
         ];
