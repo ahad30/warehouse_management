@@ -5,19 +5,27 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
   // console.log(item);
   const { product_images, product_name, scan_code, product_sale_price } = item;
   console.log(item);
+
   const handleAddedProduct = () => {
     const exist = addedProduct?.find((obj) => obj?.id == item?.id);
     if (exist) {
-      toast.error("Product already added");
+     const filetTheProduct = addedProduct?.filter((it)=> it?.id !== item?.id )
+     setAddedProduct([...filetTheProduct])
     } else {
       setAddedProduct([...addedProduct, item]);
     }
   };
-
+// const handleActive = () => {
+//   const findThe = addedProduct?.some((it)=> it?.id == item?.id)
+//  console.log(findThe)
+// }
   return (
     <div
-      onClick={() => handleAddedProduct()}
-      className="bg-white  relative  cursor-pointer p-1 rounded-lg shadow-lg"
+      onClick={() =>{
+        handleAddedProduct();
+
+      }}
+      className={`bg-white  relative  cursor-pointer p-1 rounded-lg shadow-lg ${addedProduct?.some((it)=> it?.id == item?.id) ? "ring-1" : ""}`}
     >
       <div className="flex justify-center">
         <img

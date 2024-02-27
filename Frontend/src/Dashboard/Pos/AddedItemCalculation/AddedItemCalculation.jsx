@@ -2,6 +2,7 @@ import { array, number } from "prop-types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { GrPowerReset } from "react-icons/gr";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -39,8 +40,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
     }
   };
   const handleShipping = (value) => {
-    const count =
-      Number(totalPrice) - Number(value) ;
+    const count = Number(totalPrice) - Number(value);
     if (count < 0) {
       toast.error("Provided Value is too high");
     } else {
@@ -48,7 +48,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
     }
   };
   return (
-    <div className=" flex flex-col items-stretch">
+    <div className="">
       <div className="border-b border-gray-200 shadow">
         <table className="divide-y w-full  border  divide-gray-300 ">
           <thead className=" ">
@@ -141,6 +141,12 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
           </h1>
         </div>
         {/* sidebar text Calculation end */}
+      </div>
+      <div>
+        {/* <div className="bg-red-500 text-white">
+          <p>Reset</p>
+          <GrPowerReset className="text-white"></GrPowerReset>
+        </div> */}
       </div>
     </div>
   );
