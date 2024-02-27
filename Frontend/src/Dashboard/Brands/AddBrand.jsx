@@ -70,15 +70,6 @@ const AddBrand = () => {
     dispatch,
   ]);
 
-  // Log loading, error, success, and data for debugging.
-  console.log(isLoading, isError, error, isSuccess, data);
-
-  // Get error messages from the error object using UseErrorMessages.
-  const errorMessages = UseErrorMessages(error);
-
-  // Log loading, error, success, and data again for debugging.
-  console.log(isLoading, isError, error, isSuccess, data);
-
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>

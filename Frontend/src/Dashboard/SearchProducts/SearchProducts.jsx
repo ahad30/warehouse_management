@@ -147,7 +147,13 @@ const SearchProducts = () => {
               <h2 className="text-xl p-3 font-semibold uppercase border-b-2 mb-2">
                 Siftings
               </h2>
-              <Histories histories={product?.histories} />
+              <Histories
+                histories={product?.histories}
+                extraData={{
+                  product_name: product?.product_name,
+                  scan_code: product?.scan_code,
+                }}
+              />
               <br />
               <br />
             </div>

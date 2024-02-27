@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Exists;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,7 @@ class ProductController extends Controller
     /**
      * Retrieves products
      */
+ 
     public function index(Request $request)
     {
 
@@ -30,9 +32,9 @@ class ProductController extends Controller
         /**
          * To retrieve product using scan_code
          */
-    
+
         if ($request->input('query')) {
-            $query = $query->orWhere('scan_code', 'like', "%". $request->input('query') . "%")->orWhere('product_name', 'like', "%".$request->input('query') . "%");
+            $query = $query->orWhere('scan_code', 'like', "%" . $request->input('query') . "%")->orWhere('product_name', 'like', "%" . $request->input('query') . "%");
         }
         /**
          * To retrieve product using scan_code
@@ -40,7 +42,7 @@ class ProductController extends Controller
         if ($request->warehouse_id) {
             $query = $query->where('warehouse_id', $request->warehouse_id);
         }
-        
+
         $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name')->latest()->paginate(15);
 
         return response()->json([
@@ -125,22 +127,26 @@ class ProductController extends Controller
             return $this->errorResponse(null, 'Product not found', 404);
         }
 
-        $input = [
-            'warehouse_id' => $request->warehouse_id,
-            'category_id' => $request->category_id,
-            'brand_id' => $request->brand_id,
-            'unique_code' => Str::random(8),
-            'scan_code' => $request->scan_code,
-        ];
+        try {
+            $input = [
+                'warehouse_id' => $request->warehouse_id,
+                'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id,
+                'unique_code' => Str::random(8),
+                'scan_code' => $request->scan_code,
+            ];
 
-        $data = $product->update(array_merge($request->validated(), $input));
-        if (!$data) {
+            $data = $product->update(array_merge($request->validated(), $input));
+            if (!$data) {
+                return $this->errorResponse(null, 'Something went wrong');
+            }
+            return $this->successResponse([
+                'status' => true,
+                'message' => "Product successfully updated"
+            ]);
+        } catch (\Exception $e) {
             return $this->errorResponse(null, 'Something went wrong');
         }
-        return $this->successResponse([
-            'status' => true,
-            'message' => "Product successfully updated"
-        ]);
     }
 
     public function imageUpdate(Request $request, $id)
