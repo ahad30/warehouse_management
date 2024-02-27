@@ -3,9 +3,14 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import { useSetExportMutation } from "../../features/Export/ExportApi";
+
 import ImportData from "./ImportData";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
+import { useForm } from "react-hook-form";
 
 const ImportExport = () => {
+  const { register } = useForm();
+  const { data: storesData } = useGetStoresQuery();
   const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
@@ -23,34 +28,15 @@ const ImportExport = () => {
           <p className="text-center text-xl font-semibold font-poppins underline underline-offset-8 ">
             Import / Export
           </p>
-          {/* <p className="text-xl font-semibold font-poppins mt-1 cursor-pointer">
-            <span className="hover:underline-offset-8 ">Import :</span>
-          </p> */}
           <ImportData />
-          {/* <div className="flex mt-3 mb-2">
-            <div className="w-full">
-              <input
-                type="file"
-                className="file-input bg-[#e74c3c] w-full text-white"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="inline-flex items-center py-2 px-4 ms-2 text-sm font-medium text-white rounded bg-[#e74c3c]"
-            >
-              Import
-            </button>
-          </div> */}
           <div>
-            <p className="">
+            <p>
               To know about how to import csv file and know about file structure
               <a href="" className="px-2 underline text-blue-600">
                 click here
               </a>
             </p>
           </div>
-
           <label className="font-bold text-lg mt-5 ">Export :</label>
           <div className="mt-2 border bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
@@ -60,16 +46,24 @@ const ImportExport = () => {
                     All
                   </button>
                   <div>
-                    <select className="select select-bordered w-full max-w-xs  font-bold">
-                      <option disabled selected className="font-bold">
-                        Select Warehouse
-                      </option>
-                      <option>Warehouse One</option>
-                      <option>Warehouse Two</option>
-                      <option>Warehouse Three</option>
-                      <option>Warehouse Four</option>
-                      <option>Warehouse Five</option>
-                    </select>
+                    <label className="input-group">
+                      {/* <span className="font-semibold">
+                        Warehouse<span className="text-red-500 p-0">*</span>
+                      </span> */}
+                      <select
+                        // onChange={()=>}
+                        className="select select-bordered w-full max-w-xs"
+                        required
+                        {...register("warehouse_id")}
+                      >
+                        <option value={""}>Select Warehouse Info</option>
+                        {storesData?.data?.map((data) => (
+                          <option key={data?.id} value={data?.id}>
+                            {data?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </div>
                 </div>
               </div>
