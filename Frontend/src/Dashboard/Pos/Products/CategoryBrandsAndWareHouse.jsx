@@ -29,7 +29,7 @@ const CategoryBrandsAndWareHouse = ({
   };
 
   return (
-    <div className=" grid-cols-1 grid gap-y-3">
+    <div className=" mt-8  grid-cols-1 grid gap-y-3">
       {/* brands, category , wareHouse start */}
 
       {/* category  start */}

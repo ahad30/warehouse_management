@@ -18,7 +18,7 @@ class ProductTableSeeder extends Seeder
     public function run(): void
     {
         $products = [];
-        for ($i = 0; $i < 5000; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $products[] = [
                 'warehouse_id' => Warehouse::inRandomOrder()->first()->id,
                 'category_id' => Category::inRandomOrder()->first()->id, // Replace with the actual category ID
