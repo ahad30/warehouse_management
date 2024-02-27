@@ -35,6 +35,7 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
+
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const {
@@ -121,9 +122,8 @@ const ProductsList = () => {
         <img
           src={
             row?.product_img
-              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/${
-                  row?.product_img
-                }`
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/${row?.product_img
+              }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt={row?.product_img}

@@ -7,6 +7,9 @@ const Histories = ({ histories }) => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
           <tr>
             <th scope="col" className="px-6 py-3">
+              #
+            </th>
+            <th scope="col" className="px-6 py-3">
               From
             </th>
             <th scope="col" className="px-6 py-3">
@@ -24,12 +27,12 @@ const Histories = ({ histories }) => {
           {histories?.length > 0 ? (
             histories?.map((history, index) => (
               <tr className="bg-white border-b " key={index}>
-                {/* <th
+                <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                 ok
-                </th> */}
+                  {history?.id}
+                </th>
                 <td className="px-6 py-4">
                   {" "}
                   {history?.from_warehouse_id?.name}
