@@ -29,9 +29,8 @@ const AddProduct = () => {
     return currentYear;
   };
   const onSubmit = (data) => {
-    console.log(data);
     const formData = new FormData();
-
+    const images = data?.images;
     formData.append("product_name", data?.product_name);
     // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
@@ -40,15 +39,14 @@ const AddProduct = () => {
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
-    // formData.append("product_quantity", data?.product_quantity);
-
     formData.append("scan_code", data?.scan_code);
-    if (data?.images.length > 0) {
-      formData.append("images", data?.images);
+
+    if (images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        console.log(images[i]);
+        formData.append("images[]", images[i]);
+      }
     }
-    // if (data?.images.length > 0) {
-    //   formData.append("images", data?.images);
-    // }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
     }
