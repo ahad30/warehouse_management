@@ -10,8 +10,8 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
 
   return (
     <div className="">
-      <div className="border-b   relative border-gray-200 shadow">
-        <table className="divide-y  w-full absolute border  divide-gray-300 ">
+      <div className="border-b border-gray-200 shadow">
+        <table className="divide-y w-full  border  divide-gray-300 ">
           <thead className=" ">
             <tr className="">
               <th className="px-6 py-2 text-start text-xs text-gray-500">
@@ -43,13 +43,58 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                   {Number(item?.product_sale_price).toFixed(2)}
                 </td>
                 <td className="px-6  py-2 text-sm text-gray-500">
-                  <RiDeleteBin6Line onClick={()=> handleRemoveItem(item?.id)} className="text-red-500 cursor-pointer" size={20}>
-                  </RiDeleteBin6Line>
+                  <RiDeleteBin6Line
+                    onClick={() => handleRemoveItem(item?.id)}
+                    className="text-red-500 cursor-pointer"
+                    size={20}
+                  ></RiDeleteBin6Line>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3">
+        {/* discount tax shipping start  */}
+        <div className="flex  flex-col gap-y-4">
+          {/*  tax */}
+          <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+            <input
+              placeholder="Tax"
+              className="border-0 focus:border-0 focus:ring-0"
+              type="text"
+            />
+            <span>%</span>
+          </div>
+          {/*  Discount */}
+          <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+            <input
+              placeholder="Discount"
+              className="border-0 focus:border-0 focus:ring-0"
+              type="text"
+            />
+            <span>$</span>
+          </div>
+          {/*  tax */}
+          <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+            <input
+              placeholder="Shipping"
+              className="border-0 focus:border-0 focus:ring-0"
+              type="text"
+            />
+            <span>$</span>
+          </div>
+        </div>
+        {/* discount tax shipping end  */}
+
+        {/* sidebar text Calculation start */}
+
+        <div className="">
+            <h1 className="text-2xl my-2 font-semibold">Sub Total {0.00}</h1>
+            <h1 className="text-xl my-2 font-semibold">Total QTY {0.00}</h1>
+        </div>
+        {/* sidebar text Calculation end */}
       </div>
     </div>
   );

@@ -3,13 +3,8 @@ import toast from "react-hot-toast";
 
 const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
   // console.log(item);
-  const {
-    product_images,
-    product_name,
-
-    product_sale_price,
-  } = item;
-
+  const { product_images, product_name, scan_code, product_sale_price } = item;
+  console.log(item);
   const handleAddedProduct = () => {
     const exist = addedProduct?.find((obj) => obj?.id == item?.id);
     if (exist) {
@@ -34,7 +29,7 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
         />
       </div>
       {/* product name start */}
-      <div className="mt-4">
+      <div className="mt-4 px-2">
         <h3 className="font-semibold text-base">{product_name}</h3>
         <h6 className=" text-sm">{product_name}</h6>
       </div>
@@ -46,7 +41,7 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
       </p>
 
       <p className="bg-[#0099FB] text-white rounded-lg w-1/3 absolute top-0 right-0 text-xs p-1">
-        ${Number(product_sale_price).toFixed(2)}
+        {scan_code}
       </p>
     </div>
   );
