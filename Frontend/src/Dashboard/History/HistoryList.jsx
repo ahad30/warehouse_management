@@ -31,10 +31,10 @@ const HistoryList = () => {
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>
+        {/* <TableHeadingTitle>
           History {historiesData?.histories?.length}{" "}
-          {/* Change the table title */}
-        </TableHeadingTitle>
+   
+        </TableHeadingTitle> */}
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
           setFiltering={setFiltering}
