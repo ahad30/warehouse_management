@@ -6,11 +6,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\StoreController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WarehouseController;
@@ -22,10 +20,6 @@ use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductShiftingController;
 use App\Http\Controllers\SearchProductController;
-
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -144,6 +138,16 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::delete('/delete/{id}', 'delete');
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*                              store controller                              */
+    /* -------------------------------------------------------------------------- */
+
+    // Route::controller(StoreController::class)->prefix('/stores')->group(function () {
+    //     Route::get('/', 'index');
+    //     Route::post('/store', 'store');
+    //     Route::put('/update', 'update');
+    //     Route::delete('/delete/{id}', 'delete');
+    // });
 
     /* -------------------------------------------------------------------------- */
     /*                             Settings controller                            */
@@ -184,8 +188,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductShiftingController::class)
         ->prefix('/productshift')->group(function () {
-            Route::post('/store', 'ProductShiftingStore');
-            Route::get('/index', 'ProductShiftingIndex');
+            Route::post('/store', 'store');
         });
 
     /* -------------------------------------------------------------------------- */
@@ -193,8 +196,8 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(HistoryController::class)
-        ->prefix('/history')->group(function () {
-            Route::get('/index', 'Histories');
+        ->group(function () {
+            Route::get('/histories', 'histories');
         });
 
 

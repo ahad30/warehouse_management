@@ -15,18 +15,22 @@ class History extends Model
 
     public function fromWarehouseId()
     {
-        return $this->belongsTo(Warehouse::class,'from_warehouse_id','id');
+        return $this->belongsTo(Warehouse::class, 'from_warehouse_id', 'id');
     }
     public function toWarehouseId()
     {
-        return $this->belongsTo(Warehouse::class,'to_warehouse_id','id');
+        return $this->belongsTo(Warehouse::class, 'to_warehouse_id', 'id');
     }
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function getCreateAtAttribute( $value)
+    public function getCreateAtAttribute($value)
     {
-       return $value;
+        return $value;
+    }
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 }

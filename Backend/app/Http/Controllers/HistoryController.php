@@ -7,17 +7,18 @@ use App\Models\History;
 
 class HistoryController extends Controller
 {
-    public function Histories(Request $request)
+    public function histories(Request $request)
     {
 
-        $histories = History::paginate(5);
-        
-        return response()->json([
+        $query = History::latest()->paginate(15);
+        $pagination = $query->toArray()['links'];
+        $histories = $query->load('fromWarehouseId', 'toWarehouseId', 'products', 'user');
+        return response([
             'status' => true,
-            'message' => "History Successfully Retrived",
-            'data' => $histories,
-        ]);
-
-    }//end Histories() 
-
+            'data' => [
+                'histories' => $histories,
+                'paginator' => $pagination
+            ],
+        ], 200);
+    }
 }
