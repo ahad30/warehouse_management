@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductByWarehouseExport;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use
@@ -26,10 +27,30 @@ class ImportExportController extends Controller
      */
     public function export()
     {
+        $file_name = time() . uniqid() . '-' . 'products.csv';
         try {
-            Excel::store(new ProductsExport, 'public/products.csv');
+            Excel::store(new ProductsExport, 'public/' . $file_name);
             // Generate the link to the file
-            $url = asset('storage/products.csv');
+            $url = asset('storage/' . $file_name);
+            return response()->json([
+                'status' => true,
+                'url' => $url
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => "something went wrong",
+            ], 400);
+        }
+    }
+    public function exportByWarehouse($id)
+    {
+        $product = Product::where('warehouse_id', $id)->latest()->get();
+        $file_name = time() . uniqid() . '-' . 'products.csv';
+        try {
+            Excel::store(new ProductByWarehouseExport($product), 'public/' . $file_name);
+            // Generate the link to the file
+            $url = asset('storage/' . $file_name);
             return response()->json([
                 'status' => true,
                 'url' => $url
