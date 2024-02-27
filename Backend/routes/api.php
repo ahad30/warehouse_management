@@ -188,8 +188,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
 
     Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductShiftingController::class)
         ->prefix('/productshift')->group(function () {
-            Route::post('/store', 'ProductShiftingStore');
-            Route::get('/index', 'ProductShiftingIndex');
+            Route::post('/store', 'store');
         });
 
     /* -------------------------------------------------------------------------- */
@@ -197,8 +196,8 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(HistoryController::class)
-        ->prefix('/history')->group(function () {
-            Route::get('/index', 'Histories');
+        ->group(function () {
+            Route::get('/histories', 'histories');
         });
 
 

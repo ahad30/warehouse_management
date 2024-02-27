@@ -16,7 +16,7 @@ class ProductShiftingController extends Controller
     use ResponseTrait;
 
 
-    public function ProductShiftingStore(ProductShiftingRequest $request)
+    public function store(ProductShiftingRequest $request)
     {
         try {
 
@@ -30,34 +30,35 @@ class ProductShiftingController extends Controller
             }
 
 
-            /** checking is both warehouse is same or not */
-            if($this->isSameWarehouse($request->from_warehouse_id,$request->to_warehouse_id)){
-                return $this->isSameWarehouse($request->from_warehouse_id,$request->to_warehouse_id);
-            }
-            
-                /** checking is the product belongs to warehouse or not */
-            if(!$this->isProductsBelongsToWarehouse($productIds,$request->from_warhouse_id)){
-                return response()->json(['status'=>true,'message' => "Product is not belongs to warehouse"]);
+
+
+            /** checking is the product belongs to warehouse or not */
+            if (!$this->isProductsBelongsToWarehouse($productIds, $request->from_warehouse_id)) {
+                return response(['status' => true, 'message' => "Product is not belongs to warehouse"], 400);
             };
-              
-        
 
 
+
+
+            // Create history record
+            $newHistories = [];
             foreach ($productIds as $productId) {
-                // Create history record
-                History::create([
+                $newHistories[] = [
                     "from_warehouse_id" => $request->from_warehouse_id,
                     "to_warehouse_id" => $request->to_warehouse_id,
                     "product_id" => $productId,
-                    "user_id" => Auth()->id(),
-                ]);
+                    "user_id" => auth()->id(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
 
                 // Update product's warehouse_id directly in the database query
                 Product::where('id', $productId)->update([
                     "warehouse_id" => $request->to_warehouse_id,
                 ]);
             }
-
+            // inserting history record to db
+            $histories = History::insert($newHistories);
 
             return response()->json([
                 'status' => true,
@@ -71,35 +72,21 @@ class ProductShiftingController extends Controller
             ]);
         }
     }
-    
+
+
+
     /**
-     *  Same warehouse checker
+     *  Is the product belongs to warehouse or nots
      * 
      */
-    public function isSameWarehouse($fromWarehouse,$toWarehouse):array
+    public function isProductsBelongsToWarehouse($productId, $fromWarehouseId): bool
     {
-        if($request->from_warehouse_id == $request->to_warehouse_id)
-            {
-             return  [
-                    'status' => false,
-                    'message' => "Same warehouse product can not shifted",
-                ];
+        foreach ($productId as $id) {
+            $product = Product::find($id);
+            if ($product->warehouse_id != $fromWarehouseId) {
+                return false;
             }
-            
-    }
-
-  /**
-   *  Is the product belongs to warehouse or nots
-   * 
-   */
-  public function isProductsBelongsToWarehouse($productId,$fromWarehouseId): boolean
-  {
-    foreach($productId as $id){
-        $product = Product::find($id);
-        if($product->id != $fromWarehouseId){
-            return false;
         }
+        return true;
     }
-    return true;
-  }
 }
