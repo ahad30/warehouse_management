@@ -41,4 +41,9 @@ class ImportExportController extends Controller
             ], 400);
         }
     }
+    public function exportByWarehouse($id)
+    {
+        $product = Product::where('warehouse_id', $id)->latest()->get();
+        return $product;
+    }
 }
