@@ -138,6 +138,16 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::delete('/delete/{id}', 'delete');
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*                              store controller                              */
+    /* -------------------------------------------------------------------------- */
+
+    // Route::controller(StoreController::class)->prefix('/stores')->group(function () {
+    //     Route::get('/', 'index');
+    //     Route::post('/store', 'store');
+    //     Route::put('/update', 'update');
+    //     Route::delete('/delete/{id}', 'delete');
+    // });
 
     /* -------------------------------------------------------------------------- */
     /*                             Settings controller                            */

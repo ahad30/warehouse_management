@@ -30,10 +30,11 @@ class ProductController extends Controller
         /**
          * To retrieve product using scan_code
          */
-        if ($request->scan_code) {
-            $query = $query->where('scan_code', $request->scan_code);
+    
+        if ($request->input('query')) {
+            $query = $query->orWhere('scan_code', 'like', "%". $request->input('query') . "%")->orWhere('product_name', 'like', "%".$request->input('query') . "%");
         }
-  /**
+        /**
          * To retrieve product using scan_code
          */
         if ($request->warehouse_id) {

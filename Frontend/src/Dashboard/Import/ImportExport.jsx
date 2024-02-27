@@ -3,21 +3,18 @@ import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import { useSetExportMutation } from "../../features/Export/ExportApi";
-// import { useSetImportMutation } from "../../features/Import/ImportApi";
+import ImportData from "./ImportData";
 
 const ImportExport = () => {
   const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
-
   const [setExport, { data }] = useSetExportMutation();
-  // const [setImport, { data }] = useSetImportMutation();
+
   const handleSubmit = async () => {
     setExport();
+    console.log();
   };
-  // const handleSubmitImport = async () => {
-  //   setImport();
-  // };
 
   return (
     <DashboardBackground>
@@ -26,11 +23,11 @@ const ImportExport = () => {
           <p className="text-center text-xl font-semibold font-poppins underline underline-offset-8 ">
             Import / Export
           </p>
-          <p className="text-xl font-semibold font-poppins mt-1 cursor-pointer">
+          {/* <p className="text-xl font-semibold font-poppins mt-1 cursor-pointer">
             <span className="hover:underline-offset-8 ">Import :</span>
-          </p>
-
-          <div className="flex mt-3 mb-2">
+          </p> */}
+          <ImportData />
+          {/* <div className="flex mt-3 mb-2">
             <div className="w-full">
               <input
                 type="file"
@@ -44,11 +41,11 @@ const ImportExport = () => {
             >
               Import
             </button>
-          </div>
+          </div> */}
           <div>
             <p className="">
               To know about how to import csv file and know about file structure
-              <a href="" className="px-2 underline text-blue-500">
+              <a href="" className="px-2 underline text-blue-600">
                 click here
               </a>
             </p>
@@ -105,7 +102,6 @@ const ImportExport = () => {
             {/* Import download as CSV file */}
             <ImportAsCSV data={filterData} />
           </div>
-          {/* <ImportTable /> */}
         </div>
       </>
     </DashboardBackground>

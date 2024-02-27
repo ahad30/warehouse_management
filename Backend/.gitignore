@@ -20,5 +20,6 @@ yarn-error.log
 /.vscode
 /public/uploads
 license.txt
-composer.lock
+
 .editorconfig
+composer.lock

@@ -21,6 +21,7 @@ const TransferProduct = () => {
   const { data: warehouseData } = useGetStoresQuery();
   const [fromWareHouseOptions, setFromWarehouseOptions] = useState([]);
   const [toWareHouseOptions, setToProductWarehouseOptions] = useState([]);
+  const [productsArray, setProductsArray] = useState([]);
   const { data: productsData } = useGetProductsQuery({
     pageNumber: 1,
     query: query,
@@ -31,11 +32,15 @@ const TransferProduct = () => {
   const [addHistory, { isLoading, isError, error, isSuccess, data }] =
     useAddHistoryMutation();
 
-  const onSubmit = async (data) => {
-    "from_warehouse_id", data?.from_warehouse_id;
-    "to_warehouse_id", data?.to_warehouse_id;
-    "product_id", data?.product_id;
-    addHistory(data);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let data = e.target;
+
+    addHistory({
+      from_warehouse_id: data?.from_warehouse_id.value,
+      to_warehouse_id: data?.to_warehouse_id.value,
+      product_ids: productsArray,
+    });
   };
 
   /** Initializing from warehouse options */
@@ -48,6 +53,7 @@ const TransferProduct = () => {
 
   /** Initializing to warehouse options */
   const handleWarehouseChange = (val) => {
+    setQuery(null);
     let options = warehouseData?.data?.map((warehouse, index) => {
       if (val?.value != warehouse?.id) {
         return { label: warehouse?.name, value: warehouse?.id };
@@ -69,11 +75,14 @@ const TransferProduct = () => {
     setProductOptions(productsOption);
   }, [productsData, warehouse_id]);
   /** Disabling fromSelectorDisabler */
+
   const fromSelectorDisabler = (val) => {
+    const valuesArray = val?.map((option) => option.value);
+    setProductsArray(valuesArray);
+    // console.log(productsArray);
     let fromSelector = document.querySelector("#from-selector");
     fromSelector.setAttribute("readonly", "true");
     fromSelector.setAttribute("disabled", "disabled");
-    console.log(fromSelector);
   };
   /** find product using query */
   const findProductHandler = (event) => {
@@ -110,17 +119,19 @@ const TransferProduct = () => {
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Transfer Product</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 border px-3 py-4 bg-gray-50">
           <div>
             <label className="input-group mb-2 font-medium">
               From Warehouse
             </label>
+
             <Select
               options={fromWareHouseOptions}
               className="w-full"
               onChange={handleWarehouseChange}
               id="from-selector"
+              name="from_warehouse_id"
             />
           </div>
           <div>
@@ -129,9 +140,7 @@ const TransferProduct = () => {
               options={toWareHouseOptions}
               className="w-full"
               isOptionDisabled={(option) => option.disabled}
-              // onKeyDown={(e) => {
-              //   console.log(e.target.value);
-              // }}
+              name="to_warehouse_id"
             />
           </div>
           <div>
@@ -144,6 +153,7 @@ const TransferProduct = () => {
               isMulti={true}
               onKeyDown={findProductHandler}
               onChange={fromSelectorDisabler}
+              name="product_id[]"
             />
           </div>
         </div>
