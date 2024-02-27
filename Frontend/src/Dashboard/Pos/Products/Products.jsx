@@ -50,6 +50,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
                   setAddedProduct={setAddedProduct}
                   key={item?.id}
                   item={item}
+                  addedProduct={addedProduct}
                 ></SingleProductCard>
               )
           )}

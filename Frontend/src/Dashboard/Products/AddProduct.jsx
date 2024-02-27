@@ -40,11 +40,10 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("scan_code", data?.scan_code);
-  
+
     if (images.length > 0) {
-      console.log("Hello")
       for (let i = 0; i < images.length; i++) {
-        console.log(images[i])
+        console.log(images[i]);
         formData.append("images[]", images[i]);
       }
     }
