@@ -21,7 +21,7 @@ class SaleRepository implements SaleRepositoryInterface
         /** Start database transaction */
         DB::beginTransaction();
         try {
-            $totalAmount = $this->calculateTotalAmount($request->input('items'),$newSaleId);
+            $totalAmount = $this->calculateTotalAmount($request->input('items'),$newSaleId, $request);
             /** Creating the sale record */
             $sale = Sale::create([
                 'invoice_no' => $invoice_no,
@@ -52,7 +52,7 @@ class SaleRepository implements SaleRepositoryInterface
      * 
      * @return $totalPrice
      */
-    private function calculateTotalAmount($items, $newSaleId):int
+    private function calculateTotalAmount($items, $newSaleId,Request $request):int
     {
         $total = 0;
         foreach ($items as $item) {
@@ -63,6 +63,8 @@ class SaleRepository implements SaleRepositoryInterface
             }
            /** Gathering product's price */
             $total+=$product->product_sale_price;
+            
+
             /**storing items in different model */
             SaleItem::create([
                 'sale_id' =>  $newSaleId,
@@ -82,6 +84,33 @@ class SaleRepository implements SaleRepositoryInterface
                 'average_rate' => $averagePriceOfProduct
             ]);
         }
+        /** Calculate Tax */
+        $productPriceWithTax = $this->calculateTax($total,$request->tax);
+        /** Calculate discount */
+        $productPriceWithDiscount = $this->calculateDiscount($total,$request->tax);
+        $total+=$productPriceWithTax+$productPriceWithDiscount;
+
         return $total;
     }
+
+    /**
+     *  Calculate tax
+     */
+
+     private function calculateTax($total,$tax=0) : int 
+     {
+           $productPriceWithTax = $total;
+           return $productPriceWithTax;
+     }
+     /**
+     *  Calculate discount
+     */
+
+     private function calculateDiscount($total,$discount=0) : int 
+     {
+           $productPriceWithDiscount = $total - ($discount*$total)/100;
+           info(($discount*$total)/100);
+           info($productPriceWithDiscount);
+           return $productPriceWithDiscount;
+     }
 }
