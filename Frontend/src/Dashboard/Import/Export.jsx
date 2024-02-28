@@ -53,14 +53,14 @@ const Export = () => {
           </p>
           <ImportData />
         </div>
-        {/* <div>
+        <div>
           <p>
             To know about how to import csv file and know about file structure
             <a href="" className="px-2 underline text-blue-600">
               click here
             </a>
           </p>
-        </div> */}
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label className="font-bold text-lg mt-5 ">Export :</label>
           <div className="mt-2 border bg-[#F3F4F6] rounded">
