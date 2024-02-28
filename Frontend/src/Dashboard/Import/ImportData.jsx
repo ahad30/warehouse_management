@@ -9,8 +9,6 @@ const ImportData = () => {
   const [setImport, { isLoading, isError, error, isSuccess, data }] =
     useSetImportMutation();
 
-  // console.log(data);
-
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data) => {

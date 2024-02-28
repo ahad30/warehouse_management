@@ -38,11 +38,12 @@ import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
 import InstallationRoute from "./InstallationRoute";
 import MSACRoute from "./MSACRoute";
-import ImportExport from "../Dashboard/Import/ImportExport";
+
 import PermissionDenied from "../pages/Errors/PermissionDenied";
 import HistoryList from "../Dashboard/History/HistoryList";
 import Pos from "../Dashboard/Pos/Pos";
 import TransferProduct from "../Dashboard/TransferProduct/TransferProduct";
+import Export from "../Dashboard/Import/Export";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -129,7 +130,7 @@ const routes = createBrowserRouter([
             path: "/dashboard/import",
             element: (
               <AdminRoute>
-                <ImportExport />
+                <Export />
               </AdminRoute>
             ),
           },
