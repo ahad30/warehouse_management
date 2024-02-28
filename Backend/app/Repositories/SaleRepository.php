@@ -11,17 +11,43 @@ use Illuminate\Support\Facades\DB;
 
 class SaleRepository implements SaleRepositoryInterface
 {
-    public function sale(Request $request)
+    private $newSaleId;
+    /**
+     * Set new sale id
+     *
+     */
+    private function setNewSaleId($newSaleId)
     {
-        /** Generate invoice number */
-        $prefix = "INV-";
-        $year = date("y");
-        $newSaleId = Sale::max('id') + 1;
-        $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
+        $this->newSaleId = $newSaleId;
+    }
+    /**
+     * Generate new invoice id
+     *
+     */
+    public function generateNewInvoiceId()
+    {
+          /** Generate invoice number */
+          $prefix = "INV-";
+          $year = date("y");
+          $newSaleId = Sale::max('id') + 1;
+          /** Initializing new sale id */
+          $this->setNewSaleId($newSaleId);
+          /** Generating new invoice id */
+          $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
+          return $invoice_no;
+    }
+    /**
+     * Creating new sale 
+     *
+     * @param Request $request
+     */
+    public function sale(Request $request) :array
+    {
+        $invoice_no = $this->generateNewInvoiceId();
         /** Start database transaction */
         DB::beginTransaction();
         try {
-            $totalAmount = $this->calculateTotalAmount($request->input('items'),$newSaleId, $request);
+            $totalAmount = $this->calculateTotalAmount($request->input('items'), $request);
             /** Creating the sale record */
             $sale = Sale::create([
                 'invoice_no' => $invoice_no,
@@ -32,19 +58,20 @@ class SaleRepository implements SaleRepositoryInterface
             ]);
 
             DB::commit();
-            // Commit the transaction
-
-            return response()->json([
+            /** Commit the transaction */
+            return [
                 'status' => true,
                 'message' => 'Invoice successfully created',
-            ]);
+                'code' => 201
+            ];
         } catch (Exception $e) {
-            // Rollback the transaction and handle the exception
+            /** Rollback the transaction and handle the exception */
             DB::rollBack();
-            return response()->json([
+            return [
                 'status' => false,
                 'message' => $e->getMessage(),
-            ], 500);
+                'code' => $e->getCode(),
+            ];
         }
     }
     /**
@@ -52,7 +79,7 @@ class SaleRepository implements SaleRepositoryInterface
      * 
      * @return $totalPrice
      */
-    private function calculateTotalAmount($items, $newSaleId,Request $request):int
+    private function calculateTotalAmount($items,Request $request):int
     {
         $total = 0;
         foreach ($items as $item) {
@@ -64,19 +91,18 @@ class SaleRepository implements SaleRepositoryInterface
            /** Gathering product's price */
             $total+=$product->product_sale_price;
             
-
-            /**storing items in different model */
+            /** Storing items in different model */
             SaleItem::create([
-                'sale_id' =>  $newSaleId,
+                'sale_id' =>  $this->newSaleId,
                 'product_id' => $product->id,
                 'name' => $product->product_name,
                 'code' => $product->scan_code,
                 'product_sold_price' => $product->product_sale_price, //working here
                 'product_retail_price' => $product->product_retail_price,
             ]);
+            
             /**Updating product's sold status to 1; */
            $product->increment('is_sold',1);
-         
 
             $averagePriceOfProduct = SaleItem::avg('product_sold_price');
             /**Initializing average price of product */
@@ -88,7 +114,8 @@ class SaleRepository implements SaleRepositoryInterface
         $productPriceWithTax = $this->calculateTax($total,$request->tax);
         /** Calculate discount */
         $productPriceWithDiscount = $this->calculateDiscount($total,$request->tax);
-        $total+=$productPriceWithTax+$productPriceWithDiscount;
+        /** Adding product's tax and discount together to get actual price */
+        $total+= $productPriceWithTax + $productPriceWithDiscount;
 
         return $total;
     }
@@ -99,18 +126,17 @@ class SaleRepository implements SaleRepositoryInterface
 
      private function calculateTax($total,$tax=0) : int 
      {
-           $productPriceWithTax = $total;
+           $productPriceWithTax = $total + ($tax*$total)/100;
            return $productPriceWithTax;
      }
      /**
      *  Calculate discount
+     * 
      */
 
      private function calculateDiscount($total,$discount=0) : int 
      {
            $productPriceWithDiscount = $total - ($discount*$total)/100;
-           info(($discount*$total)/100);
-           info($productPriceWithDiscount);
            return $productPriceWithDiscount;
      }
 }

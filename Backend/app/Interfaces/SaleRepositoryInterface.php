@@ -6,5 +6,5 @@ use Illuminate\Http\Request;
 
 Interface SaleRepositoryInterface
 {
-    public function sale(Request $request);
+    public function sale(Request $request):array;
 }

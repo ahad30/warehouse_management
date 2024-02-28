@@ -93,10 +93,6 @@ class SaleController extends Controller
         return $invoices;
     }
 
-
-
-  
-
     /**
      *
      * @create Request $request
@@ -136,10 +132,20 @@ class SaleController extends Controller
         ]);
     }
 
-    // Store - Create and store a new invoice
+   /**
+    * Store - Create and store a new invoice
+    *
+    * @param SaleControllerRequest $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(SaleControllerRequest $request)
     {
-    return  $this->saleRepository->sale($request);
+        $sale =  $this->saleRepository->sale($request);
+        
+        return response([
+            'status' => $sale['status'],
+            'message' => $sale['message']
+        ],$sale['code']);
     }
 
 
@@ -242,18 +248,6 @@ class SaleController extends Controller
 
 
 
-    public function search(Request $request)
-    {   
-        // $category_id = request('category'),
-        // $warehouse_id = request('warehouse'),
-        // $brand_id = request('brand'),
-
-        // if('category_id' == $category_id && 'warehouse_id' == $warehouse_id && 'brand_id' == $brand_id )
-        // {
-
-        // }
-
-    }
 
 
 }
