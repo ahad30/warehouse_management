@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { GrPowerReset } from "react-icons/gr";
+import { RxReset } from "react-icons/rx";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -94,59 +95,69 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
         </table>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
-        {/* discount tax shipping start  */}
-        <div className="flex  flex-col gap-y-4">
-          {/*  tax */}
-          <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
-            <input
-              placeholder="Tax"
-              className="border-0 focus:border-0 focus:ring-0"
-              type="number"
-              onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
-            />
-            <span>%</span>
+      <div className="absolute bottom-14">
+        {/* calculated section */}
+        <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
+          {/* discount tax shipping start  */}
+          <div className="flex  flex-col gap-y-4">
+            {/*  tax */}
+            <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+              <input
+                placeholder="Tax"
+                className="border-0 focus:border-0 focus:ring-0"
+                type="number"
+                onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
+              />
+              <span>%</span>
+            </div>
+            {/*  Discount */}
+            <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+              <input
+                placeholder="Discount"
+                className="border-0 focus:border-0 focus:ring-0"
+                type="number"
+                onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
+              />
+              <span>%</span>
+            </div>
+            {/*  shipping */}
+            <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+              <input
+                placeholder="Shipping"
+                className="border-0 focus:border-0 focus:ring-0"
+                type="number"
+                onKeyUp={(e) => handleShipping(e.target?.value)}
+              />
+              <span>$</span>
+            </div>
           </div>
-          {/*  Discount */}
-          <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
-            <input
-              placeholder="Discount"
-              className="border-0 focus:border-0 focus:ring-0"
-              type="number"
-              onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
-            />
-            <span>%</span>
+          {/* discount tax shipping end  */}
+
+          {/* sidebar text Calculation start */}
+
+          <div className=" text-center">
+            <h1 className="text-2xl my-2 font-semibold">
+              Sub Total: {Number(addedProductPrice).toFixed(2)}
+            </h1>
+            <h1 className="text-xl my-2 font-semibold">
+              Total Price Sub Total: {Number(totalPrice).toFixed(2)}
+            </h1>
           </div>
-          {/*  shipping */}
-          <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
-            <input
-              placeholder="Shipping"
-              className="border-0 focus:border-0 focus:ring-0"
-              type="number"
-              onKeyUp={(e) => handleShipping(e.target?.value)}
-            />
-            <span>$</span>
+          {/* sidebar text Calculation end */}
+        </div>
+
+        {/* button section */}
+        <div className="flex gap-x-3 p-2">
+          <div className=" bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
+            <p>Reset</p>
+            <RxReset size={25}></RxReset>
+          </div>
+
+          <div className=" bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
+            <p>Submit</p>
+            <RxReset size={25}></RxReset>
           </div>
         </div>
-        {/* discount tax shipping end  */}
-
-        {/* sidebar text Calculation start */}
-
-        <div className=" text-center">
-          <h1 className="text-2xl my-2 font-semibold">
-            Sub Total: {Number(addedProductPrice).toFixed(2)}
-          </h1>
-          <h1 className="text-xl my-2 font-semibold">
-            Total Price Sub Total: {Number(totalPrice).toFixed(2)}
-          </h1>
-        </div>
-        {/* sidebar text Calculation end */}
-      </div>
-      <div>
-        {/* <div className="bg-red-500 text-white">
-          <p>Reset</p>
-          <GrPowerReset className="text-white"></GrPowerReset>
-        </div> */}
       </div>
     </div>
   );
