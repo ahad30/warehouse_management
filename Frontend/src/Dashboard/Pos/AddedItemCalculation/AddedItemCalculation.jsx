@@ -6,6 +6,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { RxReset } from "react-icons/rx";
 import { MdDone } from "react-icons/md";
 import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
+import { UseErrorMessages } from "../../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -73,36 +74,50 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setTotalPrice(count);
     }
   };
-  const [createNewPos, { data, isError, isLoading, isSuccess }] =
-    useNewInvoiceMutation();
+  const [
+    createNewPos,
+    { data, isError, isLoading, isSuccess, error: posError },
+  ] = useNewInvoiceMutation();
   const createPos = () => {
     createNewPos({
       items: addedProduct?.map((item) => item?.id),
-      discount,
-      shipping,
-      tax,
+      discount: Number(discount),
+      shipping : Number(shipping),
+      tax: Number(tax),
     });
   };
 
+  const errorMessages = UseErrorMessages(posError);
   useEffect(() => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
     }
 
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
+    if (isError || posError) {
+      const errorMessage = data?.message || error?.status;
       toast.error(errorMessage, { id: 1 });
     }
 
     if (isSuccess && data?.status) {
-      setAddedProduct([])
-      setTax("")
-      setDiscount("")
-      setShipping("")
+      setAddedProduct([]);
+      setTax("");
+      setDiscount("");
+      setShipping("");
       toast.success(data?.message, { id: 1 });
       // return navigate("/dashboard/product");
     }
-  }, [isLoading, isSuccess, data]);
+  }, [isLoading, posError, isError, isSuccess, data]);
+
+  // const s =  errorMessages.map((item) => toast.error(item, { id: 1 }));
+  //  console.log(errorMessages)
+  useEffect(() => {
+    if (errorMessages.length > 0 && posError) {
+      for (let index = 0; index < errorMessages.length; index++) {
+        toast.error(errorMessages[index] , {id: index});
+      }
+    }
+  }, [errorMessages, errorMessages.length, posError]);
+  // console.log(data)
   return (
     <div className="">
       <div className="border-b max-h-[400px] overflow-y-scroll   border-gray-200 shadow">
