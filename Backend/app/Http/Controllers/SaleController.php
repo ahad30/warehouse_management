@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaleControllerRequest;
+use App\Interfaces\SaleRepositoryInterface;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Sale;
@@ -17,7 +19,12 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class SaleController extends Controller
+
 {
+    private $saleRepository;
+    public function __construct(SaleRepositoryInterface $saleRepository) {
+        $this->saleRepository = $saleRepository;
+    }
     // index
     // Index - Retrieve invoices with optional date filtering
     public function index($from = null, $to = null, $dayCount = null): Response
@@ -86,10 +93,6 @@ class SaleController extends Controller
         return $invoices;
     }
 
-
-
-  
-
     /**
      *
      * @create Request $request
@@ -129,140 +132,20 @@ class SaleController extends Controller
         ]);
     }
 
-    // Store - Create and store a new invoice
-    public function store(Request $request)
+   /**
+    * Store - Create and store a new invoice
+    *
+    * @param SaleControllerRequest $request
+    * @return \Illuminate\Http\Response
+    */
+    public function store(SaleControllerRequest $request)
     {
-        // return $request->all();
-        $validator = Validator::make($request->all(), [
-            'invoiceInfo.issueDate' => 'required|date_format:Y-m-d',
-            'invoiceInfo.dueDate' => 'date_format:Y-m-d',
-            'calculation.discount' => 'required|numeric',
-            'calculation.shipping' => 'required|numeric',
-            'calculation.subTotal' => 'required|numeric',
-            'calculation.total' => 'required|numeric',
-            'calculation.paidAmount' => 'required',
-            'customer.name' => 'required|string',
-            'customer.phone' => 'required|string',
-            'items' => 'required|array',
-            'items.*.category_id' => 'required|numeric',
-            'items.*.id' => 'required|numeric',
-            'items.*.quantity' => 'required|numeric',
-            'items.*.total_price_quantity_tax' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error!',
-                'errors' => $validator->errors(),
-            ], 400);
-        }
-
-        // Create or find the customer
-        $customerInfo = $request->input('customer');
-        $customer = Customer::firstOrNew(['phone' => $customerInfo['phone']]);
-        $customer->fill($customerInfo)->save();
-
-        // Generate invoice number
-        $prefix = "INV-";
-        $year = date("y");
-        $newSaleId = Sale::max('id') + 1;
-        $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
-
-        // Prepare the data for the new sale
-        $invoiceInfo = $request->input('invoiceInfo');
-        $calculation = $request->input('calculation');
-        $formattedIssueDate = Carbon::parse($invoiceInfo['issueDate'])->format('Y-m-d');
-        $formattedDueDate = $invoiceInfo['dueDate'] ? Carbon::parse($invoiceInfo['dueDate'])->format('Y-m-d') : null;
-
-        // Start a database transaction
-        DB::beginTransaction();
-
-        try {
-
-            // Create the sale record
-            $sale = Sale::create([
-                'invoice_no' => $invoice_no,
-                'customer_id' => $customer->id,
-                'discount' => $calculation['discount'],
-                'shipping' => $calculation['shipping'],
-                'sub_total' => $calculation['subTotal'],
-                'total' => $calculation['total'],
-                'paid_amount' => $calculation['paidAmount'],
-                'due_amount' => $calculation['due'],
-                'issue_date' => $formattedIssueDate,
-                'due_date' => $formattedDueDate,
-                'status' => $calculation['due'] > 0 ? 0 : 1,
-            ]);
-
-            // Store sale items
-            $items = $request->input('items');
-            foreach ($items as $item) {
-                $product = Product::find($item['id']);
-
-                if (!$product || $product->product_quantity < $item['quantity']) {
-                    DB::rollBack();
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Product not found or insufficient quantity in stock',
-                    ], 400);
-                }
-
-                // storing items in different model
-                SaleItem::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $product->id,
-                    'name' => $product->product_name,
-                    'code' => $product->product_code,
-                    'quantity' => $item['quantity'],
-                    'tax' => $item['tax'],
-                    'total_price_quantity_tax' => $item['total_price_quantity_tax'],
-                    'rate' => $product->product_sale_price,
-                    'product_retail_price' => $product->product_retail_price,
-                    'unit' => $product->product_unit,
-                    'description' => $product->product_desc,
-                ]);
-                $averagePriceOfProduct = SaleItem::avg('rate');
-                // return $averagePriceOfProduct; //average price of product
-                DB::table('sale_items')->where('product_id', $product->id)->update([
-                    'average_rate' => $averagePriceOfProduct
-                ]);
-                // Update product quantity in stock
-                $product->decrement('product_quantity', $item['quantity']);
-            }
-            DB::commit();
-            // Commit the transaction
-
-
-
-            $settings = Settings::find(1); //getting settings
-
-            $companyInfo = CompanyInfo::find(1);
-            // Fetch sale items and customer for response
-            $items = SaleItem::where('sale_id', $sale->id)->get();
-            $customer = $sale->customer;
-            if ($settings->mail_option == 'on' && $customer->email != null) {
-                InvoiceCreatedJob::dispatch($customer, $sale, $items, $settings, $companyInfo);
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Invoice successfully created',
-                'data' => [
-                    'invoice' => $sale,
-                    'items' => $items,
-                    'customer' => $customer,
-                ],
-            ]);
-        } catch (Exception $e) {
-            // Rollback the transaction and handle the exception
-            DB::rollBack();
-
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage(),
-            ], 500);
-        }
+        $sale =  $this->saleRepository->sale($request);
+        
+        return response([
+            'status' => $sale['status'],
+            'message' => $sale['message']
+        ],$sale['code']);
     }
 
 
@@ -365,18 +248,6 @@ class SaleController extends Controller
 
 
 
-    public function search(Request $request)
-    {   
-        // $category_id = request('category'),
-        // $warehouse_id = request('warehouse'),
-        // $brand_id = request('brand'),
-
-        // if('category_id' == $category_id && 'warehouse_id' == $warehouse_id && 'brand_id' == $brand_id )
-        // {
-
-        // }
-
-    }
 
 
 }

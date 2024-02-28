@@ -1,8 +1,23 @@
 import { func } from "prop-types";
 import { useState } from "react";
+import { RxCross2 } from "react-icons/rx";
+import { CiSearch } from "react-icons/ci";
+
 
 const Search = ({ setSingleScanCode }) => {
   const [text, setText] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const search = form.search.value;
+    if (search) {
+      setSingleScanCode(search);
+    } else {
+      setSingleScanCode("");
+    }
+  };
+
   return (
     <div className="relative ">
       <label htmlFor="Search" className="sr-only">
@@ -10,35 +25,24 @@ const Search = ({ setSingleScanCode }) => {
         Search{" "}
       </label>
 
-      <input
-        type="text"
-        id="Search"
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Search for..."
-        className="w-full rounded-lg py-4 border-gray-200 pe-10 shadow-sm sm:text-sm"
-      />
-
-      <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-        <button type="button" className="text-red-600 hover:text-gray-700 ">
-          <span className="sr-only">Search</span>
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-8 w-12 "
-            onClick={() => setSingleScanCode(text)}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-        </button>
-      </span>
+      <form onSubmit={handleSubmit} action="">
+        <input
+          type="text"
+          id="Search"
+          name="search"
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Search for Scan code..."
+          className="w-full rounded-lg py-4 border-gray-200 pe-10 shadow-sm sm:text-sm"
+        />
+      </form>
+    
+      <div className="absolute right-2 top-0 bottom-0 flex justify-center items-center gap-x-3">
+        <RxCross2 className={`cursor-pointer duration-700 ${text ? "" : "w-0"}`} onClick={()=> {
+          setText("")
+          setSingleScanCode("")
+        }} size={25}></RxCross2>
+        <CiSearch className="hover cursor-pointer hover:text-red-500" onClick={() => setSingleScanCode(text)} size={40}></CiSearch>
+      </div>
     </div>
   );
 };

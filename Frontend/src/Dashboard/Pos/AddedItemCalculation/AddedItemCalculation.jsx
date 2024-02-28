@@ -2,11 +2,17 @@ import { array, number } from "prop-types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { GrPowerReset } from "react-icons/gr";
+
 import { RxReset } from "react-icons/rx";
+import { MdDone } from "react-icons/md";
+import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [shipping, setShipping] = useState(0);
+  const [tax, setTax] = useState(0.0);
+  const [error, setError] = useState(false);
 
   const handleRemoveItem = (id) => {
     const filterItem = addedProduct?.filter((item) => item?.id !== id);
@@ -31,26 +37,75 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   }, [addedProduct]);
 
   //   console.log(totalPrice);
-  const handleTextAndDiscount = (value) => {
+  const handleTextAndDiscount = (value, from) => {
+    if (value < 0) {
+      setError(true);
+      return toast.error("Value must be greater than zero");
+    }
     const count =
       Number(totalPrice) - Number(totalPrice) * (Number(value) / 100);
     if (count < 0) {
+      setError(true);
       toast.error("Provided Value is too high");
     } else {
+      setError(false);
+      if (from === "Discount") {
+        setDiscount(value);
+      }
+      if (from === "Tax") {
+        setTax(value);
+      }
       setTotalPrice(count);
     }
   };
   const handleShipping = (value) => {
+    if (value < 0) {
+      setError(true);
+      return toast.error("Value must be greater than zero");
+    }
     const count = Number(totalPrice) - Number(value);
     if (count < 0) {
+      setError(true);
       toast.error("Provided Value is too high");
     } else {
+      setError(false);
+      setShipping(value);
       setTotalPrice(count);
     }
   };
+  const [createNewPos, { data, isError, isLoading, isSuccess }] =
+    useNewInvoiceMutation();
+  const createPos = () => {
+    createNewPos({
+      items: addedProduct?.map((item) => item?.id),
+      discount,
+      shipping,
+      tax,
+    });
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
+
+    if (isError) {
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
+    }
+
+    if (isSuccess && data?.status) {
+      setAddedProduct([])
+      setTax("")
+      setDiscount("")
+      setShipping("")
+      toast.success(data?.message, { id: 1 });
+      // return navigate("/dashboard/product");
+    }
+  }, [isLoading, isSuccess, data]);
   return (
     <div className="">
-      <div className="border-b border-gray-200 shadow">
+      <div className="border-b max-h-[400px] overflow-y-scroll   border-gray-200 shadow">
         <table className="divide-y w-full  border  divide-gray-300 ">
           <thead className=" ">
             <tr className="">
@@ -95,28 +150,43 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
         </table>
       </div>
 
-      <div className="absolute bottom-14">
+      <div className="absolute bottom-7 bg-white   w-full">
         {/* calculated section */}
         <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
           {/* discount tax shipping start  */}
-          <div className="flex  flex-col gap-y-4">
+          <div className="flex flex-col gap-y-4">
             {/*  tax */}
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Tax"
-                className="border-0 focus:border-0 focus:ring-0"
+                className="border-0  w-full focus:border-0 focus:ring-0"
                 type="number"
-                onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
+                value={Number(tax) == 0 ? "tax" : tax}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value >= 0) {
+                    setTax(value);
+                    handleTextAndDiscount(e.target?.value, "Tax");
+                  }
+                }}
               />
+
               <span>%</span>
             </div>
             {/*  Discount */}
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Discount"
-                className="border-0 focus:border-0 focus:ring-0"
+                className="border-0 focus:border-0 w-full focus:ring-0"
                 type="number"
-                onKeyUp={(e) => handleTextAndDiscount(e.target?.value)}
+                value={Number(discount) == 0 ? "Discount" : discount}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value >= 0) {
+                    setDiscount(value);
+                    handleTextAndDiscount(value, "Discount");
+                  }
+                }}
               />
               <span>%</span>
             </div>
@@ -124,9 +194,16 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Shipping"
-                className="border-0 focus:border-0 focus:ring-0"
+                className="border-0 w-full focus:border-0 focus:ring-0"
                 type="number"
-                onKeyUp={(e) => handleShipping(e.target?.value)}
+                value={Number(shipping) == 0 ? "Shipping" : shipping}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value >= 0) {
+                    setShipping(value);
+                    handleShipping(value);
+                  }
+                }}
               />
               <span>$</span>
             </div>
@@ -148,14 +225,24 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
 
         {/* button section */}
         <div className="flex gap-x-3 p-2">
-          <div className=" bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
+          <div
+            onClick={() => setAddedProduct([])}
+            className=" cursor-pointer bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white"
+          >
             <p>Reset</p>
             <RxReset size={25}></RxReset>
           </div>
 
-          <div className=" bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
+          <div
+            onClick={() => createPos()}
+            className={`bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white ${
+              error === true
+                ? "disabled  cursor-none bg-green-200"
+                : "cursor-pointer bg-[#2FC989] "
+            }`}
+          >
             <p>Submit</p>
-            <RxReset size={25}></RxReset>
+            <MdDone size={25}></MdDone>
           </div>
         </div>
       </div>

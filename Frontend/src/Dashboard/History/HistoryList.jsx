@@ -11,10 +11,11 @@ import { useSelector } from "react-redux";
 
 const HistoryList = () => {
   const [filterData, setFilterData] = useState([]);
+  const [query, setQuery] = useState("");
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const { data: historiesData, isLoading: historiesIsLoading } =
-    useGetHistoryQuery({ pageNumber: ActivePageNumber });
+    useGetHistoryQuery({ pageNumber: ActivePageNumber, query: query });
 
   useEffect(() => {
     setFilterData(historiesData?.data?.histories);
@@ -26,7 +27,9 @@ const HistoryList = () => {
   }
   /**For Searching */
   const setFiltering = (val) => {
-    console.log(val);
+    if (val?.length > 3) {
+      setQuery(val);
+    }
   };
   return (
     <>

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,8 +18,9 @@ class ProductTableSeeder extends Seeder
      */
     public function run(): void
     {
+        
         $products = [];
-        for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $products[] = [
                 'warehouse_id' => Warehouse::inRandomOrder()->first()->id,
                 'category_id' => Category::inRandomOrder()->first()->id, // Replace with the actual category ID
@@ -34,5 +36,7 @@ class ProductTableSeeder extends Seeder
             ];
         }
         Product::insert($products);
+
+       ProductImage::factory(1000)->create();
     }
 }

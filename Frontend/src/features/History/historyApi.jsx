@@ -14,8 +14,8 @@ const historyApi = apiSlice.injectEndpoints({
       invalidatesTags: ["getHistory"],
     }),
     getHistory: build.query({
-      query: ({ pageNumber }) => ({
-        url: `/histories?page=${pageNumber ? pageNumber : 1}`,
+      query: ({ pageNumber, query }) => ({
+        url: `/histories?page=${pageNumber ? pageNumber : 1}&query=${query}`,
       }),
       providesTags: ["Histories"],
     }),
