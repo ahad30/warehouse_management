@@ -115,7 +115,7 @@ const AddProduct = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Name<span className="text-red-500 p-0">*</span>
             </span>
             <input
@@ -127,7 +127,7 @@ const AddProduct = () => {
             />
           </label>
           {/* <label className="input-group">
-            <span className="font-semibold">
+           <span className="font-semibold text-sm">
               Code<span className="text-red-500 p-0">*</span>
             </span>
             <input
@@ -139,7 +139,7 @@ const AddProduct = () => {
             />
           </label> */}
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -157,7 +157,7 @@ const AddProduct = () => {
             </select>
           </label>
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Category<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -174,7 +174,7 @@ const AddProduct = () => {
             </select>
           </label>
           {/* <label className="input-group">
-            <span className="font-semibold">
+           <span className="font-semibold text-sm">
               Quantity<span className="text-red-500 p-0">*</span>
             </span>
             <input
@@ -187,7 +187,7 @@ const AddProduct = () => {
             />
           </label> */}
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Retail<span className="text-red-500 p-0">*</span>
             </span>
             <input
@@ -200,8 +200,8 @@ const AddProduct = () => {
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold">
-              Sold<span className="text-red-500 p-0">*</span>
+            <span className="font-semibold text-sm">
+              Sell Price<span className="text-red-500 p-0">*</span>
             </span>
             <input
               type="number"
@@ -213,7 +213,7 @@ const AddProduct = () => {
             />
           </label>
           {/* <label className="input-group">
-            <span className="font-semibold">
+           <span className="font-semibold text-sm">
               Unit<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -229,7 +229,7 @@ const AddProduct = () => {
             </select>
           </label> */}
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Brands<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -247,7 +247,7 @@ const AddProduct = () => {
           </label>
 
           {/* <label className="input-group">
-            <span className="font-semibold">Description</span>
+           <span className="font-semibold text-sm">Description</span>
             <input
               type="text"
               placeholder="Product Description"
