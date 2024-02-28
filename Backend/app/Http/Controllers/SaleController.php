@@ -99,7 +99,7 @@ class SaleController extends Controller
     public function create( Request $request): Response
     {
     
-        $productsQuery = Product::where('is_sold',false);
+        $productsQuery = Product::where('is_sold',false)->with("productImages");
 
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
@@ -124,7 +124,7 @@ class SaleController extends Controller
 
         return response()->json([
             'status' => true,
-            'data' =>  $products ,cd
+            'data' =>  $products,
      
         ]);
     }

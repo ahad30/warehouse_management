@@ -8,7 +8,7 @@ const productApi = apiSlice.injectEndpoints({
         url: "/products/store",
         body: data,
         header: {
-          "Content-type": "application/json",
+          "Content-type": "multipart/form-data",
         },
       }),
       invalidatesTags: ["Products", "Invoices", "Dashboard"],
