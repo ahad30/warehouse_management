@@ -39,16 +39,16 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   //   console.log(totalPrice);
   const handleTextAndDiscount = (value, from) => {
     if (value < 0) {
-      setError(true)
+      setError(true);
       return toast.error("Value must be greater than zero");
     }
     const count =
       Number(totalPrice) - Number(totalPrice) * (Number(value) / 100);
     if (count < 0) {
-      setError(true)
+      setError(true);
       toast.error("Provided Value is too high");
     } else {
-      setError(false)
+      setError(false);
       if (from === "Discount") {
         setDiscount(value);
       }
@@ -60,21 +60,49 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   };
   const handleShipping = (value) => {
     if (value < 0) {
-      setError(true)
+      setError(true);
       return toast.error("Value must be greater than zero");
     }
     const count = Number(totalPrice) - Number(value);
     if (count < 0) {
-      setError(true)
+      setError(true);
       toast.error("Provided Value is too high");
     } else {
-      setError(false)
+      setError(false);
       setShipping(value);
       setTotalPrice(count);
     }
   };
-const [createNewPos, {data}] = useNewInvoiceMutation();
+  const [createNewPos, { data, isError, isLoading, isSuccess }] =
+    useNewInvoiceMutation();
+  const createPos = () => {
+    createNewPos({
+      items: addedProduct?.map((item) => item?.id),
+      discount,
+      shipping,
+      tax,
+    });
+  };
 
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading(<p>Loading...</p>, { id: 1 });
+    }
+
+    if (isError) {
+      const errorMessage = error?.data?.message || error?.status;
+      toast.error(errorMessage, { id: 1 });
+    }
+
+    if (isSuccess && data?.status) {
+      setAddedProduct([])
+      setTax("")
+      setDiscount("")
+      setShipping("")
+      toast.success(data?.message, { id: 1 });
+      // return navigate("/dashboard/product");
+    }
+  }, [isLoading, isSuccess, data]);
   return (
     <div className="">
       <div className="border-b max-h-[400px] overflow-y-scroll   border-gray-200 shadow">
@@ -122,7 +150,7 @@ const [createNewPos, {data}] = useNewInvoiceMutation();
         </table>
       </div>
 
-      <div className="absolute bottom-5   w-full">
+      <div className="absolute bottom-7 bg-white   w-full">
         {/* calculated section */}
         <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
           {/* discount tax shipping start  */}
@@ -197,12 +225,16 @@ const [createNewPos, {data}] = useNewInvoiceMutation();
 
         {/* button section */}
         <div className="flex gap-x-3 p-2">
-          <div onClick={()=> setAddedProduct([])} className=" cursor-pointer bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
+          <div
+            onClick={() => setAddedProduct([])}
+            className=" cursor-pointer bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white"
+          >
             <p>Reset</p>
             <RxReset size={25}></RxReset>
           </div>
 
           <div
+            onClick={() => createPos()}
             className={`bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white ${
               error === true
                 ? "disabled  cursor-none bg-green-200"
