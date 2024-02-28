@@ -1,5 +1,4 @@
 import { array, func, object } from "prop-types";
-import toast from "react-hot-toast";
 
 const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
   // console.log(item);
@@ -9,23 +8,21 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
   const handleAddedProduct = () => {
     const exist = addedProduct?.find((obj) => obj?.id == item?.id);
     if (exist) {
-     const filetTheProduct = addedProduct?.filter((it)=> it?.id !== item?.id )
-     setAddedProduct([...filetTheProduct])
+      const filetTheProduct = addedProduct?.filter((it) => it?.id !== item?.id);
+      setAddedProduct([...filetTheProduct]);
     } else {
       setAddedProduct([...addedProduct, item]);
     }
   };
-// const handleActive = () => {
-//   const findThe = addedProduct?.some((it)=> it?.id == item?.id)
-//  console.log(findThe)
-// }
+
   return (
     <div
-      onClick={() =>{
+      onClick={() => {
         handleAddedProduct();
-
       }}
-      className={`bg-white  relative  cursor-pointer p-1 rounded-lg shadow-lg ${addedProduct?.some((it)=> it?.id == item?.id) ? "ring-1" : ""}`}
+      className={`bg-white  relative  cursor-pointer p-1 rounded-lg shadow-lg ${
+        addedProduct?.some((it) => it?.id == item?.id) ? "ring-2" : ""
+      }`}
     >
       <div className="flex justify-center">
         <img
