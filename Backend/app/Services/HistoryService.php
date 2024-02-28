@@ -1,23 +1,29 @@
 <?php 
 namespace App\Services;
 
+use App\Interfaces\HistoryServiceInterface;
 use App\Models\History;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\HistoryServiceInterface;
+
 
 class HistoryService implements HistoryServiceInterface
 {
     public function getHistory(Request $request) :array
     {
-        $query = History::latest();
+        $query = History::latest()->with('products');
         /**FIltering */
-        if($request->input('query')){
-            $query =  $query->where('scan_code', "%".$request->input('query')."%")->orWhere('product_name', "%".$request->input('query')."%");
+        $inputQuery = $request->input('query');
+        if($inputQuery){
+           $products = Product::where('scan_code','like', "%".$inputQuery."%")->orWhere('product_name','like', "%".$inputQuery."%")->get();
+           foreach($products as $product){
+            $query = $query->orWhere('product_id',$product->id);
+           }
         }
         $query = $query->paginate(15);
         
         $pagination = $query->toArray()['links'];
-        $histories = $query->load('fromWarehouseId', 'toWarehouseId', 'products', 'user');
+        $histories = $query->load('fromWarehouseId', 'toWarehouseId', 'user');
 
         return [
             'histories' => $histories,

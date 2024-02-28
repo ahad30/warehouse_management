@@ -16,12 +16,7 @@ return new class extends Migration
             $table->string('invoice_no')->unique();
             $table->string('discount')->nullable();
             $table->string('shipping')->nullable();
-            $table->float('sub_total');
             $table->float('total');
-            $table->float('paid_amount');
-            $table->string('due_amount')->nullable();
-            $table->date('due_date')->nullable();
-            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

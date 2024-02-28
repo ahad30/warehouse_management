@@ -72,7 +72,7 @@ class ProductController extends Controller
     // store
     public function store(StoreProductRequest $request)
     {
-        // return $request->all();
+     
         try {
             DB::beginTransaction();
             $input = [

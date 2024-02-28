@@ -18,9 +18,8 @@ class SaleItem extends Model
         'description',
         'unit',
         'quantity',
-        'rate',
+        'product_sold_price',
         'product_retail_price',
-        'tax',
         'total_price_quantity_tax',
         'average_rate',
     ];
