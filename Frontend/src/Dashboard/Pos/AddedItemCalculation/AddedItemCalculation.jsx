@@ -195,7 +195,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
 
         {/* button section */}
         <div className="flex gap-x-3 p-2">
-          <div className=" bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
+          <div onClick={()=> setAddedProduct([])} className=" cursor-pointer bg-red-500 w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white">
             <p>Reset</p>
             <RxReset size={25}></RxReset>
           </div>
