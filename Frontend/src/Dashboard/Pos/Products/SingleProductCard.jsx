@@ -20,13 +20,13 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
       onClick={() => {
         handleAddedProduct();
       }}
-      className={`bg-white  relative  cursor-pointer p-1 rounded-lg shadow-lg ${
+      className={`bg-white  relative  cursor-pointer p-1 rounded-lg shadow ${
         addedProduct?.some((it) => it?.id == item?.id) ? "ring-2" : ""
       }`}
     >
-      <div className="flex justify-center">
+      <div className="flex justify-center w-full">
         <img
-          className="max-h-[100px] object-cover max-w-[100px]"
+          className="h-[100px] object-cover w-full"
           src={`${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
             product_images[0]?.image
           }`}
@@ -41,11 +41,11 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
       {/* product name end */}
 
       {/* price and code */}
-      <p className="bg-[#6571FF] text-white rounded-lg w-1/3 absolute top-0 left-0 text-xs p-1">
+      <p className="bg-[#6571FF] text-white rounded-lg w-1/3 absolute top-2 left-2 text-xs p-1">
         ${Number(product_sale_price).toFixed(2)}
       </p>
 
-      <p className="bg-[#0099FB] text-white rounded-lg w-1/3 absolute top-0 right-0 text-xs p-1">
+      <p className="bg-[#0099FB] text-white rounded-lg w-1/3 absolute top-2 right-2 text-xs p-1">
         {scan_code}
       </p>
     </div>

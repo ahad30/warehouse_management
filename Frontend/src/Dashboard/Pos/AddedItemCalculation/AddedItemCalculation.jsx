@@ -5,6 +5,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 import { RxReset } from "react-icons/rx";
 import { MdDone } from "react-icons/md";
+import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -72,10 +73,11 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setTotalPrice(count);
     }
   };
+const [createNewPos, {data}] = useNewInvoiceMutation();
 
   return (
     <div className="">
-      <div className="border-b border-gray-200 shadow">
+      <div className="border-b max-h-[400px] overflow-y-scroll   border-gray-200 shadow">
         <table className="divide-y w-full  border  divide-gray-300 ">
           <thead className=" ">
             <tr className="">
@@ -120,16 +122,16 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
         </table>
       </div>
 
-      <div className="absolute bottom-14">
+      <div className="absolute bottom-5   w-full">
         {/* calculated section */}
         <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
           {/* discount tax shipping start  */}
-          <div className="flex  flex-col gap-y-4">
+          <div className="flex flex-col gap-y-4">
             {/*  tax */}
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Tax"
-                className="border-0 focus:border-0 focus:ring-0"
+                className="border-0  w-full focus:border-0 focus:ring-0"
                 type="number"
                 value={Number(tax) == 0 ? "tax" : tax}
                 onChange={(e) => {
@@ -147,7 +149,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Discount"
-                className="border-0 focus:border-0 focus:ring-0"
+                className="border-0 focus:border-0 w-full focus:ring-0"
                 type="number"
                 value={Number(discount) == 0 ? "Discount" : discount}
                 onChange={(e) => {
@@ -164,7 +166,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Shipping"
-                className="border-0 focus:border-0 focus:ring-0"
+                className="border-0 w-full focus:border-0 focus:ring-0"
                 type="number"
                 value={Number(shipping) == 0 ? "Shipping" : shipping}
                 onChange={(e) => {

@@ -10,7 +10,6 @@ const Paginator = ({ links }) => {
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
   const dispatch = useDispatch();
   const [current_page, setCurrentPage] = useState(1);
-  console.log(ActivePageNumber);
   const pageNumber = useGetCurrentPage();
 
   useEffect(() => {
