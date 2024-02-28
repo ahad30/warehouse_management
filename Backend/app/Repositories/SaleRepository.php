@@ -13,23 +13,20 @@ class SaleRepository implements SaleRepositoryInterface
 {
     public function sale(Request $request)
     {
-        // Generate invoice number
+        /** Generate invoice number */
         $prefix = "INV-";
         $year = date("y");
         $newSaleId = Sale::max('id') + 1;
         $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
-        // Start a database transaction
+        /** Start database transaction */
         DB::beginTransaction();
         try {
-
-          
-            // Store sale items
-            $items = $request->input('items');
-            $totalAmount = $this->calculateTotalAmount($items,$newSaleId);
-            /**Creating the sale record */
+            $totalAmount = $this->calculateTotalAmount($request->input('items'),$newSaleId);
+            /** Creating the sale record */
             $sale = Sale::create([
                 'invoice_no' => $invoice_no,
                 'discount' => $request->discount,
+                'tax' => $request->tax,
                 'shipping' => $request->shipping,
                 'total' => $totalAmount
             ]);
@@ -55,7 +52,7 @@ class SaleRepository implements SaleRepositoryInterface
      * 
      * @return $totalPrice
      */
-    private function calculateTotalAmount($items, $newSaleId):mixed
+    private function calculateTotalAmount($items, $newSaleId):int
     {
         $total = 0;
         foreach ($items as $item) {
@@ -64,7 +61,7 @@ class SaleRepository implements SaleRepositoryInterface
                 DB::rollBack();
                 throw new Exception("Product not found or Already sold out",404);
             }
-            info($product);
+           /** Gathering product's price */
             $total+=$product->product_sale_price;
             /**storing items in different model */
             SaleItem::create([

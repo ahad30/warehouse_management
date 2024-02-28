@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('invoice_no')->unique();
             $table->string('discount')->nullable();
             $table->string('shipping')->nullable();
+            $table->string('tax')->nullable();
             $table->float('total');
             $table->timestamps();
         });
