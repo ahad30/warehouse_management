@@ -212,6 +212,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         });
 
     Route::post('/import', [ImportExportController::class, 'import']);
-    Route::get('/export', [ImportExportController::class, 'export']);
-    Route::get('/export-By-Warehouse/{id}', [ImportExportController::class, 'exportByWarehouse']);
+    Route::post('/export', [ImportExportController::class, 'export']);
+    Route::post('/export-By-Warehouse/{id}', [ImportExportController::class, 'exportByWarehouse']);
 });

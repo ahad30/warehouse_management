@@ -71,7 +71,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("scan_code", product.id?.scan_code || "");
     }
   }, [product, setValue]);
-
+  console.log(product);
   const onSubmit = (data) => {
     console.log(data);
     if (!data.product_name) {
