@@ -46,8 +46,7 @@ const Export = () => {
     getallWarehouseCsv();
   };
 
-  console.log(allWareHouseData);
-  console.log(url);
+
   return (
     <DashboardBackground>
       <>
