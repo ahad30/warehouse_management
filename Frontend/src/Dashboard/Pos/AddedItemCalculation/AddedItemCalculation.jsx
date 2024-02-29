@@ -11,7 +11,7 @@ import useShowAsyncMessage from "../../../components/Reusable/UseShowAsyncMessag
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState("Discount");
   const [shipping, setShipping] = useState(0);
   const [tax, setTax] = useState(0.0);
   const [error, setError] = useState(false);
