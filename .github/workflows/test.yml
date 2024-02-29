@@ -40,7 +40,7 @@ jobs:
         run: |
           cd Backend
           ls
-          cp .env.ci .env
+          cp .env.example .env
           php artisan key:generate
  
       # - name: Run tests
