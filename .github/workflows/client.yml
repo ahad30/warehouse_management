@@ -1,5 +1,9 @@
 on: push
 name: 🚀 Deploy client side on server
+ push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 jobs:
   web-deploy:
     name: 🎉 Deploy
