@@ -103,7 +103,7 @@ const ProductsList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
-
+  console.log(filterData?.data);
   // SEARCH FILTERING STARTS
   const columns = [
     {
