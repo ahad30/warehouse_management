@@ -319,7 +319,7 @@ const AddProduct = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages.map((errorMessage, index) => (
+      {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"

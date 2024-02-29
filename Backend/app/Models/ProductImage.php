@@ -17,8 +17,5 @@ class ProductImage extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    public function getImageAttribute($image)
-    {
-        return json_decode($image);
-    }
+
 }
