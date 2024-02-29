@@ -38,7 +38,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
     <div>
       <Search setSingleScanCode={setSingleScanCode}></Search>
 
-      <div className="bg-white mt-8 rounded-t-lg p-3">
+      <div className="bg-white mt-4 rounded-t-lg p-3">
         <CategoryBrandsAndWareHouse
           singleCategory={singleCategory}
           setSingleCategory={setSingleCategory}
@@ -74,7 +74,9 @@ const Products = ({ setAddedProduct, addedProduct }) => {
           )}
         </div>
         {/* products card  end */}
-        <div className="my-12"><Paginator links={data?.data?.links}></Paginator></div>
+        <div className="my-12">
+          <Paginator links={data?.data?.links}></Paginator>
+        </div>
       </div>
     </div>
   );

@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\DB;
 class SaleRepository implements SaleRepositoryInterface
 {
     private $newSaleId;
-    /**
-     * Set new sale id
-     *
-     */
+    
+   /**
+    * Set new sale id
+    *
+    * @param [type] $newSaleId
+    * @return void
+    */
     private function setNewSaleId($newSaleId)
     {
         $this->newSaleId = $newSaleId;
@@ -23,8 +26,9 @@ class SaleRepository implements SaleRepositoryInterface
     /**
      * Generate new invoice id
      *
+     * @return string
      */
-    public function generateNewInvoiceId()
+    public function generateNewInvoiceId():string
     {
           /** Generate invoice number */
           $prefix = "INV-";
@@ -36,10 +40,12 @@ class SaleRepository implements SaleRepositoryInterface
           $invoice_no = $prefix . $year . str_pad($newSaleId, 4, 0, STR_PAD_LEFT);
           return $invoice_no;
     }
+
     /**
      * Creating new sale 
      *
      * @param Request $request
+     * @return array
      */
     public function sale(Request $request) :array
     {
@@ -74,11 +80,13 @@ class SaleRepository implements SaleRepositoryInterface
             ];
         }
     }
-    /**
-     * Calculate Total Amount
-     * 
-     * @return $totalPrice
-     */
+   /**
+    * Calculate Total Amount
+    *
+    * @param [type] $items
+    * @param Request $request
+    * @return integer
+    */
     private function calculateTotalAmount($items,Request $request):int
     {
         $total = 0;
@@ -89,7 +97,7 @@ class SaleRepository implements SaleRepositoryInterface
                 throw new Exception("Product not found or Already sold out",404);
             }
            /** Gathering product's price */
-            $total+=$product->product_sale_price;
+            $total += $product->product_sale_price;
             
             /** Storing items in different model */
             SaleItem::create([
@@ -97,7 +105,7 @@ class SaleRepository implements SaleRepositoryInterface
                 'product_id' => $product->id,
                 'name' => $product->product_name,
                 'code' => $product->scan_code,
-                'product_sold_price' => $product->product_sale_price, //working here
+                'product_sold_price' => $product->product_sale_price, 
                 'product_retail_price' => $product->product_retail_price,
             ]);
             
@@ -121,19 +129,25 @@ class SaleRepository implements SaleRepositoryInterface
     }
 
     /**
-     *  Calculate tax
+     * Calculate tax
+     *
+     * @param [type] $total
+     * @param integer $tax
+     * @return integer
      */
-
      private function calculateTax($total,$tax=0) : int 
      {
            $productPriceWithTax = $total + ($tax*$total)/100;
            return $productPriceWithTax;
      }
-     /**
-     *  Calculate discount
-     * 
-     */
 
+     /**
+      * Calculate discount
+      *
+      * @param [type] $total
+      * @param integer $discount
+      * @return integer
+      */
      private function calculateDiscount($total,$discount=0) : int 
      {
            $productPriceWithDiscount = $total - ($discount*$total)/100;

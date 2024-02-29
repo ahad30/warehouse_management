@@ -2,92 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Poppins", sans-serif;
-}
+@layer base {
+  body {
+    font-family: "Poppins", sans-serif;
+  }
 
-/* CUSTOM CSS START */
 
-.btn-primary {
-  @apply bg-gray-600 text-white hover:bg-gray-600 hover:text-white border-collapse hover:outline-none;
-}
 
-.input-group > span {
-  @apply flex justify-center min-w-[100px];
-}
+  .font-poppins {
+    font-family: "Poppins", sans-serif !important;
+  }
 
-.sideBar .active-link {
-  color: #e74c3c;
-  /* background-color: #F0F9FF; */
-  border-left: 4px solid #e74c3c;
-}
 
-.outlet {
-  width: calc(100% - 250px);
-}
+  /* CUSTOM CSS START */
 
-.bg-gray-100::-webkit-scrollbar {
-  width: 1px; /* Adjust as needed */
-}
-.scrollbar-0::-webkit-scrollbar {
-  width: 1px; /* Adjust as needed */
-}
-.scrollbar-5::-webkit-scrollbar {
-  width: 5px; /* Adjust as needed */
-}
-.font-poppins {
-  font-family: "Poppins", sans-serif;
-}
+  .btn-primary {
+    @apply bg-gray-600 text-white hover: bg-gray-600 hover:text-white border-collapse hover:outline-none;
+  }
 
-.step .active {
-  color: red;
-}
+  .input-group>span {
+    @apply flex justify-center min-w-[100px];
+  }
 
-/* .wrapper::-webkit-scrollbar {
+  .sideBar .active-link {
+    color: #e74c3c;
+    /* background-color: #F0F9FF; */
+    border-left: 4px solid #e74c3c;
+  }
+
+  .outlet {
+    width: calc(100% - 250px);
+  }
+
+  .bg-gray-100::-webkit-scrollbar {
+    width: 1px;
+    /* Adjust as needed */
+  }
+
+  .scrollbar-0::-webkit-scrollbar {
+    width: 1px;
+    /* Adjust as needed */
+  }
+
+  .scrollbar-5::-webkit-scrollbar {
+    width: 5px;
+    /* Adjust as needed */
+  }
+
+  .font-poppins {
+    font-family: "Poppins", sans-serif;
+  }
+
+  .step .active {
+    color: red;
+  }
+
+  /* .wrapper::-webkit-scrollbar {
   width: 4px;
   height: 5px;
   background-color: #aaa; /* or add it to the track */
-/* } */
+  /* } */
 
-/* Add a thumb */
-/* .wrapper::-webkit-scrollbar-thumb {
+  /* Add a thumb */
+  /* .wrapper::-webkit-scrollbar-thumb {
   background: #000;
 /* } */
 
-.wrapper::-webkit-scrollbar {
-  width: 4px;
-  height: 5px;
-  background-color: #aaa; /* or add it to the track */
- 
-}
+  .wrapper::-webkit-scrollbar {
+    width: 4px;
+    height: 5px;
+    background-color: #aaa;
+    /* or add it to the track */
 
-/* Add a thumb */
-.wrapper::-webkit-scrollbar-thumb {
-  background: #03A9F4;
+  }
 
-}
+  /* Add a thumb */
+  .wrapper::-webkit-scrollbar-thumb {
+    background: #03A9F4;
+
+  }
 
 
-.calculatorWrapper::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
-  background-color: #aaa; /* or add it to the track */
- 
-}
+  .calculatorWrapper::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background-color: #aaa;
+    /* or add it to the track */
 
-/* Add a thumb */
-.calculatorWrapper::-webkit-scrollbar-thumb {
-  background: #03A9F4;
+  }
 
-}
+  /* Add a thumb */
+  .calculatorWrapper::-webkit-scrollbar-thumb {
+    background: #03A9F4;
 
-/* .sideBar a.active {
+  }
+
+  /* .sideBar a.active {
   color: red;
 } */
 
-/* CUSTOM CSS ENDS */
+  /* CUSTOM CSS ENDS */
 
-/* :root {
+  /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -156,3 +172,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+  /* width */
+  .scrollbar-0::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  /* Track */
+  .scrollbar-0::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  .scrollbar-0::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  .scrollbar-0::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
