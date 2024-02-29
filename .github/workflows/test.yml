@@ -32,7 +32,9 @@ jobs:
           ls
         
       - name: Run composer install
-        run: composer install
+        run: |
+          cd Backend
+          composer install
  
       - name: Prepare Laravel Application
         run: |
