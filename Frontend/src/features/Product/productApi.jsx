@@ -11,7 +11,7 @@ const productApi = apiSlice.injectEndpoints({
           "Content-type": "multipart/form-data",
         },
       }),
-      invalidatesTags: ["Products", "Invoices", "Dashboard"],
+      invalidatesTags: ["Products", "Invoices", "Dashboard" , "Pos"],
     }),
     getProducts: builder.query({
       query: ({ pageNumber, query, warehouse_id }) => {
