@@ -40,13 +40,13 @@ class DashboardController extends Controller
         ], 200);
     }
 
+    
     /**
+     * graph of sell left 30 days
      *
-     * @return graph of sell left 30 days
-     *
+     * @return \Illuminate\Http\Response
      */
-
-    public function sellGraph()
+    public function sellGraph() 
     {
 
         $beginningDate = Carbon::now()->subDays(31);
@@ -64,9 +64,9 @@ class DashboardController extends Controller
     }
 
     /**
+     * grap of revenue left 30 days
      *
-     *  @return grap of revenue left 30 days
-     *
+     * @return \Illuminate\Http\Response
      */
     public function revenueGraph()
     {
