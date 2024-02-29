@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: maverage/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.z8tech.one
           username: ${{ secrets.FTPUSERNAME }}
