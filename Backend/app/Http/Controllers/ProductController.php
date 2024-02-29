@@ -43,7 +43,7 @@ class ProductController extends Controller
             $query = $query->where('warehouse_id', $request->warehouse_id);
         }
 
-        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name')->latest()->paginate(15);
+        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name','productImages')->latest()->paginate(15);
 
         return response()->json([
             'status' => true,

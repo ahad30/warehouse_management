@@ -5,7 +5,7 @@ import AddedItemCalculation from "./AddedItemCalculation/AddedItemCalculation";
 const Pos = () => {
   const [addedProduct, setAddedProduct] = useState([]);
   return (
-    <div className=" bg-[#E3EFF7]  flex flex-col lg:flex-row justify-between gap-x-3 lg:h-screen  overflow-hidden">
+    <div className=" bg-[#E3EFF7] p-3 flex flex-col lg:flex-row justify-between gap-x-3 lg:h-screen overflow-hidden ">
       <div className="relative bg-white lg:w-1/3 overflow-hidden  rounded-lg">
         <div className="w-full overflow-x-hidden h-screen ">
           <AddedItemCalculation

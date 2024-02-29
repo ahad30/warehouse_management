@@ -44,8 +44,13 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setError(true);
       return toast.error("Value must be greater than zero");
     }
+
     const count =
-      Number(totalPrice) - Number(totalPrice) * (Number(value) / 100);
+      from === "Discount"
+        ? Number(totalPrice) - Number(totalPrice) * (Number(value) / 100)
+        : from === "Tax"
+        ? Number(totalPrice) + Number(totalPrice) * (Number(value) / 100)
+        : 0;
     if (count < 0) {
       setError(true);
       toast.error("Provided Value is too high");
@@ -65,7 +70,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setError(true);
       return toast.error("Value must be greater than zero");
     }
-    const count = Number(totalPrice) - Number(value);
+    const count = Number(totalPrice) + Number(value);
     if (count < 0) {
       setError(true);
       toast.error("Provided Value is too high");
@@ -138,11 +143,15 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
               </tr>
             ))}
 
-            <tr className="">  {addedProduct?.length === 0 && (
-            <p className="text-center w-full text-xl mt-12 ">No data Found</p>
-          )}</tr>
+            <tr className="">
+              {" "}
+              {addedProduct?.length === 0 && (
+                <p className="text-center w-full text-xl mt-12 ">
+                  No data Found
+                </p>
+              )}
+            </tr>
           </tbody>
-        
         </table>
       </div>
 
@@ -175,7 +184,8 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 placeholder="Discount"
                 className="border-0 focus:border-0 w-full focus:ring-0"
                 type="number"
-                value={Number(discount) == 0 ? "Discount" : discount}
+                // value={Number(discount) == 0 ? "Discount" : discount}
+                value={Number(discount) < 100 && discount}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value >= 0) {
