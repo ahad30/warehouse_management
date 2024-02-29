@@ -38,7 +38,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
     <div>
       <Search setSingleScanCode={setSingleScanCode}></Search>
 
-      <div className="bg-white mt-8 rounded-t-lg p-3">
+      <div className="bg-white mt-4 rounded-t-lg p-3 ">
         <CategoryBrandsAndWareHouse
           singleCategory={singleCategory}
           setSingleCategory={setSingleCategory}
@@ -49,7 +49,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
         ></CategoryBrandsAndWareHouse>
       </div>
 
-      <div className="bg-[#FCFCFC] py-12   rounded-b-lg px-3">
+      <div className="bg-[#FCFCFC]    rounded-b-lg px-3 max-h-[60vh] overflow-y-scroll">
         {/* products card  start */}
         <div className="grid grid-cols-2 gap-5 mt-5 lg:grid-cols-5 ">
           {isLoading
@@ -74,7 +74,9 @@ const Products = ({ setAddedProduct, addedProduct }) => {
           )}
         </div>
         {/* products card  end */}
-        <div className="my-12"><Paginator links={data?.data?.links}></Paginator></div>
+        <div className="mt-5 mb-[-40px]">
+          <Paginator links={data?.data?.links}></Paginator>
+        </div>
       </div>
     </div>
   );

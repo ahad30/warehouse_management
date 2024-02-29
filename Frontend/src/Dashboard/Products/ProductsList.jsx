@@ -235,7 +235,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-
+console.log(filterData?.data)
   return (
     <>
       <DashboardBackground>

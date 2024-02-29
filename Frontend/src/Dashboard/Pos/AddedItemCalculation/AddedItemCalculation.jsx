@@ -6,6 +6,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { RxReset } from "react-icons/rx";
 import { MdDone } from "react-icons/md";
 import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
+import { UseErrorMessages } from "../../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -42,8 +44,13 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setError(true);
       return toast.error("Value must be greater than zero");
     }
+
     const count =
-      Number(totalPrice) - Number(totalPrice) * (Number(value) / 100);
+      from === "Discount"
+        ? Number(totalPrice) - Number(totalPrice) * (Number(value) / 100)
+        : from === "Tax"
+        ? Number(totalPrice) + Number(totalPrice) * (Number(value) / 100)
+        : 0;
     if (count < 0) {
       setError(true);
       toast.error("Provided Value is too high");
@@ -63,7 +70,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setError(true);
       return toast.error("Value must be greater than zero");
     }
-    const count = Number(totalPrice) - Number(value);
+    const count = Number(totalPrice) + Number(value);
     if (count < 0) {
       setError(true);
       toast.error("Provided Value is too high");
@@ -73,71 +80,60 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setTotalPrice(count);
     }
   };
-  const [createNewPos, { data, isError, isLoading, isSuccess }] =
-    useNewInvoiceMutation();
+  const [
+    createNewPos,
+    { data, isError, isLoading, isSuccess, error: posError },
+  ] = useNewInvoiceMutation();
   const createPos = () => {
     createNewPos({
       items: addedProduct?.map((item) => item?.id),
-      discount,
-      shipping,
-      tax,
+      discount: Number(discount),
+      shipping: Number(shipping),
+      tax: Number(tax),
     });
   };
 
+  useShowAsyncMessage(isLoading, isError, posError, isSuccess, data);
+  UseErrorMessages(posError);
   useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
+    if (isSuccess) {
+      setAddedProduct([]);
+      setDiscount(0);
+      setTax(0);
+      setDiscount(0);
     }
-
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
-
-    if (isSuccess && data?.status) {
-      setAddedProduct([])
-      setTax("")
-      setDiscount("")
-      setShipping("")
-      toast.success(data?.message, { id: 1 });
-      // return navigate("/dashboard/product");
-    }
-  }, [isLoading, isSuccess, data]);
+  }, [isSuccess]);
   return (
     <div className="">
-      <div className="border-b max-h-[400px] overflow-y-scroll   border-gray-200 shadow">
-        <table className="divide-y w-full  border  divide-gray-300 ">
-          <thead className=" ">
+      <div className="h-[400px] overflow-y-scroll  scrollbar-0">
+        <table className="divide-y w-full    divide-gray-300 ">
+          <thead className="border">
             <tr className="">
-              <th className="px-6 py-2 text-start text-xs text-gray-500">
+              <th className=" py-2 text-center text-xs text-gray-500">#</th>
+              <th className=" py-2 text-center text-xs text-gray-500">
                 Product
               </th>
-              <th className="px-6 py-2 text-start text-xs text-gray-500">
-                Price
-              </th>
-              <th className="px-6 py-2 text-xs text-start text-gray-500">
-                Sub Total
-              </th>
-              <th className="px-6 py-2 text-xs text-start text-gray-500">
+              <th className=" py-2 text-center text-xs text-gray-500">Price</th>
+
+              <th className=" py-2 text-xs text-center text-gray-500">
                 Action
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-300">
-            {addedProduct?.map((item) => (
-              <tr key={item?.id} className="whitespace-nowrap">
-                <td className="px-6 py-2 text-sm text-gray-500">
+            {addedProduct?.map((item, index) => (
+              <tr key={item?.id} className="whitespace-nowrap w-full">
+                <td className="text-center py-2 text-sm text-gray-500">
+                  {index}
+                </td>
+                <td className="text-center py-2 text-sm text-gray-500">
                   {item?.product_name}
                 </td>
 
-                <td className="px-6 py-2 text-sm text-gray-500">
+                <td className="text-center  py-2 text-sm text-gray-500">
                   {Number(item?.product_sale_price).toFixed(2)}
                 </td>
-
-                <td className="px-6 flex py-2 text-sm text-gray-500">
-                  {Number(item?.product_sale_price).toFixed(2)}
-                </td>
-                <td className="px-6  py-2 text-sm text-gray-500">
+                <td className="flex justify-center  py-2 text-sm text-gray-500">
                   <RiDeleteBin6Line
                     onClick={() => handleRemoveItem(item?.id)}
                     className="text-red-500 cursor-pointer"
@@ -146,11 +142,20 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 </td>
               </tr>
             ))}
+
+            <tr className="">
+              {" "}
+              {addedProduct?.length === 0 && (
+                <p className="text-center w-full text-xl mt-12 ">
+                  No data Found
+                </p>
+              )}
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <div className="absolute bottom-7 bg-white   w-full">
+      <div className="absolute bottom-7 bg-white   w-[90%]">
         {/* calculated section */}
         <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
           {/* discount tax shipping start  */}
@@ -179,7 +184,8 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 placeholder="Discount"
                 className="border-0 focus:border-0 w-full focus:ring-0"
                 type="number"
-                value={Number(discount) == 0 ? "Discount" : discount}
+                // value={Number(discount) == 0 ? "Discount" : discount}
+                value={Number(discount) < 100 && discount}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value >= 0) {
@@ -212,13 +218,13 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
 
           {/* sidebar text Calculation start */}
 
-          <div className=" text-center">
-            <h1 className="text-2xl my-2 font-semibold">
+          <div className=" text-right font-poppins">
+            <p className="text-lg text-gray-600 my-2 font-semibold">
               Sub Total: {Number(addedProductPrice).toFixed(2)}
-            </h1>
-            <h1 className="text-xl my-2 font-semibold">
-              Total Price Sub Total: {Number(totalPrice).toFixed(2)}
-            </h1>
+            </p>
+            <p className="text-2xl my-2 font-semibold">
+              Total: {Number(totalPrice).toFixed(2)}
+            </p>
           </div>
           {/* sidebar text Calculation end */}
         </div>
