@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-// import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -45,7 +44,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     let formData = new FormData();
     formData.append("_method", "PUT");
     formData.append("category_name", data?.category_name);
-    // formData.append("warehouse_id", data?.warehouse_id);
 
     if (data?.new_image?.length > 0) {
       formData.append("image", data?.new_image[0]);
@@ -56,7 +54,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
 
     updateCategory({ data: formData, id: category?.id });
     console.log(data);
-    // console.log(data?.image)
   };
 
   const errorMessages = UseErrorMessages(updateError);
@@ -88,7 +85,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     if (category) {
       setValue("category_name", category?.category_name || "");
       setValue("description", category?.description || "");
-      // setValue("warehouse_id", category?.warehouse_id || "");
+
       setValue("image", category?.image || "");
     }
   }, [category, setValue]);
