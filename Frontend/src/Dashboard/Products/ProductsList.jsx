@@ -136,7 +136,7 @@ const ProductsList = () => {
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt={row?.product_images[0]?.image}
-          className="w-10 h-auto rounded-lg"
+          className="w-10 h-auto rounded-lg cursor-pointer"
         />
       ),
     },
