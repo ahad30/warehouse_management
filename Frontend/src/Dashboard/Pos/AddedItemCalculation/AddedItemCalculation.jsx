@@ -7,6 +7,7 @@ import { RxReset } from "react-icons/rx";
 import { MdDone } from "react-icons/md";
 import { useNewInvoiceMutation } from "../../../features/Invoice/InvoiceApi";
 import { UseErrorMessages } from "../../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -87,40 +88,9 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
     });
   };
 
-  const errorMessages = UseErrorMessages(posError);
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
+  useShowAsyncMessage(isLoading, isError, posError, isSuccess, data);
+  UseErrorMessages(posError);
 
-    if (isError || posError) {
-      const errorMessage = data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
-
-    if (isSuccess && data?.status) {
-      setAddedProduct([]);
-      setTax("");
-      setDiscount("");
-      setShipping("");
-      toast.success(data?.message, { id: 1 });
-      // return navigate("/dashboard/product");
-    }
-  }, [isLoading, posError, isError, isSuccess, data]);
-
-  // const s =  errorMessages.map((item) => toast.error(item, { id: 1 }));
-  //  console.log(errorMessages)
-  useEffect(() => {
-    if (errorMessages.length > 0 && posError) {
-      for (let index = 0; index < errorMessages.length; index++) {
-        toast.error(errorMessages[index], { id: index });
-      }
-      setTimeout(() => {
-        toast.remove();
-      }, 500);
-    }
-  }, [errorMessages, errorMessages.length, posError]);
-  // console.log(data)
   return (
     <div className="">
       <div className="h-[400px] overflow-y-scroll  scrollbar-0">
