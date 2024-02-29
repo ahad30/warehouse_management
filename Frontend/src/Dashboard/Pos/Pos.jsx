@@ -6,8 +6,8 @@ const Pos = () => {
   const [addedProduct, setAddedProduct] = useState([]);
   return (
     <div className=" bg-[#E3EFF7]  flex justify-between gap-x-3 p-3">
-      <div className="relative bg-white w-1/3 rounded-lg">
-        <div className=" w-1/3 fixed min-h-[90vh] max-h-[90vh]  ">
+      <div className="relative bg-white w-1/3 overflow-hidden ring-1 rounded-lg">
+        <div className="w-1/3 overflow-x-hidden fixed h-[90vh] ">
           <AddedItemCalculation
             addedProduct={addedProduct}
             setAddedProduct={setAddedProduct}

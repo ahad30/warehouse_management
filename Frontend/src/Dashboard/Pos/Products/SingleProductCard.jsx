@@ -2,7 +2,13 @@ import { array, func, object } from "prop-types";
 
 const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
   // console.log(item);
-  const { product_images, product_name, scan_code, product_sale_price } = item;
+  const {
+    product_images,
+    product_name,
+    scan_code,
+    brand_id,
+    product_sale_price,
+  } = item;
   console.log(item);
 
   const handleAddedProduct = () => {
@@ -30,13 +36,12 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
           src={`${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
             product_images[0]?.image
           }`}
-          alt=""
         />
       </div>
       {/* product name start */}
-      <div className="mt-4 px-2">
-        <h3 className="font-semibold text-base">{product_name}</h3>
-        <h6 className=" text-sm">{product_name}</h6>
+      <div className="mt-4 px-2 font-poppins">
+        <p className="font-semibold text-base">{product_name}</p>
+        <p className=" text-sm text-gray-500">{product_name}</p>
       </div>
       {/* product name end */}
 
@@ -46,7 +51,7 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
       </p>
 
       <p className="bg-[#0099FB] text-white rounded-lg w-1/3 absolute top-2 right-2 text-xs p-1">
-        {scan_code}
+        {brand_id}
       </p>
     </div>
   );
