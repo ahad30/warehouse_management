@@ -24,7 +24,6 @@ const Products = ({ setAddedProduct, addedProduct }) => {
     scanCode: singleScanCode ? singleScanCode : "",
     pageNumber: ActivePageNumber,
   });
-
   const dispatch = useDispatch();
   const pageNumber = useGetCurrentPage();
   useEffect(() => {
@@ -54,19 +53,19 @@ const Products = ({ setAddedProduct, addedProduct }) => {
         <div className="grid grid-cols-2 gap-5 mt-5 lg:grid-cols-5 ">
           {isLoading
             ? [...Array(5)].map((item, index) => (
-                <ProductsSkeleton key={index}></ProductsSkeleton>
-              ))
+              <ProductsSkeleton key={index}></ProductsSkeleton>
+            ))
             : productsData?.map(
-                (item) =>
-                  item?.id !== 1 && (
-                    <SingleProductCard
-                      setAddedProduct={setAddedProduct}
-                      key={item?.id}
-                      item={item}
-                      addedProduct={addedProduct}
-                    ></SingleProductCard>
-                  )
-              )}
+              (item) =>
+                item?.id !== 0 && (
+                  <SingleProductCard
+                    setAddedProduct={setAddedProduct}
+                    key={item?.id}
+                    item={item}
+                    addedProduct={addedProduct}
+                  ></SingleProductCard>
+                )
+            )}
           {data?.data?.data?.length == 0 && (
             <p className="text-center text-2xl my-12 font-normal col-span-2 lg:col-span-5">
               No data is Available
