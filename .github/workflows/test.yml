@@ -36,6 +36,8 @@ jobs:
  
       - name: Prepare Laravel Application
         run: |
+          cd Backend
+          ls
           cp .env.ci .env
           php artisan key:generate
  
