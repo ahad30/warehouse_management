@@ -40,5 +40,14 @@ class SaleControllerRequest extends FormRequest
             'errors'      => $validator->errors()
         ], 400));
     }
+    /**
+     * Custom message
+     */
+    public function messages():array
+    {
+       return [
+        "items.required" => "Please select product!"
+       ];
+    }
 
 }

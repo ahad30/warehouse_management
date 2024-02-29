@@ -146,16 +146,19 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
             <tr className="">
               {" "}
               {addedProduct?.length === 0 && (
-                <p className="text-center w-full text-xl mt-12 ">
+                <td
+                  colSpan={4}
+                  className="text-center w-full text-xl mt-12 py-4"
+                >
                   No data Found
-                </p>
+                </td>
               )}
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div className="absolute bottom-7 bg-white   w-[90%]">
+      <div className="absolute bottom-7 bg-white   lg:px-3">
         {/* calculated section */}
         <div className="mt-12 grid grid-cols-1 p-2 lg:grid-cols-2 gap-3 items-center">
           {/* discount tax shipping start  */}
