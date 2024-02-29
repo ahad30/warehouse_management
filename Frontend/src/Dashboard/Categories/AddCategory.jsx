@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useAddCategoryMutation } from "../../features/Category/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
@@ -16,6 +16,7 @@ const AddCategory = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [selectedImages, setSelectedImages] = useState([]);
   // const { data: storesData } = useGetStoresQuery();
   const [addCategory, { isLoading, isError, error, isSuccess, data }] =
     useAddCategoryMutation();
@@ -55,6 +56,21 @@ const AddCategory = () => {
     data?.status,
     dispatch,
   ]);
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    console.log(files.length);
+    if (files.length > 5) {
+      console.log("succeed");
+      return alert("maximum upload 5");
+    } else {
+      console.log("You can not more then five image");
+      const imagesArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setSelectedImages(imagesArray);
+    }
+  };
 
   const errorMessages = UseErrorMessages(error);
 
@@ -63,33 +79,21 @@ const AddCategory = () => {
       <h2 className="text-xl my-5 font-semibold">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid lg:grid-cols-2 gap-5">
-          {/* <label className="input-group">
-            <span className="font-semibold">
-              Warehouse<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              {...register("warehouse_id")}
-            >
-              <option value={""}>Select Warehouse Info</option>
-              {storesData?.data?.map((data) => (
-                <option key={data?.id} value={data?.id}>
-                  {data?.name}
-                </option>
-              ))}
-            </select>
-          </label> */}
-          <label className="input-group">
-            <span className="font-semibold min-w-[110px]">
-              Image<span className="text-red-500 p-0">*</span>
+          <label className="input-group  file-input file-input-bordered">
+            <span className="font-semibold min-w-[100px] cursor-pointer">
+              Image
             </span>
             <input
               type="file"
-              className="input input-bordered w-full"
-              {...register("image")}
+              className="input input-bordered w-full hidden "
+              // {...register("image")}
+              {...register("image", {
+                onChange: (e) => handleImageChange(e),
+              })}
             />
+            <p className="py-3 px-2"> {selectedImages.length}</p>
           </label>
+
           <label className="input-group">
             <span className="font-semibold min-w-[110px]">
               Name<span className="text-red-500 p-0">*</span>
