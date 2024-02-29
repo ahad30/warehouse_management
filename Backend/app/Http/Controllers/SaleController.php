@@ -22,7 +22,8 @@ class SaleController extends Controller
 
 {
     private $saleRepository;
-    public function __construct(SaleRepositoryInterface $saleRepository) {
+    public function __construct(SaleRepositoryInterface $saleRepository)
+    {
         $this->saleRepository = $saleRepository;
     }
     // index
@@ -99,10 +100,10 @@ class SaleController extends Controller
      *
      */
     // Create - Generate and store invoices
-    public function create( Request $request): Response
+    public function create(Request $request): Response
     {
-    
-        $productsQuery = Product::where('is_sold',false)->with("productImages");
+
+        $productsQuery = Product::where('is_sold', false)->with("productImages");
 
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
@@ -112,14 +113,12 @@ class SaleController extends Controller
             $productsQuery->where('category_id', $request->category_id);
         }
 
-        if($request->warehouse_id!=null){
+        if ($request->warehouse_id != null) {
             $productsQuery->where('warehouse_id', $request->warehouse_id);
         }
 
-        if($request->scan_code != null)
-        {
+        if ($request->scan_code != null) {
             $productsQuery->where('scan_code', $request->scan_code);
-
         }
 
 
@@ -128,24 +127,24 @@ class SaleController extends Controller
         return response()->json([
             'status' => true,
             'data' =>  $products,
-     
+
         ]);
     }
 
-   /**
-    * Store - Create and store a new invoice
-    *
-    * @param SaleControllerRequest $request
-    * @return \Illuminate\Http\Response
-    */
+    /**
+     * Store - Create and store a new invoice
+     *
+     * @param SaleControllerRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(SaleControllerRequest $request)
     {
         $sale =  $this->saleRepository->sale($request);
-        
+
         return response([
             'status' => $sale['status'],
             'message' => $sale['message']
-        ],$sale['code']);
+        ], $sale['code']);
     }
 
 
@@ -245,9 +244,4 @@ class SaleController extends Controller
             'message' => 'Invalid Invoice ID provided',
         ], 400);
     }
-
-
-
-
-
 }

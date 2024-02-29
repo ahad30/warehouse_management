@@ -24,10 +24,6 @@ const AddProduct = () => {
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
   const [scanCode, setScanCode] = useState("N/A");
-  let getYear = () => {
-    let currentYear = new Date().getFullYear();
-    return currentYear;
-  };
   const onSubmit = (data) => {
     const formData = new FormData();
     const images = data?.images;
@@ -124,18 +120,7 @@ const AddProduct = () => {
               {...register("product_name")}
             />
           </label>
-          {/* <label className="input-group">
-           <span className="font-semibold text-sm">
-              Code<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="text"
-              placeholder="Product Code"
-              className="input input-bordered w-full"
-              required
-              {...register("product_code")}
-            />
-          </label> */}
+
           <label className="input-group">
             <span className="font-semibold text-sm">
               Warehouse<span className="text-red-500 p-0">*</span>
@@ -171,19 +156,7 @@ const AddProduct = () => {
               ))}
             </select>
           </label>
-          {/* <label className="input-group">
-           <span className="font-semibold text-sm">
-              Quantity<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="number"
-              placeholder="Quantity"
-              className="input input-bordered w-full"
-              required
-              min={1}
-              {...register("product_quantity")}
-            />
-          </label> */}
+
           <label className="input-group">
             <span className="font-semibold text-sm">
               Retail<span className="text-red-500 p-0">*</span>
@@ -210,22 +183,7 @@ const AddProduct = () => {
               {...register("product_sale_price")}
             />
           </label>
-          {/* <label className="input-group">
-           <span className="font-semibold text-sm">
-              Unit<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              {...register("product_unit")}
-            >
-              <option value={""}>Select Unit</option>
-              <option value={"pcs"}>Pcs</option>
-              <option value={"box"}>Box</option>
-              <option value={"kg"}>KG</option>
-              <option value={"litre"}>Litre</option>
-            </select>
-          </label> */}
+
           <label className="input-group">
             <span className="font-semibold text-sm">
               Brands<span className="text-red-500 p-0">*</span>
@@ -244,15 +202,6 @@ const AddProduct = () => {
             </select>
           </label>
 
-          {/* <label className="input-group">
-           <span className="font-semibold text-sm">Description</span>
-            <input
-              type="text"
-              placeholder="Product Description"
-              className="input input-bordered w-full"
-              {...register("product_desc")}
-            />
-          </label> */}
           <div>
             <label className="input-group">
               <span className="font-semibold text-sm">scan code </span>
@@ -277,7 +226,9 @@ const AddProduct = () => {
           <div className="form-control ">
             <div className="mb-3">
               <label className="input-group file-input file-input-bordered">
-                <span className="font-semibold text-sm">Upload Image</span>
+                <span className="font-semibold text-sm cursor-pointer">
+                  Upload Image
+                </span>
                 <input
                   className="file-input hidden file-input-bordered w-full"
                   id="image"
