@@ -280,14 +280,14 @@ const routes = createBrowserRouter([
             ),
           },
           // INVOICE
-          {
-            path: "/dashboard/invoice/new", // Create a new invoice
-            element: (
-              <MSACRoute>
-                <NewInvoice />
-              </MSACRoute>
-            ),
-          },
+          // {
+          //   path: "/dashboard/invoice/new", // Create a new invoice
+          //   element: (
+          //     <MSACRoute>
+          //       <NewInvoice />
+          //     </MSACRoute>
+          //   ),
+          // },
           {
             path: "/dashboard/pos", // Create a new invoice
             element: (
