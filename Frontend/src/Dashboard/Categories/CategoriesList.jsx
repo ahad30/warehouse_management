@@ -120,10 +120,7 @@ const CategoriesList = () => {
       name: "Category Name",
       selector: (row) => <>{row?.category_name}</>,
     },
-    // {
-    //   name: "Warehouse Name",
-    //   selector: (row) => <>{row?.warehouse_name}</>,
-    // },
+
     {
       name: "Description",
 
