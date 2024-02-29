@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Sale extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'invoice_no',
         'customer_id',
@@ -40,11 +40,4 @@ class Sale extends Model
     {
         return $this->hasMany(SaleItem::class);
     }
-
-    public function customer()
-    {
-        return $this->hasOne(Customer::class, 'id', 'customer_id');
-    }
-
-
 }
