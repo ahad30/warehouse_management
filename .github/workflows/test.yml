@@ -27,7 +27,9 @@ jobs:
           coverage: none
           
       - name: Changing directory to laravel
-        run: cd Backend
+        run: |
+          cd Backend
+          ls
         
       - name: Run composer install
         run: composer install
