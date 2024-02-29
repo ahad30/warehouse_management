@@ -9,13 +9,17 @@ import {
   useGetAllExportsMutation,
 } from "../../features/ExportApi/ExportApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
+import ExportModal from "./ExportModal";
+import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Export = () => {
+  UseTitle("Import_Export");
   const { register, handleSubmit } = useForm();
   const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [url, setUrl] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [getSpecificWarehouseCsv, { data: WareHouseData }] =
     useGetExportMutation();
@@ -43,7 +47,7 @@ const Export = () => {
   };
 
   console.log(allWareHouseData);
-
+  console.log(url);
   return (
     <DashboardBackground>
       <>
@@ -56,10 +60,19 @@ const Export = () => {
         <div>
           <p>
             To know about how to import csv file and know about file structure
-            <a href="" className="px-2 underline text-blue-600">
+            <button
+              onClick={() => {
+                setModalIsOpen(true);
+              }}
+              className="px-2 underline text-blue-600"
+            >
               click here
-            </a>
+            </button>
           </p>
+          <ExportModal
+            modalIsOpen={modalIsOpen}
+            setModalIsOpen={setModalIsOpen}
+          />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label className="font-bold text-lg mt-5 ">Export :</label>
@@ -95,7 +108,7 @@ const Export = () => {
                 <div className="m-3 flex">
                   {showButton && (
                     <a
-                      href={url}
+                      href={WareHouseData?.url}
                       className="cursor-pointer m-auto border px-2 py-1 text-[#e74c3c]  rounded text-sm shadow transition duration-300"
                       rel="noopener noreferrer"
                       download

@@ -19,7 +19,7 @@ class ProductImageFactory extends Factory
     {
         return [
            'product_id' => Product::inRandomOrder()->first()->id,
-           'image' => json_encode(['uploads/products/images/170910351241.png'])
+           'image' => fake()->randomElement(['uploads/products/170910351241.webp'])
         ];
     }
 }

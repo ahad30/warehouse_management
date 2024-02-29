@@ -148,7 +148,7 @@ const AddStore = () => {
             <span className="font-semibold min-w-[100px]">Image</span>
             <input
               type="file"
-              className="input input-bordered w-full py-2"
+              className="input input-bordered w-full"
               {...register("image")}
             />
           </label>
