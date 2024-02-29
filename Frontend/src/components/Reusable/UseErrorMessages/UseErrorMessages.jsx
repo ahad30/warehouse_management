@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const UseErrorMessages = (error) => {
   const [errorMessages, setErrorMessages] = useState([]);
 
+  console.log(error)
   useEffect(() => {
     if (error && error?.data && error?.data?.errors) {
       const messages = [];
@@ -11,6 +13,7 @@ export const UseErrorMessages = (error) => {
         if (Array.isArray(error?.data?.errors[key])) {
           error?.data?.errors[key].forEach((errorMessage) => {
             messages.push(errorMessage);
+          //  return toast.error(errorMessage , {id: 1})
           });
         }
       }

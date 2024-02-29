@@ -19,10 +19,11 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { da } from "date-fns/locale";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
-import Paginator from '../../components/Paginator/Paginator'
-import { useSelector } from "react-redux";
+import Paginator from "../../components/Paginator/Paginator";
+import { useDispatch, useSelector } from "react-redux";
+import { clear, incrementByAmount } from "../../features/Page/pageSlice";
+import useGetCurrentPage from "../../Hooks/useGetCurrentPage";
 const ProductsList = () => {
-
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [product, setProduct] = useState({});
@@ -34,25 +35,29 @@ const ProductsList = () => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
-  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value)
-
-  // Get the query string from the current URL
-  const queryString = window.location.search;
-  // Create a URLSearchParams object by passing the query string
-  const urlParams = new URLSearchParams(queryString);
-  // Use the get method to retrieve the value of a specific parameter
-  const pageNumber = urlParams.get('page');
+  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
-  } = useGetProductsQuery({pageNumber : ActivePageNumber});
+  } = useGetProductsQuery({ pageNumber: ActivePageNumber });
 
+  const dispatch = useDispatch();
 
+  const pageNumber = useGetCurrentPage();
   useEffect(() => {
+    if (pageNumber > 1) {
+      dispatch(incrementByAmount(pageNumber));
+    }
     setFilterData(productsData?.products);
-  }, [productsData?.products, productsData,ActivePageNumber]);
+  }, [
+    productsData?.products,
+    productsData,
+    ActivePageNumber,
+    dispatch,
+    pageNumber,
+  ]);
 
   const [
     deleteProduct,
@@ -116,13 +121,13 @@ const ProductsList = () => {
         <img
           src={
             row?.product_img
-              ? `${
-                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                }/uploads/products/${row?.product_img}`
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/${
+                  row?.product_img
+                }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
-          alt="User"
-          className=" w-10 h-auto rounded-lg"
+          alt={row?.product_img}
+          className="w-10 h-auto rounded-lg"
         />
       ),
     },
@@ -132,7 +137,8 @@ const ProductsList = () => {
     },
     {
       name: "Code",
-      selector: (row) => <>{row?.product_code}</>,
+      selector: (row) => <>{row?.scan_code}</>,
+      minWidth: "180px",
     },
     {
       name: "Retail price",
@@ -142,21 +148,21 @@ const ProductsList = () => {
       name: "Sold price",
       selector: (row) => <>{row?.product_sale_price}</>,
     },
-    {
-      name: "Quantity",
-      selector: (row) => <>{row?.product_quantity}</>,
-    },
-    {
-      name: "Unit",
-      selector: (row) => <>{row?.product_unit}</>,
-    },
+    // {
+    //   name: "Quantity",
+    //   selector: (row) => <>{row?.product_quantity}</>,
+    // },
+    // {
+    //   name: "Unit",
+    //   selector: (row) => <>{row?.product_unit}</>,
+    // },
     {
       name: "Category",
       selector: (row) => row?.get_category?.category_name,
     },
     {
       name: "Store",
-      selector: (row) => row?.get_store?.store_name,
+      selector: (row) => row?.warehouse?.name,
     },
     {
       name: "Brand",
@@ -199,7 +205,7 @@ const ProductsList = () => {
   const filterCategory = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
-        (product) => product?.get_category?.id == data
+        (product) => product?.get_category?.category_name?.id == data
       );
       filter && setFilterData(filter);
     } else {
@@ -217,7 +223,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products);
     }
   };
-  
+
   const filterStore = (data) => {
     if (data && productsData?.products) {
       const filter = productsData?.products.filter(
@@ -228,108 +234,42 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-  // console.log(filterData)
 
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>
-          Products: {productsData?.products?.length}
-        </TableHeadingTitle>
-
-        <SearchAndAddBtn
+        <TableHeadingTitle>Products: {productsData?.total}</TableHeadingTitle>
+        <div className="">
+          <SearchAndAddBtn
+            btnTitle={"Add Product"}
+            btnPath={"/dashboard/product/add"}
+            btnIcon={<BiCartAdd size={20} />}
+            setFiltering={setFiltering}
+          />
+        </div>
+        {/* <SearchAndAddBtn
           btnTitle={"Add Product"}
           btnPath={"/dashboard/product/add"}
           btnIcon={<BiCartAdd size={20} />}
           setFiltering={setFiltering}
-        />
-
-        {/* filler by category , store brand */}
-        <div className="flex flex-col md:flex-row gap-x-3">
-          {/* category */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by category</span>
-            </label>
-
-            <select
-              onChange={(e) => filterCategory(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select category</option>
-              {categoryData?.data &&
-                categoryData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.category_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* store */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by store</span>
-            </label>
-
-            <select
-              onChange={(e) => filterStore(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select store</option>
-              {storesData?.data &&
-                storesData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* brand */}
-          <div className="form-control my-2 w-full px-2 md:w-fit">
-            <label className="label">
-              <span className="label-text font-bold">Filter by brand</span>
-            </label>
-
-            <select
-              onChange={(e) => filterBrand(e?.target?.value)}
-              className="select select-bordered"
-            >
-              <option value={""}>Select brand</option>
-              {brandsData?.data &&
-                brandsData?.data.map((item) => (
-                  <option key={item?.id} value={item?.id}>
-                    {item?.brand_name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
+        /> */}
 
         {/* Products Table */}
         {/* {!productsIsSuccess && productsData?.status ? (
           <p className="text-center text-2xl mt-10">{productsData?.message}</p>
         ) : (
           filterData?.length > 0 && ( */}
-            <div >
-              <DataTable
-                columns={columns}
-                data={filterData?.data}
-                // pagination
-                responsive
-                // paginationPerPage={itemsPerPage}
-                // paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-                // paginationTotalRows={filterData?.length}
-                // onChangePage={(page) => setCurrentPage(page)}
-                keyField="id"
-              />
-              <br></br>
-          <Paginator links={filterData?.links}/>
+        <div>
+          <DataTable
+            columns={columns}
+            data={filterData?.data}
+            keyField="id"
+            responsive={false}
+          />
           <br></br>
-          <br></br>
-            </div>
-          {/* ) */}
+          <Paginator links={filterData?.links} />
+        </div>
+        {/* ) */}
         {/* )} */}
         <EditProduct
           product={product}

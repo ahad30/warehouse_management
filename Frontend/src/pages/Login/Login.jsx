@@ -79,7 +79,10 @@ const Login = () => {
             <div className="w-full max-w-md mx-auto">
               {/* Forget Password */}
               <p className="text-end my-3">
-                <Link to="/forget-password" className="text-blue-700 font-semibold">
+                <Link
+                  to="/forget-password"
+                  className="text-blue-700 font-semibold"
+                >
                   Forgot password?
                 </Link>
               </p>
@@ -93,7 +96,7 @@ const Login = () => {
           </form>
           {error && <p className="text-center">{error}</p>}
           <div className="w-full my-5 max-w-md mx-auto">
-            <DemoLogin></DemoLogin>
+            {/* <DemoLogin></DemoLogin> */}
           </div>
         </div>
       </div>

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DatabaseSetupController;
+use App\Http\Controllers\ImportExportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +20,6 @@ Route::get('/', function () {
 });
 
 Route::get('/test', [DatabaseSetupController::class, 'setupSQL']);
-
+Route::get('/export',[ImportExportController::class,'export']);
 
 require __DIR__ . '/auth.php';

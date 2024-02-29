@@ -86,36 +86,46 @@ class SaleController extends Controller
         return $invoices;
     }
 
+
+
+  
+
     /**
      *
      * @create Request $request
      *
      */
     // Create - Generate and store invoices
-    public function create($brand_id = null, $category_id = null): Response
+    public function create( Request $request): Response
     {
-        // Retrieving product, customer, and company info
-        $company_info = CompanyInfo::latest()->first();
-        $customers = Customer::all();
-        $productsQuery = Product::where('product_quantity', '>', '0');
+    
+        $productsQuery = Product::where('is_sold',false);
 
-        // Filtering products based on brand and category
-        if ($brand_id != null) {
-            $productsQuery->where('brand_id', $brand_id);
-        }
-        if ($category_id != null) {
-            $productsQuery->where('category_id', $category_id);
+        if ($request->brand_id != null) {
+            $productsQuery->where('brand_id', $request->brand_id);
         }
 
-        $products = $productsQuery->with('getCategory', 'getBrand', 'getStore')->get();
+        if ($request->category_id != null) {
+            $productsQuery->where('category_id', $request->category_id);
+        }
+
+        if($request->warehouse_id!=null){
+            $productsQuery->where('warehouse_id', $request->warehouse_id);
+        }
+
+        if($request->scan_code != null)
+        {
+            $productsQuery->where('scan_code', $request->scan_code);
+
+        }
+
+
+        $products = $productsQuery->paginate(15);
 
         return response()->json([
             'status' => true,
-            'data' => [
-                'company_info' => $company_info,
-                'customers' => $customers,
-                'products' => $products,
-            ],
+            'data' =>  $products ,cd
+     
         ]);
     }
 
@@ -352,4 +362,21 @@ class SaleController extends Controller
             'message' => 'Invalid Invoice ID provided',
         ], 400);
     }
+
+
+
+    public function search(Request $request)
+    {   
+        // $category_id = request('category'),
+        // $warehouse_id = request('warehouse'),
+        // $brand_id = request('brand'),
+
+        // if('category_id' == $category_id && 'warehouse_id' == $warehouse_id && 'brand_id' == $brand_id )
+        // {
+
+        // }
+
+    }
+
+
 }

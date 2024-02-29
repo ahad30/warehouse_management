@@ -30,15 +30,23 @@ class ProductController extends Controller
         /**
          * To retrieve product using scan_code
          */
-        if($request->scan_code){
-            $query = $query->where('scan_code',$request->scan_code);
+    
+        if ($request->input('query')) {
+            $query = $query->orWhere('scan_code', 'like', "%". $request->input('query') . "%")->orWhere('product_name', 'like', "%".$request->input('query') . "%");
         }
-
-        $data =  $query->with('getCategory:id', 'warehouse:id,name')->paginate(15);
+        /**
+         * To retrieve product using scan_code
+         */
+        if ($request->warehouse_id) {
+            $query = $query->where('warehouse_id', $request->warehouse_id);
+        }
+        
+        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name')->latest()->paginate(15);
 
         return response()->json([
             'status' => true,
             'products' => $data,
+            'total' => Product::count()
         ], 200);
     }
 
@@ -62,6 +70,7 @@ class ProductController extends Controller
     // store
     public function store(StoreProductRequest $request)
     {
+        // return $request->all();
         try {
             DB::beginTransaction();
             $input = [
@@ -90,8 +99,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->errorResponse([
-                'status' => false,
-                'message' => "something went wrong"
+                'message' => "something went wrong",
             ]);
         }
     }
@@ -131,7 +139,7 @@ class ProductController extends Controller
         }
         return $this->successResponse([
             'status' => true,
-            'message' =>  "Product successfully updated"
+            'message' => "Product successfully updated"
         ]);
     }
 
@@ -166,12 +174,12 @@ class ProductController extends Controller
          */
         $images = $this->multipleImageUpload($request, 'uploads/products/images');
         foreach ($images as $image) {
-            $data =  ProductImage::create([
+            $data = ProductImage::create([
                 'product_id' => $id,
                 'image' => $image,
             ]);
         }
-        return $this->successResponse(['status' => true, 'message' =>  'Image Updated']);
+        return $this->successResponse(['status' => true, 'message' => 'Image Updated']);
     }
 
 
