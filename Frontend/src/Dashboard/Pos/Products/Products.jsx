@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetCurrentPage from "../../../Hooks/useGetCurrentPage";
 import { incrementByAmount } from "../../../features/Page/pageSlice";
 import Paginator from "../../../components/Paginator/Paginator";
+import { IoHomeOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Products = ({ setAddedProduct, addedProduct }) => {
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
@@ -36,7 +38,14 @@ const Products = ({ setAddedProduct, addedProduct }) => {
 
   return (
     <div>
-      <Search setSingleScanCode={setSingleScanCode}></Search>
+      <div className="flex gap-x-4 items-center">
+        <div className="w-[95%]">
+          <Search setSingleScanCode={setSingleScanCode}></Search>
+        </div>
+    <div className="w-[5%] bg-red-500 py-2 text-white rounded-lg flex justify-center items-center">
+         <Link to={"/dashboard"}><IoHomeOutline size={30}></IoHomeOutline></Link>
+        </div>
+      </div>
 
       <div className="bg-white mt-4 rounded-t-lg p-3 ">
         <CategoryBrandsAndWareHouse
