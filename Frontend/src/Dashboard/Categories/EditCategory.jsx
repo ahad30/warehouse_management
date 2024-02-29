@@ -33,7 +33,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     // formData.append("warehouse_id", data?.warehouse_id);
 
     if (data?.new_image?.length > 0) {
-
       formData.append("image", data?.new_image[0]);
     }
     if (data?.description) {
@@ -76,7 +75,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
       setValue("description", category?.description || "");
       // setValue("warehouse_id", category?.warehouse_id || "");
       setValue("image", category?.image || "");
-
     }
   }, [category, setValue]);
 
@@ -140,7 +138,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                       <input
                         type="file"
                         className="input input-bordered w-full py-2"
-
                         {...register("new_image")}
                       />
                     </label>

@@ -23,6 +23,7 @@ import Paginator from "../../components/Paginator/Paginator";
 import { useDispatch, useSelector } from "react-redux";
 import { clear, incrementByAmount } from "../../features/Page/pageSlice";
 import useGetCurrentPage from "../../Hooks/useGetCurrentPage";
+import Imageview from "./Imageview";
 const ProductsList = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -31,6 +32,7 @@ const ProductsList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 11;
+  const [imageIsOpen, setImageIsOpen] = useState(false);
 
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
@@ -103,7 +105,12 @@ const ProductsList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
+  console.log(filterData?.data);
 
+  const handleImagesView = (row) => {
+    setProduct(row);
+    setImageIsOpen(true);
+  };
   // SEARCH FILTERING STARTS
   const columns = [
     {
@@ -120,14 +127,15 @@ const ProductsList = () => {
       name: "Image",
       cell: (row) => (
         <img
+          onClick={() => handleImagesView(row)}
           src={
-            row?.product_img
-              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/${
-                  row?.product_img
+            row?.product_images[0]?.image
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
+                  row?.product_images[0]?.image
                 }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
-          alt={row?.product_img}
+          alt={row?.product_images[0]?.image}
           className="w-10 h-auto rounded-lg"
         />
       ),
@@ -235,7 +243,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-console.log(filterData?.data)
+  console.log(filterData?.data);
   return (
     <>
       <DashboardBackground>
@@ -276,6 +284,11 @@ console.log(filterData?.data)
           product={product}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
+        />
+        <Imageview
+          product={product}
+          modalIsOpen={imageIsOpen}
+          setModalIsOpen={setImageIsOpen}
         />
       </DashboardBackground>
     </>
