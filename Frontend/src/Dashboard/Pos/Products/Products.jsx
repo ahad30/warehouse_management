@@ -38,15 +38,19 @@ const Products = ({ setAddedProduct, addedProduct }) => {
 
   return (
     <div>
+      {/* search */}
       <div className="flex gap-x-4 items-center">
-        <div className="w-[95%]">
+        <div className="lg:w-[95%] w-[70%]">
           <Search setSingleScanCode={setSingleScanCode}></Search>
         </div>
-    <div className="w-[5%] bg-red-500 py-2 text-white rounded-lg flex justify-center items-center">
-         <Link to={"/dashboard"}><IoHomeOutline size={30}></IoHomeOutline></Link>
+        <div className="lg:w-[5%] w-[30%] bg-red-500 py-2 text-white rounded-lg flex justify-center items-center">
+          <Link to={"/dashboard"}>
+            <IoHomeOutline size={30}></IoHomeOutline>
+          </Link>
         </div>
       </div>
 
+      {/* category  */}
       <div className="bg-white mt-4 rounded-t-lg p-3 ">
         <CategoryBrandsAndWareHouse
           singleCategory={singleCategory}
@@ -58,6 +62,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
         ></CategoryBrandsAndWareHouse>
       </div>
 
+      {/* product */}
       <div className="bg-[#FCFCFC]    rounded-b-lg px-3 max-h-[60vh] overflow-y-scroll">
         {/* products card  start */}
         <div className="grid grid-cols-2 gap-5 mt-5 lg:grid-cols-5 ">

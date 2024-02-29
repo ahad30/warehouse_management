@@ -32,10 +32,8 @@ const AddStore = () => {
       formData.append("image", data?.image[0]);
     }
     addStore(formData);
-      // console.log(data);
-
+    // console.log(data);
   };
-
 
   const errorMessages = UseErrorMessages(error);
 
@@ -71,13 +69,12 @@ const AddStore = () => {
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
             <span className="font-semibold min-w-[100px]">
-               Name<span className="text-red-500 p-0">*</span>
+              Name<span className="text-red-500 p-0">*</span>
             </span>
             <input
               type="text"
               placeholder="Name"
               className="input input-bordered w-full"
-              
               {...register("name")}
             />
           </label>
@@ -151,11 +148,10 @@ const AddStore = () => {
             <span className="font-semibold min-w-[100px]">Image</span>
             <input
               type="file"
-              className="input input-bordered w-full py-2"              
+              className="input input-bordered w-full py-2"
               {...register("image")}
             />
           </label>
-
         </div>
         <SubmitButton
           icon={<FaStore size={20} />}
@@ -164,7 +160,7 @@ const AddStore = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages.map((errorMessage, index) => (
+      {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"

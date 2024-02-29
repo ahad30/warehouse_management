@@ -54,7 +54,7 @@ const CategoryBrandsAndWareHouse = ({
             >
               All Category
             </button>
-            <div className="flex gap-x-3 overflow-x-scroll wrapper">
+            <div className="flex gap-x-3  overflow-x-scroll wrapper">
               {allCategory?.data?.map((item, index) => (
                 <button
                   onClick={() => handleCategory(item?.id)}
@@ -148,7 +148,7 @@ const CategoryBrandsAndWareHouse = ({
               {allWarHouse?.data?.map((item, index) => (
                 <button
                   onClick={() => handleWarehouse(item?.id)}
-                  className={`min-w-[200px] rounded-lg ${
+                  className={`min-w-[200px]  rounded-lg ${
                     singleWarehouse?.id == item?.id
                       ? "bg-light-blue-500 text-white"
                       : "bg-gray-100 text-black"
