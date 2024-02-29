@@ -14,7 +14,6 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Export = () => {
   UseTitle("Import_Export");
-  const { register, handleSubmit } = useForm();
   const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
@@ -26,28 +25,14 @@ const Export = () => {
   const [getallWarehouseCsv, { data: allWareHouseData }] =
     useGetAllExportsMutation();
   const [track, setTrack] = useState("");
-  // const onSubmit = (formData) => {
-  //   const warehouseId = formData.warehouse_id;
-  //   console.log(warehouseId);
-  //   getSpecificWarehouseCsv(warehouseId);
-  // };
+ 
   const { data: storesData } = useGetStoresQuery();
 
-  // useEffect(() => {
-  //   if (WareHouseData?.url) {
-  //     setUrl(WareHouseData?.url);
-  //   }
-  //   if (allWareHouseData?.url) {
-  //     setUrl(allWareHouseData?.url);
-  //   }
-  // }, [WareHouseData, allWareHouseData]);
+
 
   const handleAllCsvData = () => {
     getallWarehouseCsv();
   };
-
-  // console.log(allWareHouseData);
-  // console.log(url);
 
   const generateCsvData = async (from) => {
     if (!track) {
@@ -93,13 +78,7 @@ const Export = () => {
           />
         </div>
 
-        {/* <button
-          onClick={() => handleAllCsvData()}
-          type="button"
-          className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white"
-        >
-          All
-        </button> */}
+     
 
         <>
           <label className="font-bold text-lg mt-5 ">Export :</label>
