@@ -41,7 +41,7 @@ const Paginator = ({ links }) => {
   };
   return (
     <nav className="float-right mb-3">
-      <ul className="inline-flex -space-x-px text-sm">
+      <ul className="inline-flex flex-wrap -space-x-px text-sm">
         {links?.map((item, index) => {
           return (
             <span key={index}>

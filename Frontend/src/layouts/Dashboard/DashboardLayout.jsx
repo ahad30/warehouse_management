@@ -26,9 +26,9 @@ const DashboardLayout = () => {
           ${
             location?.pathname === "/dashboard/pos"
               ? "lg:max-w-[100vw]"
-              : "lg:max-w-[90vw]"
+              : "lg:max-w-[90vw] max-h-[90vh]"
           }
-          overflow-x-hidden max-h-[90vh] overflow-y-scroll scrollbar-5`}
+          overflow-x-hidden  overflow-y-scroll scrollbar-5`}
           >
             <Outlet />
             {/* Render the content of the current route */}
