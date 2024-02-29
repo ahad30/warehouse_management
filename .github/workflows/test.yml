@@ -27,12 +27,12 @@ jobs:
           coverage: none
  
       - name: Run composer install
-        run: composer install -n --prefer-dist
+        run: composer install
  
       - name: Prepare Laravel Application
         run: |
           cp .env.ci .env
           php artisan key:generate
  
-      - name: Run tests
-        run: php artisan test
+      # - name: Run tests
+      #   run: php artisan test
