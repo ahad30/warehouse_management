@@ -31,44 +31,46 @@ const CategoryBrandsAndWareHouse = ({
     setSingleWarehouse(findTheWarehouse);
   };
   return (
-    <div className=" mt-8  grid-cols-1 grid gap-y-3">
+    <div className="  grid-cols-1 grid gap-y-3">
       {/* brands, category , wareHouse start */}
 
       {/* category  start */}
       <div className={`${allCategoryIsLoading ? "flex gap-x-3" : ""}`}>
-        {
-          allCategoryIsLoading ? [...Array(3)].map((item, index) => (
+        {allCategoryIsLoading ? (
+          [...Array(3)].map((item, index) => (
             <CategorySkeleton key={index}></CategorySkeleton>
-          )) : <div className="flex gap-x-3">
-          <button
-            onClick={() => setSingleCategory("category")}
-            className={`min-w-[200px]  py-3 rounded-lg 
+          ))
+        ) : (
+          <div className="flex gap-x-3">
+            <button
+              onClick={() => setSingleCategory("category")}
+              className={`min-w-[200px]  py-3 rounded-lg 
              ${
                singleCategory == "category"
                  ? "bg-light-blue-500 text-white"
                  : "bg-gray-100 text-black"
              }
             `}
-          >
-            All Category
-          </button>
-          <div className="flex gap-x-3 overflow-x-scroll wrapper">
-            {allCategory?.data?.map((item, index) => (
-              <button
-                onClick={() => handleCategory(item?.id)}
-                className={`min-w-[200px] rounded-lg ${
-                  singleCategory?.id == item?.id
-                    ? "bg-light-blue-500 text-white"
-                    : "bg-gray-100 text-black"
-                }`}
-                key={index}
-              >
-                {item?.category_name}
-              </button>
-            ))}
+            >
+              All Category
+            </button>
+            <div className="flex gap-x-3 overflow-x-scroll wrapper">
+              {allCategory?.data?.map((item, index) => (
+                <button
+                  onClick={() => handleCategory(item?.id)}
+                  className={`min-w-[200px] rounded-lg ${
+                    singleCategory?.id == item?.id
+                      ? "bg-light-blue-500 text-white"
+                      : "bg-gray-100 text-black"
+                  }`}
+                  key={index}
+                >
+                  {item?.category_name}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-        }
+        )}
         {allCategory?.data?.length == 0 && (
           <p className="text-center text-xl font-normal">
             Category is Not Available

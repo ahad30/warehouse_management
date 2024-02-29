@@ -90,7 +90,14 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
 
   useShowAsyncMessage(isLoading, isError, posError, isSuccess, data);
   UseErrorMessages(posError);
-
+  useEffect(() => {
+    if (isSuccess) {
+      setAddedProduct([]);
+      setDiscount(0);
+      setTax(0);
+      setDiscount(0);
+    }
+  }, [isSuccess]);
   return (
     <div className="">
       <div className="h-[400px] overflow-y-scroll  scrollbar-0">
@@ -130,7 +137,12 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 </td>
               </tr>
             ))}
+
+            <tr className="">  {addedProduct?.length === 0 && (
+            <p className="text-center w-full text-xl mt-12 ">No data Found</p>
+          )}</tr>
           </tbody>
+        
         </table>
       </div>
 
