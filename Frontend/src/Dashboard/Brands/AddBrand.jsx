@@ -69,7 +69,7 @@ const AddBrand = () => {
     data?.status,
     dispatch,
   ]);
-
+  const errorMessages = UseErrorMessages(error);
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>

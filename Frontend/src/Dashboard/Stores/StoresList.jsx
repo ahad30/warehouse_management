@@ -16,7 +16,7 @@ import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 
 const StoresList = () => {
-  UseTitle("Customers");
+  UseTitle("Warehouse");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [store, setStore] = useState({});
 

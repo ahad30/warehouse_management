@@ -10,15 +10,11 @@ import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/Use
 
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   const { register, handleSubmit, setValue } = useForm();
-
   const { data: categoriesData } = useGetCategoriesQuery();
   const { data: brandsData } = useGetBrandsQuery();
   const { data: storesData } = useGetStoresQuery();
   const [scanCode, setScanCode] = useState(1);
-  let getYear = () => {
-    let currentYear = new Date().getFullYear();
-    return currentYear;
-  };
+
   const [
     updateProduct,
     {
@@ -59,7 +55,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     if (product) {
       setValue("product_name", product?.product_name || "");
       setValue("product_code", product?.product_code || "");
-      // setValue("product_unit", product?.product_unit || "");
       setValue("product_quantity", product?.product_quantity || "1");
       setValue("product_desc", product?.product_desc || "");
       setValue("product_retail_price", product?.product_retail_price || "");
@@ -81,10 +76,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     const formData = new FormData();
     formData.append("_method", "PUT");
     formData.append("product_name", data?.product_name);
-    // formData.append("product_code", data?.product_code);
     formData.append("product_quantity", data?.product_quantity);
-    // formData.append("product_unit", data?.product_unit);
-    // formData.append("product_desc", data?.product_desc);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
     formData.append("product_sale_price", data?.product_sale_price);
