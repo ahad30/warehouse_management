@@ -1,13 +1,13 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUpdateStoreMutation } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 
 const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   const { register, handleSubmit, setValue } = useForm();
-
+  const [selectedImages, setSelectedImages] = useState([]);
   const [
     updateStore,
     {
@@ -19,6 +19,21 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     },
   ] = useUpdateStoreMutation();
 
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    console.log(files.length);
+    if (files.length > 5) {
+      console.log("succeed");
+      return alert("maximum upload 5");
+    } else {
+      console.log("You can not more then five image");
+      const imagesArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setSelectedImages(imagesArray);
+    }
+  };
   const onSubmit = (data) => {
     if (!store?.name || !store?.phone || !store?.address) {
       toast.error("Please fill in all required fields.", { id: 1 });
@@ -38,7 +53,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
       formData.append("image", data?.image[0]);
     }
 
-    updateStore({ data:formData, id: store?.id });
+    updateStore({ data: formData, id: store?.id });
     // updateStore(formData);
     console.log(data);
   };
@@ -76,8 +91,7 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
       setValue("address", store?.address || "");
       setValue("city", store?.city || "");
       setValue("country", store?.country || "");
-      setValue("image", store?.image || "")
-
+      setValue("image", store?.image || "");
     }
   }, [store, setValue]);
 
@@ -171,14 +185,28 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                         {...register("country")}
                       />
                     </label>
-                    <label className="input-group">
+                    <label className="input-group  file-input file-input-bordered">
+                      <span className="font-semibold min-w-[100px] cursor-pointer">
+                        Image
+                      </span>
+                      <input
+                        type="file"
+                        className="input input-bordered w-full hidden"
+                        // {...register("image")}
+                        {...register("image", {
+                          onChange: (e) => handleImageChange(e),
+                        })}
+                      />
+                      <p className="py-3 px-2"> {selectedImages.length}</p>
+                    </label>
+                    {/* <label className="input-group">
             <span className="font-semibold min-w-[100px]">Image</span>
             <input
               type="file"
               className="input input-bordered w-full py-2"              
               {...register("image")}
             />
-          </label>
+          </label> */}
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">

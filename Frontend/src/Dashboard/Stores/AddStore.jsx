@@ -1,7 +1,7 @@
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ const AddStore = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [selectedImages, setSelectedImages] = useState([]);
   const [addStore, { isLoading, isError, error, isSuccess, data }] =
     useAddStoreMutation();
 
@@ -61,6 +61,21 @@ const AddStore = () => {
     data?.status,
     dispatch,
   ]);
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    console.log(files.length);
+    if (files.length > 5) {
+      console.log("succeed");
+      return alert("maximum upload 5");
+    } else {
+      console.log("You can not more then five image");
+      const imagesArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setSelectedImages(imagesArray);
+    }
+  };
 
   return (
     <DashboardBackground>
@@ -144,13 +159,19 @@ const AddStore = () => {
               {...register("site_link")}
             />
           </label>
-          <label className="input-group">
-            <span className="font-semibold min-w-[100px]">Image</span>
+          <label className="input-group  file-input file-input-bordered">
+            <span className="font-semibold min-w-[100px] cursor-pointer">
+              Image
+            </span>
             <input
               type="file"
-              className="input input-bordered w-full"
-              {...register("image")}
+              className="input input-bordered w-full hidden"
+              // {...register("image")}
+              {...register("image", {
+                onChange: (e) => handleImageChange(e),
+              })}
             />
+            <p className="py-3 px-2"> {selectedImages.length}</p>
           </label>
         </div>
         <SubmitButton
@@ -160,7 +181,7 @@ const AddStore = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages.map((errorMessage, index) => (
+      {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
