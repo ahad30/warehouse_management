@@ -16,9 +16,9 @@ use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\ImportExportController;
 use App\Http\Controllers\InstallationController;
-use App\Http\Controllers\ProductReportController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\ProductShiftingController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SearchProductController;
 
 /*
@@ -175,7 +175,9 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     // Route::get('/product-report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
-    Route::post('/{type}/report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
+    Route::get('/product/report/{time_range?}/{start_date?}/{end_date?}', [ReportController::class, 'product_report']);
+    Route::get('/sale/report/{time_range?}/{start_date?}/{end_date?}', [ReportController::class, 'sale_report']);
+    Route::get('/shifting/report/{time_range?}/{start_date?}/{end_date?}', [ReportController::class, 'shifting_report']);
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
