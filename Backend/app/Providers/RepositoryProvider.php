@@ -19,10 +19,6 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(ReportInterface::class, function ($app) {
-            return new ReportRepository($app);
-        });
-
         // bind ProductReport
         $this->app->bind(ReportInterface::class, ProductReport::class);
         // bind SaleReport
