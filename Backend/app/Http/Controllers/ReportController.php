@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ReportRepository;
 use App\Traits\ReportResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -20,8 +21,13 @@ class ReportController extends Controller
     // getting product reports
     public function productReport(Request $request)
     {
+        $processedData = $this->extractRequest($request);
+
+        $timeRange = $processedData['timeRange'];
+        $startDate = $processedData['startDate'];
+        $endDate = $processedData['endDate'];
         // you need to pass only request parameters
-        $reports = $this->reportRepository->getProductReport($request);
+        $reports = $this->reportRepository->getProductReport($timeRange, $startDate, $endDate);
 
         if (!$reports) {
             return $this->emptyResponse();
@@ -33,7 +39,13 @@ class ReportController extends Controller
     // getting sale reports
     public function salesReport(Request $request)
     {
-        $reports = $this->reportRepository->getSaleReport($request);
+        $processedData = $this->extractRequest($request);
+
+        $timeRange = $processedData['timeRange'];
+        $startDate = $processedData['startDate'];
+        $endDate = $processedData['endDate'];
+
+        $reports = $this->reportRepository->getSaleReport($timeRange, $startDate, $endDate);
 
         if (!$reports) {
             return $this->emptyResponse();
@@ -45,12 +57,31 @@ class ReportController extends Controller
     // getting shifting reports
     public function shiftingReport(Request $request)
     {
-        $reports = $this->reportRepository->getShiftingReport($request);
+        $processedData = $this->extractRequest($request);
+
+        $timeRange = $processedData['timeRange'];
+        $startDate = $processedData['startDate'];
+        $endDate = $processedData['endDate'];
+
+        $reports = $this->reportRepository->getShiftingReport($timeRange, $startDate, $endDate);
 
         if (!$reports) {
             return $this->emptyResponse();
         }
 
         return $this->successResponse($reports);
+    }
+
+    protected function extractRequest($request)
+    {
+        $timeRange = $request->timeRange;
+        $startDate = Carbon::parse($request->startDate)->format("Y-m-d");
+        $endDate = Carbon::parse($request->endDate)->format("Y-m-d");
+
+        return [
+            'timeRange' => $timeRange,
+            'startDate' => $startDate,
+            'endDate' => $endDate
+        ];
     }
 }
