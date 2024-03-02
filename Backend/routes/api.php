@@ -81,12 +81,12 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                              Category controller                              */
     /* -------------------------------------------------------------------------- */
-    Route::middleware(['verifySubAdmin'])->controller(CategoryController::class)->prefix('categories')->group(function () {
+    Route::middleware(['verifyStaff'])->controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
-        Route::post('/store', 'store');
-        Route::get('/edit/{id}', 'edit');
-        Route::put('/update/{id}', 'update');
-        Route::delete('/delete/{id}', 'destroy');
+        Route::middleware(['verifyStaff'])->post('/store', 'store');
+        Route::middleware(['verifyStaff'])->get('/edit/{id}', 'edit');
+        Route::middleware(['verifyStaff'])->put('/update/{id}', 'update');
+        Route::middleware(['verifyStaff'])->delete('/delete/{id}', 'destroy');
     });
 
     Route::middleware(['verifyStaff'])->controller(ProductController::class)->prefix('/products')->group(function () {
@@ -131,11 +131,11 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                              Brand controller                              */
     /* -------------------------------------------------------------------------- */
 
-    Route::middleware(['verifySubAdmin'])->controller(BrandController::class)->prefix('/brands')->group(function () {
+    Route::controller(BrandController::class)->prefix('/brands')->group(function () {
         Route::get('/', 'index');
-        Route::post('/store', 'store');
-        Route::put('/update/{id}', 'update');
-        Route::delete('/delete/{id}', 'delete');
+        Route::middleware('verifyAdmin')->post('/store', 'store');
+        Route::middleware('verifyAdmin')->put('/update/{id}', 'update');
+        Route::middleware('verifyAdmin')->delete('/delete/{id}', 'delete');
     });
 
     /* -------------------------------------------------------------------------- */
@@ -180,7 +180,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                               Product Shifting  route                            */
     /* -------------------------------------------------------------------------- */
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductShiftingController::class)
+    Route::middleware(['verifySubAdmin'])->controller(ProductShiftingController::class)
         ->prefix('/productshift')->group(function () {
             Route::post('/store', 'store');
         });
@@ -189,7 +189,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                              HistoryController  route                            */
     /* -------------------------------------------------------------------------- */
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(HistoryController::class)
+    Route::middleware(['verifySubAdmin'])->controller(HistoryController::class)
         ->group(function () {
             Route::get('/histories', 'histories');
         });
@@ -199,7 +199,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                              Search product route                            */
     /* -------------------------------------------------------------------------- */
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(SearchProductController::class)
+    Route::controller(SearchProductController::class)
 
         ->prefix('/product')->group(function () {
             Route::get('/search', 'index');

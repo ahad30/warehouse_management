@@ -103,7 +103,7 @@ class SaleController extends Controller
     public function create(Request $request): Response
     {
 
-        $productsQuery = Product::where('is_sold', false)->with("productImages");
+        $productsQuery = Product::where('is_sold', false)->with("productImages")->with('getBrand');
 
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
