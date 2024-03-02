@@ -66,7 +66,6 @@ class ProductReportController extends Controller
     //         'products' => $products
     //     ]);
     // }
-
     public function __invoke(Request $request)
     {
         $type = $request->type;

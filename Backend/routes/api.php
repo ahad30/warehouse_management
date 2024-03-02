@@ -175,6 +175,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     // Route::get('/product-report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
+    
     Route::post('/{type}/report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
