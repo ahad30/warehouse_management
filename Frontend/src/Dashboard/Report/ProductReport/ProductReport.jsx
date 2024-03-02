@@ -22,9 +22,9 @@ const ProductReport = () => {
   const [date, setDate] = useState(null);
 
   const { data: productsReport, isLoading } = useGetProductsReportQuery({
-    date,
-    startDate,
-    endDate,
+    // date,
+    // startDate,
+    // endDate,
   });
 
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
@@ -81,7 +81,6 @@ const ProductReport = () => {
     {
       name: "Sold Price (Avg.)",
 
-
       selector: (row) => <>{parseFloat(row?.price).toFixed(2)}</>,
     },
     {
@@ -117,6 +116,8 @@ const ProductReport = () => {
   if (isLoading) {
     return <UseLoading />;
   }
+
+  // console.log(filterData)
 
   return (
     <DashboardBackground>
