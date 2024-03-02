@@ -12,7 +12,7 @@ const ReportLayout = () => {
           <Tab>Product</Tab>
           <Tab>Invoice</Tab>
         </TabList>
-
+        
         <TabPanel>
           <ProductReport />
         </TabPanel>
