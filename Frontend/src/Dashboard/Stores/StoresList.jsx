@@ -14,8 +14,10 @@ import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { FaEdit, FaStore } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
+import { useSelector } from "react-redux";
 
 const StoresList = () => {
+  const { user } = useSelector((state) => state.auth);
   UseTitle("Warehouse");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [store, setStore] = useState({});
@@ -150,9 +152,11 @@ const StoresList = () => {
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
-          <button onClick={() => onDelete(row?.id)}>
-            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button>
+          {user?.get_role?.role === "Admin" && (
+            <button onClick={() => onDelete(row?.id)}>
+              <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+            </button>
+          )}
           {/* <button><FaEye size={20}/>
           </button> */}
         </div>

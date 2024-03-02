@@ -186,9 +186,9 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/category/add", // Add a new category
             element: (
-              <SuperAndAdmin>
+              <SuperAdminRoutes>
                 <AddCategory />
-              </SuperAndAdmin>
+              </SuperAdminRoutes>
             ),
           },
           // BRANDS
@@ -203,9 +203,9 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/brand/add", // Add a new brand
             element: (
-              <SuperAndAdmin>
+              <SuperAdminRoutes>
                 <AddBrand />
-              </SuperAndAdmin>
+              </SuperAdminRoutes>
             ),
           },
           // STORE
@@ -220,9 +220,9 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/store/add", // Add a new store
             element: (
-              <SuperAndAdmin>
+              <SuperAdminRoutes>
                 <AddStore />
-              </SuperAndAdmin>
+              </SuperAdminRoutes>
             ),
           },
           // PRODUCTS
