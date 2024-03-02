@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface ProductReportInterface
+interface ReportInterface
 {
     /**
      * Undocumented function
@@ -10,7 +10,6 @@ interface ProductReportInterface
      * @param [type] $timeRange
      * @param [type] $startDate
      * @param mixed $endDate
-     * @return object
      */
-    public function getReport($timeRange, $startDate, mixed $endDate): object;
+    public function generateReport($timeRange, $startDate, $endDate);
 }

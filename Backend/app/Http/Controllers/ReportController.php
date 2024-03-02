@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ProductReportInterface;
-use Carbon\Carbon;
-use GuzzleHttp\Psr7\Response;
+use App\Repositories\ReportRepository;
+use App\Traits\ReportResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 
 class ReportController extends Controller
 {
+    use ReportResponse;
     /**
      * Handle the incoming request.
      */
 
-    // public function __invoke($time_range = null, $start_date = null, $end_date = null)
-    // {
-
+    // public function __invoke($time_range = null, $start_date = null, $end_date = null){
     //     $timeRange = $time_range; // Values: daily, weekly, monthly, custom
 
     //     $query = DB::table('products')
@@ -100,36 +96,49 @@ class ReportController extends Controller
     //         ], 400);
     //     }
     // }
-    private $ProductReport;
-    public function __construct(ProductReportInterface $ProductReport)
+
+
+    private $reportRepository;
+
+    public function __construct(ReportRepository $reportRepository)
     {
-        $this->ProductReport = $ProductReport;
+        $this->reportRepository = $reportRepository;
     }
 
-    public function product_report($timeRange, $startDate = null, $endDate = null)
+    // getting product reports
+    public function productReport(Request $request)
     {
-        $report = $this->ProductReport->getReport($timeRange, $startDate, $endDate);
-        return Response([
-            'status' => true,
-            'report' => $report,
-        ], 200);
+        // you need to pass only request parameters
+        $reports = $this->reportRepository->getProductReport($request);
+
+        if (!$reports) {
+            return $this->emptyResponse();
+        }
+
+        return $this->successResponse($reports);
     }
 
-
-    protected function successResponse($query)
+    // getting sale reports
+    public function salesReport(Request $request)
     {
-        return response()->json([
-            'status' => true,
-            'message' => $query->count() . " " . "product Found",
-            'products' => $query
-        ]);
+        $reports = $this->reportRepository->getSaleReport($request);
+
+        if (!$reports) {
+            return $this->emptyResponse();
+        }
+
+        return $this->successResponse($reports);
     }
 
-    protected function emptyResponse()
+    // getting shifting reports
+    public function shiftingReport(Request $request)
     {
-        return response()->json([
-            'status' => false,
-            'message' => "No product Found",
-        ]);
+        $reports = $this->reportRepository->getShiftingReport($request);
+
+        if (!$reports) {
+            return $this->emptyResponse();
+        }
+
+        return $this->successResponse($reports);
     }
 }
