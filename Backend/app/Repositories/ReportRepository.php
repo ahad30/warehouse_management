@@ -3,51 +3,39 @@
 namespace App\Repositories;
 
 use App\Interfaces\ReportInterface;
-use Carbon\Carbon;
+use App\Services\ProductReport;
+use App\Services\SaleReport;
+use App\Services\ShiftingReport;
 
 class ReportRepository
 
 {
-    private $reportInterface;
 
-    public function __construct(ReportInterface $reportInterface)
+    protected $productReport;
+    protected $saleReport;
+    protected $shiftingReport;
+
+    public function __construct(ProductReport $productReport, SaleReport $saleReport, ShiftingReport $shiftingReport)
     {
-        $this->reportInterface = $reportInterface;
+        $this->productReport = $productReport;
+        $this->saleReport = $saleReport;
+        $this->shiftingReport = $shiftingReport;
     }
-
-    public function getProductReport($request)
+    public function getProductReport($timeRange, $startDate, $endDate)
     {
-        $processedData = $this->extractRequest($request);
-
-        $timeRange = $processedData['timeRange'];
-        $startDate = $processedData['startDate'];
-        $endDate = $processedData['endDate'];
-
         // generate product report
-        return $this->reportInterface->generateReport($timeRange, $startDate, $endDate);
+        return $this->productReport->generateReport($timeRange, $startDate, $endDate);
     }
 
-    public function getSaleReport($request)
+    // generate sales report
+    public function getSaleReport($timeRange, $startDate, $endDate)
     {
-        // return $this->reportInterface->generateReport();
+        return $this->saleReport->generateReport($timeRange, $startDate, $endDate);
     }
 
-    public function getShiftingReport($request)
+    // generate shifting report
+    public function getShiftingReport($timeRange, $startDate, $endDate)
     {
-        // return $this->reportInterface->generateReport();
-    }
-
-
-    protected function extractRequest($request)
-    {
-        $timeRange = $request->timeRange;
-        $startDate = Carbon::parse($request->startDate)->format("Y-m-d");
-        $endDate = Carbon::parse($request->endDate)->format("Y-m-d");
-
-        return [
-            'timeRange' => $timeRange,
-            'startDate' => $startDate,
-            'endDate' => $endDate
-        ];
+        return $this->shiftingReport->generateReport($timeRange, $startDate, $endDate);
     }
 }
