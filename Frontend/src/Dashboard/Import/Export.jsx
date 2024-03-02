@@ -24,6 +24,7 @@ const Export = () => {
     useGetAllExportsMutation();
   const [track, setTrack] = useState("");
   const { data: storesData } = useGetStoresQuery();
+
   const generateCsvData = async (from) => {
     if (!track) {
       alert("plz select first");
@@ -38,6 +39,8 @@ const Export = () => {
     }
   };
 
+  console.log(track);
+  console.log(url);
   return (
     <DashboardBackground>
       <>
