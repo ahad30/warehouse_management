@@ -29,12 +29,24 @@ class ReportRepository
 
     public function getSaleReport($request)
     {
-        // return $this->reportInterface->generateReport();
+        $processedData = $this->extractRequest($request);
+
+        $timeRange = $processedData['timeRange'];
+        $startDate = $processedData['startDate'];
+        $endDate = $processedData['endDate'];
+
+        return $this->reportInterface->generateReport($timeRange, $startDate, $endDate);
     }
 
     public function getShiftingReport($request)
     {
-        // return $this->reportInterface->generateReport();
+        $processedData = $this->extractRequest($request);
+
+        $timeRange = $processedData['timeRange'];
+        $startDate = $processedData['startDate'];
+        $endDate = $processedData['endDate'];
+
+        return $this->reportInterface->generateReport($timeRange, $startDate, $endDate);
     }
 
 
