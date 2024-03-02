@@ -106,9 +106,9 @@ class ReportController extends Controller
         $this->ProductReport = $ProductReport;
     }
 
-    public function product_report($timeRange, $startDate, $endDate)
+    public function product_report()
     {
-        $report = $this->ProductReport->getReport($timeRange, $startDate, $endDate);
+        $report = $this->ProductReport->getReport();
         return Response([
             'status' => true,
             'report' => $report,

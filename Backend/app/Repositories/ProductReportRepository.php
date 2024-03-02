@@ -8,32 +8,32 @@ use Carbon\Carbon;
 
 class ProductReportRepository implements ProductReportInterface
 {
-    /**
-     * Undocumented function
-     *
-     * @param mixed $timeRange
-     * @param mixed $startDate
-     * @param mixed $endDate
-     * @return \Illuminate\Http\Response
-     */
-    public function getReport($timeRange, $startDate, $endDate): object
+
+
+    public function getReport()
     {
+        $query = Product::query();
 
-        $startDate = Carbon::parse($startDate)->format('Y-m-d');
-        $endDate = Carbon::parse($endDate)->format('Y-m-d');
+        if (request()->timeRange !== null) {
+            switch (request()->timeRange) {
+                case 1:
+                    $query->whereDate('created_at', now()->toDateString());
+                    break;
+                case 7:
+                    $query->whereBetween('created_at', [now()->subDays(7)->startOfDay(), now()->endOfDay()]);
+                    break;
+                case 30:
+                    $query->whereBetween('created_at', [now()->subDays(30)->startOfMonth(), now()]);
+                    break;
+                default:
+                    return response()->json(['message' => 'Invalid time range.'], 400);
+            }
+        } elseif (request()->startDate && request()->endDate) {
+            $query->whereBetween('created_at', [Carbon::parse(request()->startDate), Carbon::parse(request()->endDate)]);
+        } else {
+            return response()->json(['message' => 'Invalid request.'], 400);
+        }
 
-        if ($timeRange != null && $timeRange === 1) {
-            return Product::whereDate('created_at', '=', now()->toDateString());
-        } elseif ($timeRange != null && $timeRange === 7) {
-            return  Product::whereBetween('created_at', [now()->subDays(7), now()]);
-        } elseif ($timeRange != null && $timeRange === 30) {
-            return Product::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()]);
-        }
-        if ($startDate && $endDate) {
-            return Product::whereBetween('created_at', [$startDate, $endDate]);
-        }
-        return response([
-            'message' => 'something went wrong',
-        ], 400);
+        return $query->get();
     }
 }
