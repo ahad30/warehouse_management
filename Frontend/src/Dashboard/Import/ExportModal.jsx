@@ -5,18 +5,17 @@ const ExportModal = ({ modalIsOpen, setModalIsOpen }) => {
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div
-        className="fixed inset-0 w-full h-full bg-black opacity-40"
+        className="fixed inset-0 w-full h-full  bg-black opacity-40"
         onClick={() => setModalIsOpen(false)}
       ></div>
-      <div className="flex items-center min-h-screen px-4 py-8">
-        <div className="relative w-full max-w-lg  p-4 mx-auto bg-white rounded-md shadow-lg">
+      <div className="flex items-center min-h-screen px-4 py-5">
+        <div className="relative w-full  max-w-lg  p-4 mx-auto bg-white rounded-md shadow-lg">
           <div className="mt-2 text-center sm:ml-4 sm:text-left">
-            <p className="text-lg font-semibold text-center mb-5">
-              Import Image
-            </p>
             <div className="px-5">
-              <h1 className="font-bold text-lg">How to import CSV file ???</h1>
-              <p className="font-bold text-lg ">Step:1</p>
+              <h1 className="font-bold text-lg text-center ">
+                How to import CSV file ???
+              </h1>
+              <p className="font-bold text-lg">Step:1</p>
               <ul className="list-decimal px-5">
                 <li>
                   Opening a CSV file is simpler than you may think. In almost
@@ -34,11 +33,11 @@ const ExportModal = ({ modalIsOpen, setModalIsOpen }) => {
                 </li>
               </ul>
             </div>
-            <div className="mt-5 px-4">
+            <div className="mt-3 px-4">
               <p className="font-bold text-lg">Step:2</p>
-              <img src={importImg} className="   " />
+              <img src={importImg} className=" h-full " />
             </div>
-            <div className="px-2 mt-2">
+            <div className="px-2 mt-1">
               <p className="font-bold text-lg">Step:3</p>
               <ul className="list-decimal px-4">
                 <li>
@@ -50,7 +49,7 @@ const ExportModal = ({ modalIsOpen, setModalIsOpen }) => {
           </div>
           <div className="flex justify-end">
             <button
-              className="bg-red-600  mt-2 text-[8px] lg:p-1  flex text-white rounded-md outline-none border ring-offset-2 ring-red-500 focus:ring-2 "
+              className="bg-red-600  mb-8 text-[8px] lg:p-1 flex text-white rounded-md outline-none border ring-offset-2 ring-red-500 focus:ring-2"
               onClick={() => setModalIsOpen(false)}
             >
               Cancel
