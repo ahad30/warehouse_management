@@ -181,7 +181,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
-    Route::middleware('verifyAdmin')->apiResource('warehouses', WarehouseController::class);
+    Route::middleware('verifySubAdmin')->apiResource('warehouses', WarehouseController::class);
 
 
 
