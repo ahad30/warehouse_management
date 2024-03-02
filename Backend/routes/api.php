@@ -81,7 +81,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                              Category controller                              */
     /* -------------------------------------------------------------------------- */
-    Route::middleware(['verifyAdmin', 'verifySubAdmin'])->controller(CategoryController::class)->prefix('categories')->group(function () {
+    Route::middleware(['verifySubAdmin'])->controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
@@ -89,7 +89,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::delete('/delete/{id}', 'destroy');
     });
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin', 'verifyStaff'])->controller(ProductController::class)->prefix('/products')->group(function () {
+    Route::middleware(['verifyStaff'])->controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('/', 'index');
         Route::get('/create', 'create');
         Route::post('/store', 'store');
@@ -113,7 +113,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     //     Route::delete('/delete/{id}', 'destroy');
     // });
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin'])->controller(UserController::class)->prefix('users')->group(function () {
+    Route::middleware(['verifySubAdmin'])->controller(UserController::class)->prefix('users')->group(function () {
         Route::get('/', 'index');
         Route::put('/update', 'update');
         Route::delete('/delete/{id}', 'destroy');
@@ -124,14 +124,14 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                                 Role Routes                                */
     /* -------------------------------------------------------------------------- */
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin'])->get('/roles', RoleController::class)->name('role.index');
+    Route::middleware(['verifySubAdmin'])->get('/roles', RoleController::class)->name('role.index');
 
 
     /* -------------------------------------------------------------------------- */
     /*                              Brand controller                              */
     /* -------------------------------------------------------------------------- */
 
-    Route::middleware(['verifyAdmin', 'verifySubAdmin'])->controller(BrandController::class)->prefix('/brands')->group(function () {
+    Route::middleware(['verifySubAdmin'])->controller(BrandController::class)->prefix('/brands')->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
         Route::put('/update/{id}', 'update');
@@ -172,7 +172,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */
-    Route::middleware('verifyAdmin')->apiResource('warehouses', WarehouseController::class);
+    Route::middleware('verifySubAdmin')->apiResource('warehouses', WarehouseController::class);
 
 
 

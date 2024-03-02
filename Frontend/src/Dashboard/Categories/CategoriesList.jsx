@@ -15,8 +15,11 @@ import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import { useSelector } from "react-redux";
 
 const CategoriesList = () => {
+  const { user } = useSelector((state) => state?.auth);
+
   UseTitle("Categories");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [category, setCategory] = useState({});
@@ -134,9 +137,11 @@ const CategoriesList = () => {
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
-          <button onClick={() => onDelete(row?.id)}>
-            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button>
+          {user?.get_role?.role === "Admin" && (
+            <button onClick={() => onDelete(row?.id)}>
+              <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+            </button>
+          )}
         </div>
       ),
     },
