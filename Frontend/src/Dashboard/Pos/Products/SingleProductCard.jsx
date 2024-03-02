@@ -1,13 +1,12 @@
 import { array, func, object } from "prop-types";
 
 const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
-  // console.log(item);
   const {
     product_images,
     product_name,
-    scan_code,
     brand_id,
     product_sale_price,
+    get_brand: { brand_name },
   } = item;
   console.log(item);
 
@@ -41,7 +40,7 @@ const SingleProductCard = ({ item, setAddedProduct, addedProduct }) => {
       {/* product name start */}
       <div className="mt-4 px-2 font-poppins">
         <p className="font-semibold text-base">{product_name}</p>
-        <p className=" text-sm text-gray-500">{product_name}</p>
+        <p className=" text-sm text-gray-500">{brand_name}</p>
       </div>
       {/* product name end */}
 
