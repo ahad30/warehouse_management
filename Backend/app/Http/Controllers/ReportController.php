@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ProductReportInterface;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-class ProductReportController extends Controller
+class ReportController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -67,37 +69,52 @@ class ProductReportController extends Controller
     //     ]);
     // }
 
-    public function __invoke(Request $request)
+    // public function __invoke(Request $request)
+    // {
+    //     $type = $request->type;
+    //     $startDate = Carbon::parse($request->start_date)->format("Y-m-d");
+    //     $endDate = Carbon::parse($request->end_date)->format("Y-m-d");
+
+    //     $time_range = $request->time_range;
+
+    //     if ($type == "products") {
+    //         $query = DB::table('products');
+    //         $startDate = Carbon::parse($startDate)->format("Y-m-d");
+    //         $endDate = Carbon::parse($endDate)->format("Y-m-d");
+    //         if ($startDate && $endDate) {
+    //             $query->whereBetween('products.created_at', [$startDate, $endDate]);
+    //         }
+
+    //         if ($query->count() > 0) {
+    //             return $this->successResponse($query->get());
+    //         }
+    //         return $this->emptyResponse();
+    //     } elseif ($type == "shifting") {
+    //         return $type;
+    //     } elseif ($type == "sales") {
+    //         return $type;
+    //     } else {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => "Invalid type"
+    //         ], 400);
+    //     }
+    // }
+    private $ProductReport;
+    public function __construct(ProductReportInterface $ProductReport)
     {
-        $type = $request->type;
-        $startDate = Carbon::parse($request->start_date)->format("Y-m-d");
-        $endDate = Carbon::parse($request->end_date)->format("Y-m-d");
-
-        $time_range = $request->time_range;
-
-        if ($type == "products") {
-            $query = DB::table('products');
-            $startDate = Carbon::parse($startDate)->format("Y-m-d");
-            $endDate = Carbon::parse($endDate)->format("Y-m-d");
-            if ($startDate && $endDate) {
-                $query->whereBetween('products.created_at', [$startDate, $endDate]);
-            }
-
-            if ($query->count() > 0) {
-                return $this->successResponse($query->get());
-            }
-            return $this->emptyResponse();
-        } elseif ($type == "shifting") {
-            return $type;
-        } elseif ($type == "sales") {
-            return $type;
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => "Invalid type"
-            ], 400);
-        }
+        $this->ProductReport = $ProductReport;
     }
+
+    public function product_report($timeRange, $startDate, $endDate)
+    {
+        $report = $this->ProductReport->getReport($timeRange, $startDate, $endDate);
+        return Response([
+            'status' => true,
+            'report' => $report,
+        ], 200);
+    }
+
 
     protected function successResponse($query)
     {
