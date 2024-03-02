@@ -31,8 +31,14 @@ const TotalCalculations = () => {
   }, [data?.status, data?.data]);
 
   // Define an array of items to display in the summary
-
   const items = [
+    {
+      img: <BsFillCartFill className="text-white" size={30}></BsFillCartFill>,
+      count: summary?.totalProducts,
+      text: "Total Products",
+      backgroundColor: "#e74c3c",
+      path: "/dashboard/product",
+    },
     {
       img: (
         <AiOutlineDollarCircle
@@ -60,19 +66,12 @@ const TotalCalculations = () => {
       backgroundColor: "#e74c3c",
       path: "/dashboard/user",
     },
-    {
-      img: <FiUsers className="text-white" size={30}></FiUsers>,
-      count: summary?.totalCustomers,
-      text: "Total Customers",
-      backgroundColor: "#e74c3c",
-      path: "/dashboard/customer",
-    },
     // {
-    //   img: <BsFillCartFill className="text-white" size={30}></BsFillCartFill>,
-    //   count: summary?.totalProducts,
-    //   text: "Total Products",
+    //   img: <FiUsers className="text-white" size={30}></FiUsers>,
+    //   count: summary?.totalCustomers,
+    //   text: "Total Customers",
     //   backgroundColor: "#e74c3c",
-    //   path: "/dashboard/product",
+    //   path: "/dashboard/customer",
     // },
     // {
     //   img: <BiCategory className="text-white" size={30}></BiCategory>,

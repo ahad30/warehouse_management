@@ -1,4 +1,4 @@
-import { array, number } from "prop-types";
+import { array} from "prop-types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -11,11 +11,10 @@ import useShowAsyncMessage from "../../../components/Reusable/UseShowAsyncMessag
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState("Discount");
   const [shipping, setShipping] = useState(0);
   const [tax, setTax] = useState(0.0);
   const [error, setError] = useState(false);
-
   const handleRemoveItem = (id) => {
     const filterItem = addedProduct?.filter((item) => item?.id !== id);
     setAddedProduct([...filterItem]);

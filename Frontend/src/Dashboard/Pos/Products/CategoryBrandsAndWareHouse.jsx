@@ -44,7 +44,7 @@ const CategoryBrandsAndWareHouse = ({
           <div className="flex gap-x-3">
             <button
               onClick={() => setSingleCategory("category")}
-              className={`min-w-[200px]  py-3 rounded-lg 
+              className={`min-w-[150px]  py-3 rounded-lg 
              ${
                singleCategory == "category"
                  ? "bg-light-blue-500 text-white"
@@ -54,7 +54,7 @@ const CategoryBrandsAndWareHouse = ({
             >
               All Category
             </button>
-            <div className="flex gap-x-3 overflow-x-scroll wrapper">
+            <div className="flex gap-x-3  overflow-x-scroll wrapper">
               {allCategory?.data?.map((item, index) => (
                 <button
                   onClick={() => handleCategory(item?.id)}
@@ -89,7 +89,7 @@ const CategoryBrandsAndWareHouse = ({
           <div className="flex gap-x-3">
             <button
               onClick={() => setSingleBrands("brand")}
-              className={`min-w-[200px]  py-3 rounded-lg 
+              className={`min-w-[150px]  py-3 rounded-lg 
            ${
              singleBrands == "brand"
                ? "bg-light-blue-500 text-white"
@@ -134,7 +134,7 @@ const CategoryBrandsAndWareHouse = ({
           <div className="flex gap-x-3">
             <button
               onClick={() => setSingleWarehouse("warehouse")}
-              className={`min-w-[200px]  py-3 rounded-lg 
+              className={`min-w-[150px]  py-3 rounded-lg 
              ${
                singleWarehouse == "warehouse"
                  ? "bg-light-blue-500 text-white"
@@ -148,7 +148,7 @@ const CategoryBrandsAndWareHouse = ({
               {allWarHouse?.data?.map((item, index) => (
                 <button
                   onClick={() => handleWarehouse(item?.id)}
-                  className={`min-w-[200px] rounded-lg ${
+                  className={`min-w-[200px]  rounded-lg ${
                     singleWarehouse?.id == item?.id
                       ? "bg-light-blue-500 text-white"
                       : "bg-gray-100 text-black"
