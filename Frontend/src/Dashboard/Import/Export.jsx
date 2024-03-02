@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import ImportData from "./ImportData";
-import { useForm } from "react-hook-form";
 import {
   useGetExportMutation,
   useGetAllExportsMutation,
@@ -14,60 +13,31 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Export = () => {
   UseTitle("Import_Export");
-  const { register, handleSubmit } = useForm();
   const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [url, setUrl] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const [getSpecificWarehouseCsv, { data: WareHouseData }] =
     useGetExportMutation();
   const [getallWarehouseCsv, { data: allWareHouseData }] =
     useGetAllExportsMutation();
   const [track, setTrack] = useState("");
-  // const onSubmit = (formData) => {
-  //   const warehouseId = formData.warehouse_id;
-  //   console.log(warehouseId);
-  //   getSpecificWarehouseCsv(warehouseId);
-  // };
   const { data: storesData } = useGetStoresQuery();
-
-  // useEffect(() => {
-  //   if (WareHouseData?.url) {
-  //     setUrl(WareHouseData?.url);
-  //   }
-  //   if (allWareHouseData?.url) {
-  //     setUrl(allWareHouseData?.url);
-  //   }
-  // }, [WareHouseData, allWareHouseData]);
-
-  const handleAllCsvData = () => {
-    getallWarehouseCsv();
-  };
-
-  // console.log(allWareHouseData);
-  // console.log(url);
-
   const generateCsvData = async (from) => {
     if (!track) {
-      alert("plz slelect first");
+      alert("plz select first");
     } else if (from === "All") {
-      // console.log("hefdfsllo");
-
       const res = await getallWarehouseCsv().unwrap();
       setUrl(res?.url);
       setShowButton(true);
     } else if (from === "warehouse") {
-      // console.log("hello");
       const res = await getSpecificWarehouseCsv(track?.id).unwrap();
       setUrl(res?.url);
       setShowButton(true);
     }
   };
 
-  console.log(track);
-  console.log(url);
   return (
     <DashboardBackground>
       <>
@@ -95,14 +65,6 @@ const Export = () => {
           />
         </div>
 
-        {/* <button
-          onClick={() => handleAllCsvData()}
-          type="button"
-          className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white"
-        >
-          All
-        </button> */}
-
         <>
           <label className="font-bold text-lg mt-5 ">Export :</label>
           <div className="mt-2 border bg-[#F3F4F6] rounded">
@@ -118,10 +80,8 @@ const Export = () => {
                 <div>
                   <label className="input-group">
                     <select
-                      // onChange={()=>}
                       className="select select-bordered w-full max-w-xs"
                       required
-                      // {...register("warehouse_id")}
                       onChange={(e) =>
                         setTrack({ name: "warehouse", id: e.target.value })
                       }
