@@ -23,6 +23,28 @@ class ReportController extends Controller
     public function productReport(Request $request)
     {
 
+        // $reports = $this->reportRepository->getProductReport();
+
+        // if (!$reports['status']) {
+        //     return response()->json(
+        //         [
+        //             'status' => false,
+        //             'message' => $reports['message']
+        //         ],
+        //         $reports['statusCode']
+        //     );
+        // }
+        // return response()->json([
+        //     'status' => true,
+        //     'data' => $reports['data']
+        // ], $reports['statusCode']);
+
+    }
+
+    // getting sale reports
+    public function salesReport(Request $request)
+    {
+
         $reports = $this->reportRepository->getProductReport();
 
         if (!$reports['status']) {
@@ -38,25 +60,6 @@ class ReportController extends Controller
             'status' => true,
             'data' => $reports['data']
         ], $reports['statusCode']);
-
-    }
-
-    // getting sale reports
-    public function salesReport(Request $request)
-    {
-        $processedData = $this->extractRequest($request);
-
-        $timeRange = $processedData['timeRange'];
-        $startDate = $processedData['startDate'];
-        $endDate = $processedData['endDate'];
-
-        $reports = $this->reportRepository->getSaleReport($timeRange, $startDate, $endDate);
-
-        if (!$reports) {
-            return $this->emptyResponse();
-        }
-
-        return $this->successResponse($reports);
     }
 
     // getting shifting reports

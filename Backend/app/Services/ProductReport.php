@@ -76,15 +76,19 @@ class ProductReport implements ReportInterface
         }
         return $query;
     }
+    /**
+     * merge Data
+     *
+     * @param [object] $newProducts
+     * @param [object] $soldProducts
+     */
     private function mergeData($newProducts, $soldProducts)
     {
         $mergedProducts = [];
         foreach ($newProducts as $newProduct) {
             $date = $newProduct->date;
-
             // Check if there is a corresponding entry in $soldProducts for the same date
             $soldProduct = collect($soldProducts)->firstWhere('date', $date);
-            // Convert stdClass object to an array if found
 
             // Merge the entries into a single array
             $mergedProducts[] = array_merge((array) $newProduct, (array) $soldProduct ?? (array) []);
