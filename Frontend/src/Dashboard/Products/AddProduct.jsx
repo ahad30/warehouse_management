@@ -28,10 +28,8 @@ const AddProduct = () => {
     const formData = new FormData();
     const images = data?.images;
     formData.append("product_name", data?.product_name);
-    // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    // formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
@@ -80,6 +78,7 @@ const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const handleImageChange = (e) => {
     const files = e.target.files;
+    // console.log(files);
     console.log(files.length);
     if (files.length > 5) {
       console.log("succeed");

@@ -21,8 +21,7 @@ const Search = ({ setSingleScanCode }) => {
     <div className="relative flex">
       <div className="w-full">
         <label htmlFor="Search" className="sr-only">
-          {" "}
-          Search{" "}
+          Search
         </label>
         <form className="" onSubmit={handleSubmit} action="">
           <input
