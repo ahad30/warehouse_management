@@ -34,8 +34,11 @@ class ReportController extends Controller
         if (!$reports) {
             return $this->emptyResponse();
         }
-
-        return $this->successResponse($reports);
+        return response()->json([
+            'status' => true,
+            'data' => $reports
+        ], 200);
+        // return $this->successResponse($reports);
     }
 
     // getting sale reports
