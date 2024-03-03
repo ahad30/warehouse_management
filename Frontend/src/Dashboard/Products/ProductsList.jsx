@@ -44,6 +44,7 @@ const ProductsList = () => {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
+    refetch,
   } = useGetProductsQuery({ pageNumber: ActivePageNumber });
 
   const dispatch = useDispatch();
@@ -266,6 +267,7 @@ const ProductsList = () => {
           product={product}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
+          refetch={refetch}
         />
         <Imageview
           product={product}
