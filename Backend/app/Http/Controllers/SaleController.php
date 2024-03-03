@@ -102,15 +102,9 @@ class SaleController extends Controller
     // Create - Generate and store invoices
     public function create(Request $request): Response
     {
-<<<<<<< HEAD
-
-        $productsQuery = Product::where('is_sold', false)->with("productImages");
-
-=======
     
         $productsQuery = Product::where('is_sold',false);
 
->>>>>>> 61be3512 (search api)
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
         }
@@ -119,14 +113,6 @@ class SaleController extends Controller
             $productsQuery->where('category_id', $request->category_id);
         }
 
-<<<<<<< HEAD
-        if ($request->warehouse_id != null) {
-            $productsQuery->where('warehouse_id', $request->warehouse_id);
-        }
-
-        if ($request->scan_code != null) {
-            $productsQuery->where('scan_code', $request->scan_code);
-=======
         if($request->warehouse_id!=null){
             $productsQuery->where('warehouse_id', $request->warehouse_id);
         }
@@ -135,7 +121,6 @@ class SaleController extends Controller
         {
             $productsQuery->where('scan_code', $request->scan_code);
 
->>>>>>> 61be3512 (search api)
         }
 
 
@@ -143,13 +128,8 @@ class SaleController extends Controller
 
         return response()->json([
             'status' => true,
-<<<<<<< HEAD
-            'data' =>  $products,
-
-=======
             'data' =>  $products ,
      
->>>>>>> 61be3512 (search api)
         ]);
     }
 
