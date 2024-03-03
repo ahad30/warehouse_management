@@ -22,17 +22,23 @@ class ReportController extends Controller
     // getting product reports
     public function productReport(Request $request)
     {
-      
+
         $reports = $this->reportRepository->getProductReport();
 
-        if (!$reports) {
-            return $this->emptyResponse();
+        if (!$reports['status']) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => $reports['message']
+                ],
+                $reports['statusCode']
+            );
         }
         return response()->json([
             'status' => true,
-            'data' => $reports
-        ], 200);
-        // return $this->successResponse($reports);
+            'data' => $reports['data']
+        ], $reports['statusCode']);
+
     }
 
     // getting sale reports

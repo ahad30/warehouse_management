@@ -10,60 +10,71 @@ use Illuminate\Support\Facades\DB;
 
 class ProductReport implements ReportInterface
 {
-    // public function generateReport($timeRange = 0, $startDate = null, $endDate = null)
-    // {
-    //     return $this->getReport($timeRange, $startDate, $endDate);
-    // }
 
-    // public function getReport($timeRange, $startDate, $endDate)
-    // {
-    //     if ($timeRange > 0) {
-    //         return $this->getReportByRange($timeRange);
-    //     }
-
-    //     $query = DB::table('products');
-    //     if ($startDate && $endDate) {
-    //         $query->whereBetween('products.created_at', [$startDate, $endDate]);
-    //     }
-    //     return $query->get();
-    // }
-
-    // public function getReportByRange($timeRange)
-    // {
-    //     $previousDate = Carbon::now()->subDays($timeRange);
-    //     $formattedDate = $previousDate->format('Y-m-d');
-    //     $currentDate = now()->toDateString();
-    //     return DB::table('products')
-    //         ->whereBetween('created_at', [$formattedDate, $currentDate])
-    //         ->get();
-    // }
     public function generateReport()
     {
-        $query = Product::query();
+        $timeRange = request()->time_range; // Values: daily, weekly, monthly, custom
 
-        if (request()->timeRange !== null) {
-            switch (request()->timeRange) {
-                case 1:
-                    $query->whereDate('created_at', now()->toDateString());
-                    break;
-                case 7:
-                    $query->whereBetween('created_at', [now()->subDays(7)->startOfDay(), now()->endOfDay()]);
-                    break;
-                case 30:
-                    $query->whereBetween('created_at', [now()->subDays(30)->startOfMonth(), now()]);
-                    break;
-                default:
-                    return ['status' => false, 'message' => 'Invalid time range.'];
-            }
-        } elseif (request()->startDate && request()->endDate) {
-            $query->whereBetween('created_at', [Carbon::parse(request()->startDate), Carbon::parse(request()->endDate)]);
-        } else {
-            return response()->json(['message' => 'Invalid request.'], 400);
-        }
-
-        $data =  $query->get();
+        /** For new product */
+        $newProducts = $this->collectNewProducts($timeRange);
+        /** for selling */
+        $soldProducts = $this->collectSoldProduct($timeRange);
+        $products = $newProducts->merge($soldProducts);
         return [
-            'allProduct' => $data->count()
+            'status' => true,
+            'data' => $products,
+            'statusCode' => 200
         ];
+    }
+    /**
+     * collect New Products
+     *
+     * @param [type] $timeRange
+     */
+    private function collectNewProducts($timeRange)
+    {
+        /** Select new product group by created at date */
+        $query = DB::table('products');
+        $query = $this->generateQuery($timeRange, $query);
+        $products = $query->selectRaw('COUNT(*) as newProducts,DATE(created_at) as date')->groupBy(DB::raw('DATE(created_at)'))->get();
+        return $products;
+
+    }
+    /**
+     * Select new product group by created at date
+     *
+     * @param [type] $timeRange
+     */
+    private function collectSoldProduct($timeRange)
+    {
+        $query = DB::table('sale_items');
+        $query = $this->generateQuery($timeRange, $query);
+        $products = $query->selectRaw('COUNT(*) as soldProducts,DATE(created_at) as date')->groupBy(DB::raw('DATE(created_at)'))->get();
+        return $products;
+    }
+    /**
+     * Apply date filters based on the time range
+     *
+     * @param [type] $timeRange
+     * @param [type] $query
+     */
+    private function generateQuery($timeRange, $query)
+    {
+
+        if ($timeRange == 1) {
+            $query->whereDate('created_at', '=', now()->toDateString());
+        } elseif ($timeRange == 7) {
+            $query->whereBetween('created_at', [now()->subDays(7), now()]);
+        } elseif ($timeRange == 30) {
+            $query->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()]);
+        } elseif ($timeRange === 'custom') {
+            // Get the time range parameters from the request
+            $startDate = Carbon::parse(request()->start_date)->format("Y-m-d");
+            $endDate = Carbon::parse(request()->end_date)->format("Y-m-d");
+            if ($startDate && $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        }
+        return $query;
     }
 }
