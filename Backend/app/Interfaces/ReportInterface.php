@@ -11,5 +11,5 @@ interface ReportInterface
      * @param [type] $startDate
      * @param mixed $endDate
      */
-    public function generateReport($timeRange, $startDate, $endDate);
+    public function generateReport();
 }
