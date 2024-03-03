@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\ReportInterface;
-use App\Models\Product;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ProductReport implements ReportInterface
@@ -19,7 +17,8 @@ class ProductReport implements ReportInterface
         $newProducts = $this->collectNewProducts($timeRange);
         /** for selling */
         $soldProducts = $this->collectSoldProduct($timeRange);
-        $products = $newProducts->merge($soldProducts);
+
+        $products = $this->mergeData($soldProducts, $newProducts);
         return [
             'status' => true,
             'data' => $products,
@@ -76,5 +75,20 @@ class ProductReport implements ReportInterface
             }
         }
         return $query;
+    }
+    private function mergeData($newProducts, $soldProducts)
+    {
+        $mergedProducts = [];
+        foreach ($newProducts as $newProduct) {
+            $date = $newProduct->date;
+
+            // Check if there is a corresponding entry in $soldProducts for the same date
+            $soldProduct = collect($soldProducts)->firstWhere('date', $date);
+            // Convert stdClass object to an array if found
+
+            // Merge the entries into a single array
+            $mergedProducts[] = array_merge((array) $newProduct, (array) $soldProduct ?? (array) []);
+        }
+        return $mergedProducts;
     }
 }
