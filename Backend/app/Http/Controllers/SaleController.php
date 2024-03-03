@@ -102,8 +102,8 @@ class SaleController extends Controller
     // Create - Generate and store invoices
     public function create(Request $request): Response
     {
-    
-        $productsQuery = Product::where('is_sold',false);
+
+        $productsQuery = Product::where('is_sold', false)->with("productImages");
 
         if ($request->brand_id != null) {
             $productsQuery->where('brand_id', $request->brand_id);
@@ -113,23 +113,21 @@ class SaleController extends Controller
             $productsQuery->where('category_id', $request->category_id);
         }
 
-        if($request->warehouse_id!=null){
+        if ($request->warehouse_id != null) {
             $productsQuery->where('warehouse_id', $request->warehouse_id);
         }
 
-        if($request->scan_code != null)
-        {
+        if ($request->scan_code != null) {
             $productsQuery->where('scan_code', $request->scan_code);
-
         }
 
 
-        $products = $productsQuery->paginate(15);
+        $products = $productsQuery->with('getBrand')->paginate(15);
 
         return response()->json([
             'status' => true,
-            'data' =>  $products ,
-     
+            'data' =>  $products,
+
         ]);
     }
 
