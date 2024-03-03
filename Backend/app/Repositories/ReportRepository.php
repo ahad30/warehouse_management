@@ -15,16 +15,19 @@ class ReportRepository
     protected $saleReport;
     protected $shiftingReport;
 
-    public function __construct(ProductReport $productReport, SaleReport $saleReport, ShiftingReport $shiftingReport)
+
+    public function __construct(ProductReport $productReport)
     {
         $this->productReport = $productReport;
-        $this->saleReport = $saleReport;
-        $this->shiftingReport = $shiftingReport;
     }
-    public function getProductReport($timeRange, $startDate, $endDate)
+    // public function getProductReport($timeRange, $startDate, $endDate)
+    // {
+    //     // generate product report
+    //     return $this->productReport->generateReport($timeRange, $startDate, $endDate);
+    // }
+    public function getProductReport()
     {
-        // generate product report
-        return $this->productReport->generateReport($timeRange, $startDate, $endDate);
+        return $this->productReport->generateReport();
     }
 
     // generate sales report

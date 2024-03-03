@@ -18,22 +18,27 @@ class ReportController extends Controller
         $this->reportRepository = $reportRepository;
     }
 
+
     // getting product reports
     public function productReport(Request $request)
     {
-        $processedData = $this->extractRequest($request);
+        // $processedData = $this->extractRequest($request);
 
-        $timeRange = $processedData['timeRange'];
-        $startDate = $processedData['startDate'];
-        $endDate = $processedData['endDate'];
+        // $timeRange = $processedData['timeRange'];
+        // $startDate = $processedData['startDate'];
+        // $endDate = $processedData['endDate'];
         // you need to pass only request parameters
-        $reports = $this->reportRepository->getProductReport($timeRange, $startDate, $endDate);
+        // $reports = $this->reportRepository->getProductReport($timeRange, $startDate, $endDate);
+        $reports = $this->reportRepository->getProductReport();
 
         if (!$reports) {
             return $this->emptyResponse();
         }
-
-        return $this->successResponse($reports);
+        return response()->json([
+            'status' => true,
+            'data' => $reports
+        ], 200);
+        // return $this->successResponse($reports);
     }
 
     // getting sale reports
