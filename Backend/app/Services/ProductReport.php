@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\ReportInterface;
 use App\Models\Product;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ProductReport implements ReportInterface
@@ -52,7 +53,7 @@ class ProductReport implements ReportInterface
                     $query->whereBetween('created_at', [now()->subDays(30)->startOfMonth(), now()]);
                     break;
                 default:
-                    return response()->json(['message' => 'Invalid time range.'], 400);
+                    return ['status' => false, 'message' => 'Invalid time range.'];
             }
         } elseif (request()->startDate && request()->endDate) {
             $query->whereBetween('created_at', [Carbon::parse(request()->startDate), Carbon::parse(request()->endDate)]);
@@ -60,6 +61,9 @@ class ProductReport implements ReportInterface
             return response()->json(['message' => 'Invalid request.'], 400);
         }
 
-        return $query->get();
+        $data =  $query->get();
+        return [
+            'allProduct' => $data->count()
+        ];
     }
 }
