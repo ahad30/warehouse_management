@@ -163,7 +163,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /*                               Product Report                               */
     /* -------------------------------------------------------------------------- */
     Route::controller(ReportController::class)->group(function () {
-        Route::get('/product/report/{timeRange?}/{startDate?}/{endDate?}', 'productReport');
         Route::get('/sale/report/{timeRange?}/{startDate?}/{endDate?}', 'salesReport');
         Route::get('/shifting/report/{timeRange?}/{startDate?}/{endDate?}', 'shiftingReport');
     });
