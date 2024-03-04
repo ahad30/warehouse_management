@@ -13,7 +13,6 @@ import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/Use
 import { set } from "date-fns";
 import { ImCross } from "react-icons/im";
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
-  // console.log(product);
   const { register, handleSubmit, setValue } = useForm();
   const { data: categoriesData } = useGetCategoriesQuery();
   const { data: brandsData } = useGetBrandsQuery();
@@ -66,7 +65,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   useEffect(() => {
     if (product) {
       setValue("product_name", product?.product_name || "");
-
       setValue("product_quantity", product?.product_quantity || "1");
       setValue("product_desc", product?.product_desc || "");
       setValue("product_retail_price", product?.product_retail_price || "");
@@ -114,7 +112,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
           file: file,
         };
       });
-      // console.log(imagesArray);
 
       setSelectedImages(imagesArray);
     }
@@ -131,7 +128,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
 
   const [updateProductImage] = useUpdateProductImageMutation();
 
-  const hanldeUpdateimage = async () => {
+  const handleUpdateImage = async () => {
     try {
       const formData = new FormData();
 
@@ -140,7 +137,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       }
       const res = await updateProductImage({ data: formData, id: product?.id });
       refetch();
-      setSelectedImages([])
+      setSelectedImages([]);
     } catch (error) {
       console.log(error);
     }
@@ -303,7 +300,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                 {/* image section update  start  */}
                 <div>
                   {/* previous image */}
-                  <h1 className=" text-2xl mb-5 mt-5">Previous images </h1>
+                  <h1 className="text-2xl mb-5 mt-5">Previous images </h1>
                   <div className="grid grid-cols-5">
                     {previousImage?.map((item) => (
                       <div className="relative" key={item?.id}>
@@ -315,12 +312,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                           className="w-[100px] h-[100px]"
                         />
                         <div
-                          onClick={() =>
-                            // setPreviousImage((prev) =>
-                            //   prev.filter((i) => i?.id !== item?.id)
-                            // )
-                            handleRemoveImageApi(item?.id)
-                          }
+                          onClick={() => handleRemoveImageApi(item?.id)}
                           className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
                         >
                           <ImCross size={12} />
@@ -330,8 +322,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                   </div>
                 </div>
                 {/* image section update  end  */}
-                <div className="form-control mt-5 ">
-                  <div className="mb-3 flex gap-2">
+                <div className="form-control mt-5">
+                  <div className="flex gap-2">
                     <label className="input-group file-input file-input-bordered">
                       <span className="font-semibold text-sm cursor-pointer">
                         Upload Image
@@ -345,33 +337,42 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       />
                       <p className="py-3 px-2"> {selectedImages.length}</p>
                     </label>
-                    {selectedImages.length > 0 && (
-                      <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5 mt-5">
-                        {selectedImages.map((image, index) => (
-                          <div key={index} className="relative">
-                            <img
-                              key={index}
-                              src={image?.url}
-                              className="w-full h-[100px] object-cover rounded"
-                            />
-                            <div
-                              onClick={() => handleRemoveImage(index)}
-                              className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
-                            >
-                              <ImCross size={12} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <div className="mb-5">
+
+                    <div>
                       <button
-                        onClick={() => hanldeUpdateimage()}
-                        className="cursor-pointer   mt-2 p-2.5 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                        onClick={() => handleUpdateImage()}
+                        className="cursor-pointer p-2.5 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
                       >
-                        Update
+                        Upload
                       </button>
                     </div>
+                  </div>
+                  {selectedImages.length > 0 && (
+                    <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5 mt-5">
+                      {selectedImages.map((image, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            key={index}
+                            src={image?.url}
+                            className="w-full h-[100px] object-cover rounded"
+                          />
+                          <div
+                            onClick={() => handleRemoveImage(index)}
+                            className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                          >
+                            <ImCross size={12} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className="flex justify-end">
+                    <button
+                      className="bg-red-600  mb-8 text-[8px] lg:p-1 flex text-white rounded-md outline-none border ring-offset-2 ring-red-500 focus:ring-2"
+                      onClick={() => setModalIsOpen(false)}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
