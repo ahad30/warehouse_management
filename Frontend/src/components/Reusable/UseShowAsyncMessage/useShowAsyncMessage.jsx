@@ -6,12 +6,13 @@ const useShowAsyncMessage = (isLoading, isError, error, isSuccess, data) => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
     }
-    if (isError || error) {
-      const errorMsg = error?.data?.message;
+    // if (isError || error) {
+    //   const errorMsg = error?.data?.message;
 
-      // const errorMessa;
-      toast.error(errorMsg, { id: 1 });
-    } else if (isSuccess && data?.status) {
+    //   // const errorMessa;
+    //   toast.error(errorMsg, { id: 1 });
+    // } 
+    else if (isSuccess && data?.status) {
       //   setAddedProduct([]);
       //   setTax("");
       //   setDiscount("");

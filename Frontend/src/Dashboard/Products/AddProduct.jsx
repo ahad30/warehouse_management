@@ -13,6 +13,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { ImCross } from "react-icons/im";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 const AddProduct = () => {
   UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
@@ -28,10 +29,8 @@ const AddProduct = () => {
     const formData = new FormData();
     const images = data?.images;
     formData.append("product_name", data?.product_name);
-    // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    // formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
@@ -50,36 +49,39 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  const errorMessages = UseErrorMessages(error);
+  UseErrorMessages(error)
+  useShowAsyncMessage(isLoading,isError, error , isSuccess , data)
 
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
 
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     toast.loading(<p>Loading...</p>, { id: 1 });
+  //   }
 
-    if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/product");
-    }
-  }, [
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
+  //   if (isError) {
+  //     const errorMessage = error?.data?.message || error?.status;
+  //     toast.error(errorMessage, { id: 1 });
+  //   }
+
+  //   if (isSuccess && data?.status) {
+  //     toast.success(data?.message, { id: 1 });
+  //     return navigate("/dashboard/product");
+  //   }
+  // }, [
+  //   isLoading,
+  //   isError,
+  //   error,
+  //   isSuccess,
+  //   data?.message,
+  //   navigate,
+  //   data?.status,
+  //   dispatch,
+  // ]);
 
   const [selectedImages, setSelectedImages] = useState([]);
   const handleImageChange = (e) => {
     const files = e.target.files;
+    // console.log(files);
     console.log(files.length);
     if (files.length > 5) {
       console.log("succeed");
@@ -270,14 +272,14 @@ const AddProduct = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages?.map((errorMessage, index) => (
+      {/* {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
         >
           {errorMessage}
         </p>
-      ))}
+      ))} */}
     </DashboardBackground>
   );
 };

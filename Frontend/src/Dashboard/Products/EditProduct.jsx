@@ -1,19 +1,31 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
-import { useUpdateProductMutation } from "../../features/Product/productApi";
+import {
+  useUpdateProductImageMutation,
+  useUpdateProductMutation,
+} from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-
-const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
+import { set } from "date-fns";
+import { ImCross } from "react-icons/im";
+const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
+  // console.log(product);
   const { register, handleSubmit, setValue } = useForm();
   const { data: categoriesData } = useGetCategoriesQuery();
   const { data: brandsData } = useGetBrandsQuery();
   const { data: storesData } = useGetStoresQuery();
   const [scanCode, setScanCode] = useState(1);
+  const [previousImage, setPreviousImage] = useState([]);
+
+  useEffect(() => {
+    if (product?.product_images) {
+      setPreviousImage(product?.product_images);
+    }
+  }, [product, product?.product_images, refetch]);
 
   const [
     updateProduct,
@@ -54,7 +66,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   useEffect(() => {
     if (product) {
       setValue("product_name", product?.product_name || "");
-      setValue("product_code", product?.product_code || "");
+
       setValue("product_quantity", product?.product_quantity || "1");
       setValue("product_desc", product?.product_desc || "");
       setValue("product_retail_price", product?.product_retail_price || "");
@@ -62,8 +74,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("warehouse_id", product?.warehouse_id || "");
       setValue("category_id", product?.category_id || "");
       setValue("brand_id", product?.brand_id || "");
-      setValue("product_img", product?.images || "");
-      setValue("scan_code", product.id?.scan_code || "");
+      setValue("product_images", product?.images || "");
+      setValue("scan_code", product.scan_code || "");
     }
   }, [product, setValue]);
   console.log(product);
@@ -85,15 +97,69 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("brand_id", data?.brand_id);
     formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
-    if (data?.product_img?.length > 0) {
-      formData.append("product_img", data?.product_img[0]);
-    }
 
     updateProduct(formData);
   };
 
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    if (files.length > 5) {
+      return alert("maximum upload 5");
+    } else {
+      const imagesArray = Array.from(files).map((file) => {
+        return {
+          url: URL.createObjectURL(file),
+          file: file,
+        };
+      });
+      // console.log(imagesArray);
+
+      setSelectedImages(imagesArray);
+    }
+  };
+
+  const handleRemoveImage = (idx) => {
+    if (selectedImages?.length > 0) {
+      const filterImages = selectedImages.filter(
+        (item, index) => index !== idx
+      );
+      setSelectedImages(filterImages);
+    }
+  };
+
+  const [updateProductImage] = useUpdateProductImageMutation();
+
+  const hanldeUpdateimage = async () => {
+    try {
+      const formData = new FormData();
+
+      for (let i = 0; i < selectedImages.length; i++) {
+        formData.append("images[]", selectedImages[i].file);
+      }
+      const res = await updateProductImage({ data: formData, id: product?.id });
+      refetch();
+      setSelectedImages([])
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRemoveImageApi = async (id) => {
+    try {
+      const formData = new FormData();
+      formData.append("image_ids[]", id);
+      const res = await updateProductImage({ data: formData, id: product?.id });
+      setPreviousImage((prev) => prev.filter((item) => item.id !== id));
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return modalIsOpen ? (
-    <div className="fixed inset-0 z-10 overflow-y-auto">
+    <div className="fixed inset-0 z-10 min-w-[1200px] overflow-y-auto">
       <div
         className="fixed inset-0 w-full h-full bg-black opacity-40"
         onClick={() => setModalIsOpen(false)}
@@ -119,17 +185,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("product_name")}
                       />
                     </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Code<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Product Code"
-                        className="input input-bordered w-full"
-                        {...register("product_code")}
-                      />
-                    </label>
+
                     <label className="input-group">
                       <span className="font-semibold">
                         Retail<span className="text-red-500 p-0">*</span>
@@ -154,33 +210,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         min={1}
                       />
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold">
-                        Quantity<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="number"
-                        placeholder="Quantity"
-                        className="input input-bordered w-full"
-                        {...register("product_quantity")}
-                        min={1}
-                      />
-                    </label> */}
-                    {/* <label className="input-group">
-                      <span className="font-semibold">
-                        Unit<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <select
-                        className="select select-bordered w-full"
-                        {...register("product_unit")}
-                      >
-                        <option>Select Unit</option>
-                        <option value={"pcs"}>Pcs</option>
-                        <option value={"box"}>Box</option>
-                        <option value={"kg"}>KG</option>
-                        <option value={"litre"}>Litre</option>
-                      </select>
-                    </label> */}
+
                     <label className="input-group">
                       <span className="font-semibold">
                         Brands<span className="text-red-500 p-0">*</span>
@@ -231,22 +261,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         ))}
                       </select>
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold">Description</span>
-                      <input
-                        type="text"
-                        placeholder="Product Description"
-                        className="input input-bordered w-full"
-                        {...register("product_desc")}
-                      />
-                    </label> */}
-                    <div className="form-control w-full">
-                      <input
-                        type="file"
-                        className="file-input file-input-bordered w-full"
-                        {...register("images")}
-                      />
-                    </div>
+
                     <div className="">
                       <label className="input-group">
                         <span className="font-semibold text-sm">
@@ -255,6 +270,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         <input
                           type="number"
                           placeholder="Scan Code"
+                          readOnly={product?.scan_code ? true : false}
                           className="input input-bordered w-full "
                           {...register("scan_code")}
                           onKeyUp={(e) => {
@@ -270,27 +286,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                       />
                     </div>
                   </div>
-                  {/* <div className="mt-3">
-                    <label className="input-group">
-                      <span className="font-semibold text-sm">scan code </span>
-                      <input
-                        type="number"
-                        placeholder="Scan Code"
-                        className="input input-bordered "
-                        {...register("scan_code")}
-                        onKeyUp={(e) => {
-                          setScanCode(e.target.value);
-                          console.log(e.target);
-                        }}
-                      />
-                    </label>
-                    <img
-                      src={`https://barcodeapi.org/api/128/${scanCode} `}
-                      className="h-16 float-right my-2"
-                      alt=""
-                    />
-                  </div> */}
-
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <button
                       className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
@@ -300,12 +295,87 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                     </button>
                     <input
                       type="submit"
-                      value={"Update"}
+                      value={"Update Product"}
                       className="cursor-pointer w-full mt-2 p-2.5 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
                     />
                   </div>
                 </form>
+                {/* image section update  start  */}
+                <div>
+                  {/* previous image */}
+                  <h1 className=" text-2xl mb-5 mt-5">Previous images </h1>
+                  <div className="grid grid-cols-5">
+                    {previousImage?.map((item) => (
+                      <div className="relative" key={item?.id}>
+                        <img
+                          src={`${
+                            import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                          }${item?.image}`}
+                          alt=""
+                          className="w-[100px] h-[100px]"
+                        />
+                        <div
+                          onClick={() =>
+                            // setPreviousImage((prev) =>
+                            //   prev.filter((i) => i?.id !== item?.id)
+                            // )
+                            handleRemoveImageApi(item?.id)
+                          }
+                          className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                        >
+                          <ImCross size={12} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* image section update  end  */}
+                <div className="form-control mt-5 ">
+                  <div className="mb-3 flex gap-2">
+                    <label className="input-group file-input file-input-bordered">
+                      <span className="font-semibold text-sm cursor-pointer">
+                        Upload Image
+                      </span>
+                      <input
+                        className="file-input hidden file-input-bordered w-full"
+                        id="image"
+                        multiple="true"
+                        type="file"
+                        onChange={(e) => handleImageChange(e)}
+                      />
+                      <p className="py-3 px-2"> {selectedImages.length}</p>
+                    </label>
+                    {selectedImages.length > 0 && (
+                      <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5 mt-5">
+                        {selectedImages.map((image, index) => (
+                          <div key={index} className="relative">
+                            <img
+                              key={index}
+                              src={image?.url}
+                              className="w-full h-[100px] object-cover rounded"
+                            />
+                            <div
+                              onClick={() => handleRemoveImage(index)}
+                              className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                            >
+                              <ImCross size={12} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mb-5">
+                      <button
+                        onClick={() => hanldeUpdateimage()}
+                        className="cursor-pointer   mt-2 p-2.5 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               {/* Display error messages */}
               {errorMessages?.map((errorMessage, index) => (
                 <p
