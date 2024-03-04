@@ -263,16 +263,16 @@ const ProductsList = () => {
           />
         </div>
 
-        <div>
+        <div className="w-[80vw] overflow-x-scroll ">
           <DataTable
             columns={columns}
             data={filterData?.data}
             keyField="id"
             responsive={false}
           />
-          <br></br>
-          <Paginator links={filterData?.links} />
         </div>
+        <br></br>
+        <Paginator links={filterData?.links} />
         {/* ) */}
         {/* )} */}
         <EditProduct
