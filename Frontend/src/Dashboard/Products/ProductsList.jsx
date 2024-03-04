@@ -44,6 +44,7 @@ const ProductsList = () => {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
+    refetch,
   } = useGetProductsQuery({ pageNumber: ActivePageNumber });
 
   const dispatch = useDispatch();
@@ -157,14 +158,7 @@ const ProductsList = () => {
       name: "Sold price",
       selector: (row) => <>{row?.product_sale_price}</>,
     },
-    // {
-    //   name: "Quantity",
-    //   selector: (row) => <>{row?.product_quantity}</>,
-    // },
-    // {
-    //   name: "Unit",
-    //   selector: (row) => <>{row?.product_unit}</>,
-    // },
+
     {
       name: "Category",
       selector: (row) => row?.get_category?.category_name,
@@ -256,18 +250,7 @@ const ProductsList = () => {
             setFiltering={setFiltering}
           />
         </div>
-        {/* <SearchAndAddBtn
-          btnTitle={"Add Product"}
-          btnPath={"/dashboard/product/add"}
-          btnIcon={<BiCartAdd size={20} />}
-          setFiltering={setFiltering}
-        /> */}
 
-        {/* Products Table */}
-        {/* {!productsIsSuccess && productsData?.status ? (
-          <p className="text-center text-2xl mt-10">{productsData?.message}</p>
-        ) : (
-          filterData?.length > 0 && ( */}
         <div>
           <DataTable
             columns={columns}
@@ -284,6 +267,7 @@ const ProductsList = () => {
           product={product}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
+          refetch={refetch}
         />
         <Imageview
           product={product}

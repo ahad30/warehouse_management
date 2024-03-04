@@ -139,17 +139,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     });
 
     /* -------------------------------------------------------------------------- */
-    /*                              store controller                              */
-    /* -------------------------------------------------------------------------- */
-
-    // Route::controller(StoreController::class)->prefix('/stores')->group(function () {
-    //     Route::get('/', 'index');
-    //     Route::post('/store', 'store');
-    //     Route::put('/update', 'update');
-    //     Route::delete('/delete/{id}', 'delete');
-    // });
-
-    /* -------------------------------------------------------------------------- */
     /*                             Settings controller                            */
     /* -------------------------------------------------------------------------- */
 
@@ -173,11 +162,12 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
     /*                               Product Report                               */
     /* -------------------------------------------------------------------------- */
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/sale/report/{timeRange?}/{startDate?}/{endDate?}', 'salesReport');
+        Route::get('/shifting/report/{timeRange?}/{startDate?}/{endDate?}', 'shiftingReport');
+    });
 
-    // Route::get('/product-report/{time_range?}/{start_date?}/{end_date?}', ProductReportController::class);
-    Route::get('/product/report/{time_range?}/{start_date?}/{end_date?}', [ReportController::class, 'product_report']);
-    Route::get('/sale/report/{time_range?}/{start_date?}/{end_date?}', [ReportController::class, 'sale_report']);
-    Route::get('/shifting/report/{time_range?}/{start_date?}/{end_date?}', [ReportController::class, 'shifting_report']);
+
     /* -------------------------------------------------------------------------- */
     /*                               Warehouse Crud                               */
     /* -------------------------------------------------------------------------- */

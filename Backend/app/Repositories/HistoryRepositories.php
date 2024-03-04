@@ -1,5 +1,5 @@
 <?php 
-namespace App\Services;
+namespace App\Repositories;
 
 use App\Interfaces\HistoryServiceInterface;
 use App\Models\History;
@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 
 
-class HistoryService implements HistoryServiceInterface
+class HistoryRepositories implements HistoryServiceInterface
 {
     public function getHistory(Request $request) :array
     {

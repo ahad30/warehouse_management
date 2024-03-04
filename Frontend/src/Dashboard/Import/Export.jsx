@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import ImportData from "./ImportData";
-import { useForm } from "react-hook-form";
 import {
   useGetExportMutation,
   useGetAllExportsMutation,
@@ -19,38 +18,29 @@ const Export = () => {
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [url, setUrl] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const [getSpecificWarehouseCsv, { data: WareHouseData }] =
     useGetExportMutation();
   const [getallWarehouseCsv, { data: allWareHouseData }] =
     useGetAllExportsMutation();
   const [track, setTrack] = useState("");
- 
   const { data: storesData } = useGetStoresQuery();
-
-
-
-  const handleAllCsvData = () => {
-    getallWarehouseCsv();
-  };
 
   const generateCsvData = async (from) => {
     if (!track) {
-      alert("plz slelect first");
+      alert("plz select first");
     } else if (from === "All") {
-      // console.log("hefdfsllo");
-
       const res = await getallWarehouseCsv().unwrap();
       setUrl(res?.url);
       setShowButton(true);
     } else if (from === "warehouse") {
-      // console.log("hello");
       const res = await getSpecificWarehouseCsv(track?.id).unwrap();
       setUrl(res?.url);
       setShowButton(true);
     }
   };
 
+  console.log(track);
+  console.log(url);
   return (
     <DashboardBackground>
       <>
@@ -78,18 +68,13 @@ const Export = () => {
           />
         </div>
 
-     
-
         <>
           <label className="font-bold text-lg mt-5 ">Export :</label>
           <div className="mt-2 border bg-[#F3F4F6] rounded">
             <div className="flex justify-between">
               <div className="flex space-x-2 items-center m-1">
                 <button
-                  onClick={() => {
-                    setTrack("All");
-                    setShowButton(false);
-                  }}
+                  onClick={() => setTrack("All")}
                   type="button"
                   className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white"
                 >
@@ -98,14 +83,11 @@ const Export = () => {
                 <div>
                   <label className="input-group">
                     <select
-                      // onChange={()=>}
                       className="select select-bordered w-full max-w-xs"
                       required
-                      // {...register("warehouse_id")}
-                      onChange={(e) => {
-                        setTrack({ name: "warehouse", id: e.target.value });
-                        setShowButton(false);
-                      }}
+                      onChange={(e) =>
+                        setTrack({ name: "warehouse", id: e.target.value })
+                      }
                     >
                       <option value={""}>Select Warehouse Info</option>
                       {storesData?.data?.map((data) => (
@@ -122,7 +104,6 @@ const Export = () => {
                   {showButton && (
                     <a
                       href={url}
-                      onClick={() => setShowButton(false)}
                       className="cursor-pointer m-auto border px-2 py-1 text-[#e74c3c]  rounded text-sm shadow transition duration-300"
                       rel="noopener noreferrer"
                       download
@@ -148,7 +129,7 @@ const Export = () => {
               </div>
             </div>
           </div>
-          <div className="flex lg:flex-row justify-end  mt-4">
+          <div className="flex lg:flex-row justify-end mt-4">
             {/* Import download as CSV file */}
             <ImportAsCSV data={filterData} />
           </div>

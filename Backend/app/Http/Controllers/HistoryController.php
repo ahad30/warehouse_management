@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\History;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\HistoryServiceInterface;
+use App\Interfaces\HistoryServiceInterface;
 
 class HistoryController extends Controller
 {
