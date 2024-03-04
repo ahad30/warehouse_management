@@ -1,4 +1,4 @@
-import { array} from "prop-types";
+import { array } from "prop-types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -11,7 +11,7 @@ import useShowAsyncMessage from "../../../components/Reusable/UseShowAsyncMessag
 
 const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [discount, setDiscount] = useState("Discount");
+  const [discount, setDiscount] = useState(0);
   const [shipping, setShipping] = useState(0);
   const [tax, setTax] = useState(0.0);
   const [error, setError] = useState(false);
@@ -83,6 +83,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
     createNewPos,
     { data, isError, isLoading, isSuccess, error: posError },
   ] = useNewInvoiceMutation();
+
   const createPos = () => {
     createNewPos({
       items: addedProduct?.map((item) => item?.id),
@@ -187,7 +188,12 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 className="border-0 focus:border-0 w-full focus:ring-0"
                 type="number"
                 // value={Number(discount) == 0 ? "Discount" : discount}
-                value={Number(discount) < 100 && discount}
+                // value={Number(tax) == 0 ? "Discount" : discount}
+                value={
+                  Number(discount) > 100 || discount === 0
+                    ? "Discount"
+                    : discount
+                }
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value >= 0) {

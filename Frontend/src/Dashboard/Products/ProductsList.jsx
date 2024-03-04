@@ -146,6 +146,17 @@ const ProductsList = () => {
       selector: (row) => <>{row?.product_name}</>,
     },
     {
+      name: "Status",
+      selector: (row) => <>
+       {
+        row?.is_sold == 1 ? <p className="bg-red-500 text-white p-1 rounded-lg">Sold out</p> : <p className="bg-green-500 text-white p-1 rounded-lg">
+          Available
+        </p>
+       }
+      
+      </>,
+    },
+    {
       name: "Code",
       selector: (row) => <>{row?.scan_code}</>,
       minWidth: "180px",

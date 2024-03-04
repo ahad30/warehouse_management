@@ -13,6 +13,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { ImCross } from "react-icons/im";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 const AddProduct = () => {
   UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
@@ -48,32 +49,34 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  const errorMessages = UseErrorMessages(error);
+  UseErrorMessages(error)
+  useShowAsyncMessage(isLoading,isError, error , isSuccess , data)
 
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
 
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     toast.loading(<p>Loading...</p>, { id: 1 });
+  //   }
 
-    if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/product");
-    }
-  }, [
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
+  //   if (isError) {
+  //     const errorMessage = error?.data?.message || error?.status;
+  //     toast.error(errorMessage, { id: 1 });
+  //   }
+
+  //   if (isSuccess && data?.status) {
+  //     toast.success(data?.message, { id: 1 });
+  //     return navigate("/dashboard/product");
+  //   }
+  // }, [
+  //   isLoading,
+  //   isError,
+  //   error,
+  //   isSuccess,
+  //   data?.message,
+  //   navigate,
+  //   data?.status,
+  //   dispatch,
+  // ]);
 
   const [selectedImages, setSelectedImages] = useState([]);
   const handleImageChange = (e) => {
@@ -269,14 +272,14 @@ const AddProduct = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages?.map((errorMessage, index) => (
+      {/* {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
         >
           {errorMessage}
         </p>
-      ))}
+      ))} */}
     </DashboardBackground>
   );
 };

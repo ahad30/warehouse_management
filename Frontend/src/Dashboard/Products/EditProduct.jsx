@@ -131,24 +131,31 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
 
   const [updateProductImage] = useUpdateProductImageMutation();
 
-  const hanldeUpdateimage = () => {
-    const formData = new FormData();
+  const hanldeUpdateimage = async () => {
+    try {
+      const formData = new FormData();
 
-    for (let i = 0; i < selectedImages.length; i++) {
-      formData.append("images[]", selectedImages[i].file);
+      for (let i = 0; i < selectedImages.length; i++) {
+        formData.append("images[]", selectedImages[i].file);
+      }
+      const res = await updateProductImage({ data: formData, id: product?.id });
+      refetch();
+      setSelectedImages([])
+    } catch (error) {
+      console.log(error);
     }
-
-    // formData.append("_method", "PUT");
-    // console.log(formData);
-    updateProductImage({ data: formData, id: product?.id });
   };
 
-  const handleRemoveImageApi = (id) => {
-    const formData = new FormData();
-
-    formData.append("image_ids[]", id);
-    updateProductImage({ data: formData, id: product?.id });
-    refetch();
+  const handleRemoveImageApi = async (id) => {
+    try {
+      const formData = new FormData();
+      formData.append("image_ids[]", id);
+      const res = await updateProductImage({ data: formData, id: product?.id });
+      setPreviousImage((prev) => prev.filter((item) => item.id !== id));
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return modalIsOpen ? (
