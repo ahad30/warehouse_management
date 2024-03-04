@@ -147,14 +147,15 @@ const ProductsList = () => {
     },
     {
       name: "Status",
-      selector: (row) => <>
-       {
-        row?.is_sold == 1 ? <p className="bg-red-500 text-white p-1 rounded-lg">Sold out</p> : <p className="bg-green-500 text-white p-1 rounded-lg">
-          Available
-        </p>
-       }
-      
-      </>,
+      selector: (row) => (
+        <>
+          {row?.is_sold == 1 ? (
+            <p className="bg-red-500 text-white p-1 rounded-lg">Sold out</p>
+          ) : (
+            <p className="bg-green-500 text-white p-1 rounded-lg">Available</p>
+          )}
+        </>
+      ),
     },
     {
       name: "Code",
