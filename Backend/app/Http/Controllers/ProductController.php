@@ -12,6 +12,7 @@ use App\Models\ProductImage;
 use App\Models\Warehouse;
 use App\Traits\ImageTrait;
 use App\Traits\ResponseTrait;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -122,12 +123,15 @@ class ProductController extends Controller
     // update
     public function update(UpdateProductRequest $request)
     {
+
         $product = Product::find($request->id);
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
         }
 
         try {
+            $this->imageUpdate($request, $product->id);
+
             $input = [
                 'warehouse_id' => $request->warehouse_id,
                 'category_id' => $request->category_id,
@@ -145,48 +149,49 @@ class ProductController extends Controller
                 'message' => "Product successfully updated"
             ]);
         } catch (\Exception $e) {
-            return $this->errorResponse(null, 'Something went wrong');
+            return $e->getMessage();
+            // return $this->errorResponse(null, 'Something went wrong');
         }
     }
-
+    /**
+     * Delete Multiple Product Images
+     *
+     * @param Request $request
+     */
     public function imageUpdate(Request $request, $id)
     {
-        if (!Product::find($id)) {
-            return $this->badRequestResponse([
-                'status' => false,
-                "Product not found"
-            ]);
-        }
 
-        /**
-         * !Delete Multiple Product Images
-         */
-        if ($request->image_ids) {
+        if (count($request->image_ids) > 1) {
             foreach ($request->image_ids as $image_id) {
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
-                    return response()->json(['data' => null, 'message' => 'data not found'], 200);
+                    throw new Exception('data not found');
                 }
+
+
                 // delete files
                 if (File::exists($product_images->image)) {
                     File::delete($product_images->image);
                 }
                 $product_images->delete();
             }
-            return $this->successResponse(['status' => true, 'message' => 'Image deleted']);
         }
+
         /**
          * * insert multiple images
          */
+        // info($request->images[0]);
         $images = $this->multipleImageUpload($request, 'uploads/products/images');
         foreach ($images as $image) {
+            info($image);
             $data = ProductImage::create([
                 'product_id' => $id,
                 'image' => $image,
             ]);
         }
-        return $this->successResponse(['status' => true, 'message' => 'Image Updated']);
+
     }
+
 
 
     // destroy
