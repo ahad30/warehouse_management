@@ -43,6 +43,7 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
 
     let formData = new FormData();
     formData.append("_method", "PUT");
+    formData.append("id", category?.id);
     formData.append("category_name", data?.category_name);
 
     if (data?.new_image?.length > 0) {
