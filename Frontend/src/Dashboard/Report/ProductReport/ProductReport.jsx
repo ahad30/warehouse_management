@@ -16,11 +16,9 @@ import { useGetDefaultSettingsQuery } from "../../../features/Settings/settingsA
 
 const ProductReport = () => {
   UseTitle("Products Report");
-
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
-
   const { data: productsReport, isLoading } = useGetProductsReportQuery({
     // date,
     // startDate,
