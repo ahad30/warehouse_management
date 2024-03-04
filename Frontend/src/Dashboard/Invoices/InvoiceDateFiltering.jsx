@@ -1,15 +1,21 @@
 import { func } from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const InvoiceDateFiltering = ({
   handleStartDate,
   handleEndDate,
   handleDate,
   handleDateClear,
+  endDate,
+  startDate,
 }) => {
   // State to track the active button
   const [activeButton, setActiveButton] = useState(null);
-
+  useEffect(() => {
+    if (startDate || endDate) {
+      setActiveButton(null);
+    }
+  }, [startDate, endDate]);
   return (
     <div className="flex items-center flex-col my-5 w-full lg:justify-between xl:flex-row gap-x-1">
       {/* Week, today, and month filtering */}
@@ -61,14 +67,20 @@ const InvoiceDateFiltering = ({
           <input
             className="input input-sm input-bordered w-full"
             type="date"
-            onChange={(e) => handleStartDate(e.target.value)} // Call handleStartDate when the "From" date changes
+            value={startDate}
+            onChange={(e) => {
+              handleStartDate(e.target.value);
+            }} // Call handleStartDate when the "From" date changes
           />
         </label>
         <label htmlFor="to">
           <input
             className="input input-sm input-bordered w-full"
             type="date"
-            onChange={(e) => handleEndDate(e.target.value)} // Call handleEndDate when the "To" date changes
+            value={endDate}
+            onChange={(e) => {
+              handleEndDate(e.target.value);
+            }} // Call handleEndDate when the "To" date changes
           />
         </label>
         <button

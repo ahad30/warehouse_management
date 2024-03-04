@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useGetDefaultSettingsQuery } from "../../../features/Settings/settingsApi";
 import { useGetProductsReportQuery } from "../../../features/ProductReport/productReport";
 import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
+import { useGetAllSalesReportQuery } from "../../../features/Report/reportApi";
 
 const SaleReport = () => {
   UseTitle("Products Report");
@@ -18,22 +19,26 @@ const SaleReport = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
-  
-//   console.log(startDate)
-//   console.log(endDate)
-//   console.log(date)
 
-  const { data: productsReport, isLoading } = useGetProductsReportQuery({
-    // date,
-    // startDate,
-    // endDate,
+  const { data: allSalesReport, isLoading } = useGetAllSalesReportQuery({
+    end_date: endDate ? endDate : "",
+    start_date: startDate ? startDate : "",
+    time_range: date ? date : "",
   });
 
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
-
   useEffect(() => {
-    setFilterData(productsReport?.products);
-  }, [productsReport?.products, productsReport]);
+    if (allSalesReport?.data) {
+      const modifiedData = allSalesReport?.data?.map((item , index)=> {
+        return {
+          serial_no : index + 1 , 
+          ...item
+        }
+      })
+      // console.log(modifiedData)
+      setFilterData(modifiedData);
+    }
+  }, [allSalesReport, allSalesReport?.data]);
 
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,18 +46,18 @@ const SaleReport = () => {
 
   const handleStartDate = (date) => {
     setStartDate(date);
-    setDate(null);
+    setDate("custom");
   };
 
   const handleEndDate = (date) => {
     setEndDate(date);
-    setDate(null);
+    setDate("custom");
   };
 
   const handleDate = (date) => {
     setDate(date);
-    setStartDate(null);
-    setEndDate(null);
+    setStartDate("");
+    setEndDate("");
   };
 
   const handleDateClear = () => {
@@ -61,69 +66,44 @@ const SaleReport = () => {
     setDate(null);
   };
 
-  //  search filtering
-  const setFiltering = (search) => {
-    const filteredData = productsReport?.products?.filter((item) =>
-      item?.product_name?.toLowerCase()?.includes(search?.toLowerCase())
-    );
-    if (filteredData) {
-      setFilterData(filteredData);
-    }
-  };
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const columns = [
     {
-      name: "Product Name",
-      selector: (row) => <>{row?.product_name}</>,
-      sortable: true,
+      name: "Serial no",
+      selector: (row) => <>{row?.serial_no}</>,
+   
     },
     {
-      name: "Sold Price (Avg.)",
-
-      selector: (row) => <>{parseFloat(row?.price).toFixed(2)}</>,
+      name: "New Products",
+      selector: (row) => <>{row?.newProducts}</>,
+  
     },
     {
-      name: "Quantity",
-      selector: (row) => <>{row?.quantity}</>,
-      sortable: true,
+      name: "Sold Products",
+      selector: (row) => <><p>{row?.soldProducts}</p></>,
     },
     {
-      name: `${defaultSettings?.settings?.taxation} (Avg.)`,
-
-      selector: (row) => <>{parseFloat(row?.average_vat).toFixed(2)}</>,
+      name: "Date",
+      selector: (row) => <>{row?.date}</>,
     },
-    {
-      name: "Total",
-      selector: (row) => (
-        <>
-          {(
-            parseFloat(row?.total_sold_price_without_vat) +
-            (parseFloat(row?.total_sold_price_without_vat) *
-              parseFloat(row?.average_vat)) /
-              100
-          ).toFixed(2)}
-        </>
-      ),
-    },
-    {
-      name: "Last Sale Date",
-      selector: (row) => <>{row?.last_sale_date}</>,
-    },
+  
   ];
+  // console.log(filterData);
 
   // ALL INVOICES Loading
   if (isLoading) {
     return <UseLoading />;
   }
 
-  // console.log(filterData)
+  console.log(filterData)
   return (
     <DashboardBackground>
       <TableHeadingTitle>
-        Products: {productsReport?.products?.length}
+        {/* Products: {productsReport?.products?.length} */}
       </TableHeadingTitle>
 
       {/* <SearchAndAddBtn
@@ -161,6 +141,8 @@ const SaleReport = () => {
         handleEndDate={handleEndDate}
         handleDate={handleDate}
         handleDateClear={handleDateClear}
+        startDate={startDate}
+        endDate={endDate}
       />
 
       <div className="overflow-x-scroll">
