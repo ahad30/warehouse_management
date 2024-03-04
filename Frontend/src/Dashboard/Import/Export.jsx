@@ -131,7 +131,7 @@ const Export = () => {
           </div>
           <div className="flex lg:flex-row justify-end mt-4">
             {/* Import download as CSV file */}
-            <ImportAsCSV data={filterData} />
+            {/* <ImportAsCSV data={filterData} /> */}
           </div>
         </>
       </>
