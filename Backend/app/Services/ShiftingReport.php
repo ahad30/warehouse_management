@@ -16,12 +16,12 @@ class ShiftingReport implements ReportInterface
         /** For new product */
         $newProducts = $this->collectNewProducts($timeRange, $warehouseId);
         /** for selling */
-        // $soldProducts = $this->collectSoldProduct($timeRange, $warehouseId);
+        $soldProducts = $this->collectSoldProduct($timeRange, $warehouseId);
 
-        // $products = $this->mergeData($soldProducts, $newProducts);
+        $products = $this->mergeData($soldProducts, $newProducts);
         return [
             'status' => true,
-            'data' => $newProducts,
+            'data' => $products,
             'statusCode' => 200
         ];
     }
@@ -43,13 +43,13 @@ class ShiftingReport implements ReportInterface
      *
      * @param [type] $timeRange
      */
-    // private function collectSoldProduct($timeRange, $warehouseId)
-    // {
-    //     $query = DB::table('histories')->where('from_warehouse_id', $warehouseId);
-    //     $query = $this->generateQuery($timeRange, $query);
-    //     $products = $query->selectRaw('COUNT(*) as soldProducts,DATE(created_at) as date')->groupBy(DB::raw('DATE(created_at)'))->get();
-    //     return $products;
-    // }
+    private function collectSoldProduct($timeRange, $warehouseId)
+    {
+        $query = DB::table('histories')->where('to_warehouse_id', $warehouseId);
+        $query = $this->generateQuery($timeRange, $query);
+        $products = $query->selectRaw('COUNT(*) as cameProducts,DATE(created_at) as date')->groupBy(DB::raw('DATE(created_at)'))->get();
+        return $products;
+    }
     /**
      * Apply date filters based on the time range
      *
@@ -81,17 +81,17 @@ class ShiftingReport implements ReportInterface
      * @param [object] $newProducts
      * @param [object] $soldProducts
      */
-    // private function mergeData($newProducts, $soldProducts)
-    // {
-    //     $mergedProducts = [];
-    //     foreach ($newProducts as $newProduct) {
-    //         $date = $newProduct->date;
+    private function mergeData($newProducts, $soldProducts)
+    {
+        $mergedProducts = [];
+        foreach ($newProducts as $newProduct) {
+            $date = $newProduct->date;
 
-    //         $soldProduct = collect($soldProducts)->firstWhere('date', $date);
+            $soldProduct = collect($soldProducts)->firstWhere('date', $date);
 
 
-    //         $mergedProducts[] = array_merge((array) $newProduct, (array) $soldProduct ?? (array) []);
-    //     }
-    //     return $mergedProducts;
-    // }
+            $mergedProducts[] = array_merge((array) $newProduct, (array) $soldProduct ?? (array) []);
+        }
+        return $mergedProducts;
+    }
 }
