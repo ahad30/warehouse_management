@@ -178,17 +178,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                         {...register("product_name")}
                       />
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold">
-                        Code<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Product Code"
-                        className="input input-bordered w-full"
-                        {...register("product_code")}
-                      />
-                    </label> */}
+
                     <label className="input-group">
                       <span className="font-semibold">
                         Retail<span className="text-red-500 p-0">*</span>
@@ -265,33 +255,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       </select>
                     </label>
 
-                    {/* <div className="form-control w-full">
-                      <input
-                        type="file"
-                        className="file-input file-input-bordered w-full"
-                        {...register("images")}
-                      />
-                    </div> */}
-                    {/* <div className="form-control ">
-                      <div className="mb-3">
-                        <label className="input-group file-input file-input-bordered">
-                          <span className="font-semibold text-sm cursor-pointer">
-                            Upload Image
-                          </span>
-                          <input
-                            className="file-input hidden file-input-bordered w-full"
-                            id="image"
-                            multiple="true"
-                            type="file"
-                            {...register("images", {
-                              onChange: (e) => handleImageChange(e),
-                            })}
-                          />
-                          <p className="py-3 px-2"> {selectedImages.length}</p>
-                        </label>
-                      </div>
-                    </div> */}
-
                     <div className="">
                       <label className="input-group">
                         <span className="font-semibold text-sm">
@@ -316,7 +279,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       />
                     </div>
                   </div>
-
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <button
                       className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
@@ -334,8 +296,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                 {/* image section update  start  */}
                 <div>
                   {/* previous image */}
-                  <h1 className=" text-2xl mb-5 mt-12">Previous images </h1>
-
+                  <h1 className=" text-2xl mb-5 mt-5">Previous images </h1>
                   <div className="grid grid-cols-5">
                     {previousImage?.map((item) => (
                       <div className="relative" key={item?.id}>
