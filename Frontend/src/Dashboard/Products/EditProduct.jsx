@@ -19,7 +19,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   const { data: storesData } = useGetStoresQuery();
   const [scanCode, setScanCode] = useState(1);
   const [previousImage, setPreviousImage] = useState([]);
-
+  const [image_ids, setImageIds] = useState([]);
   useEffect(() => {
     if (product?.product_images) {
       setPreviousImage(product?.product_images);
@@ -95,7 +95,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     formData.append("brand_id", data?.brand_id);
     formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
-
+    formData.append("images[]", data?.new_images[0]);
+    formData.append("image_ids[]", image_ids);
     updateProduct(formData);
   };
 
@@ -144,15 +145,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   };
 
   const handleRemoveImageApi = async (id) => {
-    try {
-      const formData = new FormData();
-      formData.append("image_ids[]", id);
-      const res = await updateProductImage({ data: formData, id: product?.id });
-      setPreviousImage((prev) => prev.filter((item) => item.id !== id));
-      refetch();
-    } catch (error) {
-      console.log(error);
-    }
+    setPreviousImage((prev) => prev.filter((item) => item.id !== id));
+    setImageIds([...image_ids, id]);
   };
 
   return modalIsOpen ? (
@@ -188,7 +182,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                         Retail<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Retail"
                         className="input input-bordered w-full"
                         {...register("product_retail_price")}
@@ -200,7 +194,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                         Sold<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Sold"
                         className="input input-bordered w-full"
                         {...register("product_sale_price")}
@@ -265,7 +259,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                           scan code{" "}
                         </span>
                         <input
-                          type="number"
+                          type="text"
                           placeholder="Scan Code"
                           readOnly={product?.scan_code ? true : false}
                           className="input input-bordered w-full "
@@ -277,10 +271,50 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                         />
                       </label>
                       <img
-                        src={`https://barcodeapi.org/api/128/${scanCode} `}
+                        src={`https://barcodeapi.org/api/128/${product?.scan_code} `}
                         className="h-16 float-right my-2"
                         alt=""
                       />
+                    </div>
+                    <label
+                      htmlFor="image"
+                      className="input-group file-input file-input-bordered"
+                    >
+                      <span className="font-semibold text-sm cursor-pointer">
+                        Upload Image
+                      </span>
+                      <input
+                        className="file-input hidden file-input-bordered w-full"
+                        id="image"
+                        multiple={true}
+                        type="file"
+                        {...register("new_images")}
+                      />
+                      <p className="py-3 px-2"> {selectedImages.length}</p>
+                    </label>
+                  </div>
+                  {/* image section update  start  */}
+                  <div>
+                    {/* previous image */}
+                    <h1 className="text-2xl mb-5 mt-5">Previous images </h1>
+                    <div className="grid grid-cols-5">
+                      {previousImage?.map((item) => (
+                        <div className="relative" key={item?.id}>
+                          <img
+                            src={`${
+                              import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                            }${item?.image}`}
+                            alt=""
+                            className="w-[100px] h-[100px]"
+                          />
+                          <div
+                            onClick={() => handleRemoveImageApi(item?.id)}
+                            className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                          >
+                            <ImCross size={12} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="items-center gap-2 mt-3 sm:flex">
@@ -297,46 +331,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                     />
                   </div>
                 </form>
-                {/* image section update  start  */}
-                <div>
-                  {/* previous image */}
-                  <h1 className="text-2xl mb-5 mt-5">Previous images </h1>
-                  <div className="grid grid-cols-5">
-                    {previousImage?.map((item) => (
-                      <div className="relative" key={item?.id}>
-                        <img
-                          src={`${
-                            import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                          }${item?.image}`}
-                          alt=""
-                          className="w-[100px] h-[100px]"
-                        />
-                        <div
-                          onClick={() => handleRemoveImageApi(item?.id)}
-                          className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
-                        >
-                          <ImCross size={12} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+
                 {/* image section update  end  */}
-                <div className="form-control mt-5">
+                {/* <div className="form-control mt-5">
                   <div className="flex gap-2">
-                    <label className="input-group file-input file-input-bordered">
-                      <span className="font-semibold text-sm cursor-pointer">
-                        Upload Image
-                      </span>
-                      <input
-                        className="file-input hidden file-input-bordered w-full"
-                        id="image"
-                        multiple="true"
-                        type="file"
-                        onChange={(e) => handleImageChange(e)}
-                      />
-                      <p className="py-3 px-2"> {selectedImages.length}</p>
-                    </label>
+                   
 
                     <div>
                       <button
@@ -374,7 +373,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       Cancel
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Display error messages */}

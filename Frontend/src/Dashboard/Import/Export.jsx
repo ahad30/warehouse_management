@@ -74,7 +74,10 @@ const Export = () => {
             <div className="flex justify-between">
               <div className="flex space-x-2 items-center m-1">
                 <button
-                  onClick={() => setTrack("All")}
+                  onClick={() => {
+                    setTrack("All")
+                    setShowButton(false)
+                  }}
                   type="button"
                   className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white"
                 >
@@ -86,7 +89,10 @@ const Export = () => {
                       className="select select-bordered w-full max-w-xs"
                       required
                       onChange={(e) =>
+                       {
+                        setShowButton(false)
                         setTrack({ name: "warehouse", id: e.target.value })
+                       }
                       }
                     >
                       <option value={""}>Select Warehouse Info</option>
@@ -131,7 +137,7 @@ const Export = () => {
           </div>
           <div className="flex lg:flex-row justify-end mt-4">
             {/* Import download as CSV file */}
-            <ImportAsCSV data={filterData} />
+            {/* <ImportAsCSV data={filterData} /> */}
           </div>
         </>
       </>
