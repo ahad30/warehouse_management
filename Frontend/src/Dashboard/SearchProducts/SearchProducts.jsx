@@ -110,12 +110,12 @@ const SearchProducts = () => {
                 <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow mx-auto">
                   <a href="#">
                     <img
-                      className="p-4 rounded-t-lg"
+                      className="p-4 rounded-t-lg ratio-square w-full max-h-[280px]"
                       src={
-                        product?.product_image
+                        product?.product_images?.length > 0
                           ? `${
                               import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                            }/${product?.product_image[0]}`
+                            }${product?.product_images[0]?.image}`
                           : "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
                       }
                     />
