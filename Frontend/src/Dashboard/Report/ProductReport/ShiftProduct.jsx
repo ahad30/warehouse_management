@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import SearchAndAddBtn from "../../../components/Reusable/Inputs/SearchAndAddBtn";
-import TableHeadingTitle from "../../../components/Reusable/Titles/TableHeadingTitle";
-import { useGetProductsReportQuery } from "../../../features/ProductReport/productReport";
-import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
-import DataTable from "react-data-table-component";
-import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
 import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
-import { BiCartAdd } from "react-icons/bi";
+import { useGetDefaultSettingsQuery } from "../../../features/Settings/settingsApi";
+import { useGetProductsReportQuery } from "../../../features/ProductReport/productReport";
+import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
+import DataTable from "react-data-table-component";
 import InvoiceDateFiltering from "../../Invoices/InvoiceDateFiltering";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { BsFiletypePdf } from "react-icons/bs";
 import ProductsReportAsPDF from "./ProductsReportAsPDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import ProductsReportAsCSV from "./ProductsReportAsCSV";
-import { useGetDefaultSettingsQuery } from "../../../features/Settings/settingsApi";
+import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
+import TableHeadingTitle from "../../../components/Reusable/Titles/TableHeadingTitle";
 
-const ProductReport = () => {
+const ShiftProduct = () => {
   UseTitle("Products Report");
 
   const [startDate, setStartDate] = useState(null);
@@ -118,7 +116,6 @@ const ProductReport = () => {
   }
 
   // console.log(filterData)
-
   return (
     <DashboardBackground>
       <TableHeadingTitle>
@@ -126,11 +123,11 @@ const ProductReport = () => {
       </TableHeadingTitle>
 
       {/* <SearchAndAddBtn
-        btnTitle={"Add Product"}
-        btnPath={"/dashboard/product/add"}
-        btnIcon={<BiCartAdd size={20} />}
-        setFiltering={setFiltering}
-      /> */}
+      btnTitle={"Add Product"}
+      btnPath={"/dashboard/product/add"}
+      btnIcon={<BiCartAdd size={20} />}
+      setFiltering={setFiltering}
+    /> */}
 
       {/* Download PDF and CSV */}
       <div className="flex lg:flex-row justify-center lg:justify-end gap-2">
@@ -179,4 +176,4 @@ const ProductReport = () => {
   );
 };
 
-export default ProductReport;
+export default ShiftProduct;
