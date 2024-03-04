@@ -29,12 +29,12 @@ const SaleReport = () => {
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
   useEffect(() => {
     if (allSalesReport?.data) {
-      const modifiedData = allSalesReport?.data?.map((item , index)=> {
+      const modifiedData = allSalesReport?.data?.map((item, index) => {
         return {
-          serial_no : index + 1 , 
-          ...item
-        }
-      })
+          serial_no: index + 1,
+          ...item,
+        };
+      });
       // console.log(modifiedData)
       setFilterData(modifiedData);
     }
@@ -43,7 +43,7 @@ const SaleReport = () => {
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 11;
-
+console.log(filterData)
   const handleStartDate = (date) => {
     setStartDate(date);
     setDate("custom");
@@ -66,8 +66,6 @@ const SaleReport = () => {
     setDate(null);
   };
 
-
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -75,22 +73,31 @@ const SaleReport = () => {
     {
       name: "Serial no",
       selector: (row) => <>{row?.serial_no}</>,
-   
     },
     {
       name: "New Products",
-      selector: (row) => <>{row?.newProducts}</>,
-  
+      selector: (row) => (
+        <>
+          <p>
+            {row?.newProducts} <span className="mx-1">Piece</span>
+          </p>
+        </>
+      ),
     },
     {
       name: "Sold Products",
-      selector: (row) => <><p>{row?.soldProducts}</p></>,
+      selector: (row) => (
+        <>
+          <p>
+            {row?.soldProducts} <span className="mx-1">Piece</span>
+          </p>
+        </>
+      ),
     },
     {
       name: "Date",
       selector: (row) => <>{row?.date}</>,
     },
-  
   ];
   // console.log(filterData);
 
@@ -99,7 +106,7 @@ const SaleReport = () => {
     return <UseLoading />;
   }
 
-  console.log(filterData)
+
   return (
     <DashboardBackground>
       <TableHeadingTitle>
@@ -116,9 +123,21 @@ const SaleReport = () => {
       {/* Download PDF and CSV */}
       <div className="flex lg:flex-row justify-center lg:justify-end gap-2">
         {/* Invoices download as CSV file */}
-        <ProductsReportAsCSV data={filterData} />
+        <ProductsReportAsCSV
+          // column={[
+          //   { value: "soldProducts", key: "Sold Products" },
+          //   { value: "newProducts", key: "New Products" },
+          //   { value: "date", key: "Date" },
+          // ]}
+          column={[
+            { value: "soldProducts", key: "Sold Products" },
+            { value: "newProducts", key: "New Products" },
+            { value: "date", key: "Date" },
+          ]}
+          data={filterData}
+        />
         {/* Invoices download as PDF file */}
-        <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
+        {/* <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
           <PDFDownloadLink
             document={
               <ProductsReportAsPDF
@@ -133,7 +152,7 @@ const SaleReport = () => {
               <BsFiletypePdf size={20} /> Download as PDF
             </span>
           </PDFDownloadLink>
-        </button>
+        </button> */}
       </div>
 
       <InvoiceDateFiltering
