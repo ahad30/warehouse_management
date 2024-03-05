@@ -33,7 +33,7 @@ const ShiftProduct = () => {
       const modifiedData = allShitReport?.data?.map((item, index) => {
         return {
           "Serial No": index + 1,
-          "Came Product": item?.cameProducts,
+          "Incoming Product": item?.cameProducts,
           Date: item?.date,
         };
       });
@@ -77,11 +77,11 @@ const ShiftProduct = () => {
       selector: (row) => <>{row?.["Serial No"]}</>,
     },
     {
-      name: "Came Products",
+      name: "Total Incoming Product ",
       selector: (row) => (
         <>
           <p>
-            {row?.["Came Product"]} <span className="mx-1">Piece</span>
+            {row?.["Total Incoming Product"]} <span className="mx-1">Piece</span>
           </p>
         </>
       ),
