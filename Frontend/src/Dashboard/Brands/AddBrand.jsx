@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useAddBrandMutation } from "../../features/Brand/brandApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const AddBrand = () => {
   // Set the page title using the UseTitle custom hook.
@@ -43,33 +44,15 @@ const AddBrand = () => {
     console.log(data);
   };
 
-  // Handle side effects like showing loading/error/success messages.
-  useEffect(() => {
-    if (isLoading) {
-      // Show a loading toast.
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
-    if (isError) {
-      // Show an error toast with the error message.
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
-    if (isSuccess && data?.status) {
-      // Show a success toast and navigate to the brand dashboard upon success.
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/brand");
-    }
-  }, [
+  UseErrorMessages(error);
+  useShowAsyncMessage(
     isLoading,
     isError,
     error,
     isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
-  const errorMessages = UseErrorMessages(error);
+    data,
+    "/dashboard/brand"
+  );
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>
@@ -102,17 +85,14 @@ const AddBrand = () => {
         />
       </form>
 
-      {
-        /* Display error messages if any. */
-        errorMessages?.map((errorMessage, index) => (
-          <p
-            key={index}
-            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-          >
-            {errorMessage}
-          </p>
-        ))
-      }
+      {/* {errorMessages?.map((errorMessage, index) => (
+        <p
+          key={index}
+          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
+        >
+          {errorMessage}
+        </p>
+      ))} */}
     </DashboardBackground>
   );
 };
