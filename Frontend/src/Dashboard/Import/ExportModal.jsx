@@ -49,7 +49,7 @@ const ExportModal = ({ modalIsOpen, setModalIsOpen }) => {
           </div>
           <div className="flex justify-end">
             <button
-              className="bg-red-600  mb-8 text-[8px] lg:p-1 flex text-white rounded-md outline-none border ring-offset-2 ring-red-500 focus:ring-2"
+              className="bg-red-600  mb-8 text-sm lg:p-1 flex text-white rounded-md outline-none border ring-offset-2 ring-red-500 focus:ring-2"
               onClick={() => setModalIsOpen(false)}
             >
               Cancel

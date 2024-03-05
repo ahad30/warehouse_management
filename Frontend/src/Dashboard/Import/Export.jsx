@@ -62,12 +62,12 @@ const Export = () => {
               click here
             </button>
           </p>
+          {/* Csv Modal show */}
           <ExportModal
             modalIsOpen={modalIsOpen}
             setModalIsOpen={setModalIsOpen}
           />
         </div>
-
         <>
           <label className="font-bold text-lg mt-5 ">Export :</label>
           <div className="mt-2 border bg-[#F3F4F6] rounded">
@@ -75,8 +75,8 @@ const Export = () => {
               <div className="flex space-x-2 items-center m-1">
                 <button
                   onClick={() => {
-                    setTrack("All")
-                    setShowButton(false)
+                    setTrack("All");
+                    setShowButton(false);
                   }}
                   type="button"
                   className="bg-[#e74c3c]  px-3 py-2 rounded-md text-white"
@@ -88,12 +88,10 @@ const Export = () => {
                     <select
                       className="select select-bordered w-full max-w-xs"
                       required
-                      onChange={(e) =>
-                       {
-                        setShowButton(false)
-                        setTrack({ name: "warehouse", id: e.target.value })
-                       }
-                      }
+                      onChange={(e) => {
+                        setShowButton(false);
+                        setTrack({ name: "warehouse", id: e.target.value });
+                      }}
                     >
                       <option value={""}>Select Warehouse Info</option>
                       {storesData?.data?.map((data) => (
