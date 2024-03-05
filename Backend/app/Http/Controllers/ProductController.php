@@ -73,7 +73,6 @@ class ProductController extends Controller
     // store
     public function store(StoreProductRequest $request)
     {
-
         try {
             DB::beginTransaction();
             $input = [
@@ -99,7 +98,7 @@ class ProductController extends Controller
 
             DB::commit();
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $this->errorResponse([
                 'message' => "something went wrong",
@@ -148,7 +147,7 @@ class ProductController extends Controller
                 'status' => true,
                 'message' => "Product successfully updated"
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $e->getMessage();
             // return $this->errorResponse(null, 'Something went wrong');
         }
@@ -160,15 +159,13 @@ class ProductController extends Controller
      */
     public function imageUpdate(Request $request, $id)
     {
-
-        if (count($request->image_ids) > 1) {
+        if ($request->image_ids[0]) {
+            info($request->image_ids);
             foreach ($request->image_ids as $image_id) {
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
                     throw new Exception('data not found');
                 }
-
-
                 // delete files
                 if (File::exists($product_images->image)) {
                     File::delete($product_images->image);

@@ -76,9 +76,10 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       setValue("scan_code", product.scan_code || "");
     }
   }, [product, setValue]);
-  console.log(product);
+  // console.log(product);
+  const [selectedImages, setSelectedImages] = useState([]);
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     if (!data.product_name) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
@@ -95,15 +96,24 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     formData.append("brand_id", data?.brand_id);
     formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
-    formData.append("images[]", data?.new_images[0]);
+    // formData.append("images[]", data?.new_images[0]);
+
+    if (selectedImages.length > 0) {
+      for (let i = 0; i < selectedImages.length; i++) {
+        formData.append("images[]", selectedImages[i]?.file);
+      }
+    }
+
     formData.append("image_ids[]", image_ids);
     updateProduct(formData);
   };
-  const [selectedImages, setSelectedImages] = useState([]);
+
   const handleImageChange = (e) => {
     const files = e.target.files;
-    if (files.length > 5) {
-      return alert("maximum upload 5");
+    if (files.length > 5 || selectedImages.length > 5) {
+      return toast.error("Maximum upload 5", {
+        position: "bottom-right",
+      });
     } else {
       const imagesArray = Array.from(files).map((file) => {
         return {
@@ -128,6 +138,12 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     setPreviousImage((prev) => prev.filter((item) => item.id !== id));
     setImageIds([...image_ids, id]);
   };
+
+  useEffect(() => {
+    if (updateIsSuccess) {
+      setSelectedImages([]);
+    }
+  }, [updateIsSuccess]);
 
   // console.log(image_ids)
   return modalIsOpen ? (
@@ -207,7 +223,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       <select
                         className="select select-bordered w-full"
                         required
-                        {...register("store_id")}
+                        {...register("warehouse_id")}
                       >
                         <option value={""}>Select Store Info</option>
                         {storesData?.data?.map((data) => (
@@ -247,7 +263,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                           {...register("scan_code")}
                           onKeyUp={(e) => {
                             setScanCode(e.target.value);
-                            console.log(e.target);
+                            // console.log(e.target);
                           }}
                         />
                       </label>
