@@ -50,9 +50,8 @@ const AddProduct = () => {
   };
 
   UseErrorMessages(error);
-  useShowAsyncMessage(isLoading, isError, error, isSuccess, data);
+  useShowAsyncMessage(isLoading, isError, error, isSuccess, data , "/dashboard/product");
 
-  // useEffect(() => {
   //   if (isLoading) {
   //     toast.loading(<p>Loading...</p>, { id: 1 });
   //   }
