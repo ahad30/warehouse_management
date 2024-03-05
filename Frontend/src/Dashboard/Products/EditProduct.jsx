@@ -76,9 +76,9 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       setValue("scan_code", product.scan_code || "");
     }
   }, [product, setValue]);
-  console.log(product);
+  // console.log(product);
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     if (!data.product_name) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
@@ -99,7 +99,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     formData.append("image_ids[]", image_ids);
     updateProduct(formData);
   };
-
+  console.log(image_ids);
   const [selectedImages, setSelectedImages] = useState([]);
 
   const handleImageChange = (e) => {
@@ -140,11 +140,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       refetch();
       setSelectedImages([]);
     } catch (error) {
-      console.log(error);
+      //  // console.log(error);
     }
   };
 
-  const handleRemoveImageApi = async (id) => {
+  const handleRemoveImageApi = (id) => {
     setPreviousImage((prev) => prev.filter((item) => item.id !== id));
     setImageIds([...image_ids, id]);
   };
@@ -266,7 +266,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                           {...register("scan_code")}
                           onKeyUp={(e) => {
                             setScanCode(e.target.value);
-                            console.log(e.target);
+                            // console.log(e.target);
                           }}
                         />
                       </label>
