@@ -2,15 +2,7 @@ import { array } from "prop-types";
 import { BsFiletypeCsv } from "react-icons/bs";
 import { CSVLink } from "react-csv";
 
-const ProductsReportAsCSV = ({ data, column }) => {
-
-  // const csvData = data?.map((item) => ({
-  //   // [item?.serial_no] : item?.serial_no
-  //   [item?.serial_no]: item?.serial_no,
-  //   [item?.serial_no]: item?.serial_no,
-  //   [item?.serial_no]: item?.serial_no,
-  // }));
-
+const ProductsReportAsCSV = ({data}) => {
   return (
     <>
       <CSVLink

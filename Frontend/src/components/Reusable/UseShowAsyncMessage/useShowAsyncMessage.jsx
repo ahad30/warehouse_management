@@ -1,7 +1,16 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const useShowAsyncMessage = (isLoading, isError, error, isSuccess, data) => {
+const useShowAsyncMessage = (
+  isLoading,
+  isError,
+  error,
+  isSuccess,
+  data,
+  path
+) => {
+  const navigate = useNavigate();
   return useEffect(() => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
@@ -11,13 +20,14 @@ const useShowAsyncMessage = (isLoading, isError, error, isSuccess, data) => {
 
     //   // const errorMessa;
     //   toast.error(errorMsg, { id: 1 });
-    // } 
+    // }
     else if (isSuccess && data?.status) {
       //   setAddedProduct([]);
       //   setTax("");
       //   setDiscount("");
       //   setShipping("");
       toast.success(data?.message, { id: 1 });
+      navigate(path);
       // return navigate("/dashboard/product");
     }
   }, [isLoading, isError, error, isSuccess, data]);

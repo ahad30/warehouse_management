@@ -1,5 +1,6 @@
 import { func } from "prop-types";
 import { useEffect, useState } from "react";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const InvoiceDateFiltering = ({
   handleStartDate,
@@ -8,7 +9,10 @@ const InvoiceDateFiltering = ({
   handleDateClear,
   endDate,
   startDate,
+  conditionalKey,
+  setWareHouseId,
 }) => {
+  const { data: storesData } = useGetStoresQuery();
   // State to track the active button
   const [activeButton, setActiveButton] = useState(null);
   useEffect(() => {
@@ -60,6 +64,29 @@ const InvoiceDateFiltering = ({
           This Month
         </button>
       </div>
+
+      {conditionalKey === "shift" && (
+        <div className="w-[400px]">
+          <label className="input-group">
+            <span className="font-semibold text-sm">
+              Warehouse<span className="text-red-500 p-0">*</span>
+            </span>
+            <select
+              // onChange={()=>}
+              onChange={(e) => setWareHouseId(e.target.value)}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value={""}>Select Warehouse Info</option>
+              {storesData?.data?.map((data) => (
+                <option key={data?.id} value={data?.id}>
+                  {data?.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
 
       {/* Date filtering */}
       <div className="grid grid-cols-3 gap-2 mt-2 xl:mt-0">

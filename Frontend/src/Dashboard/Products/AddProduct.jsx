@@ -49,11 +49,9 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  UseErrorMessages(error)
-  useShowAsyncMessage(isLoading,isError, error , isSuccess , data)
+  UseErrorMessages(error);
+  useShowAsyncMessage(isLoading, isError, error, isSuccess, data , "/dashboard/product");
 
-
-  // useEffect(() => {
   //   if (isLoading) {
   //     toast.loading(<p>Loading...</p>, { id: 1 });
   //   }
@@ -91,7 +89,6 @@ const AddProduct = () => {
       const imagesArray = Array.from(files).map((file) =>
         URL.createObjectURL(file)
       );
-
       setSelectedImages(imagesArray);
     }
   };

@@ -70,10 +70,15 @@ const TransferProduct = () => {
   /** Initializing product options */
   useEffect(() => {
     let productsOption = productsData?.products?.data?.map((product, index) => {
-      return { label: product?.product_name, value: product?.id };
+      return {
+        label: product?.product_name,
+        value: product?.id,
+        code: product?.scan_code,
+      };
     });
     setProductOptions(productsOption);
   }, [productsData, warehouse_id]);
+  console.log(productsData);
   /** Disabling fromSelectorDisabler */
 
   const fromSelectorDisabler = (val) => {
@@ -116,6 +121,7 @@ const TransferProduct = () => {
     dispatch,
   ]);
 
+  console.log(productOptions)
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Transfer Product</h2>
@@ -157,6 +163,7 @@ const TransferProduct = () => {
               onChange={fromSelectorDisabler}
               name="product_id[]"
               placeholder="Select products"
+              getOptionLabel={(option) => `${option?.label} (${option?.code})`}
             />
           </div>
         </div>

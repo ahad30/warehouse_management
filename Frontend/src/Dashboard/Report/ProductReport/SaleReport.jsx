@@ -14,6 +14,8 @@ import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
 import { useGetAllSalesReportQuery } from "../../../features/Report/reportApi";
 
 const SaleReport = () => {
+
+  
   UseTitle("Products Report");
 
   const [startDate, setStartDate] = useState(null);
@@ -25,13 +27,12 @@ const SaleReport = () => {
     start_date: startDate ? startDate : "",
     time_range: date ? date : "",
   });
-
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
   useEffect(() => {
     if (allSalesReport?.data) {
       const modifiedData = allSalesReport?.data?.map((item, index) => {
         return {
-          serial_no: index + 1,
+          "Serial No": index + 1,
           ...item,
         };
       });
@@ -43,7 +44,7 @@ const SaleReport = () => {
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 11;
-console.log(filterData)
+  // console.log(filterData);
   const handleStartDate = (date) => {
     setStartDate(date);
     setDate("custom");
@@ -72,7 +73,7 @@ console.log(filterData)
   const columns = [
     {
       name: "Serial no",
-      selector: (row) => <>{row?.serial_no}</>,
+      selector: (row) => <>{row?.["Serial No"]}</>,
     },
     {
       name: "New Products",
@@ -106,7 +107,6 @@ console.log(filterData)
     return <UseLoading />;
   }
 
-
   return (
     <DashboardBackground>
       <TableHeadingTitle>
@@ -124,16 +124,8 @@ console.log(filterData)
       <div className="flex lg:flex-row justify-center lg:justify-end gap-2">
         {/* Invoices download as CSV file */}
         <ProductsReportAsCSV
-          // column={[
-          //   { value: "soldProducts", key: "Sold Products" },
-          //   { value: "newProducts", key: "New Products" },
-          //   { value: "date", key: "Date" },
-          // ]}
-          column={[
-            { value: "soldProducts", key: "Sold Products" },
-            { value: "newProducts", key: "New Products" },
-            { value: "date", key: "Date" },
-          ]}
+
+  
           data={filterData}
         />
         {/* Invoices download as PDF file */}

@@ -15,8 +15,8 @@ const reportApi = apiSlice.injectEndpoints({
       providesTags: ["report"],
     }),
     getAllShiftReport: builder.query({
-      query: () => ({
-        url: `/company/info`,
+      query: ({ start_date, end_date, time_range, warehouse_id }) => ({
+        url: `/shifting/report/?warehouse_id=${warehouse_id}&&start_date=${start_date}&&end_date=${end_date}&&time_range=${time_range}`,
       }),
       providesTags: ["report"],
     }),
