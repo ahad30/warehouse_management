@@ -5,15 +5,17 @@ import AddedItemCalculation from "./AddedItemCalculation/AddedItemCalculation";
 const Pos = () => {
   const [addedProduct, setAddedProduct] = useState([]);
   return (
-    <div className=" flex gap-x-3 ">
-      <div className="w-1/3">
-        <AddedItemCalculation
-          addedProduct={addedProduct}
-          setAddedProduct={setAddedProduct}
-        ></AddedItemCalculation>
+    <div className=" bg-[#E3EFF7] p-3 flex flex-col-reverse lg:flex-row justify-between gap-x-3 h-screen overflow-y-scroll lg:overflow-hidden ">
+      <div className="relative bg-white lg:w-1/3 lg:overflow-hidden rounded-lg">
+        <div className="w-full overflow-x-hidden h-screen ">
+          <AddedItemCalculation
+            addedProduct={addedProduct}
+            setAddedProduct={setAddedProduct}
+          ></AddedItemCalculation>
+        </div>
       </div>
 
-      <div className="w-2/3">
+      <div className="lg:w-2/3 ">
         <Products
           addedProduct={addedProduct}
           setAddedProduct={setAddedProduct}

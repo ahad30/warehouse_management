@@ -38,11 +38,15 @@ import Configuration from "../pages/Installation/Configuration";
 import InstallationFinish from "../pages/Installation/InstallationFinish";
 import InstallationRoute from "./InstallationRoute";
 import MSACRoute from "./MSACRoute";
-import ImportExport from "../Dashboard/Import/ImportExport";
+
 import PermissionDenied from "../pages/Errors/PermissionDenied";
 import HistoryList from "../Dashboard/History/HistoryList";
 import Pos from "../Dashboard/Pos/Pos";
 import TransferProduct from "../Dashboard/TransferProduct/TransferProduct";
+import Export from "../Dashboard/Import/Export";
+import SuperAndAdminAndEmployeeRoutes from "./PrivateRoutes/SuperAndAdminAndEmployeeRoutes";
+import SuperAndAdmin from "./PrivateRoutes/SuperAndAdmin";
+import SuperAdminRoutes from "./PrivateRoutes/SuperAdminRoutes";
 
 // Create the routes for the application using react-router-dom
 const routes = createBrowserRouter([
@@ -114,40 +118,40 @@ const routes = createBrowserRouter([
         ),
         errorElement: <ErrorPage />, // Error page for the dashboard
         children: [
-          {
-            path: "/dashboard", // Default dashboard analytics
-            element: (
-              <AdminRoute>
-                <DashboardAnalytics />
-              </AdminRoute>
-            ),
-          },
+          // {
+          //   path: "/dashboard", // Default dashboard analytics
+          //   element: (
+
+          //       <DashboardAnalytics />
+
+          //   ),
+          // },
 
           // Import/Export
 
           {
             path: "/dashboard/import",
             element: (
-              <AdminRoute>
-                <ImportExport />
-              </AdminRoute>
+              <SuperAndAdminAndEmployeeRoutes>
+                <Export />
+              </SuperAndAdminAndEmployeeRoutes>
             ),
           },
           // USERS
           {
             path: "/dashboard/user", // Users list
             element: (
-              <AdminRoute>
+              <SuperAdminRoutes>
                 <UsersList />
-              </AdminRoute>
+              </SuperAdminRoutes>
             ),
           },
           {
             path: "/dashboard/user/add", // Add a new user
             element: (
-              <AdminRoute>
+              <SuperAdminRoutes>
                 <AddUser />
-              </AdminRoute>
+              </SuperAdminRoutes>
             ),
           },
           // CUSTOMERS
@@ -161,94 +165,90 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/product/search",
             element: (
-              <ManagerRoute>
+              <SuperAndAdminAndEmployeeRoutes>
                 <SearchProducts />
-              </ManagerRoute>
+              </SuperAndAdminAndEmployeeRoutes>
             ),
           },
-          {
-            path: "/dashboard/customer/add", // Add a new customer
-            element: (
-              <ManagerRoute>
-                <AddCustomer />
-              </ManagerRoute>
-            ),
-          },
+          // {
+          //   path: "/dashboard/customer/add", // Add a new customer
+          //   element: <AddCustomer />,
+          // },
           // CATEGORIES
           {
             path: "/dashboard/category", // Categories list
             element: (
-              <MIRoute>
+              <SuperAndAdmin>
                 <CategoriesList />
-              </MIRoute>
+              </SuperAndAdmin>
             ),
           },
           {
             path: "/dashboard/category/add", // Add a new category
             element: (
-              <MIRoute>
+              <SuperAdminRoutes>
                 <AddCategory />
-              </MIRoute>
+              </SuperAdminRoutes>
             ),
           },
           // BRANDS
           {
             path: "/dashboard/brand", // Brands list
             element: (
-              <MIRoute>
+              <SuperAndAdmin>
                 <BrandsList />
-              </MIRoute>
+              </SuperAndAdmin>
             ),
           },
           {
             path: "/dashboard/brand/add", // Add a new brand
             element: (
-              <MIRoute>
+              <SuperAdminRoutes>
                 <AddBrand />
-              </MIRoute>
+              </SuperAdminRoutes>
             ),
           },
           // STORE
           {
             path: "/dashboard/store", // Stores list
             element: (
-              <MIRoute>
+              <SuperAndAdmin>
                 <StoresList />
-              </MIRoute>
+              </SuperAndAdmin>
             ),
           },
           {
             path: "/dashboard/store/add", // Add a new store
             element: (
-              <MIRoute>
+              <SuperAdminRoutes>
                 <AddStore />
-              </MIRoute>
+              </SuperAdminRoutes>
             ),
           },
           // PRODUCTS
           {
             path: "/dashboard/product", // Products list
             element: (
-              <MIRoute>
+              <SuperAndAdminAndEmployeeRoutes>
                 <ProductsList />
-              </MIRoute>
+              </SuperAndAdminAndEmployeeRoutes>
             ),
           },
           {
             path: "/dashboard/product/add", // Add a new product
             element: (
-              <MIRoute>
+              <SuperAndAdminAndEmployeeRoutes>
                 <AddProduct />
-              </MIRoute>
+              </SuperAndAdminAndEmployeeRoutes>
             ),
           },
           // REPORT
           {
             path: "/dashboard/report", // Report layout
             element: (
-              <MACRoute>
+              <SuperAndAdminAndEmployeeRoutes>
                 <ReportLayout />
-              </MACRoute>
+              </SuperAndAdminAndEmployeeRoutes>
             ),
           },
 
@@ -256,67 +256,59 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/history",
             element: (
-              <AdminRoute>
+              <SuperAndAdmin>
                 <HistoryList />
-              </AdminRoute>
+              </SuperAndAdmin>
             ),
           },
           {
             path: "/dashboard/products/transfer",
             element: (
-              <AdminRoute>
+              <SuperAndAdmin>
                 <TransferProduct />
-              </AdminRoute>
+              </SuperAndAdmin>
             ),
           },
 
-          {
-            path: "/dashboard/analytics", // Dashboard analytics
-            element: (
-              <AdminRoute>
-                <DashboardAnalytics />
-              </AdminRoute>
-            ),
-          },
+          // {
+          //   path: "/dashboard/analytics", // Dashboard analytics
+          //   element: <DashboardAnalytics />,
+          // },
           // INVOICE
-          {
-            path: "/dashboard/invoice/new", // Create a new invoice
-            element: (
-              <MSACRoute>
-                <NewInvoice />
-              </MSACRoute>
-            ),
-          },
+          // {
+          //   path: "/dashboard/invoice/new", // Create a new invoice
+          //   element: (
+          //     <MSACRoute>
+          //       <NewInvoice />
+          //     </MSACRoute>
+          //   ),
+          // },
           {
             path: "/dashboard/pos", // Create a new invoice
             element: (
-              <MSACRoute>
+              <SuperAndAdminAndEmployeeRoutes>
                 <Pos></Pos>
-              </MSACRoute>
+              </SuperAndAdminAndEmployeeRoutes>
             ),
           },
-          {
-            path: "/dashboard/invoice", // Invoices list
-            element: (
-              <MSACRoute>
-                <InvoicesList />
-              </MSACRoute>
-            ),
-          },
+          // {
+          //   path: "/dashboard/invoice", // Invoices list
+          //   element: <InvoicesList />,
+          // },
           // SETTING
           {
             path: "/dashboard/setting", // Settings
             element: (
-              <AdminRoute>
+              <SuperAdminRoutes>
                 <Settings />
-              </AdminRoute>
+              </SuperAdminRoutes>
             ),
           },
           // PROFILE
-          {
-            path: "/dashboard/profile", // User profile update
-            element: <UserProfileUpdate />,
-          },
+          // {
+          //   path: "/dashboard/profile", // User profile update
+          //   element: <UserProfileUpdate />,
+          // },
         ],
       },
     ],

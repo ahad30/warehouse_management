@@ -15,8 +15,10 @@ import { FaEdit } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import { SiBrandfolder } from "react-icons/si";
+import { useSelector } from "react-redux";
 
 const BrandsList = () => {
+  const { user } = useSelector((state) => state.auth);
   UseTitle("Brands");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [brand, setBrand] = useState({});
@@ -95,9 +97,9 @@ const BrandsList = () => {
         <img
           src={
             row.brand_img
-              ? `${
-                  import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                }${row?.brand_img}`
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
+                  row?.brand_img
+                }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
           alt="User"
@@ -118,9 +120,12 @@ const BrandsList = () => {
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
-          <button onClick={() => onDelete(row?.id)}>
-            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button>
+
+          {user?.get_role?.role === "Admin" && (
+            <button onClick={() => onDelete(row?.id)}>
+              <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+            </button>
+          )}
         </div>
       ),
     },
@@ -182,7 +187,6 @@ const BrandsList = () => {
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
         />
-        
       </DashboardBackground>
     </>
   );

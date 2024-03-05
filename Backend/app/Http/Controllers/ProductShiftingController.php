@@ -16,7 +16,7 @@ class ProductShiftingController extends Controller
     use ResponseTrait;
 
 
-    public function ProductShiftingStore(ProductShiftingRequest $request)
+    public function store(ProductShiftingRequest $request)
     {
         try {
 
@@ -28,31 +28,37 @@ class ProductShiftingController extends Controller
                     'message' => "No product selected",
                 ], 404);
             }
-            $products = Product::whereIn('id', $productIds)
-                ->where('warehouse_id', $request->from_warehouse_id)
-                ->get();
 
-            // If some products are not found in the from_warehouse_id, return error
-            if (count($products) !== count($productIds)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "One or more products not found in the specified warehouse",
-                ], 404);
-            }
+
+
+
+            /** checking is the product belongs to warehouse or not */
+            if (!$this->isProductsBelongsToWarehouse($productIds, $request->from_warehouse_id)) {
+                return response(['status' => true, 'message' => "Product is not belongs to warehouse"], 400);
+            };
+
+
+
+
+            // Create history record
+            $newHistories = [];
             foreach ($productIds as $productId) {
-                // Create history record
-                History::create([
+                $newHistories[] = [
                     "from_warehouse_id" => $request->from_warehouse_id,
                     "to_warehouse_id" => $request->to_warehouse_id,
                     "product_id" => $productId,
-                    "user_id" => Auth()->id(),
-                ]);
+                    "user_id" => auth()->id(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+
                 // Update product's warehouse_id directly in the database query
                 Product::where('id', $productId)->update([
                     "warehouse_id" => $request->to_warehouse_id,
                 ]);
             }
-
+            // inserting history record to db
+            $histories = History::insert($newHistories);
 
             return response()->json([
                 'status' => true,
@@ -66,30 +72,21 @@ class ProductShiftingController extends Controller
             ]);
         }
     }
-    //end  ProductShiftingStore() method
 
-    public function  ProductShiftingIndex(Request $request)
+
+
+    /**
+     *  Is the product belongs to warehouse or nots
+     * 
+     */
+    public function isProductsBelongsToWarehouse($productId, $fromWarehouseId): bool
     {
-
-
-        $histories = History::paginate(5);
-
-        return response()->json([
-            'status' => true,
-            'message' => "History Successfully Retrived",
-            'data' => $histories,
-        ]);
-    } // end ProductShiftingIndex()
-
-
-
-    public function ProductShiftingDelete(Request $request, $id)
-    {
-        $history = History::find($id);
-
-        $history->delete();
-    } //end ProductShiftingDelete 
-
-
-
+        foreach ($productId as $id) {
+            $product = Product::find($id);
+            if ($product->warehouse_id != $fromWarehouseId) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

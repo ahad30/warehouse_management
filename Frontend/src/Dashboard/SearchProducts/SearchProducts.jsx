@@ -110,12 +110,12 @@ const SearchProducts = () => {
                 <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow mx-auto">
                   <a href="#">
                     <img
-                      className="p-4 rounded-t-lg"
+                      className="p-4 rounded-t-lg ratio-square w-full max-h-[280px]"
                       src={
-                        product?.product_image
+                        product?.product_images?.length > 0
                           ? `${
                               import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
-                            }/${product?.product_image[0]}`
+                            }${product?.product_images[0]?.image}`
                           : "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
                       }
                     />
@@ -147,7 +147,13 @@ const SearchProducts = () => {
               <h2 className="text-xl p-3 font-semibold uppercase border-b-2 mb-2">
                 Siftings
               </h2>
-              <Histories histories={product?.histories} />
+              <Histories
+                histories={product?.histories}
+                extraData={{
+                  product_name: product?.product_name,
+                  scan_code: product?.scan_code,
+                }}
+              />
               <br />
               <br />
             </div>

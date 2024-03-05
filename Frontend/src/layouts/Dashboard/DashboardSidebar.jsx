@@ -21,11 +21,11 @@ const DashboardSidebar = () => {
   const handleLogOut = UserLogout();
 
   const [sideBarData, setSidebarData] = useState([
-    {
-      name: "Dashboard",
-      icon: <RxDashboard size={25}></RxDashboard>,
-      path: "/dashboard",
-    },
+    // {
+    //   name: "Dashboard",
+    //   icon: <RxDashboard size={25}></RxDashboard>,
+    //   path: "/dashboard",
+    // },
     {
       name: "Import/Export",
       icon: <MdOutlineImportExport size={25}></MdOutlineImportExport>,
@@ -84,82 +84,107 @@ const DashboardSidebar = () => {
     },
   ]);
 
+  // useEffect(() => {
+  //   if (user?.get_role?.role === "manager") {
+  //     setSidebarData((prev) =>
+  //       prev.filter((section) => {
+  //         return (
+  //           section?.name !== "Users" &&
+  //           section?.name !== "Dashboard" &&
+  //           section?.name !== "Settings"
+  //         );
+  //       })
+  //     );
+  //   }
+
+  //   if (user?.get_role?.role === "sales_representative") {
+  //     setSidebarData((prev) =>
+  //       prev.filter((section) => {
+  //         return (
+  //           section?.name !== "Dashboard" &&
+  //           section?.name !== "Users" &&
+  //           section?.name !== "Customers" &&
+  //           section?.name !== "Category" &&
+  //           section?.name !== "Brand" &&
+  //           section?.name !== "Store" &&
+  //           section?.name !== "Product" &&
+  //           section?.name !== "Reports" &&
+  //           section?.name !== "Settings"
+  //         );
+  //       })
+  //     );
+  //   }
+
+  //   if (user?.get_role?.role === "accountant") {
+  //     setSidebarData((prev) =>
+  //       prev.filter((section) => {
+  //         return (
+  //           section?.name !== "Dashboard" &&
+  //           section?.name !== "Users" &&
+  //           section?.name !== "Customers" &&
+  //           section?.name !== "Category" &&
+  //           section?.name !== "Brand" &&
+  //           section?.name !== "Store" &&
+  //           section?.name !== "Product" &&
+  //           section?.name !== "Settings"
+  //         );
+  //       })
+  //     );
+  //   }
+
+  //   if (user?.get_role?.role === "cashier") {
+  //     setSidebarData((prev) =>
+  //       prev.filter((section) => {
+  //         return (
+  //           section?.name !== "Dashboard" &&
+  //           section?.name !== "Users" &&
+  //           section?.name !== "Customers" &&
+  //           section?.name !== "Category" &&
+  //           section?.name !== "Brand" &&
+  //           section?.name !== "Store" &&
+  //           section?.name !== "Product" &&
+  //           section?.name !== "Settings"
+  //         );
+  //       })
+  //     );
+  //   }
+
+  //   if (user?.get_role?.role === "inventory_manager") {
+  //     setSidebarData((prev) =>
+  //       prev.filter((section) => {
+  //         return (
+  //           section?.name !== "Dashboard" &&
+  //           section?.name !== "Users" &&
+  //           section?.name !== "Customers" &&
+  //           section?.name !== "Invoices" &&
+  //           section?.name !== "Reports" &&
+  //           section?.name !== "Settings"
+  //         );
+  //       })
+  //     );
+  //   }
+  // }, [user]);
+
   useEffect(() => {
-    if (user?.get_role?.role === "manager") {
+    if (user?.get_role?.role === "Staff") {
       setSidebarData((prev) =>
-        prev.filter((section) => {
+        prev.filter((item) => {
           return (
-            section?.name !== "Users" &&
-            section?.name !== "Dashboard" &&
-            section?.name !== "Settings"
+            item.name !== "Settings" &&
+            item.name !== "Users" &&
+            item.name !== "History" &&
+            item.name !== "Shift Product" &&
+            item.name !== "Warehouse" &&
+            item.name !== "Category" &&
+            item.name !== "Brand"
           );
         })
       );
     }
-
-    if (user?.get_role?.role === "sales_representative") {
+    if (user?.get_role?.role === "Sub Admin") {
       setSidebarData((prev) =>
-        prev.filter((section) => {
-          return (
-            section?.name !== "Dashboard" &&
-            section?.name !== "Users" &&
-            section?.name !== "Customers" &&
-            section?.name !== "Category" &&
-            section?.name !== "Brand" &&
-            section?.name !== "Store" &&
-            section?.name !== "Product" &&
-            section?.name !== "Reports" &&
-            section?.name !== "Settings"
-          );
-        })
-      );
-    }
-
-    if (user?.get_role?.role === "accountant") {
-      setSidebarData((prev) =>
-        prev.filter((section) => {
-          return (
-            section?.name !== "Dashboard" &&
-            section?.name !== "Users" &&
-            section?.name !== "Customers" &&
-            section?.name !== "Category" &&
-            section?.name !== "Brand" &&
-            section?.name !== "Store" &&
-            section?.name !== "Product" &&
-            section?.name !== "Settings"
-          );
-        })
-      );
-    }
-
-    if (user?.get_role?.role === "cashier") {
-      setSidebarData((prev) =>
-        prev.filter((section) => {
-          return (
-            section?.name !== "Dashboard" &&
-            section?.name !== "Users" &&
-            section?.name !== "Customers" &&
-            section?.name !== "Category" &&
-            section?.name !== "Brand" &&
-            section?.name !== "Store" &&
-            section?.name !== "Product" &&
-            section?.name !== "Settings"
-          );
-        })
-      );
-    }
-
-    if (user?.get_role?.role === "inventory_manager") {
-      setSidebarData((prev) =>
-        prev.filter((section) => {
-          return (
-            section?.name !== "Dashboard" &&
-            section?.name !== "Users" &&
-            section?.name !== "Customers" &&
-            section?.name !== "Invoices" &&
-            section?.name !== "Reports" &&
-            section?.name !== "Settings"
-          );
+        prev.filter((item) => {
+          return item.name !== "Settings" && item.name !== "Users";
         })
       );
     }

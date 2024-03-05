@@ -28,6 +28,8 @@ const apiSlice = createApi({
     "Settings",
     "Default",
     "Profile",
+    "Pos",
+    "report"
   ],
   endpoints: () => ({}),
 });

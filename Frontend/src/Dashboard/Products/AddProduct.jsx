@@ -13,6 +13,7 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { ImCross } from "react-icons/im";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 const AddProduct = () => {
   UseTitle("Add Product");
   const { register, handleSubmit } = useForm();
@@ -24,31 +25,23 @@ const AddProduct = () => {
   const [addProduct, { isLoading, isError, error, isSuccess, data }] =
     useAddProductMutation();
   const [scanCode, setScanCode] = useState("N/A");
-  let getYear = () => {
-    let currentYear = new Date().getFullYear();
-    return currentYear;
-  };
   const onSubmit = (data) => {
-    console.log(data);
     const formData = new FormData();
-
+    const images = data?.images;
     formData.append("product_name", data?.product_name);
-    // formData.append("product_code", data?.product_code);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
-    // formData.append("product_unit", data?.product_unit);
     formData.append("category_id", data?.category_id);
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
-    // formData.append("product_quantity", data?.product_quantity);
-
     formData.append("scan_code", data?.scan_code);
-    if (data?.images.length > 0) {
-      formData.append("images", data?.images);
+
+    if (images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        console.log(images[i]);
+        formData.append("images[]", images[i]);
+      }
     }
-    // if (data?.images.length > 0) {
-    //   formData.append("images", data?.images);
-    // }
     if (data?.product_desc) {
       formData.append("product_desc", data?.product_desc);
     }
@@ -56,36 +49,37 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  const errorMessages = UseErrorMessages(error);
+  UseErrorMessages(error);
+  useShowAsyncMessage(isLoading, isError, error, isSuccess, data , "/dashboard/product");
 
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
+  //   if (isLoading) {
+  //     toast.loading(<p>Loading...</p>, { id: 1 });
+  //   }
 
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
+  //   if (isError) {
+  //     const errorMessage = error?.data?.message || error?.status;
+  //     toast.error(errorMessage, { id: 1 });
+  //   }
 
-    if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/product");
-    }
-  }, [
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
+  //   if (isSuccess && data?.status) {
+  //     toast.success(data?.message, { id: 1 });
+  //     return navigate("/dashboard/product");
+  //   }
+  // }, [
+  //   isLoading,
+  //   isError,
+  //   error,
+  //   isSuccess,
+  //   data?.message,
+  //   navigate,
+  //   data?.status,
+  //   dispatch,
+  // ]);
 
   const [selectedImages, setSelectedImages] = useState([]);
   const handleImageChange = (e) => {
     const files = e.target.files;
+    // console.log(files);
     console.log(files.length);
     if (files.length > 5) {
       console.log("succeed");
@@ -95,7 +89,6 @@ const AddProduct = () => {
       const imagesArray = Array.from(files).map((file) =>
         URL.createObjectURL(file)
       );
-
       setSelectedImages(imagesArray);
     }
   };
@@ -115,7 +108,7 @@ const AddProduct = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-5">
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Name<span className="text-red-500 p-0">*</span>
             </span>
             <input
@@ -126,20 +119,9 @@ const AddProduct = () => {
               {...register("product_name")}
             />
           </label>
-          {/* <label className="input-group">
-            <span className="font-semibold">
-              Code<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="text"
-              placeholder="Product Code"
-              className="input input-bordered w-full"
-              required
-              {...register("product_code")}
-            />
-          </label> */}
+
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Warehouse<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -157,7 +139,7 @@ const AddProduct = () => {
             </select>
           </label>
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Category<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -173,21 +155,9 @@ const AddProduct = () => {
               ))}
             </select>
           </label>
-          {/* <label className="input-group">
-            <span className="font-semibold">
-              Quantity<span className="text-red-500 p-0">*</span>
-            </span>
-            <input
-              type="number"
-              placeholder="Quantity"
-              className="input input-bordered w-full"
-              required
-              min={1}
-              {...register("product_quantity")}
-            />
-          </label> */}
+
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Retail<span className="text-red-500 p-0">*</span>
             </span>
             <input
@@ -200,8 +170,8 @@ const AddProduct = () => {
             />
           </label>
           <label className="input-group">
-            <span className="font-semibold">
-              Sold<span className="text-red-500 p-0">*</span>
+            <span className="font-semibold text-sm">
+              Sell Price<span className="text-red-500 p-0">*</span>
             </span>
             <input
               type="number"
@@ -212,24 +182,9 @@ const AddProduct = () => {
               {...register("product_sale_price")}
             />
           </label>
-          {/* <label className="input-group">
-            <span className="font-semibold">
-              Unit<span className="text-red-500 p-0">*</span>
-            </span>
-            <select
-              className="select select-bordered w-full"
-              required
-              {...register("product_unit")}
-            >
-              <option value={""}>Select Unit</option>
-              <option value={"pcs"}>Pcs</option>
-              <option value={"box"}>Box</option>
-              <option value={"kg"}>KG</option>
-              <option value={"litre"}>Litre</option>
-            </select>
-          </label> */}
+
           <label className="input-group">
-            <span className="font-semibold">
+            <span className="font-semibold text-sm">
               Brands<span className="text-red-500 p-0">*</span>
             </span>
             <select
@@ -246,15 +201,6 @@ const AddProduct = () => {
             </select>
           </label>
 
-          {/* <label className="input-group">
-            <span className="font-semibold">Description</span>
-            <input
-              type="text"
-              placeholder="Product Description"
-              className="input input-bordered w-full"
-              {...register("product_desc")}
-            />
-          </label> */}
           <div>
             <label className="input-group">
               <span className="font-semibold text-sm">scan code </span>
@@ -279,7 +225,9 @@ const AddProduct = () => {
           <div className="form-control ">
             <div className="mb-3">
               <label className="input-group file-input file-input-bordered">
-                <span className="font-semibold text-sm">Upload Image</span>
+                <span className="font-semibold text-sm cursor-pointer">
+                  Upload Image
+                </span>
                 <input
                   className="file-input hidden file-input-bordered w-full"
                   id="image"
@@ -321,14 +269,14 @@ const AddProduct = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages.map((errorMessage, index) => (
+      {/* {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
         >
           {errorMessage}
         </p>
-      ))}
+      ))} */}
     </DashboardBackground>
   );
 };

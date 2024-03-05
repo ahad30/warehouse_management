@@ -4,88 +4,52 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
-import DataTable from "react-data-table-component";
 import { useGetHistoryQuery } from "../../features/History/historyApi";
+import Histories from "../SearchProducts/Histories";
+import Paginator from "../../components/Paginator/Paginator";
+import { useSelector } from "react-redux";
 
 const HistoryList = () => {
-  // const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const [category, setCategory] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const itemsPerPage = 11;
+  const [query, setQuery] = useState("");
+  const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const { data: historiesData, isLoading: historiesIsLoading } =
-    useGetHistoryQuery();
+    useGetHistoryQuery({ pageNumber: ActivePageNumber, query: query });
 
   useEffect(() => {
-    setFilterData(historiesData?.data);
+    setFilterData(historiesData?.data?.histories);
   }, [historiesData?.data]);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  const columns = [
-    {
-      name: "Serial",
-      cell: (row) => {
-        // Calculate the serial number based on the current page and items per page
-        const serialNumber =
-          (currentPage - 1) * itemsPerPage + filterData?.indexOf(row) + 1;
-        return <span>{serialNumber}</span>;
-      },
-    },
-
-    {
-      name: "Category Name",
-      selector: (row) => <>{row?.category_name}</>,
-    },
-    // {
-    //   name: "Warehouse Name",
-    //   selector: (row) => <>{row?.warehouse_name}</>,
-    // },
-    {
-      name: "Description",
-
-      selector: (row) => <>{row?.description}</>,
-    },
-  ];
-
-  // SEARCH FILTERING ENDS
 
   // ALL CATEGORIES
   if (historiesIsLoading) {
     return <UseLoading />;
   }
-
+  /**For Searching */
+  const setFiltering = (val) => {
+    if (val?.length > 3) {
+      setQuery(val);
+    }
+  };
   return (
     <>
       <DashboardBackground>
-        <TableHeadingTitle>
+        {/* <TableHeadingTitle>
           History {historiesData?.histories?.length}{" "}
-          {/* Change the table title */}
-        </TableHeadingTitle>
+   
+        </TableHeadingTitle> */}
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
+          setFiltering={setFiltering}
           // btnTitle={"Transfer Product"}
           btnPath={"/dashboard/history/addHistory"}
           btnIcon={<BiSolidDuplicate size={20} />}
-          // setFiltering={setFiltering}
         />
-        {/* Categories Table */}
 
-        {/* {filterData?.length > 0 && ( */}
-        <DataTable
-          columns={columns}
-          data={filterData}
-          pagination
-          responsive
-          paginationPerPage={itemsPerPage}
-          paginationRowsPerPageOptions={[itemsPerPage, 5, 10, 15]}
-          paginationTotalRows={filterData?.length}
-          onChangePage={(page) => setCurrentPage(page)}
-          keyField="id"
-        />
-        {/* )} */}
+        <Histories histories={filterData} />
+        <br></br>
+        <Paginator links={historiesData?.data?.paginator} />
+        <br></br>
       </DashboardBackground>
     </>
   );

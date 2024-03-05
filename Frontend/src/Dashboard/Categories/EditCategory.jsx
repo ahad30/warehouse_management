@@ -1,15 +1,14 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUpdateCategoryMutation } from "../../features/Category/categoryApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-// import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
   const { register, handleSubmit, setValue } = useForm();
   // const { data: storesData } = useGetStoresQuery();
-
+  const [selectedImages, setSelectedImages] = useState([]);
   const [
     updateCategory,
     {
@@ -20,6 +19,21 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
       data: updateData,
     },
   ] = useUpdateCategoryMutation();
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    console.log(files.length);
+    if (files.length > 5) {
+      console.log("succeed");
+      return alert("maximum upload 5");
+    } else {
+      console.log("You can not more then five image");
+      const imagesArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+
+      setSelectedImages(imagesArray);
+    }
+  };
 
   const onSubmit = (data) => {
     if (!data.category_name) {
@@ -29,11 +43,10 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
 
     let formData = new FormData();
     formData.append("_method", "PUT");
+    formData.append("id", category?.id);
     formData.append("category_name", data?.category_name);
-    // formData.append("warehouse_id", data?.warehouse_id);
 
     if (data?.new_image?.length > 0) {
-
       formData.append("image", data?.new_image[0]);
     }
     if (data?.description) {
@@ -42,7 +55,6 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
 
     updateCategory({ data: formData, id: category?.id });
     console.log(data);
-    // console.log(data?.image)
   };
 
   const errorMessages = UseErrorMessages(updateError);
@@ -74,9 +86,8 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
     if (category) {
       setValue("category_name", category?.category_name || "");
       setValue("description", category?.description || "");
-      // setValue("warehouse_id", category?.warehouse_id || "");
-      setValue("image", category?.image || "");
 
+      setValue("image", category?.image || "");
     }
   }, [category, setValue]);
 
@@ -116,33 +127,19 @@ const EditCategory = ({ modalIsOpen, setModalIsOpen, category }) => {
                         {...register("description")}
                       />
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold">
-                        Warehouse<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <select
-                        className="select select-bordered w-full"
-                        required
-                        {...register("warehouse_id")}
-                      >
-                        <option value={""}>Select Warehouse Info</option>
-                        {storesData?.data?.map((data) => (
-                          <option key={data?.id} value={data?.id}>
-                            {data?.name}
-                          </option>
-                        ))}
-                      </select>
-                    </label> */}
-                    <label className="input-group">
-                      <span className="font-semibold min-w-[110px]">
-                        Image<span className="text-red-500 p-0">*</span>
+
+                    <label className="input-group  file-input file-input-bordered">
+                      <span className="font-semibold min-w-[100px] cursor-pointer">
+                        Image
                       </span>
                       <input
                         type="file"
-                        className="input input-bordered w-full py-2"
-
-                        {...register("new_image")}
+                        className="input input-bordered w-full hidden "
+                        {...register("image", {
+                          onChange: (e) => handleImageChange(e),
+                        })}
                       />
+                      <p className="py-3 px-2"> {selectedImages.length}</p>
                     </label>
                   </div>
 

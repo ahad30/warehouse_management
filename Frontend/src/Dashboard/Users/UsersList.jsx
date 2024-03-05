@@ -126,18 +126,18 @@ const UsersList = () => {
       name: "email",
       selector: (row) => <>{row?.email}</>,
     },
-    {
-      name: "phone",
-      selector: (row) => <>{row?.phone}</>,
-    },
+    // {
+    //   name: "phone",
+    //   selector: (row) => <>{row?.phone}</>,
+    // },
     {
       name: "role",
       selector: (row) => row?.get_role?.role,
     },
-    {
-      name: "address",
-      selector: (row) => <>{row?.address}</>,
-    },
+    // {
+    //   name: "address",
+    //   selector: (row) => <>{row?.address}</>,
+    // },
     {
       name: "Actions",
       cell: (row) => (

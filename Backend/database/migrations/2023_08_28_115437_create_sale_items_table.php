@@ -12,20 +12,13 @@ return new class extends Migration {
     {
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
             $table->string('name');
             $table->string('code');
-            $table->string('description');
-            $table->string('unit');
-            $table->string('quantity');
-            $table->float('rate');
+            $table->float('product_sold_price');
             $table->float('average_rate')->default(1);
-            $table->float('tax');
-            $table->float('total_price_quantity_tax');
             $table->float('product_retail_price');
-            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
-            $table->unsignedBigInteger('sale_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('sale_id')->constraint('sales')->onDelete('cascade');
+            $table->foreignId('product_id')->constraint('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,24 +1,31 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
-import { useUpdateProductMutation } from "../../features/Product/productApi";
+import {
+  useUpdateProductImageMutation,
+  useUpdateProductMutation,
+} from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-
-const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
+import { set } from "date-fns";
+import { ImCross } from "react-icons/im";
+const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   const { register, handleSubmit, setValue } = useForm();
-
   const { data: categoriesData } = useGetCategoriesQuery();
   const { data: brandsData } = useGetBrandsQuery();
   const { data: storesData } = useGetStoresQuery();
   const [scanCode, setScanCode] = useState(1);
-  let getYear = () => {
-    let currentYear = new Date().getFullYear();
-    return currentYear;
-  };
+  const [previousImage, setPreviousImage] = useState([]);
+  const [image_ids, setImageIds] = useState([]);
+  useEffect(() => {
+    if (product?.product_images) {
+      setPreviousImage(product?.product_images);
+    }
+  }, [product, product?.product_images, refetch]);
+
   const [
     updateProduct,
     {
@@ -58,8 +65,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
   useEffect(() => {
     if (product) {
       setValue("product_name", product?.product_name || "");
-      setValue("product_code", product?.product_code || "");
-      // setValue("product_unit", product?.product_unit || "");
       setValue("product_quantity", product?.product_quantity || "1");
       setValue("product_desc", product?.product_desc || "");
       setValue("product_retail_price", product?.product_retail_price || "");
@@ -67,13 +72,14 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
       setValue("warehouse_id", product?.warehouse_id || "");
       setValue("category_id", product?.category_id || "");
       setValue("brand_id", product?.brand_id || "");
-      setValue("product_img", product?.images || "");
-      setValue("scan_code", product.id?.scan_code || "");
+      setValue("product_images", product?.images || "");
+      setValue("scan_code", product.scan_code || "");
     }
   }, [product, setValue]);
-
+  // console.log(product);
+  const [selectedImages, setSelectedImages] = useState([]);
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     if (!data.product_name) {
       toast.error("Please fill in all required fields.", { id: 1 });
       return;
@@ -81,10 +87,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     const formData = new FormData();
     formData.append("_method", "PUT");
     formData.append("product_name", data?.product_name);
-    // formData.append("product_code", data?.product_code);
     formData.append("product_quantity", data?.product_quantity);
-    // formData.append("product_unit", data?.product_unit);
-    // formData.append("product_desc", data?.product_desc);
     formData.append("product_retail_price", data?.product_retail_price);
     formData.append("product_sale_price", data?.product_sale_price);
     formData.append("product_sale_price", data?.product_sale_price);
@@ -93,15 +96,58 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
     formData.append("brand_id", data?.brand_id);
     formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
-    if (data?.product_img?.length > 0) {
-      formData.append("product_img", data?.product_img[0]);
+    // formData.append("images[]", data?.new_images[0]);
+
+    if (selectedImages.length > 0) {
+      for (let i = 0; i < selectedImages.length; i++) {
+        formData.append("images[]", selectedImages[i]?.file);
+      }
     }
 
+    formData.append("image_ids[]", image_ids);
     updateProduct(formData);
   };
 
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    if (files.length > 5 || selectedImages.length > 5) {
+      return toast.error("Maximum upload 5", {
+        position: "bottom-right",
+      });
+    } else {
+      const imagesArray = Array.from(files).map((file) => {
+        return {
+          url: URL.createObjectURL(file),
+          file: file,
+        };
+      });
+
+      setSelectedImages(imagesArray);
+    }
+  };
+  const handleRemoveImage = (idx) => {
+    if (selectedImages?.length > 0) {
+      const filterImages = selectedImages.filter(
+        (item, index) => index !== idx
+      );
+      setSelectedImages(filterImages);
+    }
+  };
+
+  const handleRemoveImageApi = (id) => {
+    setPreviousImage((prev) => prev.filter((item) => item.id !== id));
+    setImageIds([...image_ids, id]);
+  };
+
+  useEffect(() => {
+    if (updateIsSuccess) {
+      setSelectedImages([]);
+    }
+  }, [updateIsSuccess]);
+
+  // console.log(image_ids)
   return modalIsOpen ? (
-    <div className="fixed inset-0 z-10 overflow-y-auto">
+    <div className="fixed inset-0 z-10 min-w-[1200px] overflow-y-auto">
       <div
         className="fixed inset-0 w-full h-full bg-black opacity-40"
         onClick={() => setModalIsOpen(false)}
@@ -127,23 +173,13 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         {...register("product_name")}
                       />
                     </label>
-                    <label className="input-group">
-                      <span className="font-semibold">
-                        Code<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Product Code"
-                        className="input input-bordered w-full"
-                        {...register("product_code")}
-                      />
-                    </label>
+
                     <label className="input-group">
                       <span className="font-semibold">
                         Retail<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Retail"
                         className="input input-bordered w-full"
                         {...register("product_retail_price")}
@@ -155,40 +191,14 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         Sold<span className="text-red-500 p-0">*</span>
                       </span>
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Sold"
                         className="input input-bordered w-full"
                         {...register("product_sale_price")}
                         min={1}
                       />
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold">
-                        Quantity<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <input
-                        type="number"
-                        placeholder="Quantity"
-                        className="input input-bordered w-full"
-                        {...register("product_quantity")}
-                        min={1}
-                      />
-                    </label> */}
-                    {/* <label className="input-group">
-                      <span className="font-semibold">
-                        Unit<span className="text-red-500 p-0">*</span>
-                      </span>
-                      <select
-                        className="select select-bordered w-full"
-                        {...register("product_unit")}
-                      >
-                        <option>Select Unit</option>
-                        <option value={"pcs"}>Pcs</option>
-                        <option value={"box"}>Box</option>
-                        <option value={"kg"}>KG</option>
-                        <option value={"litre"}>Litre</option>
-                      </select>
-                    </label> */}
+
                     <label className="input-group">
                       <span className="font-semibold">
                         Brands<span className="text-red-500 p-0">*</span>
@@ -213,7 +223,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                       <select
                         className="select select-bordered w-full"
                         required
-                        {...register("store_id")}
+                        {...register("warehouse_id")}
                       >
                         <option value={""}>Select Store Info</option>
                         {storesData?.data?.map((data) => (
@@ -239,66 +249,97 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                         ))}
                       </select>
                     </label>
-                    {/* <label className="input-group">
-                      <span className="font-semibold">Description</span>
-                      <input
-                        type="text"
-                        placeholder="Product Description"
-                        className="input input-bordered w-full"
-                        {...register("product_desc")}
-                      />
-                    </label> */}
-                    <div className="form-control w-full">
-                      <input
-                        type="file"
-                        className="file-input file-input-bordered w-full"
-                        {...register("images")}
-                      />
-                    </div>
+
                     <div className="">
                       <label className="input-group">
                         <span className="font-semibold text-sm">
                           scan code{" "}
                         </span>
                         <input
-                          type="number"
+                          type="text"
                           placeholder="Scan Code"
+                          readOnly={product?.scan_code ? true : false}
                           className="input input-bordered w-full "
                           {...register("scan_code")}
                           onKeyUp={(e) => {
                             setScanCode(e.target.value);
-                            console.log(e.target);
+                            // console.log(e.target);
                           }}
                         />
                       </label>
                       <img
-                        src={`https://barcodeapi.org/api/128/${scanCode} `}
+                        src={`https://barcodeapi.org/api/128/${product?.scan_code} `}
                         className="h-16 float-right my-2"
                         alt=""
                       />
                     </div>
-                  </div>
-                  {/* <div className="mt-3">
-                    <label className="input-group">
-                      <span className="font-semibold text-sm">scan code </span>
+                    <label
+                      htmlFor="image"
+                      className="input-group file-input file-input-bordered"
+                    >
+                      <span className="font-semibold text-sm cursor-pointer">
+                        Upload Image
+                      </span>
                       <input
-                        type="number"
-                        placeholder="Scan Code"
-                        className="input input-bordered "
-                        {...register("scan_code")}
-                        onKeyUp={(e) => {
-                          setScanCode(e.target.value);
-                          console.log(e.target);
-                        }}
+                        className="file-input hidden file-input-bordered w-full"
+                        id="image"
+                        // multiple={true}
+                        multiple
+                        type="file"
+                        {...register("new_images", {
+                          onChange: (e) => handleImageChange(e),
+                        })}
                       />
+                      <p className="py-3 px-2"> {selectedImages.length}</p>
                     </label>
-                    <img
-                      src={`https://barcodeapi.org/api/128/${scanCode} `}
-                      className="h-16 float-right my-2"
-                      alt=""
-                    />
-                  </div> */}
-
+                  </div>
+                  {/* image section update  start  */}
+                  <div>
+                    {/* previous image */}
+                    <h1 className="text-2xl mb-5 mt-5">Previous images </h1>
+                    <div className="grid grid-cols-5">
+                      {previousImage?.map((item) => (
+                        <div className="relative" key={item?.id}>
+                          <img
+                            src={`${
+                              import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT
+                            }${item?.image}`}
+                            alt=""
+                            className="w-[100px] h-[100px]"
+                          />
+                          <div
+                            onClick={() => handleRemoveImageApi(item?.id)}
+                            className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                          >
+                            <ImCross size={12} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* select Images */}
+                    {selectedImages.length > 0 && (
+                      <div>
+                        <h1 className="text-2xl my-5">Selected Image</h1>
+                        <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5">
+                          {selectedImages.map((image, index) => (
+                            <div key={index} className="relative">
+                              <img
+                                key={index}
+                                src={image?.url}
+                                className="w-full h-[100px] object-cover rounded"
+                              />
+                              <div
+                                onClick={() => handleRemoveImage(index)}
+                                className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                              >
+                                <ImCross size={12} />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <button
                       className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
@@ -308,12 +349,13 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product }) => {
                     </button>
                     <input
                       type="submit"
-                      value={"Update"}
+                      value={"Update Product"}
                       className="cursor-pointer w-full mt-2 p-2.5 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
                     />
                   </div>
                 </form>
               </div>
+
               {/* Display error messages */}
               {errorMessages?.map((errorMessage, index) => (
                 <p

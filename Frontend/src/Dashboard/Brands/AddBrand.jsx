@@ -69,16 +69,7 @@ const AddBrand = () => {
     data?.status,
     dispatch,
   ]);
-
-  // Log loading, error, success, and data for debugging.
-  console.log(isLoading, isError, error, isSuccess, data);
-
-  // Get error messages from the error object using UseErrorMessages.
   const errorMessages = UseErrorMessages(error);
-
-  // Log loading, error, success, and data again for debugging.
-  console.log(isLoading, isError, error, isSuccess, data);
-
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Add Brand</h2>
@@ -113,7 +104,7 @@ const AddBrand = () => {
 
       {
         /* Display error messages if any. */
-        errorMessages.map((errorMessage, index) => (
+        errorMessages?.map((errorMessage, index) => (
           <p
             key={index}
             className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"

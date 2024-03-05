@@ -16,15 +16,13 @@ import { useGetDefaultSettingsQuery } from "../../../features/Settings/settingsA
 
 const ProductReport = () => {
   UseTitle("Products Report");
-
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
-
   const { data: productsReport, isLoading } = useGetProductsReportQuery({
-    date,
-    startDate,
-    endDate,
+    // date,
+    // startDate,
+    // endDate,
   });
 
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
@@ -81,7 +79,6 @@ const ProductReport = () => {
     {
       name: "Sold Price (Avg.)",
 
-
       selector: (row) => <>{parseFloat(row?.price).toFixed(2)}</>,
     },
     {
@@ -118,18 +115,20 @@ const ProductReport = () => {
     return <UseLoading />;
   }
 
+  // console.log(filterData)
+
   return (
     <DashboardBackground>
       <TableHeadingTitle>
         Products: {productsReport?.products?.length}
       </TableHeadingTitle>
 
-      <SearchAndAddBtn
+      {/* <SearchAndAddBtn
         btnTitle={"Add Product"}
         btnPath={"/dashboard/product/add"}
         btnIcon={<BiCartAdd size={20} />}
         setFiltering={setFiltering}
-      />
+      /> */}
 
       {/* Download PDF and CSV */}
       <div className="flex lg:flex-row justify-center lg:justify-end gap-2">

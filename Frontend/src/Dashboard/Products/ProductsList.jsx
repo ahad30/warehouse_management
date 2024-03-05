@@ -23,6 +23,7 @@ import Paginator from "../../components/Paginator/Paginator";
 import { useDispatch, useSelector } from "react-redux";
 import { clear, incrementByAmount } from "../../features/Page/pageSlice";
 import useGetCurrentPage from "../../Hooks/useGetCurrentPage";
+import Imageview from "./Imageview";
 const ProductsList = () => {
   UseTitle("Products");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -31,16 +32,19 @@ const ProductsList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const itemsPerPage = 11;
+  const [imageIsOpen, setImageIsOpen] = useState(false);
 
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
   const { data: storesData } = useGetStoresQuery();
+
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
 
   const {
     data: productsData,
     isLoading: productsIsLoading,
     isSuccess: productsIsSuccess,
+    refetch,
   } = useGetProductsQuery({ pageNumber: ActivePageNumber });
 
   const dispatch = useDispatch();
@@ -102,7 +106,12 @@ const ProductsList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
+  console.log(filterData?.data);
 
+  const handleImagesView = (row) => {
+    setProduct(row);
+    setImageIsOpen(true);
+  };
   // SEARCH FILTERING STARTS
   const columns = [
     {
@@ -119,21 +128,34 @@ const ProductsList = () => {
       name: "Image",
       cell: (row) => (
         <img
+          onClick={() => handleImagesView(row)}
           src={
-            row?.product_img
-              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}/${
-                  row?.product_img
+            row?.product_images[0]?.image
+              ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
+                  row?.product_images[0]?.image
                 }`
               : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
           }
-          alt={row?.product_img}
-          className="w-10 h-auto rounded-lg"
+          alt={row?.product_images[0]?.image}
+          className="w-10 h-auto rounded-lg cursor-pointer"
         />
       ),
     },
     {
       name: "Name",
       selector: (row) => <>{row?.product_name}</>,
+    },
+    {
+      name: "Status",
+      selector: (row) => (
+        <>
+          {row?.is_sold == 1 ? (
+            <p className="bg-red-500 text-white p-1 rounded-lg">Sold out</p>
+          ) : (
+            <p className="bg-green-500 text-white p-1 rounded-lg">Available</p>
+          )}
+        </>
+      ),
     },
     {
       name: "Code",
@@ -148,14 +170,7 @@ const ProductsList = () => {
       name: "Sold price",
       selector: (row) => <>{row?.product_sale_price}</>,
     },
-    // {
-    //   name: "Quantity",
-    //   selector: (row) => <>{row?.product_quantity}</>,
-    // },
-    // {
-    //   name: "Unit",
-    //   selector: (row) => <>{row?.product_unit}</>,
-    // },
+
     {
       name: "Category",
       selector: (row) => row?.get_category?.category_name,
@@ -234,7 +249,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-
+  console.log(filterData?.data);
   return (
     <>
       <DashboardBackground>
@@ -247,34 +262,29 @@ const ProductsList = () => {
             setFiltering={setFiltering}
           />
         </div>
-        {/* <SearchAndAddBtn
-          btnTitle={"Add Product"}
-          btnPath={"/dashboard/product/add"}
-          btnIcon={<BiCartAdd size={20} />}
-          setFiltering={setFiltering}
-        /> */}
 
-        {/* Products Table */}
-        {/* {!productsIsSuccess && productsData?.status ? (
-          <p className="text-center text-2xl mt-10">{productsData?.message}</p>
-        ) : (
-          filterData?.length > 0 && ( */}
-        <div>
+        <div className="w-[80vw] overflow-x-scroll ">
           <DataTable
             columns={columns}
             data={filterData?.data}
             keyField="id"
             responsive={false}
           />
-          <br></br>
-          <Paginator links={filterData?.links} />
         </div>
+        <br></br>
+        <Paginator links={filterData?.links} />
         {/* ) */}
         {/* )} */}
         <EditProduct
           product={product}
           modalIsOpen={modalIsOpen}
           setModalIsOpen={setModalIsOpen}
+          refetch={refetch}
+        />
+        <Imageview
+          product={product}
+          modalIsOpen={imageIsOpen}
+          setModalIsOpen={setImageIsOpen}
         />
       </DashboardBackground>
     </>

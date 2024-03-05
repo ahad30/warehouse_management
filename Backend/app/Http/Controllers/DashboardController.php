@@ -9,7 +9,7 @@ use App\Models\Brand;
 use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Customer;
+use App\Models\SaleItem;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -17,38 +17,33 @@ class DashboardController extends Controller
     // index
     public function index()
     {
-        $totalSales = Sale::all();
-        $totalProducts = Product::all();
-        $totalCustomers = Customer::all();
-        $totalUsers = User::all();
-        $totalStore = Store::all();
-        $totalCategory = Category::all();
-        $totalBrand = Brand::all();
-        $totalRevenue = sale::all()->sum('paid_amount');
+        $totalProducts = Product::count();
+        $totalUsers = User::count();
+        $totalSales = Sale::count();
+        $totalRevenue = SaleItem::get('product_sold_price')->sum();
         return response()->json([
             'status' => true,
             'data' => [
-                'totalSales' =>formatLargeNumber( $totalSales->count()),
+                'totalProducts' => formatLargeNumber((int) $totalProducts),
+                'totalUsers' => formatLargeNumber((int) $totalUsers),
+                'totalSales' => formatLargeNumber((int) $totalSales),
                 'totalRevenue' => formatLargeNumber($totalRevenue),
-                'totalProducts' => formatLargeNumber($totalProducts->count()),
-                'totalCustomers' => formatLargeNumber($totalCustomers->count()),
-                'totalUsers' => formatLargeNumber($totalUsers->count()),
-                'totalStore' =>formatLargeNumber( $totalStore->count()),
-                'totalCategory' => formatLargeNumber($totalCategory->count()),
-                'totalBrand' => formatLargeNumber($totalBrand->count()),
+                // 'totalCustomers' => formatLargeNumber($totalCustomers->count()),
+                // 'totalStore' => formatLargeNumber($totalStore->count()),
+                // 'totalCategory' => formatLargeNumber($totalCategory->count()),
+                // 'totalBrand' => formatLargeNumber($totalBrand->count()),
             ]
         ], 200);
     }
 
-    /**
-     *
-     * @return graph of sell left 30 days
-     *
-     */
 
+    /**
+     * graph of sell left 30 days
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function sellGraph()
     {
-
         $beginningDate = Carbon::now()->subDays(31);
         $endingDate = Carbon::now();
         $dayWiseSales = DB::table('sales')
@@ -64,9 +59,9 @@ class DashboardController extends Controller
     }
 
     /**
+     * grap of revenue left 30 days
      *
-     *  @return grap of revenue left 30 days
-     *
+     * @return \Illuminate\Http\Response
      */
     public function revenueGraph()
     {

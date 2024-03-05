@@ -8,10 +8,10 @@ const productApi = apiSlice.injectEndpoints({
         url: "/products/store",
         body: data,
         header: {
-          "Content-type": "application/json",
+          "Content-type": "multipart/form-data",
         },
       }),
-      invalidatesTags: ["Products", "Invoices", "Dashboard"],
+      invalidatesTags: ["Products", "Invoices", "Dashboard", "Pos"],
     }),
     getProducts: builder.query({
       query: ({ pageNumber, query, warehouse_id }) => {
@@ -39,6 +39,19 @@ const productApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Products", "Invoices"],
     }),
+
+    updateProductImage: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/products/update/image/${id}`,
+        method: "POST",
+        // url: `/posts/${id}`,
+        headers: {
+          contentType: "multipart/form-data",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Products", "Invoices"],
+    }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         method: "DELETE",
@@ -56,4 +69,5 @@ export const {
   useGetProductQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useUpdateProductImageMutation,
 } = productApi;

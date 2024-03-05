@@ -2,6 +2,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import InvoicesList from "../../Dashboard/Invoices/InvoicesList";
 import ProductReport from "../../Dashboard/Report/ProductReport/ProductReport";
+import ShiftProduct from "../../Dashboard/Report/ProductReport/ShiftProduct";
+import SaleReport from "../../Dashboard/Report/ProductReport/SaleReport";
 
 const ReportLayout = () => {
   return (
@@ -9,15 +11,19 @@ const ReportLayout = () => {
       <h2 className="text-2xl mt-5 text-center font-semibold">Reports</h2>
       <Tabs>
         <TabList className={`px-5`}>
-          <Tab>Product</Tab>
-          <Tab>Invoice</Tab>
+          {/* <Tab>Product</Tab> */}
+          <Tab>Shift</Tab>
+          <Tab>Sale</Tab>
         </TabList>
 
-        <TabPanel>
+        {/* <TabPanel>
           <ProductReport />
+        </TabPanel> */}
+        <TabPanel>
+          <ShiftProduct></ShiftProduct>
         </TabPanel>
         <TabPanel>
-          <InvoicesList />
+          <SaleReport></SaleReport>
         </TabPanel>
       </Tabs>
     </div>

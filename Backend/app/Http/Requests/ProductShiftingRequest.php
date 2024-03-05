@@ -25,9 +25,9 @@ class ProductShiftingRequest extends FormRequest
     {
         return [
             'from_warehouse_id' => 'required|exists:warehouses,id',
-            'to_warehouse_id' => 'required|exists:warehouses,id',
-            'product_ids' => 'required',
-
+            'to_warehouse_id' => 'required|exists:warehouses,id|different:from_warehouse_id',
+            'product_ids' => 'required|array',
+            'product_ids.*' => 'exists:products,id',
         ];
     }
     public function failedValidation(Validation $validator)
@@ -38,5 +38,4 @@ class ProductShiftingRequest extends FormRequest
             'errors'      => $validator->errors()
         ], 400));
     }
-
 }

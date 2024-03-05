@@ -1,15 +1,25 @@
 import { func } from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const InvoiceDateFiltering = ({
   handleStartDate,
   handleEndDate,
   handleDate,
   handleDateClear,
+  endDate,
+  startDate,
+  conditionalKey,
+  setWareHouseId,
 }) => {
+  const { data: storesData } = useGetStoresQuery();
   // State to track the active button
   const [activeButton, setActiveButton] = useState(null);
-
+  useEffect(() => {
+    if (startDate || endDate) {
+      setActiveButton(null);
+    }
+  }, [startDate, endDate]);
   return (
     <div className="flex items-center flex-col my-5 w-full lg:justify-between xl:flex-row gap-x-1">
       {/* Week, today, and month filtering */}
@@ -55,20 +65,49 @@ const InvoiceDateFiltering = ({
         </button>
       </div>
 
+      {conditionalKey === "shift" && (
+        <div className="w-[400px]">
+          <label className="input-group">
+            <span className="font-semibold text-sm">
+              Warehouse<span className="text-red-500 p-0">*</span>
+            </span>
+            <select
+              // onChange={()=>}
+              onChange={(e) => setWareHouseId(e.target.value)}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value={""}>Select Warehouse Info</option>
+              {storesData?.data?.map((data) => (
+                <option key={data?.id} value={data?.id}>
+                  {data?.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
+
       {/* Date filtering */}
       <div className="grid grid-cols-3 gap-2 mt-2 xl:mt-0">
         <label htmlFor="from">
           <input
             className="input input-sm input-bordered w-full"
             type="date"
-            onChange={(e) => handleStartDate(e.target.value)} // Call handleStartDate when the "From" date changes
+            value={startDate}
+            onChange={(e) => {
+              handleStartDate(e.target.value);
+            }} // Call handleStartDate when the "From" date changes
           />
         </label>
         <label htmlFor="to">
           <input
             className="input input-sm input-bordered w-full"
             type="date"
-            onChange={(e) => handleEndDate(e.target.value)} // Call handleEndDate when the "To" date changes
+            value={endDate}
+            onChange={(e) => {
+              handleEndDate(e.target.value);
+            }} // Call handleEndDate when the "To" date changes
           />
         </label>
         <button
