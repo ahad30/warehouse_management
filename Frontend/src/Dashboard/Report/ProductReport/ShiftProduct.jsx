@@ -11,7 +11,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import ProductsReportAsCSV from "./ProductsReportAsCSV";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import TableHeadingTitle from "../../../components/Reusable/Titles/TableHeadingTitle";
-import { useGetAllSalesReportQuery } from "../../../features/Report/reportApi";
+import { useGetAllShiftReportQuery } from "../../../features/Report/reportApi";
 
 const ShiftProduct = () => {
   UseTitle("Shift Report");
@@ -19,25 +19,28 @@ const ShiftProduct = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
-
-  const { data: allSalesReport, isLoading } = useGetAllSalesReportQuery({
+  const [wareHouseId, setWareHouseId] = useState("");
+  const { data: allShitReport, isLoading } = useGetAllShiftReportQuery({
     end_date: endDate ? endDate : "",
     start_date: startDate ? startDate : "",
     time_range: date ? date : "",
+    warehouse_id: wareHouseId ? wareHouseId : "",
   });
+  // console.log(allShitReport);
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
   useEffect(() => {
-    if (allSalesReport?.data) {
-      const modifiedData = allSalesReport?.data?.map((item, index) => {
+    if (allShitReport?.data) {
+      const modifiedData = allShitReport?.data?.map((item, index) => {
         return {
           "Serial No": index + 1,
-          ...item,
+          "Came Product": item?.cameProducts,
+          Date: item?.date,
         };
       });
       // console.log(modifiedData)
       setFilterData(modifiedData);
     }
-  }, [allSalesReport, allSalesReport?.data]);
+  }, [allShitReport, allShitReport?.data]);
 
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,36 +77,26 @@ const ShiftProduct = () => {
       selector: (row) => <>{row?.["Serial No"]}</>,
     },
     {
-      name: "New Products",
+      name: "Came Products",
       selector: (row) => (
         <>
           <p>
-            {row?.newProducts} <span className="mx-1">Piece</span>
+            {row?.["Came Product"]} <span className="mx-1">Piece</span>
           </p>
         </>
       ),
     },
-    {
-      name: "Sold Products",
-      selector: (row) => (
-        <>
-          <p>
-            {row?.soldProducts} <span className="mx-1">Piece</span>
-          </p>
-        </>
-      ),
-    },
+
     {
       name: "Date",
-      selector: (row) => <>{row?.date}</>,
+      selector: (row) => <>{row?.["Date"]}</>,
     },
   ];
-  // console.log(filterData);
 
-  // ALL INVOICES Loading
   if (isLoading) {
     return <UseLoading />;
   }
+  console.log(filterData)
   return (
     <DashboardBackground>
       <TableHeadingTitle>
@@ -148,6 +141,7 @@ const ShiftProduct = () => {
         startDate={startDate}
         endDate={endDate}
         conditionalKey={"shift"}
+        setWareHouseId={setWareHouseId}
       />
 
       <div className="overflow-x-scroll">
@@ -163,10 +157,13 @@ const ShiftProduct = () => {
           keyField="id"
         />
       </div>
+      {!wareHouseId && (
+        <p className="text-center my-12 text-2xl">
+          Please Select Warehouse First
+        </p>
+      )}
     </DashboardBackground>
   );
 };
 
 export default ShiftProduct;
-
-

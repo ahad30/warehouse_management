@@ -99,9 +99,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     formData.append("image_ids[]", image_ids);
     updateProduct(formData);
   };
-
   const [selectedImages, setSelectedImages] = useState([]);
-
   const handleImageChange = (e) => {
     const files = e.target.files;
     if (files.length > 5) {
@@ -117,7 +115,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       setSelectedImages(imagesArray);
     }
   };
-
   const handleRemoveImage = (idx) => {
     if (selectedImages?.length > 0) {
       const filterImages = selectedImages.filter(
@@ -127,28 +124,12 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     }
   };
 
-  const [updateProductImage] = useUpdateProductImageMutation();
-
-  const handleUpdateImage = async () => {
-    try {
-      const formData = new FormData();
-
-      for (let i = 0; i < selectedImages.length; i++) {
-        formData.append("images[]", selectedImages[i].file);
-      }
-      const res = await updateProductImage({ data: formData, id: product?.id });
-      refetch();
-      setSelectedImages([]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleRemoveImageApi = async (id) => {
+  const handleRemoveImageApi = (id) => {
     setPreviousImage((prev) => prev.filter((item) => item.id !== id));
     setImageIds([...image_ids, id]);
   };
 
+  // console.log(image_ids)
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 min-w-[1200px] overflow-y-auto">
       <div
@@ -286,9 +267,12 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       <input
                         className="file-input hidden file-input-bordered w-full"
                         id="image"
-                        multiple={true}
+                        // multiple={true}
+                        multiple
                         type="file"
-                        {...register("new_images")}
+                        {...register("new_images", {
+                          onChange: (e) => handleImageChange(e),
+                        })}
                       />
                       <p className="py-3 px-2"> {selectedImages.length}</p>
                     </label>
@@ -316,6 +300,29 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                         </div>
                       ))}
                     </div>
+                    {/* select Images */}
+                    {selectedImages.length > 0 && (
+                      <div>
+                        <h1 className="text-2xl my-5">Selected Image</h1>
+                        <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5">
+                          {selectedImages.map((image, index) => (
+                            <div key={index} className="relative">
+                              <img
+                                key={index}
+                                src={image?.url}
+                                className="w-full h-[100px] object-cover rounded"
+                              />
+                              <div
+                                onClick={() => handleRemoveImage(index)}
+                                className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
+                              >
+                                <ImCross size={12} />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <button
@@ -331,49 +338,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                     />
                   </div>
                 </form>
-
-                {/* image section update  end  */}
-                {/* <div className="form-control mt-5">
-                  <div className="flex gap-2">
-                   
-
-                    <div>
-                      <button
-                        onClick={() => handleUpdateImage()}
-                        className="cursor-pointer p-2.5 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
-                      >
-                        Upload
-                      </button>
-                    </div>
-                  </div>
-                  {selectedImages.length > 0 && (
-                    <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5 mt-5">
-                      {selectedImages.map((image, index) => (
-                        <div key={index} className="relative">
-                          <img
-                            key={index}
-                            src={image?.url}
-                            className="w-full h-[100px] object-cover rounded"
-                          />
-                          <div
-                            onClick={() => handleRemoveImage(index)}
-                            className="bg-red-500 p-1 absolute text-white rounded-full top-0 right-30"
-                          >
-                            <ImCross size={12} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="flex justify-end">
-                    <button
-                      className="bg-red-600  mb-8 text-[8px] lg:p-1 flex text-white rounded-md outline-none border ring-offset-2 ring-red-500 focus:ring-2"
-                      onClick={() => setModalIsOpen(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div> */}
               </div>
 
               {/* Display error messages */}

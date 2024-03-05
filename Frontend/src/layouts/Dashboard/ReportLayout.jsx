@@ -11,14 +11,14 @@ const ReportLayout = () => {
       <h2 className="text-2xl mt-5 text-center font-semibold">Reports</h2>
       <Tabs>
         <TabList className={`px-5`}>
-          <Tab>Product</Tab>
+          {/* <Tab>Product</Tab> */}
           <Tab>Shift</Tab>
           <Tab>Sale</Tab>
         </TabList>
 
-        <TabPanel>
+        {/* <TabPanel>
           <ProductReport />
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel>
           <ShiftProduct></ShiftProduct>
         </TabPanel>

@@ -14,6 +14,8 @@ import UseTitle from "../../../components/Reusable/UseTitle/UseTitle";
 import { useGetAllSalesReportQuery } from "../../../features/Report/reportApi";
 
 const SaleReport = () => {
+
+  
   UseTitle("Products Report");
 
   const [startDate, setStartDate] = useState(null);

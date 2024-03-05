@@ -10,6 +10,7 @@ const InvoiceDateFiltering = ({
   endDate,
   startDate,
   conditionalKey,
+  setWareHouseId,
 }) => {
   const { data: storesData } = useGetStoresQuery();
   // State to track the active button
@@ -72,10 +73,11 @@ const InvoiceDateFiltering = ({
             </span>
             <select
               // onChange={()=>}
+              onChange={(e) => setWareHouseId(e.target.value)}
               className="select select-bordered w-full"
               required
             >
-              {/* <option value={""}>Select Warehouse Info</option> */}
+              <option value={""}>Select Warehouse Info</option>
               {storesData?.data?.map((data) => (
                 <option key={data?.id} value={data?.id}>
                   {data?.name}
