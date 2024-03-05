@@ -49,9 +49,8 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
-  UseErrorMessages(error)
-  useShowAsyncMessage(isLoading,isError, error , isSuccess , data)
-
+  UseErrorMessages(error);
+  useShowAsyncMessage(isLoading, isError, error, isSuccess, data);
 
   // useEffect(() => {
   //   if (isLoading) {
@@ -91,7 +90,6 @@ const AddProduct = () => {
       const imagesArray = Array.from(files).map((file) =>
         URL.createObjectURL(file)
       );
-
       setSelectedImages(imagesArray);
     }
   };

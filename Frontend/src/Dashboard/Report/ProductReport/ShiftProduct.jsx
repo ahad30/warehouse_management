@@ -11,44 +11,52 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import ProductsReportAsCSV from "./ProductsReportAsCSV";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import TableHeadingTitle from "../../../components/Reusable/Titles/TableHeadingTitle";
+import { useGetAllSalesReportQuery } from "../../../features/Report/reportApi";
 
 const ShiftProduct = () => {
-  UseTitle("Products Report");
+  UseTitle("Shift Report");
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(null);
 
-  const { data: productsReport, isLoading } = useGetProductsReportQuery({
-    // date,
-    // startDate,
-    // endDate,
+  const { data: allSalesReport, isLoading } = useGetAllSalesReportQuery({
+    end_date: endDate ? endDate : "",
+    start_date: startDate ? startDate : "",
+    time_range: date ? date : "",
   });
-
   const { data: defaultSettings } = useGetDefaultSettingsQuery();
-
   useEffect(() => {
-    setFilterData(productsReport?.products);
-  }, [productsReport?.products, productsReport]);
+    if (allSalesReport?.data) {
+      const modifiedData = allSalesReport?.data?.map((item, index) => {
+        return {
+          "Serial No": index + 1,
+          ...item,
+        };
+      });
+      // console.log(modifiedData)
+      setFilterData(modifiedData);
+    }
+  }, [allSalesReport, allSalesReport?.data]);
 
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 11;
-
+  // console.log(filterData);
   const handleStartDate = (date) => {
     setStartDate(date);
-    setDate(null);
+    setDate("custom");
   };
 
   const handleEndDate = (date) => {
     setEndDate(date);
-    setDate(null);
+    setDate("custom");
   };
 
   const handleDate = (date) => {
     setDate(date);
-    setStartDate(null);
-    setEndDate(null);
+    setStartDate("");
+    setEndDate("");
   };
 
   const handleDateClear = () => {
@@ -57,99 +65,79 @@ const ShiftProduct = () => {
     setDate(null);
   };
 
-  //  search filtering
-  const setFiltering = (search) => {
-    const filteredData = productsReport?.products?.filter((item) =>
-      item?.product_name?.toLowerCase()?.includes(search?.toLowerCase())
-    );
-    if (filteredData) {
-      setFilterData(filteredData);
-    }
-  };
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const columns = [
     {
-      name: "Product Name",
-      selector: (row) => <>{row?.product_name}</>,
-      sortable: true,
+      name: "Serial no",
+      selector: (row) => <>{row?.["Serial No"]}</>,
     },
     {
-      name: "Sold Price (Avg.)",
-
-      selector: (row) => <>{parseFloat(row?.price).toFixed(2)}</>,
-    },
-    {
-      name: "Quantity",
-      selector: (row) => <>{row?.quantity}</>,
-      sortable: true,
-    },
-    {
-      name: `${defaultSettings?.settings?.taxation} (Avg.)`,
-
-      selector: (row) => <>{parseFloat(row?.average_vat).toFixed(2)}</>,
-    },
-    {
-      name: "Total",
+      name: "New Products",
       selector: (row) => (
         <>
-          {(
-            parseFloat(row?.total_sold_price_without_vat) +
-            (parseFloat(row?.total_sold_price_without_vat) *
-              parseFloat(row?.average_vat)) /
-              100
-          ).toFixed(2)}
+          <p>
+            {row?.newProducts} <span className="mx-1">Piece</span>
+          </p>
         </>
       ),
     },
     {
-      name: "Last Sale Date",
-      selector: (row) => <>{row?.last_sale_date}</>,
+      name: "Sold Products",
+      selector: (row) => (
+        <>
+          <p>
+            {row?.soldProducts} <span className="mx-1">Piece</span>
+          </p>
+        </>
+      ),
+    },
+    {
+      name: "Date",
+      selector: (row) => <>{row?.date}</>,
     },
   ];
+  // console.log(filterData);
 
   // ALL INVOICES Loading
   if (isLoading) {
     return <UseLoading />;
   }
-
-  // console.log(filterData)
   return (
     <DashboardBackground>
       <TableHeadingTitle>
-        Products: {productsReport?.products?.length}
+        {/* Products: {productsReport?.products?.length} */}
       </TableHeadingTitle>
 
       {/* <SearchAndAddBtn
-      btnTitle={"Add Product"}
-      btnPath={"/dashboard/product/add"}
-      btnIcon={<BiCartAdd size={20} />}
-      setFiltering={setFiltering}
-    /> */}
+        btnTitle={"Add Product"}
+        btnPath={"/dashboard/product/add"}
+        btnIcon={<BiCartAdd size={20} />}
+        setFiltering={setFiltering}
+      /> */}
 
       {/* Download PDF and CSV */}
       <div className="flex lg:flex-row justify-center lg:justify-end gap-2">
         {/* Invoices download as CSV file */}
         <ProductsReportAsCSV data={filterData} />
         {/* Invoices download as PDF file */}
-        <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
-          <PDFDownloadLink
-            document={
-              <ProductsReportAsPDF
-                data={filterData}
-                startDate={startDate}
-                endDate={endDate}
-              />
-            }
-            fileName="Products Report"
-          >
-            <span className="flex justify-center items-center gap-x-2">
-              <BsFiletypePdf size={20} /> Download as PDF
-            </span>
-          </PDFDownloadLink>
-        </button>
+        {/* <button className="border border-[#0369A1] text-[#0369A1] px-2 py-1 text-sm rounded-md w-full sm:w-fit cursor-pointer">
+        <PDFDownloadLink
+          document={
+            <ProductsReportAsPDF
+              data={filterData}
+              startDate={startDate}
+              endDate={endDate}
+            />
+          }
+          fileName="Products Report"
+        >
+          <span className="flex justify-center items-center gap-x-2">
+            <BsFiletypePdf size={20} /> Download as PDF
+          </span>
+        </PDFDownloadLink>
+      </button> */}
       </div>
 
       <InvoiceDateFiltering
@@ -157,6 +145,9 @@ const ShiftProduct = () => {
         handleEndDate={handleEndDate}
         handleDate={handleDate}
         handleDateClear={handleDateClear}
+        startDate={startDate}
+        endDate={endDate}
+        conditionalKey={"shift"}
       />
 
       <div className="overflow-x-scroll">
@@ -177,3 +168,5 @@ const ShiftProduct = () => {
 };
 
 export default ShiftProduct;
+
+
