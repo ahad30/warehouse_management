@@ -32,14 +32,14 @@ class CategoryRequest extends FormRequest
                 'description' => 'nullable',
             ];
         }
-
+        info($this->route('category'));
         // If the request method is put
         if ($this->isMethod('put')) {
             return [
                 'category_name' => [
                     'required',
                     'max:255',
-                    Rule::unique('categories')->ignore($this->route('category')),
+                    Rule::unique('categories')->ignore($this->id),
                 ],
                 'new_image' => 'sometimes|mimes:jpg,jpeg,png',
                 'description' => 'nullable',
@@ -49,9 +49,9 @@ class CategoryRequest extends FormRequest
     public function failedValidation(Validation $validator)
     {
         throw new HttpResponseException(response()->json([
-            'status'   => false,
-            'message'   => 'Validation Error',
-            'errors'      => $validator->errors()
+            'status' => false,
+            'message' => 'Validation Error',
+            'errors' => $validator->errors()
         ], 400));
     }
 }
