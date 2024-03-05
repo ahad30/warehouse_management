@@ -116,6 +116,7 @@ const TransferProduct = () => {
     dispatch,
   ]);
 
+  console.log(productOptions)
   return (
     <DashboardBackground>
       <h2 className="text-xl my-5 font-semibold">Transfer Product</h2>
