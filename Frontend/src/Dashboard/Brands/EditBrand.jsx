@@ -28,13 +28,12 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
     formData.append("_method", "PUT");
     formData.append("brand_name", data?.brand_name);
     formData.append("id", brand.id);
- 
+
     if (data?.brand_img.length > 0) {
       formData.append("brand_img", data?.brand_img[0]);
     }
-    const brandId = brand?.id
-    updateBrand({data:formData,id:brandId});
-    
+    const brandId = brand?.id;
+    updateBrand({ data: formData, id: brandId });
   };
 
   const errorMessages = UseErrorMessages(updateError);
