@@ -16,7 +16,19 @@ class HistoryRepositories implements HistoryServiceInterface
         /**FIltering */
         $inputQuery = $request->input('query');
         if ($inputQuery) {
-            $products = Product::where('scan_code', 'like', "%" . $inputQuery . "%")->orWhere('product_name', 'like', "%" . $inputQuery . "%")->get();
+            $products = Product::with('getBrand', 'getCategory')
+                ->where(function ($query) use ($inputQuery) {
+                    $query->where('scan_code', 'like', "%" . $inputQuery . "%")
+                        ->orWhere('product_name', 'like', "%" . $inputQuery . "%")
+                        ->orWhereHas('getBrand', function ($query) use ($inputQuery) {
+                            $query->where('brand_name', 'like', "%" . $inputQuery . "%");
+                        })
+                        ->orWhereHas('getCategory', function ($query) use ($inputQuery) {
+                            $query->where('category_name', 'like', "%" . $inputQuery . "%");
+                        });
+                })
+                ->get();
+
             foreach ($products as $product) {
                 $query = $query->orWhere('product_id', $product->id);
             }
