@@ -9,6 +9,7 @@ import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/Use
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { FaStore } from "react-icons/fa";
 import { useAddStoreMutation } from "../../features/Store/storeApi";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const AddStore = () => {
   UseTitle("Add Warehouse");
@@ -35,8 +36,9 @@ const AddStore = () => {
     // console.log(data);
   };
 
-  const errorMessages = UseErrorMessages(error);
-
+  // const errorMessages = UseErrorMessages(error);
+  UseErrorMessages(error);
+  useShowAsyncMessage(isLoading, isError, error, isSuccess, data);
   useEffect(() => {
     if (isLoading) {
       toast.loading(<p>Loading...</p>, { id: 1 });
@@ -181,14 +183,14 @@ const AddStore = () => {
         />
       </form>
       {/* Display error messages */}
-      {errorMessages?.map((errorMessage, index) => (
+      {/* {errorMessages?.map((errorMessage, index) => (
         <p
           key={index}
           className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
         >
           {errorMessage}
         </p>
-      ))}
+      ))} */}
     </DashboardBackground>
   );
 };
