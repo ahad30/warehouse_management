@@ -14,12 +14,11 @@ class HistoryRepositories implements HistoryServiceInterface
     {
         $query = History::latest()->with('products');
 
-        if ($request->input('query')) {
+        if ($request->input('query') || $request->input('category_id') || $request->input('brand_id')) {
             /**FIltering */
             $products = $this->findProduct($request, $query);
             if (count($products) > 0) {
                 foreach ($products as $product) {
-
                     $query = $query->where('product_id', $product->id);
                 }
             } else {
@@ -27,6 +26,19 @@ class HistoryRepositories implements HistoryServiceInterface
             }
         }
 
+        /** Filter with time */
+        if ($request->starting_date && $request->ending_date) {
+            $query = $query->whereBetween('created_at', [$request->starting_date, $request->ending_date]);
+        }
+        /** from where house */
+        if ($request->from_warehouse) {
+            $query = $query->where('from_warehouse_id', $request->from_warehouse);
+        }
+
+        /**to warehouse */
+        if ($request->to_warehouse) {
+            $query = $query->where('to_warehouse_id', $request->to_warehouse);
+        }
 
         $query = $query->paginate(15);
 
