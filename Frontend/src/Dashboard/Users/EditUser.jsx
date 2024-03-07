@@ -7,6 +7,7 @@ import {
   useUpdateUserMutation,
 } from "../../features/User/userApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -22,28 +23,38 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
       data: updateData,
     },
   ] = useUpdateUserMutation();
-
-  useEffect(() => {
-    if (updateIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
-    if (updateIsError) {
-      toast.error(updateError?.data?.message || updateError?.status, { id: 1 });
-    }
-
-    if (updateIsSuccess) {
-      toast.success(updateData?.message, { id: 1 });
-      setModalIsOpen(false);
-    }
-  }, [
+  UseErrorMessages(updateError);
+  useShowAsyncMessage(
     updateIsLoading,
     updateIsError,
     updateError,
     updateIsSuccess,
-    updateData?.message,
-    setModalIsOpen,
-  ]);
+    updateData,
+    "/dashboard/user",
+    setModalIsOpen
+  );
+
+  // useEffect(() => {
+  //   if (updateIsLoading) {
+  //     toast.loading("Loading...", { id: 1 });
+  //   }
+
+  //   if (updateIsError) {
+  //     toast.error(updateError?.data?.message || updateError?.status, { id: 1 });
+  //   }
+
+  //   if (updateIsSuccess) {
+  //     toast.success(updateData?.message, { id: 1 });
+  //     setModalIsOpen(false);
+  //   }
+  // }, [
+  //   updateIsLoading,
+  //   updateIsError,
+  //   updateError,
+  //   updateIsSuccess,
+  //   updateData?.message,
+  //   setModalIsOpen,
+  // ]);
 
   // Set default values using setValue from react-hook-form
   useEffect(() => {
@@ -71,7 +82,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
   };
 
   // Get error messages
-  const errorMessages = UseErrorMessages(updateError);
 
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -124,16 +134,6 @@ const EditUser = ({ modalIsOpen, setModalIsOpen, user }) => {
                   </div>
                 </form>
               </div>
-              {/* Display error messages */}
-              {updateIsError &&
-                errorMessages?.map((errorMessage, index) => (
-                  <p
-                    key={index}
-                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                  >
-                    {errorMessage}
-                  </p>
-                ))}
             </div>
           </div>
         </div>
