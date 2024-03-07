@@ -2,12 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\HistoryServiceInterface;
 use App\Models\History;
-use App\Models\Product;
-use App\Repositories\Filters\{NameFilter, BrandFilter, CategoryFilter, TimeFilter, WarehouseFilter};
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use App\Interfaces\HistoryServiceInterface;
+use App\Repositories\Filters\{NameFilter, BrandFilter, WarehouseFilter, CategoryFilter, TimeFilter};
 
 class HistoryRepositories implements HistoryServiceInterface
 {
