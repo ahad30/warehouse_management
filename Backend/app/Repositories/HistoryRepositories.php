@@ -20,14 +20,14 @@ class HistoryRepositories implements HistoryServiceInterface
                 NameFilter::class,
                 BrandFilter::class,
                 CategoryFilter::class,
-                TimeFilter::class,
                 WarehouseFilter::class,
+                TimeFilter::class,
             ])
             ->thenReturn()
             ->paginate(15);
 
         return [
-            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user'),
+            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user', 'products.getBrand', 'products.getCategory'),
             'paginator' => $histories->toArray()['links'],
         ];
     }
