@@ -50,7 +50,7 @@ const HistoryList = () => {
     setStartDate("")
     setEndDate("")
   };
-console.log(filterData)
+console.log(historiesData)
   return (
     <>
       <DashboardBackground>
