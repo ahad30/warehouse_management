@@ -27,7 +27,7 @@ class HistoryRepositories implements HistoryServiceInterface
             ->paginate(15);
 
         return [
-            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user'),
+            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user', 'products.getBrand', 'products.getCategory'),
             'paginator' => $histories->toArray()['links'],
         ];
     }
