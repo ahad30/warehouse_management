@@ -44,7 +44,9 @@ const SearchProducts = () => {
   return (
     <DashboardBackground>
       <div className="mt-10">
-        <p className="text-center font-semibold text-lg mb-3 ">
+        {/* header part start */}
+       <div>
+       <p className="text-center font-semibold text-lg mb-3 ">
           Product Search
         </p>
         <form
@@ -103,6 +105,8 @@ const SearchProducts = () => {
             <span className="sr-only">Search</span>
           </button>
         </form>
+       </div>
+        {/* header part end */}
         {product ? (
           <div className="  mt-10">
             <div>
@@ -163,6 +167,9 @@ const SearchProducts = () => {
         )}
       </div>
     </DashboardBackground>
+
+  
+
   );
 };
 
