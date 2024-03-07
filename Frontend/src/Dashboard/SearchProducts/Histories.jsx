@@ -71,6 +71,7 @@ const Histories = ({ histories, extraData }) => {
         </tbody>
       </table>
     </div>
+
   );
 };
 

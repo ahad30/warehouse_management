@@ -2,11 +2,22 @@ import { func, node, string } from "prop-types";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
+const SearchAndAddBtn = ({
+  setFiltering,
+  btnTitle,
+  btnIcon,
+  btnPath,
+  conditionalKey,
+  setEndDate,
+  endDate,
+  setStartDate,
+  startDate,
+  handleResetAll,
+}) => {
   const { user } = useSelector((state) => state.auth);
   return (
     <>
-      <div className="flex justify-between my-5 w-full gap-x-2 border bg-[#F3F4F6] border-gray-300 rounded-lg p-3">
+      <div className="flex justify-between items-center my-5 w-full gap-x-2 border bg-[#F3F4F6] border-gray-300 rounded-lg p-3">
         <input
           type="text"
           className="input input-bordered rounded-lg mb-3 lg:mb-0 w-full sm:w-1/2 md:w-1/3"
@@ -31,6 +42,34 @@ const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
                 </span>
               </Link>
             )}
+
+        {/* Date filtering */}
+        {conditionalKey === "history" && (
+          <div className="grid grid-cols-3 gap-2 mt-2 xl:mt-0">
+            <label htmlFor="from">
+              <input
+                className="input input-sm input-bordered w-full"
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </label>
+            <label htmlFor="to">
+              <input
+                className="input input-sm input-bordered w-full"
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </label>
+            <button
+              onClick={() => handleResetAll()}
+              className="flex btn-sm justify-center items-center  text-red-600 bg-white rounded-md text-sm border border-red-600 font-bold"
+            >
+              Reset all
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
@@ -41,6 +80,7 @@ SearchAndAddBtn.propTypes = {
   btnTitle: string,
   btnPath: string,
   btnIcon: node,
+  conditionalKey: string,
 };
 
 export default SearchAndAddBtn;
