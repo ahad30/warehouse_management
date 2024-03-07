@@ -1,4 +1,5 @@
 import { func, node, string } from "prop-types";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -15,6 +16,25 @@ const SearchAndAddBtn = ({
   handleResetAll,
 }) => {
   const { user } = useSelector((state) => state.auth);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (startDate && !endDate) {
+      setError({
+        name: "End",
+        message: "Please select To date",
+      });
+    } else if (endDate && !startDate) {
+      setError({
+        name: "From",
+        message: "Please select From date",
+      });
+    }
+    else {
+      setError("")
+    }
+  }, [startDate, endDate]);
+  
   return (
     <>
       <div className="flex justify-between items-center my-5 w-full gap-x-2 border bg-[#F3F4F6] border-gray-300 rounded-lg p-3">
@@ -53,6 +73,9 @@ const SearchAndAddBtn = ({
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
+              {error?.name === "From" && (
+                <p className="text-red-500 my-1">{error?.message || ""}</p>
+              )}
             </label>
             <label htmlFor="to">
               <input
@@ -61,6 +84,9 @@ const SearchAndAddBtn = ({
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />
+              {error?.name === "End" && (
+                <p className="text-red-500 my-1">{error?.message || ""}</p>
+              )}
             </label>
             <button
               onClick={() => handleResetAll()}
@@ -81,6 +107,11 @@ SearchAndAddBtn.propTypes = {
   btnPath: string,
   btnIcon: node,
   conditionalKey: string,
+  setEndDate: func,
+  endDate: string,
+  setStartDate: func,
+  startDate: string,
+  handleResetAll: func,
 };
 
 export default SearchAndAddBtn;

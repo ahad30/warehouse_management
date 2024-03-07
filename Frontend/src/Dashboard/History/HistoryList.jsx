@@ -16,16 +16,24 @@ const HistoryList = () => {
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
   const [categoyrId, setCategoryId] = useState("");
   const [brandId, setBrandId] = useState("");
-  const [productId, setProductId] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [fromWarehouse, setFromWarehouse] = useState("");
   const [toWarehouse, setToWarehouse] = useState("");
   const { data: historiesData, isLoading: historiesIsLoading } =
-    useGetHistoryQuery({ pageNumber: ActivePageNumber, query: query });
+    useGetHistoryQuery({
+      pageNumber: ActivePageNumber,
+      query: query,
+      brand_id: brandId ? brandId : "",
+      category_id: categoyrId ? categoyrId : "",
+      to_warehouse: toWarehouse ? toWarehouse : "",
+      starting_date: startDate ? startDate : "",
+      ending_date: endDate ? endDate : "",
+      from_warehouse: fromWarehouse ? fromWarehouse : "",
+    });
   useEffect(() => {
     setFilterData(historiesData?.data?.histories);
-  }, [historiesData?.data]);
+  }, [historiesData?.data, historiesData, historiesData?.data?.length]);
 
   // ALL CATEGORIES
   if (historiesIsLoading) {
@@ -37,14 +45,12 @@ const HistoryList = () => {
       setQuery(val);
     }
   };
-  // console.log(filterData)
+ 
   const handleResetAll = () => {
-    // setBrandId(null)
-    // setCategoryId(null)
-    // setEndDate(null)
-    // set(null)
+    setStartDate("")
+    setEndDate("")
   };
-
+console.log(filterData)
   return (
     <>
       <DashboardBackground>
