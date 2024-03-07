@@ -29,12 +29,11 @@ const SearchAndAddBtn = ({
         name: "From",
         message: "Please select From date",
       });
-    }
-    else {
-      setError("")
+    } else {
+      setError("");
     }
   }, [startDate, endDate]);
-  
+
   return (
     <>
       <div className="flex justify-between items-center my-5 w-full gap-x-2 border bg-[#F3F4F6] border-gray-300 rounded-lg p-3">
@@ -52,7 +51,7 @@ const SearchAndAddBtn = ({
           : btnTitle && (
               <Link
                 to={btnPath}
-                className="bg-red-500 grid place-content-center text-white focus:ring-1  my-1 lg:my-0 px-3 rounded-md"
+                className="bg-red-500 grid place-content-center text-white focus:ring-1  py-3 px-3 rounded-md"
               >
                 <span className="flex items-center gap-x-2">
                   <span>{btnIcon}</span>
