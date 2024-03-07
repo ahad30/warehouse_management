@@ -47,7 +47,7 @@ class ShiftingReport implements ReportInterface
     {
         $query = DB::table('histories')->where('to_warehouse_id', $warehouseId);
         $query = $this->generateQuery($timeRange, $query);
-        $products = $query->selectRaw('COUNT(*) as cameProducts,DATE(created_at) as date')->groupBy(DB::raw('DATE(created_at)'))->get();
+        $products = $query->selectRaw('COUNT(*) as incomingProducts,DATE(created_at) as date')->groupBy(DB::raw('DATE(created_at)'))->get();
         return $products;
     }
     /**
