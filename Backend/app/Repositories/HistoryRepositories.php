@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\History;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use App\Interfaces\HistoryServiceInterface;
