@@ -5,8 +5,9 @@ namespace App\Repositories;
 use App\Interfaces\HistoryServiceInterface;
 use App\Models\History;
 use App\Models\Product;
+use App\Repositories\Filters\{NameFilter, BrandFilter, CategoryFilter, TimeFilter, WarehouseFilter};
 use Illuminate\Http\Request;
-
+use Illuminate\Pipeline\Pipeline;
 
 class HistoryRepositories implements HistoryServiceInterface
 {
@@ -14,78 +15,21 @@ class HistoryRepositories implements HistoryServiceInterface
     {
         $query = History::latest()->with('products');
 
-        if ($request->input('query') || $request->input('category_id') || $request->input('brand_id')) {
-            /**FIltering */
-            $products = $this->findProduct($request, $query);
-            if (count($products) > 0) {
-                foreach ($products as $product) {
-                    $query = $query->where('product_id', $product->id);
-                }
-            } else {
-                $query = $query->where('product_id', 0);
-            }
-        }
-
-        /** Filter with time */
-        if ($request->starting_date && $request->ending_date) {
-            $query = $query->whereBetween('created_at', [$request->starting_date, $request->ending_date]);
-        }
-        /** from where house */
-        if ($request->from_warehouse) {
-            $query = $query->where('from_warehouse_id', $request->from_warehouse);
-        }
-
-        /**to warehouse */
-        if ($request->to_warehouse) {
-            $query = $query->where('to_warehouse_id', $request->to_warehouse);
-        }
-
-        $query = $query->paginate(15);
-
-        $pagination = $query->toArray()['links'];
-        $histories = $query->load('fromWarehouseId', 'toWarehouseId', 'user');
+        $histories = app(Pipeline::class)
+            ->send($query)
+            ->through([
+                NameFilter::class,
+                BrandFilter::class,
+                CategoryFilter::class,
+                TimeFilter::class,
+                WarehouseFilter::class,
+            ])
+            ->thenReturn()
+            ->paginate(15);
 
         return [
-            'histories' => $histories,
-            'paginator' => $pagination
+            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user'),
+            'paginator' => $histories->links()->toArray()
         ];
-    }
-
-    private function findProduct(Request $request, $query)
-    {
-
-        $products = Product::where('scan_code', $request->input('query'));
-        /** Find by name */
-        $products = $this->findByName($request->input('query'), $products);
-        /** Find by brand */
-        $products = $this->findByBrand($request->input('brand_id'), $products);
-        /**Find by category */
-        $products = $this->findByCategory($request->input('category_id'), $products);
-        $products =  $products->get();
-
-        return $products;
-    }
-    private function findByName($inputQuery, $query)
-    {
-        if ($inputQuery) {
-            $query = $query->where('product_name', 'like', "%" . $inputQuery . "%");
-        }
-
-        return $query;
-    }
-
-    private function findByBrand($brandId, $query)
-    {
-        if ($brandId) {
-            $query = $query->where('brand_id', $brandId);
-        }
-        return $query;
-    }
-    private function findByCategory($categoryId, $query)
-    {
-        if ($categoryId) {
-            $query = $query->where('category_id',  $categoryId);
-        }
-        return $query;
     }
 }
