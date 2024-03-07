@@ -13,6 +13,6 @@ class HistoryTableSeeder extends Seeder
      */
     public function run(): void
     {
-        History::factory(20)->create();
+        History::factory(10)->create();
     }
 }

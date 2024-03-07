@@ -12,6 +12,7 @@ import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import { set } from "date-fns";
 import { ImCross } from "react-icons/im";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   const { register, handleSubmit, setValue } = useForm();
   const { data: categoriesData } = useGetCategoriesQuery();
@@ -37,29 +38,16 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     },
   ] = useUpdateProductMutation();
 
-  useEffect(() => {
-    if (updateIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
-    if (updateIsError) {
-      toast.error(updateError?.data?.message || updateError?.status, { id: 1 });
-    }
-
-    if (updateIsSuccess) {
-      toast.success(updateData?.message, { id: 1 });
-      setModalIsOpen(false);
-    }
-  }, [
+  UseErrorMessages(updateError);
+  useShowAsyncMessage(
     updateIsLoading,
     updateIsError,
     updateError,
     updateIsSuccess,
-    updateData?.message,
-    setModalIsOpen,
-  ]);
-
-  const errorMessages = UseErrorMessages(updateError);
+    updateData,
+    "/dashboard/product",
+    setModalIsOpen
+  );
 
   // Set default values using setValue from react-hook-form
   useEffect(() => {
@@ -145,7 +133,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     }
   }, [updateIsSuccess]);
 
-  // console.log(image_ids)
   return modalIsOpen ? (
     <div className="fixed inset-0 z-10 min-w-[1200px] overflow-y-auto">
       <div
@@ -355,16 +342,6 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                   </div>
                 </form>
               </div>
-
-              {/* Display error messages */}
-              {errorMessages?.map((errorMessage, index) => (
-                <p
-                  key={index}
-                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                >
-                  {errorMessage}
-                </p>
-              ))}
             </div>
           </div>
         </div>

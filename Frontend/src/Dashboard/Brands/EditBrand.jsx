@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useUpdateBrandMutation } from "../../features/Brand/brandApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
   const { register, handleSubmit, setValue } = useForm();
@@ -28,38 +29,24 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
     formData.append("_method", "PUT");
     formData.append("brand_name", data?.brand_name);
     formData.append("id", brand.id);
- 
+
     if (data?.brand_img.length > 0) {
       formData.append("brand_img", data?.brand_img[0]);
     }
-    const brandId = brand?.id
-    updateBrand({data:formData,id:brandId});
-    
+    const brandId = brand?.id;
+    updateBrand({ data: formData, id: brandId });
   };
 
-  const errorMessages = UseErrorMessages(updateError);
-
-  useEffect(() => {
-    if (updateIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
-    if (updateIsError) {
-      toast.error(updateError?.data?.message || updateError?.status, { id: 1 });
-    }
-
-    if (updateIsSuccess) {
-      toast.success(updateData?.message, { id: 1 });
-      setModalIsOpen(false);
-    }
-  }, [
+  UseErrorMessages(updateError);
+  useShowAsyncMessage(
     updateIsLoading,
     updateIsError,
     updateError,
     updateIsSuccess,
-    updateData?.message,
-    setModalIsOpen,
-  ]);
+    updateData,
+    "/dashboard/brand",
+    setModalIsOpen
+  );
 
   // Set default values using setValue from react-hook-form
   useEffect(() => {
@@ -120,15 +107,6 @@ const EditBrand = ({ modalIsOpen, setModalIsOpen, brand }) => {
                   </div>
                 </form>
               </div>
-              {/* Display error messages */}
-              {errorMessages.map((errorMessage, index) => (
-                <p
-                  key={index}
-                  className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                >
-                  {errorMessage}
-                </p>
-              ))}
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const AddUser = () => {
   UseTitle("Add User"); // Set the page title
@@ -60,31 +61,16 @@ const AddUser = () => {
   };
 
   // Custom hook to retrieve and display error messages
-  const errorMessages = UseErrorMessages(error);
 
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 }); // Display a loading toast
-    }
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 }); // Display an error toast message
-    }
-    if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 }); // Display a success toast message
-      return navigate("/dashboard/user"); // Redirect to the user dashboard on success
-    }
-  }, [
+  UseErrorMessages(error);
+  useShowAsyncMessage(
     isLoading,
     isError,
     error,
     isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
-
+    data,
+    "/dashboard/user"
+  );
   return (
     <>
       <DashboardBackground>
@@ -258,16 +244,6 @@ const AddUser = () => {
             isLoading={isLoading}
           />
         </form>
-
-        {/* Display error messages, if any */}
-        {errorMessages?.map((errorMessage, index) => (
-          <p
-            key={index}
-            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-          >
-            {errorMessage}
-          </p>
-        ))}
       </DashboardBackground>
     </>
   );

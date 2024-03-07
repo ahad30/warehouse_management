@@ -2,33 +2,33 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\HistoryServiceInterface;
 use App\Models\History;
-use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Pipeline\Pipeline;
+use App\Interfaces\HistoryServiceInterface;
+use App\Repositories\Filters\{NameFilter, BrandFilter, WarehouseFilter, CategoryFilter, TimeFilter};
 
 class HistoryRepositories implements HistoryServiceInterface
 {
     public function getHistory(Request $request): array
     {
-        $query = History::latest()->with('products.getBrand', 'products.getCategory');
-        /**FIltering */
-        $inputQuery = $request->input('query');
-        if ($inputQuery) {
-            $products = Product::where('scan_code', 'like', "%" . $inputQuery . "%")->orWhere('product_name', 'like', "%" . $inputQuery . "%")->get();
-            foreach ($products as $product) {
-                $query = $query->orWhere('product_id', $product->id);
-            }
-        }
-        $query = $query->paginate(15);
+        $query = History::latest()->with('products');
 
-        $pagination = $query->toArray()['links'];
-        $histories = $query->load('fromWarehouseId', 'toWarehouseId', 'user');
+        $histories = app(Pipeline::class)
+            ->send($query)
+            ->through([
+                NameFilter::class,
+                BrandFilter::class,
+                CategoryFilter::class,
+                TimeFilter::class,
+                WarehouseFilter::class,
+            ])
+            ->thenReturn()
+            ->paginate(15);
 
         return [
-            'histories' => $histories,
-            'paginator' => $pagination
+            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user'),
+            'paginator' => $histories->toArray()['links'],
         ];
     }
 }

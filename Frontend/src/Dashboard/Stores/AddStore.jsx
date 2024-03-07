@@ -1,10 +1,8 @@
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import SubmitButton from "../../components/Reusable/Buttons/SubmitButton";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { FaStore } from "react-icons/fa";
@@ -14,8 +12,6 @@ import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/u
 const AddStore = () => {
   UseTitle("Add Warehouse");
   const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [selectedImages, setSelectedImages] = useState([]);
   const [addStore, { isLoading, isError, error, isSuccess, data }] =
     useAddStoreMutation();
@@ -38,31 +34,15 @@ const AddStore = () => {
 
   // const errorMessages = UseErrorMessages(error);
   UseErrorMessages(error);
-  useShowAsyncMessage(isLoading, isError, error, isSuccess, data);
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
-
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
-
-    if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/store");
-    }
-  }, [
+  useShowAsyncMessage(
     isLoading,
     isError,
     error,
     isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
+    data,
+    "/dashboard/store"
+  );
+
   const handleImageChange = (e) => {
     const files = e.target.files;
     console.log(files.length);
@@ -182,15 +162,6 @@ const AddStore = () => {
           isLoading={isLoading}
         />
       </form>
-      {/* Display error messages */}
-      {/* {errorMessages?.map((errorMessage, index) => (
-        <p
-          key={index}
-          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-        >
-          {errorMessage}
-        </p>
-      ))} */}
     </DashboardBackground>
   );
 };
