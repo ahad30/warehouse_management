@@ -8,7 +8,8 @@ const useShowAsyncMessage = (
   error,
   isSuccess,
   data,
-  path
+  path,
+  setModalIsOpen = false
 ) => {
   const navigate = useNavigate();
   return useEffect(() => {
@@ -27,10 +28,15 @@ const useShowAsyncMessage = (
       //   setDiscount("");
       //   setShipping("");
       toast.success(data?.message, { id: 1 });
-      navigate(path);
+      if (setModalIsOpen) {
+        setModalIsOpen(false);
+      }
+      if (path) {
+        navigate(path);
+      }
       // return navigate("/dashboard/product");
     }
-  }, [isLoading, isError, error, isSuccess, data]);
+  }, [isLoading, isError, error, isSuccess, data, path]);
 };
 
 export default useShowAsyncMessage;

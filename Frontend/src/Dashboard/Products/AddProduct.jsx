@@ -50,31 +50,14 @@ const AddProduct = () => {
   };
 
   UseErrorMessages(error);
-  useShowAsyncMessage(isLoading, isError, error, isSuccess, data , "/dashboard/product");
-
-  //   if (isLoading) {
-  //     toast.loading(<p>Loading...</p>, { id: 1 });
-  //   }
-
-  //   if (isError) {
-  //     const errorMessage = error?.data?.message || error?.status;
-  //     toast.error(errorMessage, { id: 1 });
-  //   }
-
-  //   if (isSuccess && data?.status) {
-  //     toast.success(data?.message, { id: 1 });
-  //     return navigate("/dashboard/product");
-  //   }
-  // }, [
-  //   isLoading,
-  //   isError,
-  //   error,
-  //   isSuccess,
-  //   data?.message,
-  //   navigate,
-  //   data?.status,
-  //   dispatch,
-  // ]);
+  useShowAsyncMessage(
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data,
+    "/dashboard/product"
+  );
 
   const [selectedImages, setSelectedImages] = useState([]);
   const handleImageChange = (e) => {
@@ -268,15 +251,6 @@ const AddProduct = () => {
           isLoading={isLoading}
         />
       </form>
-      {/* Display error messages */}
-      {/* {errorMessages?.map((errorMessage, index) => (
-        <p
-          key={index}
-          className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-        >
-          {errorMessage}
-        </p>
-      ))} */}
     </DashboardBackground>
   );
 };
