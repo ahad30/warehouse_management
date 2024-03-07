@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 // import { useGetStoresQuery } from "../../features/Store/storeApi";
 
 const AddCategory = () => {
@@ -34,28 +35,6 @@ const AddCategory = () => {
     addCategory(formData);
   };
 
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading(<p>Loading...</p>, { id: 1 });
-    }
-    if (isError) {
-      const errorMessage = error?.data?.message || error?.status;
-      toast.error(errorMessage, { id: 1 });
-    }
-    if (isSuccess && data?.status) {
-      toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/category");
-    }
-  }, [
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-    data?.message,
-    navigate,
-    data?.status,
-    dispatch,
-  ]);
   const handleImageChange = (e) => {
     const files = e.target.files;
     console.log(files.length);
@@ -72,7 +51,15 @@ const AddCategory = () => {
     }
   };
 
-  const errorMessages = UseErrorMessages(error);
+  UseErrorMessages(error);
+  useShowAsyncMessage(
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+    data,
+    "/dashboard/category"
+  );
 
   return (
     <DashboardBackground>
@@ -121,15 +108,6 @@ const AddCategory = () => {
           icon={<BiSolidDuplicate size={20} />}
           isLoading={isLoading}
         />
-
-        {errorMessages?.map((errorMessage, index) => (
-          <p
-            key={index}
-            className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-          >
-            {errorMessage}
-          </p>
-        ))}
       </form>
     </DashboardBackground>
   );

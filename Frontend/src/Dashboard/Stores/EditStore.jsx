@@ -4,10 +4,12 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useUpdateStoreMutation } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
   const { register, handleSubmit, setValue } = useForm();
   const [selectedImages, setSelectedImages] = useState([]);
+
   const [
     updateStore,
     {
@@ -58,29 +60,16 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     console.log(data);
   };
 
-  const errorMessages = UseErrorMessages(updateError);
-
-  useEffect(() => {
-    if (updateIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
-    if (updateIsError) {
-      toast.error(updateError?.data?.message || updateError?.status, { id: 1 });
-    }
-
-    if (updateIsSuccess) {
-      toast.success(updateData?.message, { id: 1 });
-      setModalIsOpen(false);
-    }
-  }, [
+  UseErrorMessages(updateError);
+  useShowAsyncMessage(
     updateIsLoading,
     updateIsError,
     updateError,
     updateIsSuccess,
-    updateData?.message,
-    setModalIsOpen,
-  ]);
+    updateData,
+    "/dashboard/store",
+    setModalIsOpen
+  );
 
   useEffect(() => {
     if (store) {
@@ -199,14 +188,6 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                       />
                       <p className="py-3 px-2"> {selectedImages.length}</p>
                     </label>
-                    {/* <label className="input-group">
-            <span className="font-semibold min-w-[100px]">Image</span>
-            <input
-              type="file"
-              className="input input-bordered w-full py-2"              
-              {...register("image")}
-            />
-          </label> */}
                   </div>
 
                   <div className="items-center gap-2 mt-3 sm:flex">
@@ -225,16 +206,6 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                   </div>
                 </form>
               </div>
-              {/* Display error messages */}
-              {updateIsError &&
-                errorMessages?.map((errorMessage, index) => (
-                  <p
-                    key={index}
-                    className="border border-red-400 p-3 sm:w-2/5 my-2 rounded-lg"
-                  >
-                    {errorMessage}
-                  </p>
-                ))}
             </div>
           </div>
         </div>
