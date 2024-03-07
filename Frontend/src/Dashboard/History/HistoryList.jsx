@@ -45,12 +45,12 @@ const HistoryList = () => {
       setQuery(val);
     }
   };
- 
+
   const handleResetAll = () => {
-    setStartDate("")
-    setEndDate("")
+    setStartDate("");
+    setEndDate("");
   };
-console.log(historiesData)
+
   return (
     <>
       <DashboardBackground>
