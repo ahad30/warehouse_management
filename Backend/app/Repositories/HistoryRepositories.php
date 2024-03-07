@@ -21,8 +21,8 @@ class HistoryRepositories implements HistoryServiceInterface
                 NameFilter::class,
                 BrandFilter::class,
                 CategoryFilter::class,
-                TimeFilter::class,
                 WarehouseFilter::class,
+                TimeFilter::class,
             ])
             ->thenReturn()
             ->paginate(15);
