@@ -124,7 +124,7 @@ const Export = () => {
                   >
                     <button
                       type="submit"
-                      className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded"
+                      className="inline-flex items-center py-1 lg:py-2.5  px-3 ms-2 text-sm font-medium text-white bg-[#e74c3c] rounded"
                     >
                       Generate CSV
                     </button>
