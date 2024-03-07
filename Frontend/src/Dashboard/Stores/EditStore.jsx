@@ -181,7 +181,6 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
                       <input
                         type="file"
                         className="input input-bordered w-full hidden"
-                        // {...register("image")}
                         {...register("image", {
                           onChange: (e) => handleImageChange(e),
                         })}

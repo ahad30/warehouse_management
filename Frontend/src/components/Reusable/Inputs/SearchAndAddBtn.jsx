@@ -9,7 +9,7 @@ const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
       <div className="flex justify-between my-5 w-full gap-x-2 border bg-[#F3F4F6] border-gray-300 rounded-lg p-3">
         <input
           type="text"
-          className="input input-bordered rounded-lg mb-3 lg:mb-0 w-full sm:w-1/2 md:w-1/3"
+          className="input input-bordered rounded-lg mb-1 lg:mb-0 w-full sm:w-1/2 md:w-1/3"
           onChange={(e) => setFiltering(e.target.value)}
           placeholder="Search"
         />
@@ -21,7 +21,7 @@ const SearchAndAddBtn = ({ setFiltering, btnTitle, btnIcon, btnPath }) => {
           : btnTitle && (
               <Link
                 to={btnPath}
-                className="bg-red-500 grid place-content-center text-white focus:ring-1 px-3 rounded-md"
+                className="bg-red-500 grid place-content-center text-white focus:ring-1  my-1 lg:my-0 px-3 rounded-md"
               >
                 <span className="flex items-center gap-x-2">
                   <span>{btnIcon}</span>
