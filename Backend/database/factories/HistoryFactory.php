@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use App\Models\User;
+use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,9 +20,9 @@ class HistoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'from_warehouse_id' => 1,
-            'to_warehouse_id' => 2,
-            'product_id' => 1,
+            'from_warehouse_id' => Warehouse::inRandomOrder()->first()->id,
+            'to_warehouse_id' => Warehouse::inRandomOrder()->first()->id,
+            'product_id' => Product::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id
         ];
     }
