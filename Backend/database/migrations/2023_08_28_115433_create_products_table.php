@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('scan_code')->unique();
             $table->float('product_retail_price');
             $table->float('product_sale_price');
+            $table->string('description')->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('brand_id')->references('id')->on('brands');
