@@ -34,6 +34,7 @@ class StoreProductRequest extends FormRequest
             'images' => ['required'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'scan_code' => ['required', 'unique:products,scan_code'],
+            'description' => ['nullable', 'string', 'max:255'],
         ];
     }
     public function failedValidation(Validation $validator)

@@ -35,6 +35,7 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("scan_code", data?.scan_code);
+    formData.append("description", data?.description);
 
     if (images.length > 0) {
       for (let i = 0; i < images.length; i++) {
@@ -205,6 +206,8 @@ const AddProduct = () => {
             />
           </div>
 
+
+        
           <div className="form-control ">
             <div className="mb-3">
               <label className="input-group file-input file-input-bordered">
@@ -223,6 +226,23 @@ const AddProduct = () => {
                 <p className="py-3 px-2"> {selectedImages.length}</p>
               </label>
             </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="OrderNotes"
+              className="block text-lm font-medium text-gray-700"
+            >
+              Description
+            </label>
+
+            <textarea
+              {...register("description")}
+              id="OrderNotes"
+              className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+              rows="6"
+              placeholder="Enter any additional order notes..."
+            ></textarea>
           </div>
 
           {selectedImages.length > 0 && (
