@@ -23,6 +23,7 @@ class Product extends Model
         "product_unit",
         "product_retail_price",
         "product_sale_price",
+        "description"
     ];
 
     public function getCategory()
