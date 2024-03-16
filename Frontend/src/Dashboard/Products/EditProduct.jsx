@@ -1,7 +1,7 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import {
-  useUpdateProductImageMutation,
+
   useUpdateProductMutation,
 } from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
@@ -10,7 +10,7 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-import { set } from "date-fns";
+
 import { ImCross } from "react-icons/im";
 import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
@@ -376,6 +376,7 @@ EditProduct.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
   product: object,
+  refetch: func,
 };
 
 export default EditProduct;
