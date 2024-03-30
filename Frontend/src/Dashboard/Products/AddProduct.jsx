@@ -35,6 +35,7 @@ const AddProduct = () => {
     formData.append("brand_id", data?.brand_id);
     formData.append("warehouse_id", data?.warehouse_id);
     formData.append("scan_code", data?.scan_code);
+    formData.append("description", data?.description);
 
     if (images.length > 0) {
       for (let i = 0; i < images.length; i++) {
@@ -198,13 +199,11 @@ const AddProduct = () => {
                 }}
               />
             </label>
-            <img
-              src={`https://barcodeapi.org/api/128/${scanCode}`}
-              className="h-16 float-right my-2"
-              alt=""
-            />
+
           </div>
 
+
+        
           <div className="form-control ">
             <div className="mb-3">
               <label className="input-group file-input file-input-bordered">
@@ -225,6 +224,27 @@ const AddProduct = () => {
             </div>
           </div>
 
+          <div className="flex">
+            <label
+              htmlFor="OrderNotes"
+              className="me-2 text-lm font-medium text-black bg-[#E5E6E6] px-4 py-3 h-fit w-fit rounded-md"
+            >
+              Description
+            </label>
+
+            <textarea
+              {...register("description")}
+              id="OrderNotes"
+              className=" w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+              rows="1"
+              placeholder="Enter any additional order notes..."
+            ></textarea>
+          </div>
+          <img
+            src={`https://barcodeapi.org/api/128/${scanCode}`}
+            className="h-16 float-right my-2"
+            alt=""
+          />
           {selectedImages.length > 0 && (
             <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5">
               {selectedImages.map((image, index) => (

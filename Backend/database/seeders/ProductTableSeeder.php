@@ -42,13 +42,13 @@ class ProductTableSeeder extends Seeder
         //     'product_id' => Product::inRandomOrder()->first()->id,
         //     'image' => fake()->randomElement(['uploads/products/170910351241.webp'])
         // ]);
-        $productImage = [];
-        foreach (Product::all() as $product) {
-            $productImage[] = [
-                'product_id' => $product->id,
-                'image' => fake()->randomElement(['uploads/products/170910351241.webp'])
-            ];
-        }
-        ProductImage::insert($productImage);
+        // $productImage = [];
+        // foreach (Product::all() as $product) {
+        //     $productImage[] = [
+        //         'product_id' => $product->id,
+                    
+        //     ];
+        // }
+        // ProductImage::insert($productImage);
     }
 }
