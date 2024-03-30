@@ -17,6 +17,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Exists;
 
@@ -244,6 +245,19 @@ class ProductController extends Controller
 
     public function appProductImageUpdate(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'imageIds' => 'nullable', // Ensure imageIds is present and is an array
+            'images' => 'nullable',
+            'images.*' => ['mimes:jpeg,jpg,png,gif', 'max:8048'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ], 400);
+        }
+
         // Find product
         $product = Product::find($id);
 
@@ -255,9 +269,23 @@ class ProductController extends Controller
             ], 404);
         }
 
+        // Upload and attach new images
+        if ($request->hasFile('images')) {
+            $images = $this->multipleImageUpload($request, 'uploads/products/images');
+
+            if (!empty($images)) {
+                foreach ($images as $image) {
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image' => $image,
+                    ]);
+                }
+            }
+        }
+
         // Delete existing images if imageIds are provided
-        if ($request->imageIds) {
-            $imageIds = (array) $request->input('imageIds', []);
+        if ($request->has('imageIds')) {
+            $imageIds = $request->input('imageIds', []);
 
             // Retrieve existing images for the provided imageIds
             $existingImages = ProductImage::whereIn('id', $imageIds)
@@ -281,21 +309,6 @@ class ProductController extends Controller
 
                 // Delete the image record
                 $existingImage->delete();
-            }
-        }
-
-
-        // Upload and attach new images
-        if ($request->hasFile('images')) {
-            $images = $this->multipleImageUpload($request, 'uploads/products/images');
-
-            if (!empty($images)) {
-                foreach ($images as $image) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image' => $image,
-                    ]);
-                }
             }
         }
 
