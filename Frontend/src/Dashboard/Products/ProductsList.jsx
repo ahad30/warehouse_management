@@ -134,7 +134,7 @@ const ProductsList = () => {
               ? `${import.meta.env.VITE_REACT_APP_PUBLIC_IMAGE_PORT}${
                   row?.product_images[0]?.image
                 }`
-              : "https://c.static-nike.com/a/images/w_1920,c_limit/bzl2wmsfh7kgdkufrrjq/image.jpg"
+              : "https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }
           alt={row?.product_images[0]?.image}
           className="w-10 h-auto rounded-lg cursor-pointer"

@@ -199,11 +199,7 @@ const AddProduct = () => {
                 }}
               />
             </label>
-            <img
-              src={`https://barcodeapi.org/api/128/${scanCode}`}
-              className="h-16 float-right my-2"
-              alt=""
-            />
+
           </div>
 
 
@@ -228,10 +224,10 @@ const AddProduct = () => {
             </div>
           </div>
 
-          <div>
+          <div className="flex">
             <label
               htmlFor="OrderNotes"
-              className="block text-lm font-medium text-gray-700"
+              className="me-2 text-lm font-medium text-black bg-[#E5E6E6] px-4 py-3 h-fit w-fit rounded-md"
             >
               Description
             </label>
@@ -239,12 +235,16 @@ const AddProduct = () => {
             <textarea
               {...register("description")}
               id="OrderNotes"
-              className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
-              rows="6"
+              className=" w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+              rows="1"
               placeholder="Enter any additional order notes..."
             ></textarea>
           </div>
-
+          <img
+            src={`https://barcodeapi.org/api/128/${scanCode}`}
+            className="h-16 float-right my-2"
+            alt=""
+          />
           {selectedImages.length > 0 && (
             <div className="form-control  gap-3  w-full col-span-2 grid grid-cols-2 lg:grid-cols-5">
               {selectedImages.map((image, index) => (
