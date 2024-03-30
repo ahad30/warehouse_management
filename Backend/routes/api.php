@@ -193,7 +193,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::controller(SearchProductController::class)
-
         ->prefix('/product')->group(function () {
             Route::get('/search', 'index');
         });

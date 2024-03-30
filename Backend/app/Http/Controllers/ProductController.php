@@ -85,17 +85,19 @@ class ProductController extends Controller
             ];
             $product = Product::create(array_merge($request->validated(), $input));
 
-            $images = $this->multipleImageUpload($request, 'uploads/products/images');
-
-            $productImageData = [];
-            foreach ($images as $image) {
-                $productImageData[] = [
-                    'product_id' => $product->id,
-                    'image' => $image,
-                ];
-            }
             /**Inserting product image */
-            ProductImage::insert($productImageData);
+            if ($request->hasFile('images')) {
+                $imagePaths = $this->multipleImageUpload($request, 'uploads/products/images');
+
+                if ($imagePaths) {
+                    foreach ($imagePaths as $path) {
+                        ProductImage::create([
+                            'product_id' => $product->id,
+                            'image' => $path,
+                        ]);
+                    }
+                }
+            }
 
             DB::commit();
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
@@ -123,7 +125,6 @@ class ProductController extends Controller
     // update
     public function update(UpdateProductRequest $request)
     {
-
         $product = Product::find($request->id);
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
@@ -241,12 +242,12 @@ class ProductController extends Controller
         ], 404);
     }
 
-    // update images for app
     public function appProductImageUpdate(Request $request, $id)
     {
-        // find product
+        // Find product
         $product = Product::find($id);
 
+        // Check if product exists
         if (!$product) {
             return response()->json([
                 'status' => false,
@@ -254,30 +255,41 @@ class ProductController extends Controller
             ], 404);
         }
 
-        // if image id exists
-        if ($data = $request->only('imageIds')) {
-            foreach ($data as $value) {
-                $existingImage = ProductImage::where('id', $value)->where('product_id', $product->id)->first();
-                // Not found any image
-                if (!$existingImage) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Product Image not found"
-                    ], 404);
-                }
+        // Delete existing images if imageIds are provided
+        if ($request->imageIds) {
+            $imageIds = (array) $request->input('imageIds', []);
 
-                // delete files
+            // Retrieve existing images for the provided imageIds
+            $existingImages = ProductImage::whereIn('id', $imageIds)
+                ->where('product_id', $product->id)
+                ->get();
+
+            // Check if all provided imageIds correspond to existing images
+            if ($existingImages->count() !== count($imageIds)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "One or more product images not found for this product."
+                ], 404);
+            }
+
+            // Iterate over existing images and delete associated files and records
+            foreach ($existingImages as $existingImage) {
+                // Delete associated file
                 if (File::exists($existingImage->image)) {
                     File::delete($existingImage->image);
                 }
+
+                // Delete the image record
                 $existingImage->delete();
             }
         }
 
-        // if image files exists
-        if ($request->only('images')) {
+
+        // Upload and attach new images
+        if ($request->hasFile('images')) {
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
-            if ($images) {
+
+            if (!empty($images)) {
                 foreach ($images as $image) {
                     ProductImage::create([
                         'product_id' => $product->id,
@@ -287,9 +299,10 @@ class ProductController extends Controller
             }
         }
 
+        // Return success response
         return response()->json([
             'status' => true,
             'message' => "Product images successfully updated"
-        ], 404);
+        ]);
     }
 }
