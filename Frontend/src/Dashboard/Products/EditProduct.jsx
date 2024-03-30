@@ -372,11 +372,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   );
 };
 
+
+export default EditProduct;
 EditProduct.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
   product: object,
   refetch: func,
 };
-
-export default EditProduct;
