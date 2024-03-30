@@ -94,9 +94,11 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::get('/create', 'create');
         Route::post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::post('update/image/{id}', 'imageUpdate');
         Route::put('/update', 'update');
         Route::middleware(['verifyAdmin', 'verifySubAdmin'])->delete('/delete/{id}', 'destroy');
+        // for android
+        Route::put('/app/update/{id}', [ProductController::class, 'appProductUpdate']);
+        Route::put('/app/update/image/{id}', [ProductController::class, 'appProductImageUpdate']);
     });
 
     Route::controller(CompanyInfoController::class)->prefix('company')->group(function () {
@@ -104,14 +106,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::middleware('verifyAdmin')->get('/info/edit/{id}', 'edit');
         Route::middleware('verifyAdmin')->put('/info/update', 'update');
     });
-
-    // Route::controller(CustomerController::class)->prefix('customers')->group(function () {
-    //     Route::get('/', 'index');
-    //     Route::post('/store', 'store');
-    //     Route::get('/edit/{id}', 'edit');
-    //     Route::put('/update', 'update');
-    //     Route::delete('/delete/{id}', 'destroy');
-    // });
 
     Route::middleware(['verifySubAdmin'])->controller(UserController::class)->prefix('users')->group(function () {
         Route::get('/', 'index');
@@ -199,7 +193,6 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     /* -------------------------------------------------------------------------- */
 
     Route::controller(SearchProductController::class)
-
         ->prefix('/product')->group(function () {
             Route::get('/search', 'index');
         });

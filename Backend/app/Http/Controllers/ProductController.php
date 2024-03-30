@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductInfoUpdateRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -84,17 +85,19 @@ class ProductController extends Controller
             ];
             $product = Product::create(array_merge($request->validated(), $input));
 
-            $images = $this->multipleImageUpload($request, 'uploads/products/images');
-
-            $productImageData = [];
-            foreach ($images as $image) {
-                $productImageData[] = [
-                    'product_id' => $product->id,
-                    'image' => $image,
-                ];
-            }
             /**Inserting product image */
-            ProductImage::insert($productImageData);
+            if ($request->hasFile('images')) {
+                $imagePaths = $this->multipleImageUpload($request, 'uploads/products/images');
+
+                if ($imagePaths) {
+                    foreach ($imagePaths as $path) {
+                        ProductImage::create([
+                            'product_id' => $product->id,
+                            'image' => $path,
+                        ]);
+                    }
+                }
+            }
 
             DB::commit();
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
@@ -122,7 +125,6 @@ class ProductController extends Controller
     // update
     public function update(UpdateProductRequest $request)
     {
-
         $product = Product::find($request->id);
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
@@ -148,8 +150,10 @@ class ProductController extends Controller
                 'message' => "Product successfully updated"
             ]);
         } catch (Exception $e) {
-            return $e->getMessage();
-            // return $this->errorResponse(null, 'Something went wrong');
+            return response()->json([
+                'status' => false,
+                'message' => "Something went wrong"
+            ]);
         }
     }
     /**
@@ -160,11 +164,13 @@ class ProductController extends Controller
     public function imageUpdate(Request $request, $id)
     {
         if ($request->image_ids[0]) {
-            info($request->image_ids);
             foreach ($request->image_ids as $image_id) {
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
-                    throw new Exception('data not found');
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Image not found"
+                    ]);
                 }
                 // delete files
                 if (File::exists($product_images->image)) {
@@ -177,16 +183,13 @@ class ProductController extends Controller
         /**
          * * insert multiple images
          */
-        // info($request->images[0]);
         $images = $this->multipleImageUpload($request, 'uploads/products/images');
         foreach ($images as $image) {
-            info($image);
-            $data = ProductImage::create([
+            ProductImage::create([
                 'product_id' => $id,
                 'image' => $image,
             ]);
         }
-
     }
 
 
@@ -216,5 +219,90 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse(null, "Unable to delete product", 400);
         }
+    }
+
+    // ===================================== For Android App ===========================================//
+
+    // update product information
+    public function appProductUpdate(ProductInfoUpdateRequest $request, $id)
+    {
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => "Product not found"
+            ], 404);
+        }
+
+        $product->update($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => "Product successfully updated"
+        ], 404);
+    }
+
+    public function appProductImageUpdate(Request $request, $id)
+    {
+        // Find product
+        $product = Product::find($id);
+
+        // Check if product exists
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => "Product not found"
+            ], 404);
+        }
+
+        // Delete existing images if imageIds are provided
+        if ($request->imageIds) {
+            $imageIds = (array) $request->input('imageIds', []);
+
+            // Retrieve existing images for the provided imageIds
+            $existingImages = ProductImage::whereIn('id', $imageIds)
+                ->where('product_id', $product->id)
+                ->get();
+
+            // Check if all provided imageIds correspond to existing images
+            if ($existingImages->count() !== count($imageIds)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "One or more product images not found for this product."
+                ], 404);
+            }
+
+            // Iterate over existing images and delete associated files and records
+            foreach ($existingImages as $existingImage) {
+                // Delete associated file
+                if (File::exists($existingImage->image)) {
+                    File::delete($existingImage->image);
+                }
+
+                // Delete the image record
+                $existingImage->delete();
+            }
+        }
+
+
+        // Upload and attach new images
+        if ($request->hasFile('images')) {
+            $images = $this->multipleImageUpload($request, 'uploads/products/images');
+
+            if (!empty($images)) {
+                foreach ($images as $image) {
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image' => $image,
+                    ]);
+                }
+            }
+        }
+
+        // Return success response
+        return response()->json([
+            'status' => true,
+            'message' => "Product images successfully updated"
+        ]);
     }
 }

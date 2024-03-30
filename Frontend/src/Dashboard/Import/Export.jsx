@@ -1,6 +1,5 @@
 import { useState } from "react";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import ImportAsCSV from "./ImportAsCSV";
 import { useGetDefaultSettingsQuery } from "../../features/Settings/settingsApi";
 import ImportData from "./ImportData";
 import {
@@ -13,7 +12,6 @@ import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 
 const Export = () => {
   UseTitle("Import_Export");
-  const [filterData, setFilterData] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [url, setUrl] = useState("");
@@ -39,13 +37,11 @@ const Export = () => {
     }
   };
 
-  console.log(track);
-  console.log(url);
   return (
     <DashboardBackground>
       <>
         <div className="mt-5">
-          <p className="text-center text-xl font-semibold font-poppins underline underline-offset-8 ">
+          <p className="text-center text-xl font-semibold font-poppins underline underline-offset-8">
             Import / Export
           </p>
           <ImportData />
@@ -132,10 +128,6 @@ const Export = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex lg:flex-row justify-end mt-4">
-            {/* Import download as CSV file */}
-            {/* <ImportAsCSV data={filterData} /> */}
           </div>
         </>
       </>

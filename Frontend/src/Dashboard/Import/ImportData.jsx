@@ -8,7 +8,6 @@ const ImportData = () => {
   const { data: settingsData } = useGetDefaultSettingsQuery();
   const [setImport, { isLoading, isError, error, isSuccess, data }] =
     useSetImportMutation();
-
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
