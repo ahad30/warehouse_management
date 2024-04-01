@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Exports\ProductsExport;
 use App\Http\Requests\CsvRequest;
 use App\Imports\ProductsImport;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Warehouse;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportExportController extends Controller
@@ -15,28 +18,45 @@ class ImportExportController extends Controller
     // Import from app
     public function appImport(CsvRequest $request)
     {
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $name = time() . '-' . $file->getClientOriginalName();
+        // Validate the request data
+        $data = $request->validated();
 
-            // Set the storage directory
-            $storagePath = 'uploads/csv/';
+        $warehouses = Warehouse::whereIn('name', array_column($data, 'warehouse'))->get()->keyBy('name');
+        $categories = Category::whereIn('category_name', array_column($data, 'category'))->get()->keyBy('category_name');
 
-            // Move file to storage directory
-            $file->move(storage_path($storagePath), $name);
+        $othersBrand = Brand::firstOrCreate(['brand_name' => 'Others']);
 
-            // Import the moved file to DB and return OK if there were rows affected
-            $path = storage_path($storagePath . '/' . $name);
-            $rowsAffected = Excel::import(new ProductsImport,  asset($path));
+        $products = [];
 
-            return $rowsAffected ? response()->json([
-                'success' => true,
-                'message' => "Imported successfully"
-            ], 200) : response()->json([
-                'success' => false,
-                'message' => "No rows affected"
-            ], 400);
+        foreach ($data as $item) {
+            // Check if warehouse and category exist
+            if (!isset($warehouses[$item['warehouse']]) || !isset($categories[$item['category']])) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Some data are invalid',
+                ], 404);
+            }
+
+            $warehouseId = $warehouses[$item['warehouse']]->id;
+            $categoryId = $categories[$item['category']]->id;
+
+            $brand = $item['brand'] ? Brand::firstOrCreate(['brand_name' => $item['brand']]) : $othersBrand;
+
+            $products[] = [
+                'warehouse_id' => $warehouseId,
+                'category_id' => $categoryId,
+                'brand_id' => $brand->id,
+                'product_name' => $item['name'],
+                'unique_code' => uniqid('PRD-'),
+                'scan_code' => $item['code'],
+                'product_retail_price' => $item['retail_price'],
+                'product_sale_price' => $item['sale_price'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
+
+        Product::insert($products);
     }
 
 

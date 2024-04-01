@@ -37,11 +37,7 @@ class ProductTableSeeder extends Seeder
         }
         Product::insert($products);
 
-        //    ProductImage::factory(1000)->create();
-        // Product::where('id','!=',0)->update([
-        //     'product_id' => Product::inRandomOrder()->first()->id,
-        //     'image' => fake()->randomElement(['uploads/products/170910351241.webp'])
-        // ]);
+
         $productImage = [];
         foreach (Product::all() as $product) {
             $productImage[] = [

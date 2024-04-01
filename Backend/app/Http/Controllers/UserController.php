@@ -89,16 +89,16 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if ($user != null) {
-            $user->delete();
+        if (!$user) {
             return response()->json([
-                'status' => true,
-                'message' => "User successfully deleted",
-            ], 201);
+                'status' => false,
+                'message' => "User Not Found",
+            ], 404);
         }
+        $user->delete();
         return response()->json([
-            'status' => false,
-            'message' => "User Not Found",
-        ], 500);
+            'status' => true,
+            'message' => "User successfully deleted",
+        ], 200);
     }
 }

@@ -24,7 +24,14 @@ class CsvRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|mimes:xlsx,csv',
+            'warehouse' => 'required|string',
+            'category' => 'required|string',
+            'brand' => 'nullable|string',
+            'product_name' => ['required', 'string', 'max:255'],
+            'retail_price' => ['required', 'max:10'],
+            'sale_price' => ['required', 'max:10'],
+            'scan_code' => ['required', 'unique:products,scan_code'],
+            'description' => ['nullable', 'string', 'max:255'],
         ];
     }
     public function failedValidation(Validation $validator)
