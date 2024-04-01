@@ -17,9 +17,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Exists;
 
 class ProductController extends Controller
 {
@@ -77,36 +75,32 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            $input = [
+
+            // Create the product
+            $productData = array_merge($request->validated(), [
                 'warehouse_id' => $request->warehouse_id,
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id,
                 'unique_code' => Str::random(8),
                 'scan_code' => $request->scan_code,
-            ];
-            $product = Product::create(array_merge($request->validated(), $input));
+            ]);
+            $product = Product::create($productData);
 
-            /**Inserting product image */
-            if ($request->hasFile('images')) {
-                $imagePaths = $this->multipleImageUpload($request, 'uploads/products/images');
-
-                if ($imagePaths) {
-                    foreach ($imagePaths as $path) {
-                        ProductImage::create([
-                            'product_id' => $product->id,
-                            'image' => $path,
-                        ]);
-                    }
-                }
+            // Upload and insert product images
+            $images = $this->multipleImageUpload($request, 'uploads/products/images');
+            $productImageData = [];
+            foreach ($images as $image) {
+                $productImageData[] = [
+                    'image' => $image,
+                ];
             }
+            $product->productImages()->createMany($productImageData);
 
             DB::commit();
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->errorResponse([
-                'message' => "something went wrong",
-            ]);
+            return $this->errorResponse(['message' => "Something went wrong"]);
         }
     }
 
