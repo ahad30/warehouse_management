@@ -245,19 +245,6 @@ class ProductController extends Controller
 
     public function appProductImageUpdate(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'imageIds' => 'nullable', // Ensure imageIds is present and is an array
-            'images' => 'nullable',
-            'images.*' => ['mimes:jpeg,jpg,png,gif', 'max:8048'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()->first(),
-            ], 400);
-        }
-
         // Find product
         $product = Product::find($id);
 
@@ -270,18 +257,17 @@ class ProductController extends Controller
         }
 
         // Upload and attach new images
-        if ($request->hasFile('images')) {
-            $images = $this->multipleImageUpload($request, 'uploads/products/images');
+        $images = $this->multipleImageUpload($request, 'uploads/products/images');
 
-            if (!empty($images)) {
-                foreach ($images as $image) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image' => $image,
-                    ]);
-                }
+        if (!empty($images)) {
+            foreach ($images as $image) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $image,
+                ]);
             }
         }
+
 
         // Delete existing images if imageIds are provided
         if ($request->has('imageIds')) {
