@@ -9,8 +9,6 @@ use App\Exports\ProductsExport;
 use App\Http\Requests\CsvRequest;
 use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
 class ImportExportController extends Controller
 {
@@ -29,7 +27,7 @@ class ImportExportController extends Controller
 
             // Import the moved file to DB and return OK if there were rows affected
             $path = storage_path($storagePath . '/' . $name);
-            $rowsAffected = $this->importCsvToDatabase($path);
+            $rowsAffected = Excel::import(new ProductsImport,  asset($path));
 
             return $rowsAffected ? response()->json([
                 'success' => true,
@@ -39,11 +37,6 @@ class ImportExportController extends Controller
                 'message' => "No rows affected"
             ], 400);
         }
-    }
-
-    private function importCsvToDatabase($path)
-    {
-        Excel::import(new ProductsImport,  $path);
     }
 
 
