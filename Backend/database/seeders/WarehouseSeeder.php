@@ -6,6 +6,7 @@ use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+
 class WarehouseSeeder extends Seeder
 {
     /**
@@ -13,11 +14,11 @@ class WarehouseSeeder extends Seeder
      */
     public function run(): void
     {
-        
-        $warehouses =[];
-        for($i=1; $i<10; $i++) {
+
+        $warehouses = [];
+        for ($i = 1; $i < 2; $i++) {
             $warehouses[] = [
-                'name' => 'warehouse'.$i,
+                'name' => 'warehouse' . $i,
                 'slug' => Str::random(5),
                 'image' => '',
                 'country' => 'Bangladesh',

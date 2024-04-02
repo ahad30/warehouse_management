@@ -16,10 +16,10 @@ class StaffSeeder extends Seeder
     public function run(): void
     {
         $staffUsers = User::where('role_id', 3)->get();
-        foreach ($staffUsers as $user){
+        foreach ($staffUsers as $user) {
             Staff::insert([
-                'user_id'=> $user->id,
-                'warehouse_id'=> Warehouse::inRandomOrder()->first()->id,
+                'user_id' => $user->id,
+                'warehouse_id' => Warehouse::inRandomOrder()->first()->id,
             ]);
         }
     }

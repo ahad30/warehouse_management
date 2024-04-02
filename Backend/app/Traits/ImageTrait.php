@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 trait ImageTrait
@@ -20,7 +19,7 @@ trait ImageTrait
         if ($request->file($inputField)) {
             $file = $request->file($inputField);
             $extension = $file->getClientOriginalExtension();
-            $filename = time() . rand(1, 99) . '.' . $extension;
+            $filename = uniqid('img-') . '.' . $extension;
             $file->move(public_path($path), $filename);
 
             $filePath = $path . '/' . $filename;
@@ -48,7 +47,7 @@ trait ImageTrait
             }
 
             $file = $request->file($inputField);
-            $filename = time() . rand(1, 99) . '.' . $file->getClientOriginalExtension();
+            $filename = uniqid('img-') . '.' . $file->getClientOriginalExtension();
             $file->move(public_path($newPath), $filename);
             $filePath = $newPath . '/' . $filename;
             return $filePath;
@@ -97,26 +96,31 @@ trait ImageTrait
     // For uploading Image
     public function multipleImageUpload($request, string $path)
     {
-        DB::beginTransaction();
         try {
-            $allowedFileExtension = ['jpg', 'png', 'jpeg', 'gif'];
+            $allowedFileExtension = ['jpg', 'png', 'jpeg', 'gif', 'svg'];
             $imagePaths = [];
+
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $key => $image) {
                     $extension = $image->getClientOriginalExtension();
-                    $check = in_array($extension, $allowedFileExtension);
-                    if ($check) {
-                        $imageName = time() . rand(1, 99) . '.' . $extension;
+                    $checkExtension = in_array($extension, $allowedFileExtension);
+                    $checkSize = ($image->getSize() <= 5 * 1024 * 1024); // Max 5MB
+
+                    if ($checkExtension && $checkSize) {
+                        $imageName = uniqid('img-') . '.' . $extension;
                         $image->move(public_path($path), $imageName);
                         $imagePath = $path . "/" . $imageName;
                         $imagePaths[] = $imagePath;
                     }
                 }
             }
-            DB::commit();
+
             return $imagePaths;
         } catch (\Exception $e) {
-            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => "Something went wrong",
+            ]);
         }
     }
 }
