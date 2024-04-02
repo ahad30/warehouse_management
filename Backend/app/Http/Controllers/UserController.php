@@ -85,7 +85,7 @@ class UserController extends Controller
         ], 200);
     }
     // destroy
-    public function destroy($id): Response
+    public function destroy($id)
     {
         $user = User::find($id);
 
@@ -96,6 +96,7 @@ class UserController extends Controller
             ], 404);
         }
         $user->delete();
+
         return response()->json([
             'status' => true,
             'message' => "User successfully deleted",

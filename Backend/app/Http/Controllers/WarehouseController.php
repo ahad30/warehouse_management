@@ -52,7 +52,7 @@ class WarehouseController extends Controller
     public function update(UpdateWarehouseRequest $request, $id)
     {
         $data = Warehouse::find($id);
-        if(!$data){
+        if (!$data) {
             return response()->json([
                 'status' => false,
                 'message' => "data not found"
@@ -68,7 +68,7 @@ class WarehouseController extends Controller
      */
     public function destroy($id)
     {
-        $data = Warehouse::findOrFail($id);
+        $data = Warehouse::find($id);
         $this->deleteImage($data->image);
         $data->delete();
         return $this->successResponse(['status' => true, 'message' => "Warehouse Deleted"]);

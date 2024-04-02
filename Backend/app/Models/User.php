@@ -35,8 +35,6 @@ class User extends Authenticatable implements JWTSubject
         'city',
         'state',
         'country',
-        'profile_image',
-        'token_expire_time',
         'img'
     ];
 
@@ -59,6 +57,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -77,5 +76,15 @@ class User extends Authenticatable implements JWTSubject
     public function getRole()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(History::class);
     }
 }
