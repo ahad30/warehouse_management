@@ -25,16 +25,13 @@ class History extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function getCreateAtAttribute($value)
-    {
-        return $value;
-    }
+
     public function products()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
     public function getCreatedAtAttribute($date)
     {
-        return date('d-m-Y', strtotime($date));;
+        return date('d-m-Y', strtotime($date));
     }
 }

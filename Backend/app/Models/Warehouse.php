@@ -28,4 +28,24 @@ class Warehouse extends Model
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function staffs()
+    {
+        return $this->hasMany(Staff::class);
+    }
+
+    public function fromWarehouseHistories()
+    {
+        return $this->hasMany(History::class, 'from_warehouse_id');
+    }
+
+    public function toWarehouseHistories()
+    {
+        return $this->hasMany(History::class, 'to_warehouse_id');
+    }
 }

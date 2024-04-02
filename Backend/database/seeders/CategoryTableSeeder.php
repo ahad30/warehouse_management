@@ -19,19 +19,5 @@ class CategoryTableSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-
-        Category::create([
-            'category_name' => 'Medicine',
-            'description' => 'The Best Medicine collection',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        Category::create([
-            'category_name' => 'Electronics',
-            'description' => 'The Best Electronics collection',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
     }
 }

@@ -20,7 +20,7 @@ class ProductTableSeeder extends Seeder
     {
 
         $products = [];
-        for ($i = 0; $i < 500; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $products[] = [
                 'warehouse_id' => Warehouse::inRandomOrder()->first()->id,
                 'category_id' => Category::inRandomOrder()->first()->id, // Replace with the actual category ID
@@ -37,18 +37,14 @@ class ProductTableSeeder extends Seeder
         }
         Product::insert($products);
 
-        //    ProductImage::factory(1000)->create();
-        // Product::where('id','!=',0)->update([
-        //     'product_id' => Product::inRandomOrder()->first()->id,
-        //     'image' => fake()->randomElement(['uploads/products/170910351241.webp'])
-        // ]);
-        // $productImage = [];
-        // foreach (Product::all() as $product) {
-        //     $productImage[] = [
-        //         'product_id' => $product->id,
-                    
-        //     ];
-        // }
-        // ProductImage::insert($productImage);
+
+        $productImage = [];
+        foreach (Product::all() as $product) {
+            $productImage[] = [
+                'product_id' => $product->id,
+                'image' => fake()->randomElement(['uploads/products/170910351241.webp'])
+            ];
+        }
+        ProductImage::insert($productImage);
     }
 }
