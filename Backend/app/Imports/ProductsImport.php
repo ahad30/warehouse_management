@@ -28,10 +28,11 @@ class ProductsImport implements ToCollection
                 $warehouse = Warehouse::find($row[1]);
                 $category = Category::find($row[2]);
                 $brand = Brand::find($row[3]);
-                if(!$warehouse || !$category || !$brand){
+                if (!$warehouse || !$category || !$brand) {
                     DB::rollBack();
                     return "Warehouse with ID {$row[1]} does not exist. Import rolled back.";
                 }
+
                 $products[] = [
                     'warehouse_id' => $row[1],
                     'category_id' => $row[2],
@@ -44,10 +45,9 @@ class ProductsImport implements ToCollection
                     // 'created_at' => $row[10],
                     // 'updated_at' => $row[11],
                 ];
-            } 
+            }
             Product::insert($products);
             DB::commit();
-        
         } catch (\Exception $e) {
             // If an exception occurs, rollback the transaction
             DB::rollBack();

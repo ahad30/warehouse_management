@@ -17,9 +17,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Exists;
 
 class ProductController extends Controller
 {
@@ -77,36 +74,32 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            $input = [
+
+            // Create the product
+            $productData = array_merge($request->validated(), [
                 'warehouse_id' => $request->warehouse_id,
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id,
-                'unique_code' => Str::random(8),
+                'unique_code' => uniqid('PRD-'),
                 'scan_code' => $request->scan_code,
-            ];
-            $product = Product::create(array_merge($request->validated(), $input));
+            ]);
+            $product = Product::create($productData);
 
-            /**Inserting product image */
-            if ($request->hasFile('images')) {
-                $imagePaths = $this->multipleImageUpload($request, 'uploads/products/images');
-
-                if ($imagePaths) {
-                    foreach ($imagePaths as $path) {
-                        ProductImage::create([
-                            'product_id' => $product->id,
-                            'image' => $path,
-                        ]);
-                    }
-                }
+            // Upload and insert product images
+            $images = $this->multipleImageUpload($request, 'uploads/products/images');
+            $productImageData = [];
+            foreach ($images as $image) {
+                $productImageData[] = [
+                    'image' => $image,
+                ];
             }
+            $product->productImages()->createMany($productImageData);
 
             DB::commit();
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->errorResponse([
-                'message' => "something went wrong",
-            ]);
+            return $this->errorResponse(['message' => "Something went wrong"]);
         }
     }
 
@@ -138,7 +131,7 @@ class ProductController extends Controller
                 'warehouse_id' => $request->warehouse_id,
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id,
-                'unique_code' => Str::random(8),
+                'unique_code' => uniqid('PRD-'),
                 'scan_code' => $request->scan_code,
             ];
 
@@ -245,21 +238,8 @@ class ProductController extends Controller
 
     public function appProductImageUpdate(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'imageIds' => 'nullable', // Ensure imageIds is present and is an array
-            'images' => 'nullable',
-            'images.*' => ['mimes:jpeg,jpg,png,gif', 'max:8048'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()->first(),
-            ], 400);
-        }
-
-        // Find product
-        $product = Product::find($id);
+        // Find product with eager loading of productImages relationship
+        $product = Product::with('productImages')->find($id);
 
         // Check if product exists
         if (!$product) {
@@ -269,53 +249,45 @@ class ProductController extends Controller
             ], 404);
         }
 
-        // Upload and attach new images
         if ($request->hasFile('images')) {
-            $images = $this->multipleImageUpload($request, 'uploads/products/images');
+            // Use bulk insertion for product images
+            DB::transaction(function () use ($request, $product) {
+                // Upload and insert product images
+                $images = $this->multipleImageUpload($request, 'uploads/products/images');
 
-            if (!empty($images)) {
+                // Prepare product image data for bulk insertion
+                $productImageData = [];
                 foreach ($images as $image) {
-                    ProductImage::create([
+                    $productImageData[] = [
                         'product_id' => $product->id,
                         'image' => $image,
-                    ]);
+                    ];
                 }
-            }
+
+                // Bulk insert product images
+                ProductImage::insert($productImageData);
+            });
         }
 
-        // Delete existing images if imageIds are provided
-        if ($request->has('imageIds')) {
-            $imageIds = $request->input('imageIds', []);
-
-            // Retrieve existing images for the provided imageIds
-            $existingImages = ProductImage::whereIn('id', $imageIds)
-                ->where('product_id', $product->id)
-                ->get();
-
-            // Check if all provided imageIds correspond to existing images
-            if ($existingImages->count() !== count($imageIds)) {
+        if ($request->imageId) {
+            $product_image = ProductImage::where('id', $request->imageId)->first();
+            if (!$product_image) {
                 return response()->json([
                     'status' => false,
-                    'message' => "One or more product images not found for this product."
+                    'message' => "Image not found",
                 ], 404);
             }
-
-            // Iterate over existing images and delete associated files and records
-            foreach ($existingImages as $existingImage) {
-                // Delete associated file
-                if (File::exists($existingImage->image)) {
-                    File::delete($existingImage->image);
-                }
-
-                // Delete the image record
-                $existingImage->delete();
+            // delete files
+            if (File::exists($product_image->image)) {
+                File::delete($product_image->image);
             }
+            $product_image->delete();
         }
 
         // Return success response
         return response()->json([
             'status' => true,
             'message' => "Product images successfully updated"
-        ]);
+        ], 200);
     }
 }
