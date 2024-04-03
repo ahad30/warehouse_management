@@ -8,10 +8,8 @@ use Illuminate\Http\Request;
 use App\Exports\ProductsExport;
 use App\Http\Requests\CsvRequest;
 use App\Imports\ProductsImport;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Warehouse;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class ImportExportController extends Controller
 {
@@ -21,42 +19,48 @@ class ImportExportController extends Controller
         // Validate the request data
         $data = $request->validated();
 
-        $warehouses = Warehouse::whereIn('name', array_column($data, 'warehouse'))->get()->keyBy('name');
-        $categories = Category::whereIn('category_name', array_column($data, 'category'))->get()->keyBy('category_name');
 
-        $othersBrand = Brand::firstOrCreate(['brand_name' => 'Others']);
+        try {
+            DB::beginTransaction();
 
-        $products = [];
+            $products = [];
 
-        foreach ($data as $item) {
-            // Check if warehouse and category exist
-            if (!isset($warehouses[$item['warehouse']]) || !isset($categories[$item['category']])) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Some data are invalid',
-                ], 404);
+            foreach (array_chunk($data, 100) as $chunk) {
+                $chunkProducts = [];
+
+                foreach ($chunk as $item) {
+                    $chunkProducts[] = [
+                        'warehouse_id' => $request->warehouse_id,
+                        'category_id' => $request->category_id,
+                        'brand_id' => $request->brand_id,
+                        'product_name' => $item['product_name'],
+                        'unique_code' => uniqid('PRD-'),
+                        'scan_code' => $item['scan_code'],
+                        'product_retail_price' => $item['product_retail_price'],
+                        'product_sale_price' => $item['product_sale_price'],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+
+                $products = array_merge($products, $chunkProducts);
+
+                Product::insert($chunkProducts);
             }
 
-            $warehouseId = $warehouses[$item['warehouse']]->id;
-            $categoryId = $categories[$item['category']]->id;
+            DB::commit();
 
-            $brand = $item['brand'] ? Brand::firstOrCreate(['brand_name' => $item['brand']]) : $othersBrand;
-
-            $products[] = [
-                'warehouse_id' => $warehouseId,
-                'category_id' => $categoryId,
-                'brand_id' => $brand->id,
-                'product_name' => $item['name'],
-                'unique_code' => uniqid('PRD-'),
-                'scan_code' => $item['code'],
-                'product_retail_price' => $item['retail_price'],
-                'product_sale_price' => $item['sale_price'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+            return response()->json([
+                'status' => true,
+                'message' => "Data has been imported successfully"
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => "The given csv is invalid",
+            ], 400);
         }
-
-        Product::insert($products);
     }
 
 
@@ -93,7 +97,7 @@ class ImportExportController extends Controller
     public function exportByWarehouse($id)
     {
         $product = Product::where('warehouse_id', $id)->latest()->get();
-        $file_name = time() . uniqid() . '-' . 'products.csv';
+        $file_name = date('Ymd') . '-' . 'products.csv';
         try {
             Excel::store(new ProductByWarehouseExport($product), 'public/' . $file_name);
             // Generate the link to the file
