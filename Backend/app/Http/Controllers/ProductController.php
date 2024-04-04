@@ -290,4 +290,20 @@ class ProductController extends Controller
             'message' => "Product images successfully updated"
         ], 200);
     }
+    public function ProductByWarehouseID($id)
+    {
+        $product = Product::where('warehouse_id', $id)->with('getCategory', 'getBrand', 'warehouse', 'productImages')->get();
+        return response()->json([
+            'status' => true,
+            'data' => $product,
+        ], 200);
+    }
+    public function getWarehouses()
+    {
+        $warehouses = Warehouse::orderBy('name')->get(['id', 'name']);
+        return response()->json([
+            'status' => true,
+            'data' => $warehouses,
+        ], 200);
+    }
 }

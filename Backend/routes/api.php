@@ -201,4 +201,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::post('/app/import', [ImportExportController::class, 'appImport']);
     Route::post('/export', [ImportExportController::class, 'export']);
     Route::post('/export-By-Warehouse/{id}', [ImportExportController::class, 'exportByWarehouse']);
+
+    Route::get('app/warhouse/list', [ProductController::class, 'getWarehouses']);
+    Route::get('app/products/warhouse/{id}', [ProductController::class, 'ProductByWarehouseID']);
 });
