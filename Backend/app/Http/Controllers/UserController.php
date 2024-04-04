@@ -95,11 +95,31 @@ class UserController extends Controller
                 'message' => "User Not Found",
             ], 404);
         }
-        $user->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => "User successfully deleted",
-        ], 200);
+        if (auth()->user() == $user) {
+            return response()->json([
+                'status' => false,
+                'message' => "Access Denied",
+            ], 400);
+        }
+        if (auth()->user()->role_id == 1) {
+            $user->delete();
+            return response()->json([
+                'status' => true,
+                'message' => "User successfully deleted",
+            ], 200);
+        } elseif (auth()->user()->role_id == 2) {
+            if (!$user->role_id == 1 || !$user->role_id == 2) {
+                $user->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => "User successfully deleted",
+                ], 200);
+            }
+        } else {
+            return response()->json([
+                "status" => false,
+                "message" => "something went wrong",
+            ]);
+        }
     }
 }
