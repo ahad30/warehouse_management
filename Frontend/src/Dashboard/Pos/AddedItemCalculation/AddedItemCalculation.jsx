@@ -248,7 +248,14 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
           </div>
 
           <div
-            onClick={() => createPos()}
+            onClick={() => {
+              if (error === true) {
+               toast.error("you can't create pos")
+              }
+              else {
+                createPos()
+              }
+            }}
             className={`bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white ${
               error === true
                 ? "disabled  cursor-none bg-green-200"
