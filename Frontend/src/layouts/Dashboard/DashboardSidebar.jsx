@@ -184,7 +184,7 @@ const DashboardSidebar = () => {
     if (user?.get_role?.role === "Sub Admin") {
       setSidebarData((prev) =>
         prev.filter((item) => {
-          return item.name !== "Settings" && item.name !== "Users";
+          return item.name !== "Settings" ;
         })
       );
     }

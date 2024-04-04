@@ -16,9 +16,11 @@ import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const UsersList = () => {
-  // Set the title for the page
+  const { get_role } = useSelector((state) => state.auth?.user);
+  console.log(get_role);
   UseTitle("Users");
 
   // State to manage the edit user modal
@@ -29,7 +31,7 @@ const UsersList = () => {
 
   // Query to fetch user roles
   const { data: rolesData } = useGetUserRolesQuery();
-
+  console.log(rolesData);
   // Pagination and filtering related states
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
@@ -58,10 +60,38 @@ const UsersList = () => {
       data: deleteData,
     },
   ] = useDeleteUserMutation();
-
+  console.log(rolesData?.roles?.some((a) => a?.role === "Admin"));
   // Function to delete a user
+
   const onDelete = (id) => {
-    DeleteConformation(id, () => deleteUser(id));
+   
+    if (
+      get_role?.role === "Sub Admin" &&
+      usersData?.users?.some(
+        (item) => item?.id == id && item?.get_role?.role === "Admin"
+      )
+    ) {
+      toast.error("Access denied");
+    }
+    else if (
+      get_role?.role === "Sub Admin" &&
+      usersData?.users?.some(
+        (item) => item?.id == id && item?.get_role?.role === "Sub Admin"
+      )
+    ) {
+      toast.error("Access denied");
+    }
+    else if (
+      get_role?.role === "Admin" &&
+      usersData?.users?.some(
+        (item) => item?.id == id && item?.get_role?.role === "Admin"
+      )
+    ) {
+      toast.error("Access denied");
+    } else {
+      deleteUser(id);
+      // console.log("hello");
+    }
   };
 
   // Handle loading, error, and success to show toasts
@@ -145,9 +175,11 @@ const UsersList = () => {
           <button onClick={() => handleModalEditInfo(row)}>
             <FaEdit size={20}></FaEdit>
           </button>
-          <button onClick={() => onDelete(row?.id)}>
-            <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
-          </button>
+          {(get_role?.role === "Admin" || get_role?.role === "Sub Admin") && (
+            <button onClick={() => onDelete(row?.id)}>
+              <RiDeleteBin4Line size={20}></RiDeleteBin4Line>
+            </button>
+          )}
         </div>
       ),
     },
