@@ -17,6 +17,8 @@ import { FaEdit } from "react-icons/fa";
 import DeleteConformation from "../../components/DeleteConformationAlert/DeletConformation";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
+import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
+import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 
 const UsersList = () => {
   const { get_role } = useSelector((state) => state.auth?.user);
@@ -65,55 +67,46 @@ const UsersList = () => {
 
   const onDelete = (id) => {
    
-    if (
-      get_role?.role === "Sub Admin" &&
-      usersData?.users?.some(
-        (item) => item?.id == id && item?.get_role?.role === "Admin"
-      )
-    ) {
-      toast.error("Access denied");
-    }
-    else if (
-      get_role?.role === "Sub Admin" &&
-      usersData?.users?.some(
-        (item) => item?.id == id && item?.get_role?.role === "Sub Admin"
-      )
-    ) {
-      toast.error("Access denied");
-    }
-    else if (
-      get_role?.role === "Admin" &&
-      usersData?.users?.some(
-        (item) => item?.id == id && item?.get_role?.role === "Admin"
-      )
-    ) {
-      toast.error("Access denied");
-    } else {
-      deleteUser(id);
-      // console.log("hello");
-    }
+    // if (
+    //   get_role?.role === "Sub Admin" &&
+    //   usersData?.users?.some(
+    //     (item) => item?.id == id && item?.get_role?.role === "Admin"
+    //   )
+    // ) {
+    //   toast.error("Access denied");
+    // }
+    // else if (
+    //   get_role?.role === "Sub Admin" &&
+    //   usersData?.users?.some(
+    //     (item) => item?.id == id && item?.get_role?.role === "Sub Admin"
+    //   )
+    // ) {
+    //   toast.error("Access denied");
+    // }
+    // else if (
+    //   get_role?.role === "Admin" &&
+    //   usersData?.users?.some(
+    //     (item) => item?.id == id && item?.get_role?.role === "Admin"
+    //   )
+    // ) {
+    //   toast.error("Access denied");
+    // } else {
+    //   deleteUser(id);
+    //   // console.log("hello");
+    // }
+    deleteUser(id)
   };
-
-  // Handle loading, error, and success to show toasts
-  useEffect(() => {
-    if (deleteIsLoading) {
-      toast.loading("Loading...", { id: 1 });
-    }
-
-    if (deleteIsError) {
-      toast.error(deleteData?.data?.message || deleteError?.status, { id: 1 });
-    }
-
-    if (deleteIsSuccess) {
-      toast.success(deleteData?.message, { id: 1 });
-    }
-  }, [
+  // console.log(dele)
+  UseErrorMessages(deleteError)
+  useShowAsyncMessage(
     deleteIsLoading,
     deleteIsError,
     deleteError,
     deleteIsSuccess,
     deleteData,
-  ]);
+  
+  );
+ 
 
   // Function to handle opening the edit user modal
   const handleModalEditInfo = (row) => {
