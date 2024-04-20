@@ -29,7 +29,7 @@ class StoreProductRequest extends FormRequest
             'brand_id' => 'nullable|exists:brands,id',
             'product_name' => ['required', 'string', 'max:255'],
             'product_retail_price' => ['required', 'max:10'],
-            'product_sale_price' => ['required', 'max:10'],
+            'product_sale_price' => ['nullable', 'max:10'],
             'scan_code' => ['required', 'unique:products,scan_code'],
             'description' => ['nullable', 'string', 'max:255'],
         ];
