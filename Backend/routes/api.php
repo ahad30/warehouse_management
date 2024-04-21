@@ -92,10 +92,10 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::middleware(['verifyStaff'])->controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('/', 'index');
         Route::get('/create', 'create');
-        Route::post('/store', 'store');
+        Route::middleware('verifyAdmin')->post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update', 'update');
-        Route::middleware(['verifyAdmin', 'verifySubAdmin'])->delete('/delete/{id}', 'destroy');
+        Route::middleware('verifySubAdmin')->put('/update', 'update');
+        Route::middleware( 'verifySubAdmin')->delete('/delete/{id}', 'destroy');
         // for android
         Route::put('/app/update/{id}', [ProductController::class, 'appProductUpdate']);
         Route::put('/app/update/image/{id}', [ProductController::class, 'appProductImageUpdate']);

@@ -33,7 +33,7 @@ class UpdateProductRequest extends FormRequest
             'brand_id' => ['nullable'],
             'product_name' => ['required', 'string', 'max:255'],
             'product_retail_price' => ['required', 'max:10'],
-            'product_sale_price' => ['nullable', 'max:10'],
+            'product_sale_price' => ['required', 'max:10'],
             'description' => ['nullable', 'string', 'max:255'],
             'scan_code' => ['nullable', Rule::unique('products')->ignore(request()->input('id'))],
         ];
