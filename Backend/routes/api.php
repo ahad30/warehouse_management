@@ -95,7 +95,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
         Route::middleware('verifyAdmin')->post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
         Route::middleware('verifySubAdmin')->put('/update', 'update');
-        Route::middleware( 'verifySubAdmin')->delete('/delete/{id}', 'destroy');
+        Route::middleware( 'verifyAdmin')->delete('/delete/{id}', 'destroy');
         // for android
         Route::put('/app/update/{id}', [ProductController::class, 'appProductUpdate']);
         Route::put('/app/update/image/{id}', [ProductController::class, 'appProductImageUpdate']);
