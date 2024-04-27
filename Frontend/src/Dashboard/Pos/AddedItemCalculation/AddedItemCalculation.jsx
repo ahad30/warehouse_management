@@ -16,11 +16,14 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [tax, setTax] = useState(0.0);
   const [error, setError] = useState(false);
 
-  let temporaryValue = {
-    TShipping: 0,
+  const [temporaryValue, setTemporaryValue] = useState({
     TDiscount: 0,
+    TShipping: 0,
     TTax: 0,
-  };
+    IShipping: 0,
+    IDiscount: 0,
+    ITax: 0,
+  });
 
   const handleRemoveItem = (id) => {
     const filterItem = addedProduct?.filter((item) => item?.id !== id);
@@ -71,17 +74,28 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
     }
   };
   // handleShipping
-  const [n, setn] = useState([]);
+  console.log(temporaryValue);
   const handleShipping = (value) => {
-    setn([...n, value]);
-    console.log(n);
     // console.log(temporaryValue)
-    
+    if (temporaryValue.TShipping === 0) {
+      setTemporaryValue((prev) => ({
+        ...prev,
+        IShipping: totalPrice,
+      }));
+    }
+
+    // console.log(temporaryValue);
+
     if (value === "") {
-      console.log("hello");
-      // setTotalPrice(price);
-    } else if (value > temporaryValue.TShipping) {
-      temporaryValue.TShipping = value;
+      // console.log("hello");
+      setTotalPrice(temporaryValue.IShipping);
+    }
+    if (value > temporaryValue.TShipping) {
+      // temporaryValue.TShipping = value;
+      setTemporaryValue((prev) => ({
+        ...prev,
+        TShipping: parseFloat(value),
+      }));
       const count = parseFloat(totalPrice) + parseFloat(value);
       if (count < 0) {
         setError(true);
@@ -91,8 +105,9 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
         setShipping(value);
         setTotalPrice(count);
       }
-    } else if (value < temporaryValue.TShipping) {
-      temporaryValue.TShipping = value;
+    }
+    if (value < temporaryValue.TShipping) {
+      // temporaryValue.TShipping = value;
       const count = parseFloat(totalPrice) - parseFloat(value);
       if (count < 0) {
         setError(true);
@@ -259,7 +274,9 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
               Sub Total: {Number(addedProductPrice).toFixed(2)}
             </p>
             <p className="text-2xl my-2 font-semibold">
-              Total: {Number(totalPrice).toFixed(2)}
+              {/* Total: {Number(totalPrice).toFixed(2)}
+               */}
+               {totalPrice}
             </p>
           </div>
           {/* sidebar text Calculation end */}
