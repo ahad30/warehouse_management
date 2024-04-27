@@ -17,9 +17,5 @@ class BrandTableSeeder extends Seeder
             'brand_name' => "Others",
             'brand_img' => "N/A",
         ]);
-        Brand::create([
-            'brand_name' => "Brand 1",
-            'brand_img' => "N/A",
-        ]);
     }
 }

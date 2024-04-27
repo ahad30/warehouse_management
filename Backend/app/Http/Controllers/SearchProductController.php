@@ -11,14 +11,18 @@ class SearchProductController extends Controller
 
     public function index(Request $request)
     {
-        $product = Product::where('scan_code', $request->scan_code)->with('histories.fromWarehouseId','histories.toWarehouseId','histories.user','getCategory','getBrand','warehouse','productImages')->latest()->first();
-        
+        $product = Product::where('scan_code', $request->scan_code)
+            ->orWhere('product_name', $request->scan_code)
+            ->with('histories.fromWarehouseId', 'histories.toWarehouseId', 'histories.user', 'getCategory', 'getBrand', 'warehouse', 'productImages')
+            ->latest()->first();
+
         if (!$product) {
             return response()->json([
-                'status' => true,
+                'status' => false,
                 'message' => 'Product not found',
-            ], 200);
+            ], 404);
         }
+
         return response()->json([
             'status' => true,
             'data' =>  $product,

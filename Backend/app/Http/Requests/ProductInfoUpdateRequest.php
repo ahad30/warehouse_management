@@ -5,8 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class StoreProductRequest extends FormRequest
+class ProductInfoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +25,13 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse_id' => 'required|exists:warehouses,id',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'nullable|exists:brands,id',
+            'warehouse_id' => ['required'],
+            'category_id' => ['required'],
+            'brand_id' => ['nullable'],
+            'scan_code' => ['nullable', Rule::unique('products')->ignore(request()->id)],
             'product_name' => ['required', 'string', 'max:255'],
             'product_retail_price' => ['required', 'max:10'],
             'product_sale_price' => ['required', 'max:10'],
-            'scan_code' => ['required', 'unique:products,scan_code'],
             'description' => ['nullable', 'string', 'max:255'],
         ];
     }
@@ -38,8 +39,8 @@ class StoreProductRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'status'   => false,
-            'message'  => 'Validation errors',
-            'errors'   => $validator->errors()
+            'message'   => 'Validation errors',
+            'errors'      => $validator->errors()
         ], 400));
     }
 }

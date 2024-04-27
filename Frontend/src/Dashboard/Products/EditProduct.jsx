@@ -1,7 +1,7 @@
 import { bool, func, object } from "prop-types";
 import { useForm } from "react-hook-form";
 import {
-  useUpdateProductImageMutation,
+
   useUpdateProductMutation,
 } from "../../features/Product/productApi";
 import { toast } from "react-hot-toast";
@@ -10,7 +10,7 @@ import { useGetCategoriesQuery } from "../../features/Category/categoryApi";
 import { useGetBrandsQuery } from "../../features/Brand/brandApi";
 import { useGetStoresQuery } from "../../features/Store/storeApi";
 import { UseErrorMessages } from "../../components/Reusable/UseErrorMessages/UseErrorMessages";
-import { set } from "date-fns";
+
 import { ImCross } from "react-icons/im";
 import useShowAsyncMessage from "../../components/Reusable/UseShowAsyncMessage/useShowAsyncMessage";
 const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
@@ -62,6 +62,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       setValue("brand_id", product?.brand_id || "");
       setValue("product_images", product?.images || "");
       setValue("scan_code", product.scan_code || "");
+      setValue("description", product.description || "");
     }
   }, [product, setValue]);
   // console.log(product);
@@ -84,6 +85,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     formData.append("brand_id", data?.brand_id);
     formData.append("scan_code", data?.scan_code);
     formData.append("id", product?.id);
+    formData.append("description", data?.description);
     // formData.append("images[]", data?.new_images[0]);
 
     if (selectedImages.length > 0) {
@@ -327,6 +329,24 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
                       </div>
                     )}
                   </div>
+
+                  {/* image */}
+                  <div>
+                    <label
+                      htmlFor="OrderNotes"
+                      className="block text-lm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+
+                    <textarea
+                      {...register("description")}
+                      id="OrderNotes"
+                      className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+                      rows="6"
+                      placeholder="Enter any additional order notes..."
+                    ></textarea>
+                  </div>
                   <div className="items-center gap-2 mt-3 sm:flex">
                     <button
                       className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
@@ -352,10 +372,11 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
   );
 };
 
+
+export default EditProduct;
 EditProduct.propTypes = {
   modalIsOpen: bool,
   setModalIsOpen: func,
   product: object,
+  refetch: func,
 };
-
-export default EditProduct;

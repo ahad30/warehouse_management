@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\SaleItem;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,6 +21,7 @@ class Product extends Model
         "product_unit",
         "product_retail_price",
         "product_sale_price",
+        "description"
     ];
 
     public function getCategory()
@@ -49,7 +48,6 @@ class Product extends Model
     }
     public function histories()
     {
-        return $this->hasMany(History::class, 'product_id', 'id');
+        return $this->hasMany(History::class);
     }
-  
 }

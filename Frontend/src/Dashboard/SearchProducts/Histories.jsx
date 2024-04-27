@@ -1,6 +1,8 @@
+import { array, string } from "prop-types";
 import React from "react";
 
 const Histories = ({ histories, extraData }) => {
+  // console.log(histories)
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -14,6 +16,12 @@ const Histories = ({ histories, extraData }) => {
             </th>
             <th scope="col" className="px-6 py-3">
               Product Code
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Category
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Brand
             </th>
             <th scope="col" className="px-6 py-3">
               From
@@ -49,6 +57,14 @@ const Histories = ({ histories, extraData }) => {
                     ? extraData?.scan_code
                     : history?.products?.scan_code}
                 </th>
+                <td scope="col" className="px-6 py-3">
+                  {history?.products?.get_category?.category_name}
+                </td>
+                <td scope="col" className="px-6 py-3">
+                  {history?.products?.get_brand?.brand_name}
+                </td>
+
+                {/* d */}
                 <td className="px-6 py-4">
                   {history?.from_warehouse_id?.name}
                 </td>
@@ -75,3 +91,7 @@ const Histories = ({ histories, extraData }) => {
 };
 
 export default Histories;
+Histories.propTypes = {
+  histories: array,
+  extraData: string,
+};

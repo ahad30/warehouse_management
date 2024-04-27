@@ -120,15 +120,7 @@ const StoresList = () => {
       // selector: "store_address",
       selector: (row) => <>{row?.city}</>,
     },
-    // {
-    //   name: "Country",
-    //   // selector: "store_address",
-    //   selector: (row) => <>{row?.country}</>,
-    // },
-    // {
-    //   name: "Web",
-    //   selector: (row) => <>{row?.site_link}</>,
-    // },
+
     {
       name: "Image",
       cell: (row) => (
@@ -192,13 +184,14 @@ const StoresList = () => {
         <TableHeadingTitle>
           Warehouse: {storesData?.data?.length}
         </TableHeadingTitle>
-
-        <SearchAndAddBtn
-          btnTitle={"Add Warehouse"}
-          btnPath={"/dashboard/store/add"}
-          btnIcon={<FaStore size={20} />}
-          setFiltering={setFiltering}
-        />
+        <div className="lg:w-[84vw] w-full">
+          <SearchAndAddBtn
+            btnTitle={"Add Warehouse"}
+            btnPath={"/dashboard/store/add"}
+            btnIcon={<FaStore size={20} />}
+            setFiltering={setFiltering}
+          />
+        </div>
 
         {!storesIsSuccess && storesData?.status ? (
           <p className="text-center text-2xl mt-10">{storesData?.message}</p>

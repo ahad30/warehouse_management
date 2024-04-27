@@ -228,13 +228,13 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 placeholder="Discount"
                 className="border-0 focus:border-0 w-full focus:ring-0"
                 type="number"
-                // value={Number(discount) == 0 ? "Discount" : discount}
+                value={Number(discount) == 0 ? "Discount" : discount}
                 // value={Number(tax) == 0 ? "Discount" : discount}
-                value={
-                  Number(discount) > 100 || discount === 0
-                    ? "Discount"
-                    : discount
-                }
+                // value={
+                //   Number(discount) > 100 || discount === 0
+                //     ? "Discount"
+                //     : discount
+                // }
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value >= 0) {

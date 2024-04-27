@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductInfoUpdateRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -16,8 +17,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Exists;
 
 class ProductController extends Controller
 {
@@ -75,34 +74,32 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            $input = [
+
+            // Create the product
+            $productData = array_merge($request->validated(), [
                 'warehouse_id' => $request->warehouse_id,
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id,
-                'unique_code' => Str::random(8),
+                'unique_code' => uniqid('PRD-'),
                 'scan_code' => $request->scan_code,
-            ];
-            $product = Product::create(array_merge($request->validated(), $input));
+            ]);
+            $product = Product::create($productData);
 
+            // Upload and insert product images
             $images = $this->multipleImageUpload($request, 'uploads/products/images');
-
             $productImageData = [];
             foreach ($images as $image) {
                 $productImageData[] = [
-                    'product_id' => $product->id,
                     'image' => $image,
                 ];
             }
-            /**Inserting product image */
-            ProductImage::insert($productImageData);
+            $product->productImages()->createMany($productImageData);
 
             DB::commit();
             return $this->successResponse(['status' => true, 'message' => "Products uploaded"]);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->errorResponse([
-                'message' => "something went wrong",
-            ]);
+            return $this->errorResponse(['message' => "Something went wrong"]);
         }
     }
 
@@ -110,47 +107,63 @@ class ProductController extends Controller
     // edit
     public function edit($id)
     {
-        $data = ProductResource::collection(Product::latest()->get());
-
+        // $data = ProductResource::collection(Product::latest()->get());
+        $data = Product::find($id);
         return $this->successResponse([
             'status' => true,
             'data' => $data,
-        ]);
+        ],200);
     }
 
 
     // update
     public function update(UpdateProductRequest $request)
     {
-
         $product = Product::find($request->id);
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
         }
+        if(auth()->user()->role_id == 2){
+            $data = $product->update(['product_sale_price' => $request->product_sale_price]);
+             if (!$data) {
+                 return $this->errorResponse(null, 'Something went wrong');
+             }
+             return $this->successResponse([
+                 'status' => true,
+                 'message' => "Product sold price updated"
+             ],200);
+         }elseif(auth()->user()->role_id == 1){
+            try {
+                $this->imageUpdate($request, $product->id);
 
-        try {
-            $this->imageUpdate($request, $product->id);
+                $input = [
+                    'warehouse_id' => $request->warehouse_id,
+                    'category_id' => $request->category_id,
+                    'brand_id' => $request->brand_id,
+                    'unique_code' => uniqid('PRD-'),
+                    'scan_code' => $request->scan_code,
+                ];
 
-            $input = [
-                'warehouse_id' => $request->warehouse_id,
-                'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id,
-                'unique_code' => Str::random(8),
-                'scan_code' => $request->scan_code,
-            ];
-
-            $data = $product->update(array_merge($request->validated(), $input));
-            if (!$data) {
-                return $this->errorResponse(null, 'Something went wrong');
+                $data = $product->update(array_merge($request->validated(), $input));
+                if (!$data) {
+                    return $this->errorResponse(null, 'Something went wrong');
+                }
+                return $this->successResponse([
+                    'status' => true,
+                    'message' => "Product successfully updated"
+                ],200);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Something went wrong"
+                ]);
             }
-            return $this->successResponse([
-                'status' => true,
-                'message' => "Product successfully updated"
+         }else{
+            return response()->json([
+               'status' => false,
+               'message' => "You don't have permission to update this product"
             ]);
-        } catch (Exception $e) {
-            return $e->getMessage();
-            // return $this->errorResponse(null, 'Something went wrong');
-        }
+        }        
     }
     /**
      * Delete Multiple Product Images
@@ -160,11 +173,13 @@ class ProductController extends Controller
     public function imageUpdate(Request $request, $id)
     {
         if ($request->image_ids[0]) {
-            info($request->image_ids);
             foreach ($request->image_ids as $image_id) {
                 $product_images = ProductImage::where('id', $image_id)->first();
                 if (!$product_images) {
-                    throw new Exception('data not found');
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Image not found"
+                    ]);
                 }
                 // delete files
                 if (File::exists($product_images->image)) {
@@ -177,16 +192,13 @@ class ProductController extends Controller
         /**
          * * insert multiple images
          */
-        // info($request->images[0]);
         $images = $this->multipleImageUpload($request, 'uploads/products/images');
         foreach ($images as $image) {
-            info($image);
-            $data = ProductImage::create([
+            ProductImage::create([
                 'product_id' => $id,
                 'image' => $image,
             ]);
         }
-
     }
 
 
@@ -216,5 +228,110 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse(null, "Unable to delete product", 400);
         }
+    }
+
+    // ===================================== For Android App ===========================================//
+
+    // update product information
+    public function appProductUpdate(ProductInfoUpdateRequest $request, $id)
+    {
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => "Product not found"
+            ], 404);
+        }
+        if(auth()->user()->role_id == 1){
+            $product->update($request->validated());
+
+            return response()->json([
+                'status' => true,
+                'message' => "Product successfully updated"
+            ], 200);
+        }elseif(auth()->user()->role_id == 2){
+            $product->update(['product_sale_price' => $request->product_sale_price]);
+            return response()->json([
+                'status' => true,
+                'message' => "Product sold price updated"
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "You don't have permission to update"
+            ], 400);
+        }
+       
+    }
+
+    public function appProductImageUpdate(Request $request, $id)
+    {
+        // Find product with eager loading of productImages relationship
+        $product = Product::with('productImages')->find($id);
+
+        // Check if product exists
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => "Product not found"
+            ], 404);
+        }
+
+        if ($request->hasFile('images')) {
+            // Use bulk insertion for product images
+            DB::transaction(function () use ($request, $product) {
+                // Upload and insert product images
+                $images = $this->multipleImageUpload($request, 'uploads/products/images');
+
+                // Prepare product image data for bulk insertion
+                $productImageData = [];
+                foreach ($images as $image) {
+                    $productImageData[] = [
+                        'product_id' => $product->id,
+                        'image' => $image,
+                    ];
+                }
+
+                // Bulk insert product images
+                ProductImage::insert($productImageData);
+            });
+        }
+
+        if ($request->imageId) {
+            $product_image = ProductImage::where('id', $request->imageId)->first();
+            if (!$product_image) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Image not found",
+                ], 404);
+            }
+            // delete files
+            if (File::exists($product_image->image)) {
+                File::delete($product_image->image);
+            }
+            $product_image->delete();
+        }
+
+        // Return success response
+        return response()->json([
+            'status' => true,
+            'message' => "Product images successfully updated"
+        ], 200);
+    }
+    public function ProductByWarehouseID($id)
+    {
+        $product = Product::where('warehouse_id', $id)->with('getCategory', 'getBrand', 'warehouse', 'productImages')->get();
+        return response()->json([
+            'status' => true,
+            'data' => $product,
+        ], 200);
+    }
+    public function getWarehouses()
+    {
+        $warehouses = Warehouse::orderBy('name')->get(['id', 'name']);
+        return response()->json([
+            'status' => true,
+            'data' => $warehouses,
+        ], 200);
     }
 }
