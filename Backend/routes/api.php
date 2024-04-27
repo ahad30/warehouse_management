@@ -92,10 +92,10 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::middleware(['verifyStaff'])->controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('/', 'index');
         Route::get('/create', 'create');
-        Route::post('/store', 'store');
+        Route::middleware('verifyAdmin')->post('/store', 'store');
         Route::get('/edit/{id}', 'edit');
-        Route::put('/update', 'update');
-        Route::middleware(['verifyAdmin', 'verifySubAdmin'])->delete('/delete/{id}', 'destroy');
+        Route::middleware('verifySubAdmin')->put('/update', 'update');
+        Route::middleware( 'verifyAdmin')->delete('/delete/{id}', 'destroy');
         // for android
         Route::put('/app/update/{id}', [ProductController::class, 'appProductUpdate']);
         Route::put('/app/update/image/{id}', [ProductController::class, 'appProductImageUpdate']);
@@ -201,4 +201,7 @@ Route::middleware(['verifyJwtToken'])->group(function () {
     Route::post('/app/import', [ImportExportController::class, 'appImport']);
     Route::post('/export', [ImportExportController::class, 'export']);
     Route::post('/export-By-Warehouse/{id}', [ImportExportController::class, 'exportByWarehouse']);
+
+    Route::get('app/warhouse/list', [ProductController::class, 'getWarehouses']);
+    Route::get('app/products/warhouse/{id}', [ProductController::class, 'ProductByWarehouseID']);
 });

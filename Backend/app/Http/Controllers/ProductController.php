@@ -107,12 +107,12 @@ class ProductController extends Controller
     // edit
     public function edit($id)
     {
-        $data = ProductResource::collection(Product::latest()->get());
-
+        // $data = ProductResource::collection(Product::latest()->get());
+        $data = Product::find($id);
         return $this->successResponse([
             'status' => true,
             'data' => $data,
-        ]);
+        ],200);
     }
 
 
@@ -123,32 +123,47 @@ class ProductController extends Controller
         if (!$product) {
             return $this->errorResponse(null, 'Product not found', 404);
         }
+        if(auth()->user()->role_id == 2){
+            $data = $product->update(['product_sale_price' => $request->product_sale_price]);
+             if (!$data) {
+                 return $this->errorResponse(null, 'Something went wrong');
+             }
+             return $this->successResponse([
+                 'status' => true,
+                 'message' => "Product sold price updated"
+             ],200);
+         }elseif(auth()->user()->role_id == 1){
+            try {
+                $this->imageUpdate($request, $product->id);
 
-        try {
-            $this->imageUpdate($request, $product->id);
+                $input = [
+                    'warehouse_id' => $request->warehouse_id,
+                    'category_id' => $request->category_id,
+                    'brand_id' => $request->brand_id,
+                    'unique_code' => uniqid('PRD-'),
+                    'scan_code' => $request->scan_code,
+                ];
 
-            $input = [
-                'warehouse_id' => $request->warehouse_id,
-                'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id,
-                'unique_code' => uniqid('PRD-'),
-                'scan_code' => $request->scan_code,
-            ];
-
-            $data = $product->update(array_merge($request->validated(), $input));
-            if (!$data) {
-                return $this->errorResponse(null, 'Something went wrong');
+                $data = $product->update(array_merge($request->validated(), $input));
+                if (!$data) {
+                    return $this->errorResponse(null, 'Something went wrong');
+                }
+                return $this->successResponse([
+                    'status' => true,
+                    'message' => "Product successfully updated"
+                ],200);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Something went wrong"
+                ]);
             }
-            return $this->successResponse([
-                'status' => true,
-                'message' => "Product successfully updated"
-            ]);
-        } catch (Exception $e) {
+         }else{
             return response()->json([
-                'status' => false,
-                'message' => "Something went wrong"
+               'status' => false,
+               'message' => "You don't have permission to update this product"
             ]);
-        }
+        }        
     }
     /**
      * Delete Multiple Product Images
@@ -227,13 +242,26 @@ class ProductController extends Controller
                 'message' => "Product not found"
             ], 404);
         }
+        if(auth()->user()->role_id == 1){
+            $product->update($request->validated());
 
-        $product->update($request->validated());
-
-        return response()->json([
-            'status' => true,
-            'message' => "Product successfully updated"
-        ], 404);
+            return response()->json([
+                'status' => true,
+                'message' => "Product successfully updated"
+            ], 200);
+        }elseif(auth()->user()->role_id == 2){
+            $product->update(['product_sale_price' => $request->product_sale_price]);
+            return response()->json([
+                'status' => true,
+                'message' => "Product sold price updated"
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "You don't have permission to update"
+            ], 400);
+        }
+       
     }
 
     public function appProductImageUpdate(Request $request, $id)
@@ -288,6 +316,22 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'message' => "Product images successfully updated"
+        ], 200);
+    }
+    public function ProductByWarehouseID($id)
+    {
+        $product = Product::where('warehouse_id', $id)->with('getCategory', 'getBrand', 'warehouse', 'productImages')->get();
+        return response()->json([
+            'status' => true,
+            'data' => $product,
+        ], 200);
+    }
+    public function getWarehouses()
+    {
+        $warehouses = Warehouse::orderBy('name')->get(['id', 'name']);
+        return response()->json([
+            'status' => true,
+            'data' => $warehouses,
         ], 200);
     }
 }

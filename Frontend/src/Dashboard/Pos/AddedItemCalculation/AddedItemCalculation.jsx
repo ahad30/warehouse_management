@@ -15,6 +15,16 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
   const [shipping, setShipping] = useState(0);
   const [tax, setTax] = useState(0.0);
   const [error, setError] = useState(false);
+
+  const [temporaryValue, setTemporaryValue] = useState({
+    TDiscount: 0,
+    TShipping: 0,
+    TTax: 0,
+    IShipping: 0,
+    IDiscount: 0,
+    ITax: 0,
+  });
+
   const handleRemoveItem = (id) => {
     const filterItem = addedProduct?.filter((item) => item?.id !== id);
     setAddedProduct([...filterItem]);
@@ -37,7 +47,6 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
     setTotalPrice(addedProductPrice);
   }, [addedProduct]);
 
-  //   console.log(totalPrice);
   const handleTextAndDiscount = (value, from) => {
     if (value < 0) {
       setError(true);
@@ -64,21 +73,53 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
       setTotalPrice(count);
     }
   };
+  // handleShipping
+  console.log(temporaryValue);
   const handleShipping = (value) => {
-    if (value < 0) {
-      setError(true);
-      return toast.error("Value must be greater than zero");
+    // console.log(temporaryValue)
+    if (temporaryValue.TShipping === 0) {
+      setTemporaryValue((prev) => ({
+        ...prev,
+        IShipping: totalPrice,
+      }));
     }
-    const count = Number(totalPrice) + Number(value);
-    if (count < 0) {
-      setError(true);
-      toast.error("Provided Value is too high");
-    } else {
-      setError(false);
-      setShipping(value);
-      setTotalPrice(count);
+
+    // console.log(temporaryValue);
+
+    if (value === "") {
+      // console.log("hello");
+      setTotalPrice(temporaryValue.IShipping);
+    }
+    if (value > temporaryValue.TShipping) {
+      // temporaryValue.TShipping = value;
+      setTemporaryValue((prev) => ({
+        ...prev,
+        TShipping: parseFloat(value),
+      }));
+      const count = parseFloat(totalPrice) + parseFloat(value);
+      if (count < 0) {
+        setError(true);
+        toast.error("Provided Value is too high");
+      } else {
+        setError(false);
+        setShipping(value);
+        setTotalPrice(count);
+      }
+    }
+    if (value < temporaryValue.TShipping) {
+      // temporaryValue.TShipping = value;
+      const count = parseFloat(totalPrice) - parseFloat(value);
+      if (count < 0) {
+        setError(true);
+        toast.error("Provided Value is too high");
+      } else {
+        setError(false);
+        setShipping(value);
+        setTotalPrice(count);
+      }
     }
   };
+
   const [
     createNewPos,
     { data, isError, isLoading, isSuccess, error: posError },
@@ -164,7 +205,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
           {/* discount tax shipping start  */}
           <div className="flex flex-col gap-y-4">
             {/*  tax */}
-            <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+            {/* <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Tax"
                 className="border-0  w-full focus:border-0 focus:ring-0"
@@ -180,9 +221,9 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
               />
 
               <span>%</span>
-            </div>
+            </div> */}
             {/*  Discount */}
-            <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
+            {/* <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
                 placeholder="Discount"
                 className="border-0 focus:border-0 w-full focus:ring-0"
@@ -203,7 +244,8 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 }}
               />
               <span>%</span>
-            </div>
+            </div> */}
+
             {/*  shipping */}
             <div className="border border-gray-300 flex justify-between w-full items-center px-2 rounded-lg">
               <input
@@ -213,6 +255,7 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
                 value={Number(shipping) == 0 ? "Shipping" : shipping}
                 onChange={(e) => {
                   const value = e.target.value;
+
                   if (value >= 0) {
                     setShipping(value);
                     handleShipping(value);
@@ -231,7 +274,9 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
               Sub Total: {Number(addedProductPrice).toFixed(2)}
             </p>
             <p className="text-2xl my-2 font-semibold">
-              Total: {Number(totalPrice).toFixed(2)}
+              {/* Total: {Number(totalPrice).toFixed(2)}
+               */}
+               {totalPrice}
             </p>
           </div>
           {/* sidebar text Calculation end */}
@@ -248,7 +293,13 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
           </div>
 
           <div
-            onClick={() => createPos()}
+            onClick={() => {
+              if (error === true) {
+                toast.error("something went wrong");
+              } else {
+                createPos();
+              }
+            }}
             className={`bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white ${
               error === true
                 ? "disabled  cursor-none bg-green-200"
