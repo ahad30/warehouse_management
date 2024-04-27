@@ -13,7 +13,7 @@ class NameFilter
     {
         if (request()->filled('query')) {
             $query->whereHas('products', function (Builder $query) {
-                $query->where('product_name', 'like', '%' . request('query') . '%');
+                $query->orWhere('product_name', 'like', '%' . request('query') . '%');
             });
         }
 
