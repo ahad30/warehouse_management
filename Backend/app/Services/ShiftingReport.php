@@ -34,7 +34,7 @@ class ShiftingReport implements ReportInterface
                 TimeFilter::class,
             ])
             ->thenReturn()
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         return [
             'status' => true,
             'data' => $products,

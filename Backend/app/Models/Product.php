@@ -38,7 +38,7 @@ class Product extends Model
     }
     public function saleitems()
     {
-        return $this->belongsTo(SaleItem::class);
+        return $this->hasOne(SaleItem::class);
     }
 
     // product images rel
