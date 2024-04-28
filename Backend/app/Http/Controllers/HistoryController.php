@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\History;
 use Illuminate\Http\Request;
 use App\Interfaces\HistoryServiceInterface;
+use App\Repositories\ReportRepository;
 
 class HistoryController extends Controller
 {
     private $historyService;
-    public function __construct(HistoryServiceInterface $historyService)
+    private $reportRepository;
+    public function __construct(HistoryServiceInterface $historyService, ReportRepository $reportRepository)
     {
         $this->historyService = $historyService;
+        $this->reportRepository = $reportRepository;
     }
     /**
      * Get all histories

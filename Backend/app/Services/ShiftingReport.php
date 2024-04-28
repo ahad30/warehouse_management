@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Interfaces\ReportInterface;
+use App\Models\History;
 use Carbon\Carbon;
+use Illuminate\Pipeline\Pipeline;
+use App\Repositories\Filters\{NameFilter, BrandFilter, WarehouseFilter, CategoryFilter, TimeFilter};
 use Illuminate\Support\Facades\DB;
 
 class ShiftingReport implements ReportInterface
@@ -19,9 +22,24 @@ class ShiftingReport implements ReportInterface
         $soldProducts = $this->collectSoldProduct($timeRange, $warehouseId);
 
         $products = $this->mergeData($soldProducts, $newProducts);
+        $query = History::latest()->with('products');
+
+        $histories = app(Pipeline::class)
+            ->send($query)
+            ->through([
+                NameFilter::class,
+                BrandFilter::class,
+                CategoryFilter::class,
+                WarehouseFilter::class,
+                TimeFilter::class,
+            ])
+            ->thenReturn()
+            ->paginate(15);
         return [
             'status' => true,
             'data' => $products,
+            'histories' => $histories->load('fromWarehouseId', 'toWarehouseId', 'user', 'products.getBrand', 'products.getCategory'),
+            'paginator' => $histories->toArray()['links'],
             'statusCode' => 200
         ];
     }
