@@ -141,9 +141,9 @@ const routes = createBrowserRouter([
           {
             path: "/dashboard/user", // Users list
             element: (
-              <SuperAdminRoutes>
+              <SuperAndAdmin>
                 <UsersList />
-              </SuperAdminRoutes>
+              </SuperAndAdmin>
             ),
           },
           {

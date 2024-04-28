@@ -19,7 +19,7 @@ const Products = ({ setAddedProduct, addedProduct }) => {
   const [singleWarehouse, setSingleWarehouse] = useState("warehouse");
   const [singleScanCode, setSingleScanCode] = useState("");
   const [productsData, setProductsData] = useState([]);
-  const { data, isLoading } = useGetProductsForPosQuery({
+  const { data, isLoading, isFetching } = useGetProductsForPosQuery({
     warehouseId: singleWarehouse?.id ? singleWarehouse?.id : "",
     brandId: singleBrands?.id ? singleBrands?.id : "",
     categoryId: singleCategory?.id ? singleCategory?.id : "",
@@ -62,14 +62,17 @@ const Products = ({ setAddedProduct, addedProduct }) => {
       </div>
 
       {/* product */}
-      <div className="bg-[#FCFCFC]    rounded-b-lg px-3 max-h-[60vh] overflow-y-scroll">
+      <div className="bg-[#FCFCFC]  rounded-b-lg px-3 max-h-[60vh] overflow-y-scroll">
         {/* products card  start */}
         <div className="grid grid-cols-2 gap-5 mt-5 lg:grid-cols-5 ">
-          {isLoading
-            ? [...Array(5)].map((item, index) => (
-              <ProductsSkeleton key={index}></ProductsSkeleton>
-            ))
-            : productsData?.map(
+          {isFetching ? (
+            <div className="col-span-5 grid grid-cols-5 gap-x-3">
+              {[...Array(5)].map((item, index) => (
+                <ProductsSkeleton key={index}></ProductsSkeleton>
+              ))}
+            </div>
+          ) : (
+            productsData?.map(
               (item) =>
                 item?.id !== 0 && (
                   <SingleProductCard
@@ -79,7 +82,8 @@ const Products = ({ setAddedProduct, addedProduct }) => {
                     addedProduct={addedProduct}
                   ></SingleProductCard>
                 )
-            )}
+            )
+          )}
           {data?.data?.data?.length == 0 && (
             <p className="text-center text-2xl my-12 font-normal col-span-2 lg:col-span-5">
               No data is Available
