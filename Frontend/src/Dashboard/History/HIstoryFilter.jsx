@@ -50,10 +50,11 @@ const HIstoryFilter = ({
           ))}
         </select>
       </label>
+      
       {/* From warehouse */}
       <label className="input-group">
         <span className="font-semibold text-sm">
-          From Warehouse<span className="text-red-500 p-0">*</span>
+         Warehouse<span className="text-red-500 p-0">*</span>
         </span>
         <select
           // onChange={()=>}
@@ -68,8 +69,9 @@ const HIstoryFilter = ({
           ))}
         </select>
       </label>
+
       {/* To warehouse */}
-      <label className="input-group">
+      {/* <label className="input-group">
         <span className="font-semibold text-sm">
           To Warehouse<span className="text-red-500 p-0">*</span>
         </span>
@@ -86,7 +88,7 @@ const HIstoryFilter = ({
             </option>
           ))}
         </select>
-      </label>
+      </label> */}
     </div>
   );
 };
