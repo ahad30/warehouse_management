@@ -1,4 +1,4 @@
-import TableHeadingTitle from "../../components/Reusable/Titles/TableHeadingTitle";
+
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
 import { BiSolidDuplicate } from "react-icons/bi";
 import { useEffect, useState } from "react";
@@ -64,6 +64,10 @@ const HistoryList = () => {
           setToWarehouse={setToWarehouse}
           setFromWarehouse={setFromWarehouse}
         ></HIstoryFilter>
+        <div className="flex justify-between my-7">
+          <p className="text-xl font-medium">Incoming Product</p>
+          <p className="text-xl font-medium">Outgoing Product</p>
+        </div>
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
           setFiltering={setFiltering}
