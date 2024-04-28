@@ -44,7 +44,7 @@ const SaleReport = () => {
   const [filterData, setFilterData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 11;
-  // console.log(filterData);
+  console.log(filterData);
   const handleStartDate = (date) => {
     setStartDate(date);
     setDate("custom");
