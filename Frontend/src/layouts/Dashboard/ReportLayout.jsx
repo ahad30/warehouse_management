@@ -4,6 +4,7 @@ import InvoicesList from "../../Dashboard/Invoices/InvoicesList";
 import ProductReport from "../../Dashboard/Report/ProductReport/ProductReport";
 import ShiftProduct from "../../Dashboard/Report/ProductReport/ShiftProduct";
 import SaleReport from "../../Dashboard/Report/ProductReport/SaleReport";
+import HistoryList from "../../Dashboard/History/HistoryList";
 
 const ReportLayout = () => {
   return (
@@ -12,18 +13,15 @@ const ReportLayout = () => {
       <Tabs>
         <TabList className={`px-5`}>
           {/* <Tab>Product</Tab> */}
-          <Tab>Shift</Tab>
-          <Tab>Sale</Tab>
+          <Tab>General Report</Tab>
+          <Tab>Sold Report</Tab>
         </TabList>
 
-        {/* <TabPanel>
-          <ProductReport />
-        </TabPanel> */}
         <TabPanel>
-          <ShiftProduct></ShiftProduct>
+          <HistoryList></HistoryList>
         </TabPanel>
         <TabPanel>
-          <SaleReport></SaleReport>
+          <HistoryList></HistoryList>
         </TabPanel>
       </Tabs>
     </div>

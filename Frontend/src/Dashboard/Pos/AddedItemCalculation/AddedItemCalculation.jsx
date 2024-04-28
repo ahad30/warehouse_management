@@ -295,9 +295,10 @@ const AddedItemCalculation = ({ setAddedProduct, addedProduct }) => {
           <div
             onClick={() => {
               if (error === true) {
-                toast.error("something went wrong");
-              } else {
-                createPos();
+               toast.error("you can't create pos")
+              }
+              else {
+                createPos()
               }
             }}
             className={`bg-[#2FC989] w-1/2 py-3 rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium text-white ${
