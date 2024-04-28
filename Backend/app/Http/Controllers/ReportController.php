@@ -21,7 +21,6 @@ class ReportController extends Controller
     // getting sale reports
     public function salesReport()
     {
-
         $reports = $this->reportRepository->getSaleReport();
 
         if (!$reports['status']) {

@@ -24,14 +24,14 @@ class CsvRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse' => 'required|string',
-            'category' => 'required|string',
-            'brand' => 'nullable|string',
-            'product_name' => ['required', 'string', 'max:255'],
-            'retail_price' => ['required', 'max:10'],
-            'sale_price' => ['required', 'max:10'],
-            'scan_code' => ['required', 'unique:products,scan_code'],
-            'description' => ['nullable', 'string', 'max:255'],
+            '*.warehouse_id' => 'required|integer|exists:warehouses,id',
+            '*.category_id' => 'required|integer|exists:categories,id',
+            '*.brand_id' => 'nullable|integer|exists:brands,id',
+            '*.product_name' => ['required', 'string', 'max:255'],
+            '*.scan_code' => ['required', 'unique:products,scan_code'],
+            '*.product_retail_price' => ['required', 'max:10'],
+            '*.product_sale_price' => ['required', 'max:10'],
+            '*.description' => ['nullable', 'string', 'max:255'],
         ];
     }
     public function failedValidation(Validation $validator)
