@@ -55,7 +55,9 @@ class ReportController extends Controller
         }
         return response()->json([
             'status' => true,
-            'data' => $reports['data']
+            'data' => $reports['data'],
+            'histories' => $reports['histories'],
+            'paginator' => $reports['paginator']
         ], $reports['statusCode']);
     }
 }
