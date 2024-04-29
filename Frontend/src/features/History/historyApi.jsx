@@ -13,6 +13,8 @@ const historyApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["getHistory"],
     }),
+
+    
     getHistory: build.query({
       query: ({
         pageNumber,

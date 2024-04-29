@@ -2,38 +2,44 @@
 import { BiSolidDuplicate } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetHistoryQuery } from "../../../features/History/historyApi";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
 import SearchAndAddBtn from "../../../components/Reusable/Inputs/SearchAndAddBtn";
 import HIstoryFilter from "../../History/HIstoryFilter";
 import Paginator from "../../../components/Paginator/Paginator";
 import SoldReportTable from "../../SearchProducts/SoldReportTable";
+import { useGetSoldReportQuery } from "../../../features/SoldReport/SoldReportApi";
 
 const SoldReport = () => {
   const [filterData, setFilterData] = useState([]);
   const [query, setQuery] = useState("");
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
-  const [categoyrId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [brandId, setBrandId] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [fromWarehouse, setFromWarehouse] = useState("");
-  const [toWarehouse, setToWarehouse] = useState("");
-  const { data: historiesData, isLoading: historiesIsLoading } =
-    useGetHistoryQuery({
+  const [warehouseId, setWarehouseId] = useState("");
+  const [productCode, setProductCode] = useState("");
+
+  const { data: soldData, isLoading: historiesIsLoading, isError, error } =
+    useGetSoldReportQuery({
       pageNumber: ActivePageNumber,
       query: query,
       brand_id: brandId ? brandId : "",
-      category_id: categoyrId ? categoyrId : "",
-      to_warehouse: toWarehouse ? toWarehouse : "",
+      category_id: categoryId ? categoryId : "",
       starting_date: startDate ? startDate : "",
       ending_date: endDate ? endDate : "",
-      from_warehouse: fromWarehouse ? fromWarehouse : "",
+      warehouse_id: warehouseId ? warehouseId : "",
+      product_code : productCode ? productCode : ""
     });
+
+    console.log(historiesIsLoading, soldData, isError, error);
+    
   useEffect(() => {
-    setFilterData(historiesData?.data?.histories);
-  }, [historiesData?.data, historiesData, historiesData?.data?.length]);
+    setFilterData(soldData?.data?.histories);
+    console.log(soldData?.data?.histories);
+
+  }, [soldData?.data, soldData, soldData?.data?.length]);
 
   // ALL CATEGORIES
   if (historiesIsLoading) {
@@ -55,14 +61,14 @@ const SoldReport = () => {
     <>
       <DashboardBackground>
         {/* <TableHeadingTitle>
-          History {historiesData?.histories?.length}{" "}
+          History {soldData?.histories?.length}{" "}
         </TableHeadingTitle> */}
 
         <HIstoryFilter
           setBrandId={setBrandId}
           setCategoryId={setCategoryId}
-          setToWarehouse={setToWarehouse}
-          setFromWarehouse={setFromWarehouse}
+          setWarehouseId={setWarehouseId}
+          setProductCode ={setProductCode}
         ></HIstoryFilter>
         <div className="flex justify-between my-7">
           <p className="text-xl font-medium">Incoming Product</p>
@@ -83,7 +89,7 @@ const SoldReport = () => {
 
         <SoldReportTable histories={filterData} />
         <br></br>
-        <Paginator links={historiesData?.data?.paginator} />
+        <Paginator links={soldData?.data?.paginator} />
         <br></br>
       </DashboardBackground>
     </>

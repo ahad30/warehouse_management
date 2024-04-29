@@ -31,6 +31,8 @@ const HistoryList = () => {
       ending_date: endDate ? endDate : "",
       from_warehouse: fromWarehouse ? fromWarehouse : "",
     });
+
+    console.log(historiesData)
   useEffect(() => {
     setFilterData(historiesData?.data?.histories);
   }, [historiesData?.data, historiesData, historiesData?.data?.length]);
