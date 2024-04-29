@@ -24,7 +24,6 @@ const SoldReport = () => {
   const { data: soldData, isLoading: historiesIsLoading, isError, error } =
     useGetSoldReportQuery({
       pageNumber: ActivePageNumber,
-      query: query,
       brand_id: brandId ? brandId : "",
       category_id: categoryId ? categoryId : "",
       starting_date: startDate ? startDate : "",
