@@ -1,5 +1,4 @@
 import { array, string } from "prop-types";
-import React from "react";
 
 const Histories = ({ histories, extraData }) => {
   console.log(histories)

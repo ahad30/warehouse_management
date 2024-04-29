@@ -24,18 +24,11 @@ const SoldReportTable = ({histories, extraData }) => {
             Brand
           </th>
           <th scope="col" className="px-6 py-3">
-            From
+            Warehouse
           </th>
     
           <th scope="col" className="px-6 py-3">
             Price
-          </th>
-          <th scope="col" className="px-6 py-3">
-            Date
-          </th>
-
-          <th scope="col" className="px-6 py-3">
-            By
           </th>
           
         </tr>
@@ -67,11 +60,9 @@ const SoldReportTable = ({histories, extraData }) => {
                 {history?.products?.get_brand?.brand_name}
               </td>
               <td className="px-6 py-4">
-                {history?.from_warehouse_id?.name}
+                {history?.products?.warehouse?.name}
               </td>
               <td className="px-6 py-4">{history?.products?.product_retail_price}</td>
-              <td className="px-6 py-4">{history?.created_at}</td>
-              <td className="px-6 py-4">{history?.user?.name}</td>
             </tr>
           ))
         ) : (

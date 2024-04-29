@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
 import SearchAndAddBtn from "../../../components/Reusable/Inputs/SearchAndAddBtn";
-import HIstoryFilter from "../../History/HIstoryFilter";
 import Paginator from "../../../components/Paginator/Paginator";
-import SoldReportTable from "../../SearchProducts/SoldReportTable";
+import SoldReportTable from "./SoldReportTable";
 import { useGetSoldReportQuery } from "../../../features/SoldReport/SoldReportApi";
+import SoldReportFilter from "./SoldReportFilter";
 
 const SoldReport = () => {
   const [filterData, setFilterData] = useState([]);
@@ -24,19 +24,19 @@ const SoldReport = () => {
   const { data: soldData, isLoading: historiesIsLoading, isError, error } =
     useGetSoldReportQuery({
       pageNumber: ActivePageNumber,
-      brand_id: brandId ? brandId : "",
-      category_id: categoryId ? categoryId : "",
-      starting_date: startDate ? startDate : "",
-      ending_date: endDate ? endDate : "",
-      warehouse_id: warehouseId ? warehouseId : "",
-      product_code : productCode ? productCode : ""
+      brand_id: brandId ,
+      category_id: categoryId ,
+      starting_date: startDate ,
+      ending_date: endDate,
+      warehouse_id: warehouseId,
+      product_code : productCode
     });
 
-    console.log(historiesIsLoading, soldData, isError, error);
+    console.log( soldData?.data?.data );
     
   useEffect(() => {
-    setFilterData(soldData?.data?.histories);
-    console.log(soldData?.data?.histories);
+    setFilterData(soldData?.data?.data);
+    console.log(soldData?.data?.data);
 
   }, [soldData?.data, soldData, soldData?.data?.length]);
 
@@ -63,16 +63,14 @@ const SoldReport = () => {
           History {soldData?.histories?.length}{" "}
         </TableHeadingTitle> */}
 
-        <HIstoryFilter
+        <SoldReportFilter
           setBrandId={setBrandId}
           setCategoryId={setCategoryId}
           setWarehouseId={setWarehouseId}
           setProductCode ={setProductCode}
-        ></HIstoryFilter>
-        <div className="flex justify-between my-7">
-          <p className="text-xl font-medium">Incoming Product</p>
-          <p className="text-xl font-medium">Outgoing Product</p>
-        </div>
+        ></SoldReportFilter>
+
+
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
           setFiltering={setFiltering}

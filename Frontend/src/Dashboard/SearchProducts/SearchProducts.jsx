@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import UseTitle from "../../components/Reusable/UseTitle/UseTitle";
 import DashboardBackground from "../../layouts/Dashboard/DashboardBackground";
-import Histories from "./Histories";
 
 import toast from "react-hot-toast";
 import axios from "axios";
+import Histories from "../History/Histories";
 
 const SearchProducts = () => {
   UseTitle("Find Product");

@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { useGetHistoryQuery } from "../../features/History/historyApi";
-import Histories from "../SearchProducts/Histories";
 import Paginator from "../../components/Paginator/Paginator";
 import { useSelector } from "react-redux";
 import HIstoryFilter from "./HIstoryFilter";
+import Histories from "./Histories";
 
 const HistoryList = () => {
   const [filterData, setFilterData] = useState([]);
