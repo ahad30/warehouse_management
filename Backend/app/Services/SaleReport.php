@@ -44,7 +44,7 @@ class SaleReport implements ReportInterface
         });
     }
     if ($productCode) {
-        $query->where('code', $productCode);
+        $query->where('scan_code', $productCode);
     }
 
     // Apply date filtering

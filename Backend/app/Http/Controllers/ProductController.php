@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductInfoUpdateRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
@@ -43,7 +42,7 @@ class ProductController extends Controller
             $query = $query->where('warehouse_id', $request->warehouse_id);
         }
 
-        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name', 'productImages')->latest()->paginate(15);
+        $data = $query->with('getCategory:id,category_name', 'warehouse:id,name', 'getBrand:id,brand_name', 'productImages')->orderBy('updated_at', 'DESC')->paginate(15);
 
         return response()->json([
             'status' => true,
@@ -82,6 +81,7 @@ class ProductController extends Controller
                 'brand_id' => $request->brand_id,
                 'unique_code' => uniqid('PRD-'),
                 'scan_code' => $request->scan_code,
+                'updated_at' => now()
             ]);
             $product = Product::create($productData);
 
