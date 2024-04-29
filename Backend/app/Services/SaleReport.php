@@ -61,7 +61,7 @@ class SaleReport implements ReportInterface
     }
 
     // Execute the query and eager load relationships
-    $products = $query->with('products', 'products.warehouse:id,name')
+    $products = $query->with('products','products.getCategory:id,category_name','products.getBrand:id,brand_name', 'products.warehouse:id,name')
                       ->paginate(15)
                       ->appends(request()->query());
 
