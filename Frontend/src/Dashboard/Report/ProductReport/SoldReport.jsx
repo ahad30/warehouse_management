@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import DashboardBackground from "../../../layouts/Dashboard/DashboardBackground";
 import UseLoading from "../../../components/Reusable/useLoading/UseLoading";
 import SearchAndAddBtn from "../../../components/Reusable/Inputs/SearchAndAddBtn";
-import Paginator from "../../../components/Paginator/Paginator";
 import SoldReportTable from "./SoldReportTable";
 import { useGetSoldReportQuery } from "../../../features/SoldReport/SoldReportApi";
 import SoldReportFilter from "./SoldReportFilter";
+import Paginator from "../../../components/Paginator/Paginator";
 
 const SoldReport = () => {
   const [filterData, setFilterData] = useState([]);

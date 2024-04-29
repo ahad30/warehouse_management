@@ -108,7 +108,7 @@ const TransferProduct = () => {
     }
     if (isSuccess && data?.status) {
       toast.success(data?.message, { id: 1 });
-      return navigate("/dashboard/history");
+      return navigate("/dashboard/report");
     }
   }, [
     isLoading,

@@ -1,4 +1,5 @@
 import { array, string } from "prop-types";
+import moment from 'moment';
 
 
 const SoldReportTable = ({histories, extraData }) => {
@@ -29,6 +30,9 @@ const SoldReportTable = ({histories, extraData }) => {
     
           <th scope="col" className="px-6 py-3">
             Price
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Date
           </th>
           
         </tr>
@@ -63,6 +67,8 @@ const SoldReportTable = ({histories, extraData }) => {
                 {history?.products?.warehouse?.name}
               </td>
               <td className="px-6 py-4">{history?.products?.product_retail_price}</td>
+              <td className="px-6 py-4">{moment(history?.created_at).format("MMM Do YY")}</td>
+
             </tr>
           ))
         ) : (

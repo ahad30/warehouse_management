@@ -1,7 +1,7 @@
 import { array, string } from "prop-types";
 
 const Histories = ({ histories, extraData }) => {
-  console.log(histories)
+  // console.log(histories)
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
