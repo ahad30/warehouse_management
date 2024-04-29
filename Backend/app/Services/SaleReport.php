@@ -11,62 +11,67 @@ class SaleReport implements ReportInterface
 {
     public function generateReport()
     {
-        $category = request()->category_id;
-        $brand = request()->brand_id;
-        $warehouse = request()->warehouse_id;
-        $productCode = request()->product_code;
-        $startDate = request()->starting_date;
-        $endDate = request()->ending_date;
-        // Initialize the base query
-        if ($startDate && $endDate && $startDate == $endDate) {
-            $endDate .= ' 23:59:59'; // Append the end of the day time
-        }
-        $query = SaleItem::query();
 
-        // Apply filters
-        
-        if ($category) {
-            $query->whereHas('products', function ($q) use ($category) {
-                $q->where('category_id', $category);
-            });
-        }
-        if ($brand) {
-            $query->whereHas('products', function ($q) use ($brand) {
-                $q->where('brand_id', $brand);
-            });
-        }
-        if ($warehouse) {
-            $query->whereHas('products', function ($q) use ($warehouse) {
-                $q->where('warehouse_id', $warehouse);
-            });
-        }
-        if ($productCode) {
-            $query->where('code', $productCode);
-        }
-        
-        if ($startDate == $endDate) {
-            // Adjust the end date to include the entire day
-            $endDate .= ' 23:59:59';
-        }
-        if ($startDate && $endDate) {
-            $endDate .= ' 23:59:59';
-            $query->whereBetween('created_at', [$startDate, $endDate]);
-        } elseif ($startDate) {
-            $query->where('created_at', '>=', $startDate);
-        } elseif ($endDate) {
-            // Adjust the end date to include the entire day
-            $endDate .= ' 23:59:59';
-            $query->where('created_at', '<=', $endDate);
-        }
-        // Execute the query and eager load relationships
-        $products = $query->with('products', 'products.warehouse:id,name')->paginate(15)->appends(request()->query());
+    $category = request()->category_id;
+    $brand = request()->brand_id;
+    $warehouse = request()->warehouse_id;
+    $productCode = request()->product_code;
+    $startDate = request()->starting_date;
+    $endDate = request()->ending_date;
 
-        return [
-            'status' => true,
-            'data' => $products,
-            // 'paginator' => $products->toArray()['links'],
-            'statusCode' => 200
-        ];
+    // Adjust the end date if start date and end date are the same
+    if ($startDate && $endDate && $startDate == $endDate) {
+        $endDate .= ' 23:59:59';
+    }
+
+    // Initialize the base query
+    $query = SaleItem::query();
+
+    // Apply filters if any query parameters are provided
+    if ($category) {
+        $query->whereHas('products', function ($q) use ($category) {
+            $q->where('category_id', $category);
+        });
+    }
+    if ($brand) {
+        $query->whereHas('products', function ($q) use ($brand) {
+            $q->where('brand_id', $brand);
+        });
+    }
+    if ($warehouse) {
+        $query->whereHas('products', function ($q) use ($warehouse) {
+            $q->where('warehouse_id', $warehouse);
+        });
+    }
+    if ($productCode) {
+        $query->where('code', $productCode);
+    }
+
+    // Apply date filtering
+    if ($startDate && $endDate) {
+        // Adjust end date to include the entire day
+        $endDate .= ' 23:59:59';
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    } elseif ($startDate) {
+        $query->where('created_at', '>=', $startDate);
+    } elseif ($endDate) {
+        // Adjust end date to include the entire day
+        $endDate .= ' 23:59:59';
+        $query->where('created_at', '<=', $endDate);
+    }
+
+    // Execute the query and eager load relationships
+    $products = $query->with('products', 'products.warehouse:id,name')
+                      ->paginate(15)
+                      ->appends(request()->query());
+
+    return [
+        'status' => true,
+        'data' => $products,
+        'statusCode' => 200
+    ];
+
+
 
         // $timeRange = request()->time_range; 
         // $newProducts = $this->collectNewProducts($timeRange);
