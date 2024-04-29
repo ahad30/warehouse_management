@@ -17,7 +17,7 @@ class SaleReport implements ReportInterface
     $warehouse = request()->warehouse_id;
     $productCode = request()->product_code;
     $startDate = request()->starting_date;
-    $endDate = request()->ending_date;
+    $endDate = request()->ending_date ;
 
     // Adjust the end date if start date and end date are the same
     if ($startDate && $endDate && $startDate == $endDate) {
