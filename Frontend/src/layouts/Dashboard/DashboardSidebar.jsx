@@ -62,11 +62,11 @@ const DashboardSidebar = () => {
       icon: <LiaFileInvoiceDollarSolid size={25} />,
       path: "/dashboard/products/transfer",
     },
-    {
-      name: "History",
-      icon: <FaHistory size={18}></FaHistory>,
-      path: "/dashboard/history",
-    },
+    // {
+    //   name: "History",
+    //   icon: <FaHistory size={18}></FaHistory>,
+    //   path: "/dashboard/history",
+    // },
     {
       name: "Users",
       icon: <BiUserCircle size={25} />,

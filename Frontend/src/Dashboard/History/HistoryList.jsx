@@ -5,35 +5,39 @@ import { useEffect, useState } from "react";
 import UseLoading from "../../components/Reusable/useLoading/UseLoading";
 import SearchAndAddBtn from "../../components/Reusable/Inputs/SearchAndAddBtn";
 import { useGetHistoryQuery } from "../../features/History/historyApi";
-import Histories from "../SearchProducts/Histories";
 import Paginator from "../../components/Paginator/Paginator";
 import { useSelector } from "react-redux";
 import HIstoryFilter from "./HIstoryFilter";
+import Histories from "./Histories";
 
 const HistoryList = () => {
   const [filterData, setFilterData] = useState([]);
   const [query, setQuery] = useState("");
   const ActivePageNumber = useSelector((state) => state?.pageSlice?.value);
-  const [categoyrId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [brandId, setBrandId] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [fromWarehouse, setFromWarehouse] = useState("");
-  const [toWarehouse, setToWarehouse] = useState("");
+  const [warehouseId, setWarehouseId] = useState("");
+  
   const { data: historiesData, isLoading: historiesIsLoading } =
     useGetHistoryQuery({
       pageNumber: ActivePageNumber,
       query: query,
-      brand_id: brandId ? brandId : "",
-      category_id: categoyrId ? categoyrId : "",
-      to_warehouse: toWarehouse ? toWarehouse : "",
-      starting_date: startDate ? startDate : "",
-      ending_date: endDate ? endDate : "",
-      from_warehouse: fromWarehouse ? fromWarehouse : "",
+      brand_id: brandId ,
+      category_id: categoryId ,
+      warehouse_id: warehouseId,
+      starting_date: startDate ,
+      ending_date: endDate,
+      
     });
+
+    console.log(historiesData?.data)
+
+
   useEffect(() => {
-    setFilterData(historiesData?.data?.histories);
-  }, [historiesData?.data, historiesData, historiesData?.data?.length]);
+    setFilterData(historiesData?.histories);
+  }, [historiesData?.histories, historiesData,historiesData?.data, historiesData?.histories?.length]);
 
   // ALL CATEGORIES
   if (historiesIsLoading) {
@@ -61,12 +65,27 @@ const HistoryList = () => {
         <HIstoryFilter
           setBrandId={setBrandId}
           setCategoryId={setCategoryId}
-          setToWarehouse={setToWarehouse}
-          setFromWarehouse={setFromWarehouse}
+          setWarehouseId={setWarehouseId}
         ></HIstoryFilter>
+
         <div className="flex justify-between my-7">
-          <p className="text-xl font-medium">Incoming Product</p>
-          <p className="text-xl font-medium">Outgoing Product</p>
+         {
+             historiesData.data?.map(product => (
+            <>
+            <div>
+            <p className="text-lg font-bold">Incoming Products: {product.incomingProducts}</p>
+            </div>
+            <div>
+            <p className="text-lg font-bold">Outgoing Products:  {product.shiftProducts ?product.shiftProducts : 'Nothing Yet'}</p>
+            </div>
+            <div>
+            <p className="text-lg font-bold">Date: {product.date}</p>
+            </div>
+            
+            </>
+          ))
+         }
+
         </div>
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn

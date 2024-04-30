@@ -1,5 +1,4 @@
 import { array, string } from "prop-types";
-import React from "react";
 
 const Histories = ({ histories, extraData }) => {
   // console.log(histories)
@@ -30,11 +29,16 @@ const Histories = ({ histories, extraData }) => {
               to
             </th>
             <th scope="col" className="px-6 py-3">
+              Price
+            </th>
+            <th scope="col" className="px-6 py-3">
               Date
             </th>
+
             <th scope="col" className="px-6 py-3">
               By
             </th>
+            
           </tr>
         </thead>
         <tbody>
@@ -69,6 +73,7 @@ const Histories = ({ histories, extraData }) => {
                   {history?.from_warehouse_id?.name}
                 </td>
                 <td className="px-6 py-4"> {history?.to_warehouse_id?.name}</td>
+                <td className="px-6 py-4">{history?.products?.product_retail_price}</td>
                 <td className="px-6 py-4">{history?.created_at}</td>
                 <td className="px-6 py-4">{history?.user?.name}</td>
               </tr>

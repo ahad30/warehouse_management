@@ -7,8 +7,7 @@ import { useState } from "react";
 const HIstoryFilter = ({
   setBrandId,
   setCategoryId,
-  setToWarehouse,
-  setFromWarehouse,
+  setWarehouseId
 }) => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
@@ -50,14 +49,15 @@ const HIstoryFilter = ({
           ))}
         </select>
       </label>
-      {/* From warehouse */}
+      
+      {/*  warehouse */}
       <label className="input-group">
         <span className="font-semibold text-sm">
-          From Warehouse<span className="text-red-500 p-0">*</span>
+         Warehouse<span className="text-red-500 p-0">*</span>
         </span>
         <select
           // onChange={()=>}
-          onChange={(e) => setFromWarehouse(e.target.value)}
+          onChange={(e) => setWarehouseId(e.target.value)}
           className="select select-bordered w-full"
         >
           <option value={""}>Select Warehouse Info</option>
@@ -68,8 +68,9 @@ const HIstoryFilter = ({
           ))}
         </select>
       </label>
+
       {/* To warehouse */}
-      <label className="input-group">
+      {/* <label className="input-group">
         <span className="font-semibold text-sm">
           To Warehouse<span className="text-red-500 p-0">*</span>
         </span>
@@ -86,7 +87,7 @@ const HIstoryFilter = ({
             </option>
           ))}
         </select>
-      </label>
+      </label> */}
     </div>
   );
 };

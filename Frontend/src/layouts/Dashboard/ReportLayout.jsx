@@ -1,10 +1,7 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import InvoicesList from "../../Dashboard/Invoices/InvoicesList";
-import ProductReport from "../../Dashboard/Report/ProductReport/ProductReport";
-import ShiftProduct from "../../Dashboard/Report/ProductReport/ShiftProduct";
-import SaleReport from "../../Dashboard/Report/ProductReport/SaleReport";
 import HistoryList from "../../Dashboard/History/HistoryList";
+import SoldReport from "../../Dashboard/Report/ProductReport/SoldReport";
 
 const ReportLayout = () => {
   return (
@@ -21,7 +18,7 @@ const ReportLayout = () => {
           <HistoryList></HistoryList>
         </TabPanel>
         <TabPanel>
-          <HistoryList></HistoryList>
+          <SoldReport/>
         </TabPanel>
       </Tabs>
     </div>
