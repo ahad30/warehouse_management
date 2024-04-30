@@ -32,12 +32,12 @@ const HistoryList = () => {
       
     });
 
-    console.log(historiesData)
+    console.log(historiesData?.data)
 
 
   useEffect(() => {
     setFilterData(historiesData?.histories);
-  }, [historiesData?.histories, historiesData, historiesData?.histories?.length]);
+  }, [historiesData?.histories, historiesData,historiesData?.data, historiesData?.histories?.length]);
 
   // ALL CATEGORIES
   if (historiesIsLoading) {
@@ -67,9 +67,25 @@ const HistoryList = () => {
           setCategoryId={setCategoryId}
           setWarehouseId={setWarehouseId}
         ></HIstoryFilter>
+
         <div className="flex justify-between my-7">
-          <p className="text-xl font-medium">Incoming Product</p>
-          <p className="text-xl font-medium">Outgoing Product</p>
+         {
+             historiesData.data?.map(product => (
+            <>
+            <div>
+            <p className="text-lg font-bold">Incoming Products: {product.incomingProducts}</p>
+            </div>
+            <div>
+            <p className="text-lg font-bold">Outgoing Products:  {product.shiftProducts ?product.shiftProducts : 'Nothing Yet'}</p>
+            </div>
+            <div>
+            <p className="text-lg font-bold">Date: {product.date}</p>
+            </div>
+            
+            </>
+          ))
+         }
+
         </div>
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
