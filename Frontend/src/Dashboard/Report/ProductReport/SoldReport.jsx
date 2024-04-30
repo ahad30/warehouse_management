@@ -32,7 +32,7 @@ const SoldReport = () => {
       product_code : productCode
     });
 
-    console.log( soldData?.data?.data );
+    console.log( soldData);
     
   useEffect(() => {
     setFilterData(soldData?.data?.data);
@@ -86,7 +86,7 @@ const SoldReport = () => {
 
         <SoldReportTable histories={filterData} />
         <br></br>
-        <Paginator links={soldData?.data?.paginator} />
+        <Paginator links={soldData?.data?.links} />
         <br></br>
       </DashboardBackground>
     </>
