@@ -82,8 +82,8 @@ const Histories = ({ histories, extraData }) => {
             <tr className="bg-white border-b ">
               <th
                 scope="row"
-                colSpan={4}
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                colSpan={12}
+                className="font-bold text-red-500 text-lg  whitespace-nowrap text-center"
               >
                 No data yet
               </th>

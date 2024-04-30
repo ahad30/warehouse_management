@@ -32,7 +32,7 @@ const HistoryList = () => {
       
     });
 
-    console.log(historiesData?.data)
+    console.log(historiesData)
 
 
   useEffect(() => {
@@ -69,6 +69,7 @@ const HistoryList = () => {
         ></HIstoryFilter>
 
         <div className="flex justify-between my-7">
+
          {
              historiesData.data?.map(product => (
             <>
@@ -87,6 +88,14 @@ const HistoryList = () => {
          }
 
         </div>
+        {historiesData?.data?.length == 0 && (
+            <p className="text-center text-xl my-12 font-bold text-red-600">
+              No Incoming & Outgoing Product found
+            </p>
+          )
+        }
+
+
         {/* SEARCH AND BTN */}
         <SearchAndAddBtn
           setFiltering={setFiltering}
@@ -102,7 +111,7 @@ const HistoryList = () => {
 
         <Histories histories={filterData} />
         <br></br>
-        <Paginator links={historiesData?.data?.paginator} />
+        <Paginator links={historiesData?.paginator} />
         <br></br>
       </DashboardBackground>
     </>
