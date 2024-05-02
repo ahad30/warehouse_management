@@ -106,7 +106,7 @@ const ProductsList = () => {
     setModalIsOpen(true);
   };
   // EDIT ENDS
-  console.log(filterData?.data);
+  // console.log(filterData?.data);
 
   const handleImagesView = (row) => {
     setProduct(row);
@@ -249,7 +249,7 @@ const ProductsList = () => {
       setFilterData(productsData?.products?.data);
     }
   };
-  console.log(filterData?.data);
+  // console.log(filterData?.data);
   return (
     <>
       <DashboardBackground>

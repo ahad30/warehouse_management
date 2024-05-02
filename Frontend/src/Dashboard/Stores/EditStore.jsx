@@ -21,6 +21,8 @@ const EditStore = ({ modalIsOpen, setModalIsOpen, store }) => {
     },
   ] = useUpdateStoreMutation();
 
+console.log(updateData);
+
   const handleImageChange = (e) => {
     const files = e.target.files;
     console.log(files.length);

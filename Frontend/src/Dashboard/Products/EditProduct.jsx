@@ -27,6 +27,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
     }
   }, [product, product?.product_images, refetch]);
 
+
   const [
     updateProduct,
     {
@@ -37,6 +38,7 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
       data: updateData,
     },
   ] = useUpdateProductMutation();
+
 
   UseErrorMessages(updateError);
   useShowAsyncMessage(
@@ -96,6 +98,8 @@ const EditProduct = ({ modalIsOpen, setModalIsOpen, product, refetch }) => {
 
     formData.append("image_ids[]", image_ids);
     updateProduct(formData);
+    console.log(data);
+
   };
 
   const handleImageChange = (e) => {

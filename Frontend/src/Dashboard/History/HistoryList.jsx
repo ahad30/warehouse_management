@@ -68,19 +68,17 @@ const HistoryList = () => {
           setWarehouseId={setWarehouseId}
         ></HIstoryFilter>
 
-        <div className="flex justify-between my-7">
+        <div className="grid grid-cols-1 lg:grid-cols-3 max-w-3xl mx-auto my-7">
 
          {
              historiesData.data?.map(product => (
             <>
-            <div>
-            <p className="text-lg font-bold">Incoming Products: {product.incomingProducts}</p>
-            </div>
-            <div>
-            <p className="text-lg font-bold">Outgoing Products:  {product.shiftProducts ?product.shiftProducts : 'Nothing Yet'}</p>
-            </div>
-            <div>
+
+            <div className="text-center">
             <p className="text-lg font-bold">Date: {product.date}</p>
+            <p className="text-lg font-bold">Incoming Products: {product.incomingProducts}</p>
+            <p className="text-lg font-bold">Outgoing Products: {product.shiftProducts ?product.shiftProducts : 'Nothing Yet'}</p>
+          
             </div>
             
             </>
