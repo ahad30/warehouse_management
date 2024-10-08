@@ -1,6 +1,6 @@
 ### Warehouse Management System - Project Setup Guide
 
-**Live Link:** [Warehouse Management System](https://warehouse.z8tech.one/login)
+**Live Link:** [Warehouse Management System](https://smsinventory.ca/login)
 
 ---
 
